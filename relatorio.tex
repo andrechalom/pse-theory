@@ -1,0 +1,1432 @@
+\documentclass{changed-elsart}
+%documentclass[doublespacing]{elsart}
+% if you use PostScript figures in your article
+\usepackage{graphicx}
+\usepackage{amsmath}
+\setlength{\topmargin}{0cm}
+\input acentos
+\input psfig.sty
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+\begin{document}
+
+\begin{frontmatter}
+\begin{center}
+  {\Large RELATÓRIO DE CICLO AVANÇADO}
+\end{center}
+
+\title{
+Estudo da mobilidade de microorganismos por deformações da
+membrana via Método da Fronteira Imersa}
+\end{frontmatter}
+
+\mbox{}\vspace{-9mm}\mbox{}
+\begin{table}[hbt]{\small
+\begin{tabular}{ll}
+Aluno        & André Chalom\\
+             & Ciências Moleculares-USP      \\
+Modalidade   & Iniciação Científica        \\
+Período      & 01/08/2008 - 30/06/2010     \\
+Subárea      & 1.01.04.00-3 / Análise Numérica \\
+             & \\
+Orientador   & Dr. Alexandre Megiorin Roma \\
+             & Departamento de Matemática Aplicada / IME-USP
+\end{tabular} }
+\end{table}
+
+\mbox{}\vspace{-14mm}\mbox{}
+
+\begin{frontmatter}
+\end{frontmatter}
+
+\section{RESUMO}
+O estudo da mobilidade de microorganismos leva a problemas de alta
+complexidade que podem ser tratados por dinâmica de fluidos
+computacional. O movimento de bactérias por deformações elásticas
+da membrana celular tem recebido atenção da comunidade científica
+e abordagens geométricas foram propostas para calcular a
+velocidade e a potência dissipada pelo microorganismo. O presente
+trabalho trata as questões da velocidade e da eficiência
+da natação empregando o Método da Fronteira Imersa com a
+prescrição da velocidade da membrana como condição de contorno
+para a resolução das equações de movimento. Este método permite o
+tratamento de geometrias e de movimentos complexos da membrana
+celular, ampliando a gama de problemas que podem ser resolvidos.
+A metodologia foi validada por diversos testes normalmente usados
+e por comparações com estudos geométricos, apresentando resultados
+satisfatórios. 
+
+\section{INTRODUÇÃO}
+O estudo de movimentos biológicos apresenta uma miríade de
+questões que têm sido abordadas por cientistas de várias áreas,
+desde biólogos e pesquisadores da área de saúde até matemáticos,
+engenheiros e físicos. Entre estas questões, merece destaque a
+relação entre a morfologia de uma espécie e sua capacidade de
+locomoção. Quase todos os seres vivos capazes de se autopropelir o fazem
+em um meio fluido como por exemplo o ar, a água do mar ou os
+fluidos internos de outro ser vivo. A dinâmica destes movimentos
+pode ser complexa, envolvendo comportamento advectivo e difusivo,
+assim como interações com outros organismos da mesma espécie ou
+com a área ao redor. Desta forma, métodos de dinâmica de fluidos
+computacional podem ser empregados para modelar diversos tipos de
+movimentos biológicos \cite{Fauci96}.
+
+Estudos de dinâmica de fluidos computacional aplicada a problemas
+biológicos são caracterizados por uma interação complexa entre o
+fluido e a estrutura biológica a qual, normalmente, é composta por
+materiais elásticos. Dentre as abordagens que têm sido utilizadas
+no estudo destes problemas é possível citar os métodos
+geométricos, os quais utilizam a aproximação de Stokes para as
+equações do movimento para calcular soluções em forma fechada
+\cite{Stone,Ehlers}. Outra abordagem existente consiste em empregar
+métodos computacionais para aproximar a solução das equações completas de
+Navier-Stokes em um domínio discretizado \cite{Fauci96}.
+
+Tendo como modelo o fluxo de sangue dentro do coração humano,
+Charles S. Peskin desenvolveu o Método da Fronteira Imersa
+\cite{Peskin93}, a ser descrito na Seção (\ref{metodologia}).
+Desde sua introdução, este método tem sido aplicado com sucesso em
+diferentes problemas em diversas áreas, e.g. como na natação de
+microorganismos \cite{Fauci96} e como na simulação de escoamentos
+ao redor de fronteiras rígidas \cite{Iaccarino}.
+
+O presente trabalho pretende aplicar a metodologia da fronteira
+imersa no estudo da mobilidade de microorganismos por deformações
+de membrana. Esta metodologia permite o tratamento de problemas
+com geometrias complexas, de difícil ou impossível abordagem por
+métodos geométricos como os descritos em \cite{Ehlers}.
+
+\section{JUSTIFICATIVA E RELEVÂNCIA DO TEMA}
+Microorganimos procariotos formam um compartimento  fundamental da
+biota do planeta Terra. Estima-se que existam de 4 a 6$\times
+10^{30}$ organismos procariotos vivos no planeta, e que eles
+contêm mais nitrogênio e fósforo orgânicos que todos os outros
+seres vivos \cite{Whitman98}. A diversidade genética existente
+entre tais organismos está começando a ser avaliada. Do ponto de
+vista humano, são relevantes na área de saúde, tanto como agentes
+patogênicos quanto como simbiontes essenciais à vida humana
+\cite{Lippincott}, além de participar de ciclos biogeoquímicos dos
+principais nutrientes.
+
+Estes organismos ocupam praticamente  todos os habitats do planeta
+e apresentam grande diversidade morfológica. Sendo assim, existem
+diversas possibilidades de meios de locomoção exercidos por estes
+organismos. O estudo desta locomoção é de relevância por sua
+importância biológica e na área de saúde, além de ter potenciais
+aplicações à engenharia e à robótica. Tanto a criação de
+mini-robôs \cite{Flam} como o controle de microorganismos
+\cite{Fearing} estão sendo pesquisados, podendo ser aplicados em
+exploração de petróleo ou no transporte de fármacos para regiões
+específicas do corpo humano. Ambas as áreas de pesquisa podem se
+beneficiar de uma melhor compreensão dos mecanismos de locomoção
+em escalas microscópicas.
+
+\section{OBJETIVOS}\label{objetivos}
+
+\begin{enumerate}
+\item Estudar e implementar um método numérico simples para 
+resolver as equações de movimento de um fluido através da
+aplicação da transformada rápida de Fourier - {\em FFT}.
+\item Estudar e implementar o Método da Fronteira Imersa.
+\item Testar, gradativamente, outros métodos e implementações mais
+ elaboradas e adequadas para os itens (1) e (2).
+\item Desenvolver uma metodologia para simular o movimento de uma
+ célula com velocidade prescrita sobre membrana celular.
+\item Realizar cálculos de velocidade instantânea, deslocamento e
+ potência dissipada em problemas modelo.
+\item Validar a metodologia desenvolvida por intermédio de
+ comparações com estudos pretéritos.
+\end{enumerate}
+
+\section{METODOLOGIA}\label{metodologia}
+
+Nesta seção, vamos descrever as propriedades do fluido por letras
+minúsculas (ex: \bu{x}, \bu{f}), e as propriedades da fibra por
+letras maiúsculas (ex: \bu{X}, \bu{F}). Todas as medidas utilizadas
+estão no sistema internacional de medidas (S.I.).
+
+\subsection{Sumário}
+O Método da Fronteira Imersa se baseia na possibilidade de se
+ resolver o movimento do fluido e da fronteira imersa separadamente.
+ Cada passo temporal da simulação compreende as seguintes etapas:
+\begin{enumerate}
+\item Determinar o passo temporal $\Delta t$ a ser utilizado
+ (eq. \ref{CFL});
+\item Calcular o termo forçante $\bu{F}(r,s)$ (eq. \ref{forclagr})
+ e interpolar para os pontos do fluido (eq. \ref{interf});
+\item Resolver as equações de Navier-Stokes (veja Seção \ref{FFT});
+\item Interpolar a velocidade do fluido para os pontos da fibra 
+(eq. \ref{interu}).
+\item Calcular os tensores de deformação e stress e as forças
+de arrasto e sustentação. (Seção \ref{Drag}).
+\end{enumerate}
+Ao final destas etapas, o passo temporal está completo.
+\subsection{Resolução das equações de movimento do fluido}\label{FFT}
+As equações que descrevem o movimento de um fluido newtoniano
+incompressível podem ser escritas como
+\begin{equation}
+ \rho \left( \frac{\partial\bu{u}}{\partial t}
+ + \bu{u} \cdot \nabla \bu{u} \right) =
+ - \nabla p + \mu \nabla^2 \bu{u} + \bu{f}(\bu{x}, t) \label{NS}
+\end{equation}
+\begin{equation}
+ \nabla \cdot \bu{u} = 0 \label{incompr}
+\end{equation}
+onde $\rho$ é a densidade do fluido, $\mu$ é o coeficiente de
+viscosidade, $\bu{u}$ é a velocidade, $p$ é a pressão e $\bu{f}$
+é uma força externa, que no caso da fronteira imersa será 
+discutida na Seção (\ref{metodologiaMFI}). Além destas equações,
+são necessárias uma condição de contorno no domínio e uma condição
+inicial.
+
+Para resolver estas equações numericamente para um escoamento 
+bidimensional, vamos considerar a velocidade e pressão do fluido 
+definidos em uma malha quadrada de dimensão $h$, com 
+$\bu{x} = (x_1h, x_2h)$, onde $x_1$ e $x_2$ são inteiros, e em 
+intervalos discretos de tempo $n\Delta t$. Para aplicar a 
+transformada de Fourier mais facilmente, vamos considerar um 
+domínio espacialmente periódico, de período $L$. Vamos então
+aproximar os operadores diferenciais por operadores de diferenças,
+como descritos a seguir.
+
+Os termos $\nabla$ e $\nabla \cdot$ são aproximados por um 
+operador de diferenças centradas $\bu{D}^0$, preciso em segunda 
+ordem, definido por:
+\begin{equation}
+ \bu{D}^0 = (D_1^0, D_2^0)\label{D0}
+\end{equation}
+\begin{equation}
+(D^0_{\alpha} \phi) (\bu{x}) =
+ \frac{\phi(\bu{x}+h\bu{e}_{\alpha}) -
+ \phi(\bu{x}-h\bu{e}_{\alpha})}{2h}\label{D0comps}
+\end{equation}
+O laplaciano $\nabla^2$ é aproximado em segunda ordem pela soma
+das diferenças progressivas e regressivas 
+$\sum^2_{\alpha=1}D_{\alpha}^+D_{\alpha}^-$, onde:
+\begin{equation}
+(D_{\alpha}^+ \phi)(\bu{x}) = 
+\frac{\phi(\bu{x}+h\bu{e}_{\alpha}) - \phi(\bu{x})}{h}
+\end{equation}
+\begin{equation}
+(D_{\alpha}^- \phi)(\bu{x}) = 
+\frac{\phi(\bu{x}) - \phi(\bu{x}-h\bu{e}_{\alpha})}{h}
+\end{equation}
+Por outro lado, o termo $\bu{u} \cdot \nabla$ pode ser aproximado
+de diversas maneiras, entre as quais utilizamos duas. A primeira
+é a {\em upwind} (a barlavento), que é dada por
+\begin{equation}
+u_{\alpha}D_{\alpha}^{\pm} = \left\{
+ \begin{array}{ll}
+ u_{\alpha}D_{\alpha}^{+}, & u_{\alpha} < 0\\
+ u_{\alpha}D_{\alpha}^{-}, & u_{\alpha} \geq 0
+ \end{array} \right. \label{uada}
+\end{equation}
+Este método é preciso apenas em primeira ordem. Contudo, pode-se
+mostrar que esta discretização é estável com a escolha de um passo
+temporal $\Delta t \sim h$:
+\begin{equation}
+ \Delta t \sum_{\alpha=1}^2 \mid u_{\alpha}^n(\bu{x}) \mid \leq h 
+\label{CFL}
+\end{equation}
+A Eq. (\ref{CFL}) é conhecida como condição de 
+Courant-Friedrichs-Lewy ou CFL.
+
+A segunda aproximação utilizada é a aproximação utilizando 
+diferenças centradas (\ref{D0}, \ref{D0comps}). Este método é 
+preciso em segunda ordem, e é estável com $\Delta t \sim h$.
+
+Com estas escolhas para os operadores de diferenças, as equações 
+de Navier-Stokes (\ref{NS}, \ref{incompr}) podem ser escritas 
+implicitamente como:
+\begin{equation}
+\rho \left(\frac{\bu{u}^{n+1}-\bu{u}^n}{\Delta t}
++ \sum^2_{\alpha=1}u_{\alpha}^nD_{\alpha}^{\pm}\bu{u}^n \right)
+- \bu{D}^0 p^{n+1} = \mu \sum^2_{\alpha=1}
+D_{\alpha}^+D_{\alpha}^-\bu{u}^{n+1} + \bu{f}^n \label{NSdisc}
+\end {equation}
+\begin{equation}
+\bu{D}^0 \cdot \bu{u}^{n+1} = 0 \label{incomprdisc}
+\end {equation}
+
+Vamos então obter a transformada de Fourier destas expressões,
+sendo que a transformada discreta de $\phi$, denotada por
+$\hat{\phi}$ é dada por:
+
+\begin{equation}
+ \hat{\phi} (\bu{k}) = \frac{1}{L^3} \sum_{\bu{x}} \phi(\bu{x}) \exp \left(-i2\pi \frac{\bu{k}\cdot\bu{x}}{L} \right)h^3
+ \label{fourier}
+\end{equation}
+
+Para conhecer o efeito da transformada de Fourier sobre os operadores de diferenças, vamos considerar
+\begin{equation}
+ \psi(\bu{x}) = (D^0_{\alpha} \phi) (\bu{x})
+\end{equation}
+A transformada de Fourier de $\psi$ é, pela Eq. (\ref{fourier}),
+\begin{equation}
+ \hat{\psi} (\bu{k}) = \frac{h^3}{L^3}\sum_{\bu{x}} \psi(\bu{x}) \exp \left(\frac{-i2\pi\bu{k}\cdot\bu{x}}{L}\right)
+\end{equation}
+Substituindo a definição de $D^0_{\alpha}$ (eq. \ref{D0comps}),
+\begin{equation}
+ \hat{\psi} (\bu{k}) = \frac{h^3}{L^3}
+ \sum_{\bu{x}} \frac{\phi(\bu{x}+h\bu{e}_{\alpha})-\phi(\bu{x}-h\bu{e}_{\alpha})}{2h} 
+ \exp \left(\frac{-i2\pi\bu{k}\cdot\bu{x}}{L}\right)
+\end{equation}
+Convém perceber aqui que, como o domínio é periódico, a soma de $\phi(\bu{x})$ é o mesmo que a soma de $\phi(\bu{x}\pm h\bu{e}_{\alpha})$, apenas com a numeração deslocada. Assim, podemos abrir a expressão acima em duas somatórias e em cada uma realizar uma mudança de variáveis de forma que 
+\begin{equation}
+ \hat{\psi} (\bu{k}) = \frac{h^3}{2hL^3}
+ \sum_{\bu{x}} \phi(\bu{x})
+   \left[\exp \left(\frac{-i2\pi\bu{k}\cdot(\bu{x}-h\bu{e}_{\alpha})}{L}\right)
+ -      \exp \left(\frac{-i2\pi\bu{k}\cdot(\bu{x}+h\bu{e}_{\alpha})}{L}\right)
+ \right]
+\end{equation}
+Esta expressão também pode se escrever
+\begin{equation}
+ \hat{\psi} (\bu{k}) = \frac{h^3}{L^3}\frac{1}{h}
+ \sum_{\bu{x}} \phi(\bu{x}) \exp \left(\frac{-i2\pi\bu{k}\cdot\bu{x}}{L}\right)
+ \left[ \frac{
+        \exp \left(\frac{-i2h\pi k_{\alpha}}{L}\right)
+ -      \exp \left(\frac{-i2h\pi k_{\alpha}}{L}\right) }{2}
+ \right]
+\end{equation}
+\begin{equation}
+ \hat{\psi} (\bu{k}) = \frac{h^3}{L^3}
+ \sum_{\bu{x}} \phi(\bu{x}) \exp \left(\frac{-i2\pi\bu{k}\cdot\bu{x}}{L}\right)
+\frac{i}{h}
+\sin \left(\frac{2h\pi k_{\alpha}}{L}\right)
+\end{equation}
+Portanto, a aplicação de $D^0_{\alpha}$ em $\phi$ seguida da aplicação da transformada de Fourier equivale à transformada de Fourier seguida da multiplicação por $\sin \left(\frac{2h\pi k_{\alpha}}{L}\right)$
+Note-se ainda que $h/L = 1/N$, e podemos escrever a transformada de $\bu{D}^0$ como
+\begin{equation}
+ \hat{\bu{D}}^0 = \frac{i}{h} \sin \frac{2 \bu{k}\pi}{N} 
+\end{equation}
+onde se usa a notação 
+\begin{equation}
+ \sin (\bu{k}) = (\sin k_{1}, \sin k_{2})
+\end{equation}
+Da mesma forma, é fácil chegar ao resultado seguinte:
+
+\begin{equation}
+ \hat{D}_{\alpha}^+(\bu{k}) \hat{D}_{\alpha}^-(\bu{k}) = - \frac{4}{h^2} \left(\sin\frac{k_{\alpha}\pi}{N}\right) ^2
+\end{equation}
+
+Com estes resultados, podemos escrever a transformada das equações (\ref{NSdisc}, \ref{incomprdisc}) como:
+
+\begin{equation}
+ A(\bu{k})\hat{\bu{u}}^{n+1} + \frac{i\Delta t}{\rho h}\sin \frac{2 \bu{k}\pi}{N} \hat{p}^{n+1} = \hat{\bu{v}}^n(\bu{k})\label{NSfour}
+\end{equation}
+
+\begin{equation}
+ \frac{i}{h}\left(\sin \frac{2 \bu{k}\pi}{N} \right) \cdot \hat{\bu{u}}^{n+1}(\bu{k}) = 0
+\end {equation}
+
+Aqui, $\bu{v}$ é o termo conhecido da equação de Navier-Stokes no tempo $n$, e $A(\bu{k})$ é dado por
+\begin{equation}
+ A(\bu{k}) = 1 + \frac{4\mu\Delta t}{\rho h^2} \sum_{\alpha=1}^2 \left(\sin\frac{k_{\alpha}\pi}{N}\right) ^2
+\end{equation}
+
+Multiplicando escalarmente (\ref{NSfour}) por $\sin\frac{2 \bu{k}\pi}{N}$, obtemos a equação
+
+\begin{equation}
+-\frac{\Delta t}{\rho h} \left(\sin\frac{2 \bu{k}\pi}{N}\right) \cdot \left(\sin\frac{2 \bu{k}\pi}{N}\right) \hat{\bu{p}}^{n+1} = i \left(\sin\frac{2 \bu{k}\pi}{N}\right) \cdot \hat{\bu{v}}^n(\bu{k})
+\end{equation}
+
+A qual pode ser resolvida diretamente para $\hat{p}$. Note-se que esta equação não pode ser resolvida no caso em que $\sin\frac{2 \bu{k}\pi}{N} = (0,0)$, o que ocorre em até 4 pontos do domínio. Assim, a pressão nestes pontos do espaço de Fourier é arbitrária, e pode ser definida como zero.
+
+A seguir, resolve-se a Eq. (\ref{NSfour}) para $\hat{\bu{u}}$, e tendo-se obtido os valores de $\hat{\bu{u}}$ e $\hat{p}$, procede-se à transformada inversa dada por:
+
+\begin {equation}
+ \phi(\bu{x}) = \sum_{\bu{k}}\hat{\phi}(\bu{k})\exp \left( i2\pi \frac{\bu{k}\cdot\bu{x}}{L} \right)
+\end{equation}
+
+O que termina o passo temporal da resolução das equações de movimento do fluido. Note-se que o esquema numérico definido acima é preciso em primeira ordem no tempo, e em primeira ou segunda ordem no espaço dependendo da escolha feita para aproximar $\bu{u} \cdot \nabla$.
+
+\subsection{Método da Fronteira Imersa}\label{metodologiaMFI}
+
+O Método da Fronteira Imersa \cite{Peskin93} é utilizado para resolver o movimento de uma coleção de fibras elásticas imersas em um fluido evitando-se discretizar as fibras na mesma malha que o fluido. Supõe-se que as fibras não ocupem volume e não tenham massa, e que se movam com a velocidade local do fluido.
+
+Vamos desenvolver aqui o caso mais geral de uma coleção de fibras ocupando uma regiaão do espaço. No nosso caso, só será utilizada uma fibra, e a metodologia de fato será um caso particular do exposto aqui. Seja $\bu{X}(r, s, t)$ a posição do ponto da $r$-ésima fibra com parâmetro de curva $s$ no instante $t$. Em um primeiro instante, vamos considerar que conhecemos a força exercida no fluido pela fibra. Posteriormente, vamos considerar o problema de escrever as equações se o dado conhecido for a velocidade dos pontos da fibra.
+
+A força transmitida pela fibra para o fluido pode ser modelada de diferentes 
+formas. Este trabalho escolheu duas metodologias. 
+Existem outras modelagens propostas na literatura que podem ser utilizadas em trabalhos
+futuros, como a metodologia do {\em Direct Forcing} \cite{DirectForcing}.
+
+Vamos utilizar os vetores tangente $\bu{\tau}(r, s, t)$ e normal exterior $\bu{n}(r, s, t)$ como
+\begin{equation}
+\bu{\tau} = \frac{\partial \bu{X} / \partial s}{\mid\partial \bu{X} / \partial s\mid}
+\end{equation}
+\begin{equation}
+\bu{n} = \frac{\partial \bu{\tau} / \partial s}{\mid\partial \bu{\tau} / \partial s\mid}\label{normal}
+\end{equation}
+
+A primeira metodologia utilizada é uma membrana elástica livre, cuja força em um segmento é dada por
+
+\begin{equation}
+\bu{F}(r, s, t) = \frac{\partial(\sigma \bu{\tau})}{\partial s}\label{forclagr}
+\end {equation}
+
+Onde $\sigma=\sigma(\mid\frac{\partial \bu{X}}{\partial s}\mid, r, s, t)$ é a 
+tensão em cada ponto da fibra.
+
+A segunda expressão que utilizamos para a força é baseada na metodologia de 
+pontos ancorados (veja por exemplo \cite{Ceniceros}). Com esta metodologia, 
+cada ponto da fronteira imersa é associado a um ponto âncora, cuja posição é 
+determinada sem interferência do fluido, e que não contribui diretamente para o termo 
+forçante. Neste caso, a expressão da força é simplesmente
+\begin{equation}
+\bu{F}(r, s, t) = -\kappa\left(\bu{X}(r, s, t) - \bu{\hat{X}}(r, s, t)\right)
+\end {equation}
+Onde $\bu{\hat{X}}(r, s, t)$ é a posição do ponto âncora.
+
+A expressão da força vinda de uma membrana elástica garante que a integral da força sobre toda a membrana é zero. Já a segunda expressão pode introduzir um erro devido ao deslocamento relativo entre o centro geométrico da membrana ancorada e o da membrana âncora. Veja detalhes junto com os resultados numéricos.
+
+Note-se que estas expressões determinam a força exercida pelas fibras a partir somente da configuração destas. Assim, qualquer que seja o termo forçante usado, o Método da Fronteira Imersa se baseia no fato de que se pode discretizar as equações de movimento do fluido (\ref{NS}, \ref{incompr}) em um domínio euleriano, e a equação de força das fibras (\ref{forclagr}) de forma lagrangiana, e resolver a interação entre os dois domínios através das equações de interação:
+
+\begin{equation}
+\bu{f}(\bu{x}, t) = \int \bu{F}(r, s, t) \delta(\bu{x}-\bu{X}(r,s,t)) dr ds
+\end{equation}
+
+\begin{equation}
+\frac{\partial \bu{X}(r, s, t)}{\partial t} = 
+\bu{u}(\bu{X}(r,s,t),t) = \int \bu{u}(\bu{x},t)\delta(\bu{x}-\bu{X}(r,s,t)) d\bu{x}\label{dUdt}
+\end{equation}
+
+Aqui, a função $\delta$ é a função delta de Dirac, cuja forma discretizada $\delta_h$ é descrita na Seção \ref{Deltadirac}.
+
+Com a força na fronteira definida acima, podemos calcular a potência e o torque em variáveis eulerianas como
+\begin{equation}
+P_e(t) = \int \bu{u} \cdot \bu{f} d\bu{x}
+\end{equation}
+\begin{equation}
+\bu{T_e}(t) = \int \left(\bu{x}-\bu{x}_{CG} \right) \times \bu{f} d\bu{x}
+\end{equation}
+e as mesmas definições valem no domínio lagrangiano como
+\begin{equation}
+P_l(t) = \int \bu{U} \cdot \bu{F} dr ds
+\end{equation}
+\begin{equation}
+\bu{T_l}(t) = \int \left(\bu{X}-\bu{X}_{CG} \right) \times \bu{F} dr ds
+\end{equation}
+Aqui, $\bu{x}_{CG}$ e $\bu{X}_{CG}$ são as coordenadas do centro geométrico
+da fronteira imersa, respectivamente em coordenadas eulerianas e lagrangianas.
+
+As variáveis lagrangianas podem ser aproximadas em segunda ordem pelo operador $D_s$ definido como
+\begin{equation}
+(D_s \phi) (s) = \frac{\phi(s + \Delta s) - \phi(s-\Delta s )} {2\Delta s}
+\end {equation}
+
+Isso permite que se calcule a força $\bu {F}(r, s, t)$ computacionalmente, para que seja interpolada para $f(\bu{x}, t)$ 
+
+\begin{equation}
+\bu{f}^n(\bu{x}) = \sum_{(r,s)} \bu{F}^n(r,s) \delta_h(\bu{x} - \bu{X}^n(r,s)) \Delta r \Delta s\label{interf}
+\end{equation}
+
+Ainda é necessário um esquema numérico para resolver a Eq. (\ref{dUdt}). Para isto, vamos usar o método de Euler implícito:
+
+\begin{equation}
+\bu{X}^{n+1}(r, s) = \bu{X}^n(r, s) + \Delta t  \bu{u}^{n+1}(\bu{X}^n(r,s))
+\end{equation}
+
+\begin{equation}
+\bu{X}^{n+1}(r, s) = \bu{X}^n(r, s) + \Delta t \sum_{\bu{x}} \bu{u}^{n+1}(\bu{x})\delta_h(\bu{x}-\bu{X}^n(r,s)) h^2\label{interu}
+\end{equation}
+
+Embora a soma esteja escrita sobre todos os $\bu{x}$, é conveniente notar que ela só precisa ser calculada para os pontos próximos de $\bu{X}$, pois para os mais distantes a função $\delta_h$ vale zero.
+
+\subsection{Integrais no domínio periódico}
+Para calcular propriedades do escoamento no domínio periódico, usamos a fórmula do trapézio composto
+\begin{equation}
+\int_\Omega P(\bu{x}) d\bu{x} = \sum_{i=0}^N \sum_{j=0}^N P(x_{ij})*h
+\end{equation}
+Para uma função $P(\bu{x})$ periódica de classe $C^m$, pode-se mostrar que o erro da fórmula do trapézio composto é da ordem de $O(h^m)$. Em particular, se supusermos $P \in C^\infty(\bu{R})$, a fórmula do trapézio converge para a integral mais rápido que qualquer potência de $h$.
+
+\subsection{ Escolha do passo temporal }\label{DeltaT}
+
+Para garantir a estabilidade da discretização utilizada, foram usadas duas restrições ao passo
+temporal usado. A primeira vem da condição de CFL (Eq. \ref{CFL}), e é dada por
+
+\begin{equation}
+\Delta t \leq \alpha = \frac{h^r}{\max\{u_1(\bu{x})+u_2(\bu{x})\}}
+\end{equation}
+
+Esta equação é usada em todas as simulações que não contém membranas ancoradas (como na validação
+da resolução das equações de movimento). Quando existe alguma membrana ancorada, é necessário
+incluir um segundo termo:
+
+\begin{equation}
+\Delta t = 0.5 \min\left(\alpha, \frac{ h^r \sqrt{\rho}}{\sqrt{w}}\right)
+\end{equation}
+
+Onde $w$ é a constante elástica da membrana ancorada. A dedução deste termo pode ser vista em 
+\cite{Ming-Chi}. Veja também em \cite{Ceniceros} uma discussão detalhada sobre a escolha de passo
+temporal, inclusive sobre a inclusão do fator multiplicativo de 0.5.
+
+Em ambas as equações, o expoente $r$ é usado para controlar a ordem de convergência do método.
+Nas simulações habituais, $r = 1$, e o passo temporal é da ordem do passo espacial. Isso faz com 
+que o erro na resolução das equações se comporte como $h$. Para realizar validações mais finas,
+utilizamos $r = 2$, fazendo com que o passo temporal seja da ordem do passo espacial ao quadrado,
+e assim o termo de erro na resolução das equações deve se comportar com segunda ordem.
+
+\subsection{Discretização da função Delta}\label{Deltadirac}
+
+A discretização utilizada para a função Delta de Dirac em duas dimensões é dada por:
+
+\begin{equation}
+ \delta_h(\bu{x}) = \varphi\left(\frac{x_1}{h}\right)\varphi\left(\frac{x_2}{h}\right)/h^2
+\end {equation}
+
+Existem, na literatura, várias propostas para a função delta unidimensional $\varphi(r)$. A 
+discretização usada por Charles Peskin em artigos a partir de 1996 (a qual vamos nos referir 
+como Peskin96) é dada por:
+
+\begin{equation}
+\varphi(r) = \left\{
+ \begin{array}{ll}
+ \frac{3 - 2 \mid r \mid +\sqrt{1+4\mid r \mid - 4 r^2}}{8}, & \mid r \mid \leq 1\\
+ \frac{5-2\mid r \mid-\sqrt{-7 +12 \mid r \mid - 4 r ^2}}{8}, & 1 < \mid r \mid \leq 2\\
+ 0, & 2 < \mid r \mid
+ \end{array} \right. \text{ (Peskin96)}
+\end{equation}
+
+Note as seguintes propriedades da função $\varphi$:
+
+\begin{enumerate}
+\item $\varphi (r)$ é contínua,\label{phicont}
+\item $\varphi (r) = 0, \mid r \mid \geq 2$,
+\item $\sum_{j\text{ par}} \varphi (r-j) = \sum_{j\text{ impar}} \varphi (r-j) = 1/2$, \label{prop3}
+\item $\sum_{j}(r-j)\varphi(r-j) = 0$, \label{prop4}
+\item $\sum_j (\varphi(r-j))^2 = 3/8$, \label{phisoma}
+\item $\varphi (r)$ é uma função par,
+\item $\varphi (r)$ é derivável,
+\item $\varphi '(r)$ é contínua.
+\end{enumerate}
+
+Pode-se mostrar que as propriedades (\ref{phicont}) até (\ref{phisoma}) determinam de forma única 
+a função $\varphi(r)$ (veja \cite{Peskin96}). No entanto, deve-se salientar que esta não é a única 
+escolha possível para o conjunto de propriedades que deve ser conservado pela interpolação. O 
+apêndice deste documento traz a dedução da conservação da resultante das forças, da potência e do
+torque pela função Delta descrita acima.
+
+Outras discretizações para a função delta unidimensional estão representadas nas equações 
+\ref{DeltaS95}, \ref{DeltaP93} e \ref{DeltaT04}, e o perfil destas funções pode ser visto nas
+nas figuras \ref{Deltas1} e \ref{Deltas2}.
+
+\begin{equation}
+\begin{array}{l}
+\varphi(r) = \left\{
+\begin{array}{ll}
+    \frac{61}{112} - \frac{11}{42}r - \frac{11}{56}r^2 + \frac{1}{12}r^3 + \frac{\sqrt{3}}{336}\chi(r), & \mid r \mid \leq 1 \\
+    \frac{21}{16}+\frac{7}{12}r-\frac{7}{8}r^2+\frac{1}{6}r^3-\frac{3}{2}\varphi(r-1), & 1 < \mid r \mid \leq 2\\
+     \frac{9}{8}-\frac{23}{12}r+\frac{3}{4}r^2-\frac{1}{12}r^3+\frac{1}{2}\varphi(r-2), & 2 < \mid r\mid \leq 3\\
+	0, & 3 < \mid r \mid\\
+\end{array}
+\right. \\
+\chi(r) = \sqrt{
+    (243+1584r-748r^2-1560r^3+500r^4+336r^5-112r^6)}\\
+
+\end{array}
+\text{ Stockie95}
+\label{DeltaS95}
+\end{equation}
+
+\begin{equation}
+\varphi(r) = \left\{
+\begin{array}{ll}
+	1-\frac{1}{2}r-r^2+\frac{1}{2}r, & \mid r \mid \leq 1\\
+	1-\frac{11}{6}r+r^2-\frac{1}{6}r^3, & 1 < \mid r \mid \leq 2 \\
+	0, & 2 < \mid r \mid\\
+\end{array}
+\right.
+\text{ Tornberg04}
+\label{DeltaT04}
+\end{equation}
+
+\begin{equation}
+\varphi(r) = \left\{
+\begin{array}{ll}
+    \frac{1+\cos(\pi r/2)}{4}, & \mid r \mid \leq 2\\
+    0, & 2 < \mid r \mid\\
+ \end{array}
+\right.
+\text{ Peskin93}
+\label{DeltaP93}
+\end{equation}
+
+
+\begin{figure}[htbp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Peskin93.png}
+       \includegraphics[scale=0.33]{./figs/Peskin96.png}
+       \caption{Função de discretização Delta Peskin93 (esq) e Peskin96 (dir)}
+	\label{Deltas1}
+\end{figure}
+
+\begin{figure}[htbp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Stockie95.png}
+       \includegraphics[scale=0.33]{./figs/Tornberg04.png}
+       \caption{Função de discretização Delta Stockie95 (esq) e Tornberg04 (dir)} 
+	\label{Deltas2}
+\end{figure}
+
+\subsection{Tensores de deformação e stress}\label{Drag}
+Vamos utilizar as seguintes definições para calcular as forças hidrodinâmicas durante o programa.
+Todos os termos são explicados em maiores detalhes em \cite{Aris} ou \cite{Batchelor}.
+
+O tensor de deformação é dado pela expressão \cite{Aris}
+\begin{equation}
+e_{ij} = 1/2\left(\frac{\partial v_i}{\partial x_j} + \frac{\partial v_j}{\partial x_i}\right)
+\end{equation}
+
+E o tensor de stress para um escoamento incompressível é dado por
+
+\begin{equation}
+T_{ij} = -p\delta_{ij} + 2\mu e_{ij}
+\end{equation}
+
+Onde $\delta_{ij}$ é o delta de Kronecker.
+
+Para um corpo rígido imerso no escoamento, seja \bu{F} 
+
+\begin{equation}
+\bu{F} = \int_\Omega \bu{T} \cdot \bu{n} ds
+\end{equation}
+
+Onde $n$ é a normal externa unitária à superfície do corpo (Eq. \ref{normal}). Então a projeção de \bu{F} no 
+sentido do movimento é denominada a força de arrasto $F_d$ e a projeção de \bu{F} no sentido 
+normal é denominada a força de sustentação $F_s$. Note-se que esta expressão calcula a força de arrasto 
+no fluido, a qual é oposta à força de arrasto no corpo imerso.
+
+O cálculo computacional da força de arrasto e de sustentação durante o programa é feito
+nas seguintes etapas:
+\begin{enumerate}
+\item Os tensores de deformação e stress são calculados em todo o domínio euleriano.
+\item O tensor de stress é interpolado componente a componente para a malha lagrangiana utilizando-se a função Delta de Dirac.
+\item Em cada ponto lagrangiano, aplica-se o tensor de stress na direção normal à fronteira.
+\item O termo de força encontrado é integrado em todo o domínio lagrangiano e projetado na direção do movimento (para determinar $F_d$) e na direção normal (para determinar $F_s$).
+\end{enumerate}
+
+Além da força de arrasto $F_d$, também é possível calcular o coeficiente de 
+arrasto $C_d$. A definição do coeficiente de arrasto para um escoamento 
+bidimensional é, de forma diferente da usual, ligada ao diâmetro e não a área
+do corpo imerso. Para um cilindro infinito imerso em um escoamento, 
+define-se \cite{Triton}:
+
+\begin{equation}
+C_d = \frac{f_d}{\frac{1}{2}\rho u^2d}\label{C_d}
+\end{equation}
+
+Onde $f_d$ é a força de arrasto por unidade de comprimento.
+
+\section { IMPLEMENTAÇÃO }
+Nesta seção, vamos descrever brevemente detalhes da implementação computacional
+das metodologias descritas acima. A linguagem de programação utilizada foi 
+o C++, compilado com gcc versão 4.1.2. A transformada de Fourier (FFT) é 
+realizada com auxílio do pacote FFTN, escrito por R.C. Singleton e convertido
+para C por John Beale. A visualização dos dados foi feita com o VisIt, um
+programa de visualização e análise gráfica de dados. Foi usado também o Doxygen,
+um gerador automático de documentação, para documentar a estrutura de classes
+e objetos usada no programa. O controle de versão foi feito com o Subversion,
+em um servidor de versões local. Todos os programas e pacotes citados são de uso
+livre ou de código aberto.
+
+Os programas e pacotes citados podem ser encontrados para download em:
+\begin{enumerate}
+\item gcc: http://gcc.gnu.org/ 
+\item VisIt: https://wci.lnll.gov/codes/visit/
+\item FFTn: http://www.jjj.de/fft/ 
+\item Doxygen: http://www,stack.nl/~dimitri/doxygen/
+\item Subversion: http://subversion.tigris.org/
+\end{enumerate}
+
+\section {RESULTADOS NUMÉRICOS DE VALIDAÇÃO} \label{Resultados}
+
+A validação do código desenvolvido para tratar o problema da fronteira imersa é composta de duas 
+partes. Primeiramente, é necessário validar a implementação das rotinas utilizadas na resolução das 
+equações de movimento e na interpolação da velocidade (do fluido para a fibra) e no espalhamento do 
+termo forçante (da fibra para o fluido) separadamente. Esta etapa é conduzida por meio de soluções 
+manufaturadas, descritas abaixo. A seguir, deve-se validar o programa como um todo, utilizando para 
+isso modelos mais complexos.
+
+Nesta seção, será utilizado o seguinte resultado \cite{Stoer}:
+
+Seja $\eta(x;h)$ a solução aproximada obtida por um método de passo simples de ordem $p$ para a solução do problema de Cauchy $y' = f(x, y),$ $y(x_0) = y_0$. Então $\eta(x;h)$ tem uma expansão assintótica da forma
+\begin{equation}
+\eta(x; h) = y(x) = h^p e_p(x) + h^{p+1}e_{p+1}(x) + ...
+\end{equation}
+Onde as funções $e_i(x)$ não dependem de $h$. Com isso, em primeira aproximação,
+\begin{equation}
+\eta(x;h) - y(x) \doteq e_p(x)h^p
+\end{equation}
+\begin{equation}
+\eta\left(x;\frac{h}{2}\right) - y(x) \doteq e_p(x)\left(\frac{h}{2}\right)^p
+\end{equation}
+
+Dividindo uma expressão pela outra, obtemos a razão $R(h)$ dada por
+
+\begin{equation}
+R(h) := \frac{\eta(x; h) - y(x)}{\eta\left(x;\frac{h}{2}\right) - y(x)} \doteq 2^p
+\end{equation}
+
+Esta expressão pode ser usada para verificar a ordem de convergência do método utilizado. Nos testes abaixo, quando $R(h) \rightarrow 2$, dizemos que o método é de primeira ordem, e quando $R(h) \rightarrow 4$, dizemos que o método é de segunda ordem.
+
+\subsection{Erro na transformada de Fourier}
+A utilização da transformada discreta de Fourier acarreta em um erro nos dados de velocidade e 
+pressão utilizados no programa. Para poder estimar a magnitude deste erro, foi realizado um teste 
+utilizando a transformada de Fourier direta e inversa de números arbitrários. Os números foram 
+gerados em um vetor $p$ de tamanho $N^2$ seguindo:
+
+\begin{equation}
+p(j) = (sin(j)*log(j+1)) + i(cos(j/N)*log(j+1))
+\end{equation}
+
+O resultado final $\hat p$ foi comparado com os números originais $p$ e foi utilizada a seguinte medida de erro:
+
+\begin{equation}
+E_{FFT} (N) = \mid \mid p(j) - \hat p(j) \mid \mid _{\infty}
+\end{equation}
+
+O resultado segue na tabela \ref{erroFFT}, e mostra que o erro absoluto é pequeno, mas superior ao 
+erro de arredondamento para ponto flutuante.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c}
+\hline
+N   & $E_{FFT}$  \\ 
+\hline
+32  & 8.89306e-15 \\
+64  & 1.30083e-14 \\
+128 & 1.78755e-14 \\
+256 & 8.28049e-14 \\
+512 & 8.94814e-14 \\
+\hline
+\end{tabular}
+\caption{ Erro durante a transformada de Fourier direta e inversa de um conjunto de $N^2$ números.}\label{erroFFT}
+\end{table}
+
+\subsection{Validação de Navier-Stokes}
+
+Para validar a resolução das equações de Navier-Stokes, utilizou-se uma solução manufaturada da forma
+
+\begin{equation}
+\bu{u}_e(\bu{x}, t) = [-\bu{k}^{\perp}\sin(\bu{k}\cdot\bu{x}) + \bu{k}\sin(\bu{k}^{\perp}\cdot\bu{x})]f(t)
+\end{equation}
+\begin{equation}
+p_e(\bu{x}, t) = 0
+\end{equation}
+
+Aqui, o subscrito $e$ indica a solução exata. Desta expressão, é fácil ver que $\nabla \cdot \bu{u}_e = 0$. Calcula-se então exatamente o termo $\bu{f}_e(\bu{x}, t)$ que deve gerar este campo de velocidades, e utiliza-se $\bu{f}_e$ como entrada para o modelo. O erro da simulação é calculado como $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$. Além do erro na velocidade, também foi calculado numericamnte o divergente desta a cada passo temporal. 
+
+Os parâmetros utilizados para os testes foram: $\rho = \mu = 1.0$, tempo total de simulação $T=1.0$, largura do domínio $L = 2\pi$. A validação foi efetuada com as duas discretizações para o termo convectivo (Seção \ref{FFT}). Para validar a discretização de segunda ordem, utilizou-se o passo temporal da ordem do passo espacial e o passo temporal da ordem do passo espacial ao quadrado (Seção \ref{DeltaT}).
+
+Os resultados estão listados nas Tab. \ref{ValidaNS1} a \ref{ValidaNS3}, para $f(t) = t$ e $\bu{k} = [1,1]^t$.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ & $\mid\nabla\cdot\bu{u}\mid$ & $R(h)$  \\
+\hline
+32  & 6.6448e-03 & -    & 3.3521e-04 & -    \\
+64  & 3.2568e-03 & 2.04 & 2.0727e-04 & 1.62 \\
+128 & 1.6191e-03 & 2.01 & 1.1632e-04 & 1.78 \\
+256 & 8.2292e-04 & 1.97 & 5.9028e-05 & 1.97 \\
+512 & 4.1643e-04 & 1.98 & 2.9921e-05 & 1.97 \\
+\hline
+\end{tabular}
+\caption{ Erro na velocidade e divergente da velocidade para a resolução de Navier-Stokes utilizando discretização espacial de primeira ordem para o termo convectivo e razão entre o erro de duas simulações sucessivas }\label{ValidaNS1}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ & $\mid\nabla\cdot\bu{u}\mid$ & $R(h)$  \\
+\hline
+32  & 4.9124e-03 & -    & 3.3046e-04 & -    \\
+64  & 2.9104e-03 & 1.69 & 2.1028e-04 & 1.57 \\
+128 & 1.5702e-03 & 1.85 & 1.1423e-04 & 1.84 \\
+256 & 8.1373e-04 & 1.93 & 5.9011e-05 & 1.94 \\
+512 & 4.1405e-04 & 1.97 & 2.9928e-05 & 1.97 \\
+\hline
+\end{tabular}
+\caption{ Erro na velocidade e divergente da velocidade para a resolução de Navier-Stokes utilizando discretização espacial de segunda ordem para o termo convectivo e passo temporal da ordem do passo espacial e razão entre o erro de duas simulações sucessivas }\label{ValidaNS2}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ & $\mid\nabla\cdot\bu{u}\mid$ & $R(h)$  \\
+\hline
+32  & 4.9762e-04 & -    & 2.2759e-05 & -    \\
+64  & 1.2451e-04 & 3.88 & 3.8147e-06 & 5.97 \\
+128 & 3.1110e-05 & 3.59 & 5.5584e-07 & 6.86 \\
+256 & 7.7749e-06 & 4.00 & 7.6622e-08 & 7.25 \\
+\hline
+\end{tabular}
+\caption{ Erro na velocidade e divergente da velocidade para a resolução de Navier-Stokes utilizando discretização espacial de segunda ordem para o termo convectivo e passo temporal da ordem do passo espacial ao quadrado e razão entre o erro de duas simulações sucessivas }\label{ValidaNS3}
+\end{table}
+
+\begin{figure}[hp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Valida_NS.png}
+       \includegraphics[scale=0.33]{./figs/Valida_NS-force.png}
+       \caption{Solução manufaturada usada na validação da resolução das equações de Navier-Stokes. Campo de velocidades
+                (acima) e magnitude do termo forçante (abaixo). Visualização gerada a partir da simulação com malha de 512 pontos.}
+\end{figure}
+
+Como $R(h) \rightarrow 2$ com a discretização de primeira ordem, e $R(h) \rightarrow 4$ para a discretização de segunda ordem com passo temporal da ordem do passo espacial ao quadrado, estes resultados comprovam a ordem de convergência de ambas as discretizações usadas.
+
+\subsection{Validação dos operadores de interpolação e espalhamento}
+
+Para validar a interpolação da velocidade do fluido para a fronteira, foram utilizados dois campos de velocidades manufaturados. O primeiro foi o campo linear
+
+\begin{equation}
+\bu{u}_l(\bu{x}, 0) = \bu{A} \bu{x} + \bu{b}
+\end{equation}
+
+O segundo campo usado foi o mesmo $\bu{u}_e$ utilizado na validação de Navier-Stokes. Estes campos foram calculados nos pontos da malha euleriana e interpolados para a fronteira imersa. Os resultados para $\bu{A} = \frac{1}{N}\begin{bmatrix} 10 & 15 \\ 20 & 10 \end{bmatrix} $ e $\bu{b} = \frac{1}{N}[5, 10]^t$ estão listados nas Tabs. \ref{ValidaMPP93} até \ref{ValidaMPT04}, e mostram que o erro é o erro de ponto flutuante para o campo linear e cai pelo menos quadraticamente com o refinamento do domínio para o campo não-linear para todas as discretizações da função Delta exceto a de Peskin93, para a qual o erro cai linearmente. Desta forma, decidiu-se não realizar os testes mais gerais com o Delta de Peskin93.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u}-\bu{u}_l \mid\mid_\infty$ & $\mid\mid \bu{u}-\bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 4.95334e-03 & 1.79228e-02 & - \\
+64  & 1.26058e-03 & 5.34544e-03 & 3.35 \\
+128 & 3.12443e-04 & 1.82995e-03 & 2.92 \\
+256 & 7.83753e-05 & 7.69772e-04 & 2.38 \\
+512 & 1.96679e-05 & 3.50511e-04 & 2.20 \\\hline
+\end{tabular}
+\caption{ Erro da interpolação da velocidade euleriana para a fronteira e razão entre o erro de duas simulações sucessivas para o campo de velocidades não-linear usando a discretização da função Delta de Peskin93 }\label{ValidaMPP93}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u}-\bu{u}_l \mid\mid_\infty$ & $\mid\mid \bu{u}-\bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 3.14018e-16 & 1.67077e-02 & -    \\
+64  & 2.28878e-16 & 4.27581e-03 & 3.91 \\
+128 & 1.24127e-16 & 1.09428e-03 & 3.92 \\
+256 & 5.72196e-17 & 2.73284e-04 & 3.99 \\
+512 & 2.86098e-17 & 6.87893e-05 & 3.97 \\\hline
+\end{tabular}
+\caption{ Erro da interpolação da velocidade euleriana para a fronteira e razão entre o erro de duas simulações sucessivas para o campo de velocidades não-linear usando a discretização da função Delta de Peskin96 }\label{ValidaMPP96}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u}-\bu{u}_l \mid\mid_\infty$ & $\mid\mid \bu{u}-\bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 1.37327e-15 & 1.71149e-04 & -    \\
+64  & 5.66105e-16 & 1.11079e-05 & 15.4 \\
+128 & 2.98937e-16 & 7.27113e-07 & 15.3 \\
+256 & 1.49468e-16 & 4.55966e-08 & 15.9 \\
+512 & 8.58294e-17 & 2.87114e-09 & 15.9 \\\hline
+\end{tabular}
+\caption{ Erro da interpolação da velocidade euleriana para a fronteira e razão entre o erro de duas simulações sucessivas para o campo de velocidades não-linear usando a discretização da função Delta de Stockie95 }\label{ValidaMPS95}
+\end{table}
+
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c c}
+\hline
+N   & $\mid\mid \bu{u}-\bu{u}_l \mid\mid_\infty$ & $\mid\mid \bu{u}-\bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 9.93014e-16 & 5.06260e-05 & -    \\
+64  & 5.97873e-16 & 3.31990e-06 & 15.2 \\
+128 & 2.61846e-16 & 2.20129e-07 & 15.1 \\
+256 & 1.49468e-16 & 1.42035e-08 & 15.5 \\
+512 & 7.47342e-17 & 8.94189e-10 & 15.9 \\\hline
+\end{tabular}
+\caption{ Erro da interpolação da velocidade euleriana para a fronteira e razão entre o erro de duas simulações sucessivas para o campo de velocidades não-linear usando a discretização da função Delta de Tornberg04 }\label{ValidaMPT04}
+\end{table}
+
+\begin{figure}[hp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Valida_MP.png}
+       \includegraphics[scale=0.33]{./figs/Valida_MP_2.png}
+       \caption{Perfil de velocidades para a validação da interpolação de 
+		velocidades usando a função Delta. Campo linear (acima) e 
+		não-linear (abaixo). Visualização gerada a partir da simulação com malha de 512 pontos.}
+\end{figure}
+
+Para validar a interpolação do termo forçante da fronteira para a malha euleriana, foi usado um campo constante
+
+\begin{equation}
+\bu{F}(s, t) = \bu{k}
+\end{equation}
+
+E mediu-se a resultante das forças, da potência e do torque exercido pela fronteira. Estes são comparados com a resultante das forças, a potência e o torque aplicados no fluido. O erro entre eles está listado nas Tabs. \ref{ValidaFP93} até \ref{ValidaFT04}, para $\bu{k} = [0.1, 0.2]^t$, e da ordem do erro de ponto flutuante para a força e para potência. A demonstração de que estas quantidades devem ser iguais quando medidas na fronteira ou no fluido está na Seção \ref{deltaprop}. A mesma validação foi realizada com outros termos forçantes (não constantes) na membrana, com resultados semelhantes.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & Erro na força & Erro na potência & Erro no torque\\
+\hline
+32  & 9.79437e-17 & 1.40811e-17 & 2.64975e-04 \\
+64  & 9.67316e-17 & 4.72983e-18 & 2.17780e-04 \\
+128 & 1.08368e-16 & 5.21772e-18 & 5.20834e-06 \\
+256 & 9.50345e-17 & 1.66696e-18 & 7.95593e-06 \\
+512 & 2.11015e-14 & 5.55112e-17 & 1.44673e-06 \\
+\hline
+\end{tabular}
+\caption{ Erro do espalhamento do termo forçante na fronteira para o fluido usando a função Delta de Peskin93. }\label{ValidaFP93}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & Erro na força & Erro na potência & Erro no torque\\
+\hline
+32  & 3.63652e-18 & 1.78826e-17 & 7.14498e-08 \\
+64  & 8.97009e-18 & 2.90702e-18 & 2.81067e-08 \\
+128 & 6.18209e-18 & 3.74727e-18 & 3.38389e-09 \\
+256 & 4.24261e-18 & 8.32125e-18 & 7.69799e-10 \\
+512 & 3.63652e-19 & 1.39862e-17 & 7.51324e-11 \\ 
+\hline
+\end{tabular}
+\caption{ Erro do espalhamento do termo forçante na fronteira para o fluido usando a função Delta de Peskin96. }\label{ValidaFP96}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & Erro na força & Erro na potência & Erro no torque\\
+\hline
+32  & 5.18205e-16 & 5.86824e-18 & 1.37168e-07 \\
+64  & 4.75536e-16 & 1.40065e-17 & 2.91515e-08 \\
+128 & 4.94567e-16 & 1.35525e-17 & 1.04477e-08 \\
+256 & 4.93719e-16 & 7.42678e-18 & 1.79102e-09 \\
+512 & 5.00143e-16 & 2.42590e-18 & 7.22355e-10 \\
+\hline
+\end{tabular}
+\caption{ Erro do espalhamento do termo forçante na fronteira para o fluido usando a função Delta de Stockie95. }\label{ValidaFS95}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & Erro na força & Erro na potência & Erro no torque\\
+\hline
+32  & 6.10694e-16 & 1.11334e-17 & 3.57077e-07 \\
+64  & 6.27301e-16 & 5.94278e-18 & 1.38040e-07 \\
+128 & 6.38695e-16 & 2.99511e-18 & 2.73163e-09 \\
+256 & 6.15785e-16 & 1.81468e-17 & 1.46393e-09 \\
+512 & 6.29482e-16 & 4.75694e-18 & 6.83478e-10 \\
+\hline
+\end{tabular}
+\caption{ Erro do espalhamento do termo forçante na fronteira para o fluido usando a função Delta de Tornberg04. }\label{ValidaFT04}
+\end{table}
+
+\begin{figure}[htbp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Valida_F.png}
+       \caption{Perfil de velocidades para a validação do espalhamento de forças
+		pela função Delta após 1.0 segundo de simulação. Visualização gerada a partir da simulação com malha de 512 pontos. }
+\end{figure}
+
+
+\subsection{Escoamento de Couette}
+Nesta seção, vamos descrever um teste utilizado para validar a metodologia como um todo.
+
+Denomina-se escoamento de Couette o problema idealizado de um canal de extensão infinita com uma
+das margens fixas e a outra se movendo com velocidade constante. A solução deste problema é
+conhecida em forma fechada \cite{Batchelor}. 
+
+Para este teste, foi utilizada uma membrana âncora ao longo da reta $y=0.0$ se movendo na direção de $x$ positivo com velocidade $U_x = a$, e uma membrana âncora ao longo da reta $y = -L/2$ estática, onde $L$ é o lado do domínio computacional. A cada membrana âncora foi associada uma membrana ancorada com constante elástica $w$.
+
+Lembrando que a simulação acontece em um toro, o escoamento estacionário que resulta desta disposição de membranas é dado por
+\begin{equation}
+\left\{
+\begin{tabular}{c c c}
+$u_x (x, y)$ &=& $a\left(1 - \frac{\mid y \mid}{L/2}\right)$\\
+$u_y (x, y)$ &=& 0
+\end{tabular}
+\right.
+\end{equation}
+
+Para validar, rodamos a simulação por 15.0 segundos para eliminar as flutuações iniciais. A velocidade máxima atingida pelo fluido é portanto 0,2. Para a simulação rodada, os parâmetros usados foram: $a = 0.2$, $w = 50.0$, $\mu = 1.0$, $\rho = 1.0$ e $l = 2\pi$, e foi utilizada discretização de segunda ordem para o termo convectivo. Os resultados, expressos nas Tabs. \ref{couetteP96} até \ref{couetteT04}, indicam que o método utilizado, como um todo, se comporta como um método de primeira ordem. A mesma simulacao foi rodada com passo temporal da ordem do passo espacial ao quadrado, com resultados iguais em precisão de máquina. Note-se que a precisão máxima é atingida com o Delta de Tornberg04.
+
+A precisão dos melhores resultados é da ordem de $10^{-8}$. Este erro talvez possa ser atribuído ao fato de que a solução 
+para o problema idealizado do escoamento de Couette é um campo de velocidades contínuo, mas cuja derivada não é contínua.
+
+A figura \ref{FigCouette} traz o perfil do escoamento de Couette, juntamente
+com resultados para 3 malhas (32, 128 e 512), mostrando graficamente a
+convergência do método. A solução exata do problema, quando plotada no gráfico,
+se sobrepõe exatamente à solução para malha de 512 pontos.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 9.051724e-03 & -    \\
+64  & 4.610656e-03 & 1.96 \\
+128 & 2.325000e-03 & 1.98 \\
+256 & 1.167244e-03 & 1.99 \\
+512 & 5.847870e-04 & 2.00 \\
+\hline
+\end{tabular}
+\caption{ Erro da velocidade durante a validação do problema de escoamento de Couette usando discretização espacial de segunda ordem para o termo convectivo e a discretização da função Delta de Peskin96 e razão entre o erro de duas simulações sucessivas }\label{couetteP96}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline 
+32  & 5.56122e-03 & -    \\
+64  & 2.85679e-03 & 1.95 \\
+128 & 1.44682e-03 & 1.97 \\
+256 & 7.27940e-04 & 1.99 \\
+512 & 3.65094e-04 & 1.99 \\
+\hline
+\end{tabular}
+\caption{ Erro da velocidade durante a validação do problema de escoamento de Couette usando discretização espacial de segunda ordem para o termo convectivo e a discretização da função Delta de Stockie95 e razão entre o erro de duas simulações sucessivas }\label{couetteS95}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 2.02325e-08 & - \\
+64  & 1.86996e-08 & - \\
+128 & 1.81688e-08 & - \\
+256 & 1.79573e-08 & - \\
+512 & 1.78646e-08 & - \\
+\hline
+\end{tabular}
+\caption{ Erro da velocidade durante a validação do problema de escoamento de Couette usando discretização espacial de segunda ordem para o termo convectivo e a discretização da função Delta de Tornberg04 e razão entre o erro de duas simulações sucessivas }\label{couetteT04}
+\end{table}
+
+\begin{figure}[htbp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Couette.png}
+       \includegraphics[scale=0.33]{./figs/CouettePerf.png}
+       \caption{Acima: Perfil do escoamento de Couette simulado.
+		Note a fronteira móvel à meia-altura da imagem, e a fronteira
+		estática no topo. Como o domínio é periódico, o perfil se
+		encontra espelhado para baixo da fronteira móvel. Visualização gerada a partir da simulação com malha de 512 pontos.
+		Abaixo: Corte transversal do escoamento de Couette com N
+		valendo 32 (azul), 128 (verm.) e 512 (preto).}
+	\label{FigCouette}
+\end{figure}
+
+
+
+\subsection{Escoamento de Poiseulli}
+Outro teste usado para validar a metodologia é o do escoamento de Poiseulli. Denomina-se escoamento
+de Poiseulli o problema idealizado de um canal de extensão infinita com ambas as margens paradas, 
+movido por um gradiente de pressão. A solução deste problema é conhecida em forma fechada
+\cite{Batchelor}.
+
+Para esta simulação, uma membrana âncora estática é colocada ao longo da reta $y = -L/2$ com uma membrana ancorada associada de constante elástica $w$. Um termo forçante constante $\bu{f}_p = [a, 0]$ é introduzido no fluido e somado com a contribuição da fronteira ancorada a cada passo de integração. 
+
+Note que o domínio é periódico, então a membrana efetivamente delimita um canal de largura $L$. O escoamento resultante vai apresentar um perfil parabólico dado por 
+\begin{equation}
+\left\{
+\begin{tabular}{c c c}
+$u_x (x, y)$ &=& $\frac{a L^2}{8\mu}\left(1 - \frac{4y^2}{L^2}\right)$\\
+$u_y (x, y)$ &=& 0
+\end{tabular}
+\right.
+\end{equation}
+
+Utilizamos os parâmetros: $a = 0.05$, $w = 50.0$, $\mu = 1.0$, $\rho = 1.0$ e $L = 2\pi$. A velocidade máxima atingida pelo fluido é portanto aproximadamente 0,25. A simulação foi rodada por 25.0 segundos para eliminar as flutuações iniciais, e foi utilizada discretização de segunda ordem para o termo convectivo. Os resultados, expressos nas Tabs. \ref{poiseulliP96} até \ref{poiseulliT04}, indicam que o método utilizado, como um todo, se comporta como um método de primeira ordem. A mesma simulacao foi rodada com passo temporal da ordem do passo espacial ao quadrado, com resultados iguais em precisão de máquina. Note-se que a precisão máxima ocorre com o Delta de Tornberg04.
+
+A precisão dos melhores resultados é da ordem de $10^{-4}$. Este erro talvez possa ser atribuído ao fato de que a solução 
+para o problema idealizado do escoamento de Poiseulli é um campo de velocidades contínuo, mas cuja derivada não é contínua.
+
+A figura \ref{FigPoiseulli} traz o perfil do escoamento de Poiseulli, juntamente
+com resultados para 3 malhas (32, 128 e 512), mostrando graficamente a
+convergência do método. A solução exata do problema, quando plotada no gráfico,
+se sobrepõe exatamente à solução para malha de 512 pontos.
+
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 2.28880e-02 & -    \\
+64  & 1.17902e-02 & 1.94 \\
+128 & 6.16488e-03 & 1.91 \\
+256 & 3.33339e-03 & 1.85 \\
+512 & 1.91321e-03 & 1.74 \\
+\hline
+\end{tabular}
+\caption{ Erro da velocidade durante a validação do problema de escoamento de Poiseulli usando discretização espacial de segunda ordem para o termo convectivo e discretização da função Delta de Peskin96 e razão entre o erro de duas simulações sucessivas }\label{poiseulliP96}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 1.44763e-02 & -    \\
+64  & 7.23956e-03 & 2.00 \\
+128 & 3.62007e-03 & 2.00 \\
+256 & 1.81002e-03 & 2.00 \\
+512 & 1.14299e-03 & 1.58 \\
+\hline
+\end{tabular}
+\caption{ Erro da velocidade durante a validação do problema de escoamento de Poiseulli usando discretização espacial de segunda ordem para o termo convectivo e discretização da função Delta de Stockie95 e razão entre o erro de duas simulações sucessivas }\label{poiseulliS95}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c}
+\hline
+N   & $\mid\mid \bu{u} - \bu{u}_e \mid\mid_\infty$ & $R(h)$ \\
+\hline
+32  & 4.95113e-04 & - \\
+64  & 4.91749e-04 & - \\
+128 & 4.90535e-04 & - \\
+256 & 4.90045e-04 & - \\
+512 & 4.89829e-04 & - \\
+\hline
+\end{tabular}
+\caption{ Erro da velocidade durante a validação do problema de escoamento de Poiseulli usando discretização espacial de segunda ordem para o termo convectivo e discretização da função Delta de Tornberg04 e razão entre o erro de duas simulações sucessivas }\label{poiseulliT04}
+\end{table}
+
+\begin{figure}[htbp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Poiseulli.png}
+       \includegraphics[scale=0.33]{./figs/PoiseulliPerf.png}
+       \caption{Acima: Perfil de velocidades para o escoamento de Poiseulli.
+		Note a membrana fixa no topo. Como o domínio é periódico, esta
+		membrana também funciona como uma membrana fixa embaixo. Visualização gerada a partir da simulação com malha de 512 pontos. 
+		Abaixo: Corte transversal do escoamento de Poiseulli com N
+		valendo 32(azul), 128(verm.) e 512 (preto).}
+	\label{FigPoiseulli}
+\end{figure}
+
+\subsection{Cálculo da força e coeficiente de arrasto}
+Para avaliar o cálculo da força de arrasto, foi utilizada uma simulação com um termo forçante
+constante $\bu{f}$ ao redor de uma membrana ancorada circular com constante elástica $w$ localizada
+no centro do domínio computacional. Os parâmetros usados foram $\bu{f} = (0.02, 0.0)$ em todos os pontos eulerianos, 
+$\mu = \rho = 1.0$, $L = 2\pi$ e $w = 500.0$.
+A simulação foi rodada por 15.0 segundos para eliminar as flutuações iniciais. A força de arrasto 
+$F_d$ e a força de sustentação $F_s$ calculadas ao final da simulação seguem nas Tabs. \ref{dragP96}
+até \ref{dragT04}. Também estão listados os coeficientes de arrasto $C_d$
+calculados pela expressão \ref{C_d}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & $F_d$ & $F_s$ & $C_d$ \\
+\hline
+128 &  1.52515e-02 & -1.59660e-13 & 2.67318 \\
+256 &  2.24037e-02 &  6.96318e-14 & 3.92676 \\
+512 &  2.10717e-02 & -1.95074e-13 & 3.69330 \\
+\hline
+\end{tabular}
+\caption{ Força de arrasto, força de sustentação e coeficiente de arrasto para um cilindro imerso em um escoamento calculadas usando a função Delta de Peskin96.}\label{dragP96}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & $F_d$ & $F_s$ & $C_d$ \\
+\hline
+128 & 1.75702e-02 & -3.87212e-13 & 3.07958 \\
+256 & 2.34330e-02 & -4.44488e-14 & 4.10717 \\
+512 & 2.56146e-02 & -1.02694e-13 & 4.48955 \\
+\hline
+\end{tabular}
+\caption{ Força de arrasto, força de sustentação e coeficiente de arrasto para um cilindro imerso em um escoamento usando a função Delta de Stockie95.}\label{dragS95}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{c c c c}
+\hline
+N   & $F_d$ & $F_s$ & $C_d$ \\
+\hline
+128 &  2.44314e-02 & -1.03969e-12 & 4.28216 \\
+256 &  3.01828e-02 &  1.16697e-13 & 5.29023 \\
+512 &  2.99381e-02 & -2.66902e-13 & 5.24734 \\
+\hline
+\end{tabular}
+\caption{ Força de arrasto, força de sustentação e coeficiente de arrasto para um cilindro imerso em um escoamento calculadas usando a função Delta de Tornberg04.}\label{dragT04}
+\end{table}
+
+A solução exata para o problema pode ser estimada apenas de forma aproximada. Em primeiro lugar, 
+não existem soluções analíticas para o problema descrito em duas dimensões, embora existam para
+o problema semelhante de uma esfera tridimensional imersa em um escoamento. No caso simulado, deve-se ainda
+considerar que o domínio no qual a simulação é feita é um toro, e portanto o sistema simulado é o 
+do escoamento ao redor de infinitos discos dispostos em um arranjo fixo.
+
+Para um único cilindro com parâmetros semelhantes aos usados, o coeficiente 
+de arrasto calculado por \cite{Triton} é de cerca de 10.0. Assim, nossos 
+resultados apresentam a ordem de grandeza correta, com a discretização da 
+função Delta por Tornberg04 apresentando os melhores resultados.
+
+\begin{figure}[hp]
+       \centering
+       \includegraphics[scale=0.33]{./figs/Drag_Vel.png}
+       \includegraphics[scale=0.33]{./figs/Drag_Press.png}
+       \caption{Cilindro imerso no escoamento para calcular força e coeficiente 
+		de arrasto. Velocidade do escoamento (acima) e pressão 
+		(abaixo). Visualização gerada a partir da simulação com malha de 512 pontos.}
+\end{figure}
+
+
+\section{PROBLEMA MODELO}
+\subsection { Descrição }
+O gênero {\em Synechococcus} é composto de bactérias do filo Cyanophycota (algas azuis) de vida livre e que utilizam clorofila a como pigmento fotossintetizante e ficoeritrina como pigmento acessório \cite{Waterbury}. Várias linhagens são capazes de se movimentar por {\em gliding}, ou seja, se movimentam em contato com uma superfície de separação de fases. 
+
+Algumas linhagens de {\em Synechococcus} sp. são capazes de natação livre \cite{Waterbury} apesar de não apresentarem flagelos, deformações visíveis na membrana celular ou propulsão eletroforética \cite{Pitta&Berg}. Exemplares em forma de bastonete tendem a se movimentar em linha reta, enquanto exemplares esferóides se movimentam em espiral. Ocasionalmente, observam-se exemplares que entram em contato com um corpo sólido e rotacionam ao redor do eixo principal \cite{Waterbury}.
+
+As linhagens com capacidade de locomoção possuem 0,7 a 0,9 $\mu m$ de diametro, 1,25 a 2,5 $\mu m$ de comprimento. A velocidade de natação delas é da ordem de 5 a 25 $\mu m/s$. Não se observa comportamento fototático, nem comportamento de {\em tumble}, como é comum em outras bactérias capazes de natação.
+
+Para explicar a natação dessas bactérias, já que elas não possuem nenhuma característica morfológica responsável por essa capacidade, foi proposto o modelo de ondas de compressão na membrana da bactéria \cite{Ehlers,Stone}. Estudos biológicos revelaram a importância de duas proteínas de membrana {\em SwmA} e {\em SwmB}\, \cite{McCarren04,McCarren06}. Descobriu-se recentemente que a superfície desta bactéria é recoberta por {\em espículas} \cite{Samuel}, as quais podem atuar como pequenos remos, à maneira de cílios em outros organismos. No entanto, uma descrição detalhada dos processos locomotores desta bactéria ainda é desconhecida.
+
+A descoberta das espículas  na membrana de {\em Synechococcus} sp. impõe algumas restrições quanto ao mecanismo locomotor utilizado em sua natação. No entanto, ela não invalida os modelos de ondas de compressão pois o conjunto de espículas pode ser pensado como um envelope ciliar ao redor da célula (como na abordagem de Lighthill e Blake \cite{Blake} para o estudo de protozoários).
+
+A onda de superfície descrita em \cite{Ehlers} tem a forma geral
+\begin{equation}
+ \bu{y}(\bu{x},t)  = \bu{x} +
+ a[\cos(\omega t) \bu{\nu}_1(\bu{x}) +
+ \sin(\omega t) \bu{\nu}_2(\bu{x})], \label{ehlers}
+\end{equation}
+onde $\bu{x}$ denota um ponto da superfície da célula, $a$ é a amplitude da onda, $t$ é o tempo
+e $\bu{\nu}_1$ e $\bu{\nu}_2$ são dois campos vetoriais ao longo (e não necessariamente tangentes)
+da membrana celular. Esta expressão será utilizada para aproximar numericamente a natação desta
+espécie. Serão também calculadas a força de arrasto e a potência dissipada. Estes dados são
+calculados em forma fechada por métodos geométricos \cite{Stone}, porém estão disponíveis apenas
+os resultados para escoamentos tridimensionais, impossibilitando uma comparação direta.
+
+\subsection{Implementação}
+
+A natação de {\em Synechococcus} sp. foi simulada utilizando o método da fronteira imersa utilizando
+três coleções de pontos lagrangianos:
+\begin{enumerate}
+\item CG - um ponto que representa o centro geométrico imediato do organismo. É advectada pelo
+fluido, mas não tem efeito no cálculo da força. \label {CG}
+\item Oscilante - membrana circular, que descreve um movimento ondulatório sobreposto à velocidade
+do fluido. Não tem efeito no cálculo da força. Veja abaixo o cálculo da velocidade destes pontos.
+\label{Osc}
+\item Membrana - membrana circular, representa a membrana plasmática do organismo. É advectada
+pelo fluido e tem seus pontos ancorados na membrana \ref{Osc} com uma força elástica. 
+\end{enumerate}
+
+No início da simulação, as fronteiras Oscilante e Membrana estão sobrepostas. Então, a cada passo temporal, os seguintes passos são usados para simular a natação do organismo:
+\begin{enumerate}
+\item O termo forçante vindo da fronteira Membrana é calculado como:
+\begin{equation}
+\bu{F}(s, t) = -\kappa\left(\bu{X}(s, t) - \bu{\hat{X}}(s, t)\right)
+\end {equation}
+Onde $\bu{X}(s, t)$ é a posição do ponto de coordenada r na fronteira Membrana e $\bu{\hat{X}}(s, t)$ é a posição do ponto correspondente na fronteira Oscilante.
+\item O termo forçante é interpolado para o fluido.
+\item As equações de movimento do fluido são resolvidas.
+\item A velocidade local do fluido é interpolada para CG e Membrana.
+\item A velocidade de cada ponto da fronteira Oscilante é calculada como:
+\begin{equation}
+\bu{U}(s, t) = \bu{U}_{CG} + a\cos(2\pi s-\omega t)\bu{\tau}(s)
+\end{equation}
+Onde $U_{CG}$ é a velocidade do centro geométrico, $a$ é a amplitude e $\omega$ é a frequência da onda de
+compressão e $\bu{\tau}(r)$ é o vetor tangente à fronteira na posição $\bu{X}(s)$.
+\item A posição de todos os pontos lagrangianos é atualizada.
+\end{enumerate}
+
+Deve ser notado neste esquema que a posição dos pontos âncora não é imposta, como ocorre normalmente
+em estudos utilizando esta metodologia \cite{Ceniceros}. Decompondo a velocidade de cada ponto 
+lagrangiano na velocidade de translação e em um termo de perturbação $\bu{U} = \bu{U}_CG + \bu{u'}$,
+é possível ver que apenas o termo de perturbação é imposto, com o termo translacional vindo da 
+resolução das equações de movimento.
+
+\subsection { Resultados numéricos }
+A simulação foi rodada por um tempo $T = 2.0$ com os seguintes parâmetros: $\rho = 1000$, $\mu = 0.001$, 
+$L = 1e-05$ (tamanho do domínio computacional), $FL = 2e-06$ (comprimento das fronteiras imersas), 
+$a = 2e-09$, $\omega = 800$, $\kappa = 1e+05$ e discretização espacial de segunda ordem. O
+valor dos parâmetros foi escolhido para aproximar a física da {\em Synechoccocus} e o modelo de
+locomoção proposto por \cite{Ehlers}. Os resultados seguem na tabela \ref{ResBac}.
+
+\begin{table}[hbt]\begin{center}
+\begin{tabular}{c c c c c} \hline
+N   & Velocidade  & Reynolds & Arrasto     & Potência  \\
+\hline
+64  & 1.78779e-05 & 5.67e-05 & 1.91977e-12 & 3.432e-17 \\
+128 & 1.34603e-05 & 4.27e-05 & 2.13204e-12 & 2.870e-17 \\
+256 & 4.05198e-06 & 1.29e-05 & 5.00673e-13 & 2.029e-18 \\
+512 & 1.56270e-06 & 4.97e-06 & 1.43826e-13 & 2.248e-19 \\
+\cite{Ehlers} & 2.5e-05 & 1.0e-05 & - & - \\
+\hline
+
+\end{tabular}
+\caption {Resultados de velocidade do centro geométrico, estimativa do número de Reynolds, força de
+	  arrasto e potência dissipada pela natação de {\em Synechococcus} sp. simulada pelo
+	  método da fronteira imersa, juntamente com o resultado de um modelo
+	  teórico proposto por Ehlers em \cite{Ehlers} }\label{ResBac}
+\end{center}
+\end{table}
+
+Os resultados obtidos mostram uma razoável concordância com os modelos teóricos. Podemos apontar
+como fontes de erro mais prováveis a baixa ordem do esquema númerico utilizado, o fato do modelo
+ser apenas bidimensional e com domínio toroidal. Outros modelos para a introdução do termo forçante
+que suavizem erros de discretização também devem produzir resultados melhores.
+
+\section{CRONOGRAMA DE ATIVIDADES}
+
+O projeto foi desenvolvido ao longo de dois semestres, em conjunto com a realização de disciplinas que
+forneceram ao aluno uma base teórica em métodos numéricos e computação. O cronograma realizado
+segue abaixo.
+
+\begin{table}[hbt]\begin{center}
+\begin{tabular}{|c|c|c|} \hline
+semestre       & 1       & 2  
+\\\hline 
+metas          & 1,2,3,4 & 3,4,5,6
+\\\hline
+               &         & MAC5742\\
+disciplinas    & MAC0300 & MAP5725\\
+               & MAP0316 & MAP5729\\
+               & CCM0318 & CCM0328\\ \hline\label{grade}
+\end{tabular}
+\end{center}
+\end{table}
+
+
+Na Tab. \ref{grade}, as disciplinas cursadas são:
+
+\begin{tabular}{|c|l|c|} \hline
+Sigla   & Nome & Créditos$^{*}$\\\hline
+CCM0318 & Iniciação à pesquisa I & 12\\
+CCM0328 & Iniciação à pesquisa II & 12\\
+MAC0300 & Métodos Numéricos da Álgebra Linear & 4\\
+MAC5742 & Introdução à Computação Paralela e Distribuída & 6\\
+MAP0316 & Equações Diferenciais II & 4\\
+MAP5725 & Tratamento Numérico de Equações Diferenciais & 6\\
+MAP5729 & Introdução à Análise Numérica & 6\\
+\hline
+\end{tabular}
+
+\section {CONCLUSÕES E PERSPECTIVAS}
+
+\begin{enumerate}
+\item A metodologia da fronteira imersa foi implementada e validada com sucesso.
+\item O problema modelo foi simulado com sucesso, apresentando resultados satisfatórios dados
+      os estudos teóricos para o problema semelhante em três dimensões.
+\item Estudos futuros podem usar a metodologia dos pontos ancorados, da fronteira elástica,
+      ou de {\em direct forcing}, descritas em \ref{metodologiaMFI} para simular a natação de
+      outras espécies de microorganismos. A metodologia utilizando uma fronteira
+      elástica se apresenta promissora, por ser capaz de conservar propriedades
+      importantes do problema real.
+\item Estudos futuros podem desenvolver uma ferramenta semelhante usando uma modelagem tridimensional
+      para este problema.
+\end {enumerate}
+
+\section {AGRADECIMENTOS}
+
+Gostariamos de agradecer ao Prof. Dr. Jair Koiller e ao Prof. Dr. Hector Ceniceros pelas idéias e 
+sugestões recebidas durante a realização deste projeto. Também gostariamos de agradecer a Fábio
+Fonseca e Catalina Alvarez pela ajuda na implementação de vários trechos do código.
+
+\section {APÊNDICE}
+\subsection {Espalhamento de forças pela função Delta}\label{deltaprop}
+Vamos mostrar nesta seção que as propriedades da função Delta de Peskin96 garantem que a força 
+exercida pela fronteira, a potência e o torque aplicados devem ser iguais, se medidos em termos 
+de grandezas do fluido e da fronteira. Em primeiro lugar, lembremos que a Eq. \ref{interf} escrita 
+para uma única fibra é
+
+\begin{equation}
+\bu{f}^n(\bu{x}) = \sum_s \bu{F}^n(s) \delta_h(\bu{x} - \bu{X}^n(s)) \Delta s
+\end{equation}
+
+Tomando a somatória em todo o domínio euleriano, 
+
+\begin{align}
+\sum_{\bu{x}} \bu{f}^n(\bu{x}) h^2
+& = \sum_{\bu{x}}\sum_s \bu{F}^n(s) \delta_h(\bu{x} - \bu{X}^n(s)) \Delta s h^2 \nonumber\\
+& = \sum_s \bu{F}^n(s) \left[\sum_{\bu{x}}\delta_h(\bu{x} - \bu{X}^n(s)) h^2 \right]\Delta s \\
+& = \sum_s \bu{F}^n(s)\Delta s \nonumber
+\end{align}
+
+Onde se utilizou a propriedade (\ref{prop3}) da função delta. Isto mostra que a resultante das forças aplicadas ao fluido pela fronteira deve ser igual à resultante das forças calculadas na fronteira. 
+
+Para mostrar que o mesmo ocorre com a potência, veja que esta é dada, no fluido, por
+
+\begin{align}
+\sum_{\bu{x}} \bu{f}^n(\bu{x}) \cdot \bu{u}^n(\bu{x}) h^2
+&= \sum_{\bu{x}} \left[\sum_s \bu{F}^n(s) \delta_h(\bu{x} - \bu{X}^n(s)) \Delta s \right] \cdot \bu{u}^n(\bu{x}) h^2
+\nonumber \\
+&= \sum_{s} \left[\sum_{\bu{x}} \bu{u}^n(\bu{x}) \delta_h(\bu{x} - \bu{X}^n(s)) h^2 \right] \cdot \bu{F}^n(s) \Delta s
+ \\
+&= \sum_{s} \bu{F}^n(s) \cdot \bu{U}^n(s) \Delta s \nonumber
+\end{align}
+
+Esta propriedade é válida pois a função usada para interpolar a velocidade é a mesma função usada para espalhar a força.
+
+Vamos mostrar agora que o mesmo acontece com o torque. Em primeiro lugar, note que, das propriedades \ref{prop3} e \ref{prop4},
+
+\begin{equation}
+\sum_{\bu{x}} \bu{x} \delta_h(\bu{x}-\bu{X}^n(s)) h^2 = \bu{X}^n(s)
+\end{equation}
+
+Então, calculando o torque total no fluido, 
+
+\begin{align}
+\sum_{\bu{x}} \bu{x} \times \bu{f}^n(\bu{x}) h^2
+&= \sum_{\bu{x}} \sum_s \bu{x} \times \bu{F}^n(s) \delta_h(\bu{x}-\bu{X}^n(s)) h^2 \Delta s
+\nonumber\\
+&= \sum_s \left[\sum_{\bu{x}} \bu{x}  \delta_h(\bu{x}-\bu{X}^n(s)) h^2 \right] \times \bu{F}^n(s) \Delta s
+\\
+&= \sum_s \bu{X}(s) \times \bu{F}^n(s) \Delta s \nonumber
+\end{align}
+
+\mbox{}\vspace{0.5cm}
+
+\mbox{}\hfill São Paulo, 12/12/2008.
+
+\mbox{}\vspace{1.5cm}
+\begin{center}
+Professor Dr. Alexandre M. Roma\hspace{5cm}André Chalom
+\end{center}
+
+\bibliographystyle{elsart-num}
+\bibliography{chalom}
+
+
+\end{document}
