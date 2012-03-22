@@ -1,10 +1,6 @@
 all: pse.pdf
 
-
-pse.pdf: pse.tex 
-
-
-hjkhjdkfsldchalom.bib Makefile
+pse.pdf: pse.tex chalom.bib Makefile
 	-pdflatex pse
 	-bibtex pse
 	pdflatex pse
