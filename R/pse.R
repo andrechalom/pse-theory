@@ -11,7 +11,7 @@ print(modelRun(1,2,3,4))
 # Descrevendo o espaco de parametros e gerando o hipercubo
 N <- 200
 # r eh uniformemente distribuido entre 0 e 2
-rlimits <- 0:N / N*(2-0) + 0 
+rlimits <- 0:N / N*(2-0) + 250
 rpos <- array(0)
 for (i in 1:N) rpos[i] <- runif(1, rlimits[i], rlimits[i+1])
 rpos <- sample(rpos)
