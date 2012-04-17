@@ -27,23 +27,24 @@ X <- data.frame(x,r,k,res)
 testPlot(list(r,x,Time,k), test=res>0.0001, mar=c(4,4,1,2))
 
 # Plot da populacao final
-Max <- max(X$res)
-Min <- min(X$res)
-plot(0,0, xlim=limits(r),ylim=limits(k),xlab="Valores de r",ylab="Valores de K",main="Pop Final")
-points(X$r,X$k,col=rgb((X$res-Min)/(Max-Min),0,0),pch=19)
+gradPlot(list(r,x,Time,k), res, mar=c(4,4,1,2))
 
 # Geramos um modelo linear para prever a populacao em qualquer ponto
 # Ele claramente falha ao identificar a superficie de sobrevivencia
-modellm <- lm (X$res ~ X$r + X$k)
+# WORK IN PROGRESS!!!
+modellm <- lm (res ~ r + k + Time + x)
 print (modellm)
 print (summary(modellm))
 rpred <- rep(1:N/N*(2-0) + 0 - (1/N),N)
 kpred <- rep(1:N/N*(50-10) + 10 - 1/N*(50-10)/2, each=N)
+p1pred <- rep(1:N/N*(limits(p1)[2]-limits(p1)[1]) + limits(p1)[1] - 1/N*(limits(p1)[2]-limits(p1)[1])/2, N)
 prd <- modellm$coefficients[1] + modellm$coefficients[2]*rpred + modellm$coefficients[3]*kpred
 # Normalizacao
+Max <- max(res)
+Min <- min(res)
 prd <- (prd-Min) / (Max-Min)
 prd[prd < 0] <- 0
-prd[prd > Max ] <- Max
+prd[prd > 1 ] <- 1
 plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Pop Final Predita E Realizada") 
 points(rpred,kpred,col=rgb(prd,0,0),pch=15)
 points(X$r,X$k,col=rgb((X$res-Min)/(Max-Min),0,0),pch=23)
@@ -59,10 +60,10 @@ prd <- modellm$coefficients[1] + modellm$coefficients[2]*rpred + modellm$coeffic
 # Normalizacao, jogando fora < 0 
 prd <- (prd-Min) / (Max-Min)
 prd[prd < 0] <- 0
-prd[prd > Max ] <- Max
+prd[prd > 1 ] <- 1
 plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Pop Final Predita E Realizada") 
 points(rpred,kpred,col=rgb(prd,0,0),pch=15)
 points(X$r,X$k,col=rgb((X$res-Min)/(Max-Min),0,0),pch=23)
 
-# Correlacao entre k e r
-print(cor(k,r))
+# Correlacao entre as variaveis:
+cor(cbind(r,k,Time,x))

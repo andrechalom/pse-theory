@@ -34,7 +34,7 @@ oneTestPlot <- function(p1, p2, test) {
 # Plota o resultado de um teste logico pelo hipercubo
 testPlot <- function(vars, test, ...) {
 	l <- length(vars)-1
-	par(mfrow=c(l,l), ...)
+	opar <- par(mfrow=c(l,l), ...)
 	for (i in 1:l) {
 		for (j in (l+1):2) {
 			if (i >= j) {
@@ -44,4 +44,29 @@ testPlot <- function(vars, test, ...) {
 			}
 		}
 	}
+	par(opar)
 }
+
+oneGradPlot <- function (p1, p2, res) {
+	Max <- max(res)
+	Min <- min(res)
+	plot(0,0, xlim=limits(p1),ylim=limits(p2),xlab=paste("Valores de ",attr(p1,"name")),ylab=paste("Valores de ",attr(p2,"name")))
+	points(p1,p2,col=rgb((res-Min)/(Max-Min),0,0),pch=19)
+}
+
+# Plota o resultado da simulacao pelo hipercubo
+gradPlot <- function(vars, res, ...) {
+	l <- length(vars)-1
+	opar <- par(mfrow=c(l,l), ...)
+	for (i in 1:l) {
+		for (j in (l+1):2) {
+			if (i >= j) {
+				plot.new()
+			} else {
+				oneGradPlot(vars[[j]],vars[[i]],res)
+			}
+		}
+	}
+	par(opar)
+}
+
