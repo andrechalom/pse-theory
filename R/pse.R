@@ -1,59 +1,47 @@
-# Modelo numerico
-modelRun <- function (Xo, r, K, Time) {
-	X <- Xo
-	for (i in 0:Time) {
-		X <- rbind (X, r*X[length(X)]*(1-X[length(X)]/K))
-	}
-	return (X)
+### Geradores das amostragens e funcoes acessorias:
+
+# sampleunif: gera uma amostra proveniente de N intervalos de uma
+# distribuicao uniforme
+# Devolve os valores como array, e seta os atributos distribution, max e min
+sampleunif <- function (N, xmin, xmax, name) {
+	limits <- 0:N/N*(xmax-xmin) + xmin
+	pos <- array(0)
+	for (i in 1:N) pos[i] <- runif(1,limits[i],limits[i+1])
+	pos <- sample(pos);
+	attr(pos,"distribution") <- "uniform"
+	attr(pos,"max") <- xmax
+	attr(pos,"min") <- xmin
+	attr(pos,"name") <- name
+	return (pos);
 }
-print(modelRun(1,2,3,4))
 
-# Descrevendo o espaco de parametros e gerando o hipercubo
-N <- 100
-# r eh uniformemente distribuido entre 0 e 2
-rlimits <- 0:N / N*(2-0) + 0
-rpos <- array(0)
-for (i in 1:N) rpos[i] <- runif(1, rlimits[i], rlimits[i+1])
-rpos <- sample(rpos)
-# K eh uniformemente distribuido entre 10 e 50
-klimits <- 0:N/N*(50-10) + 10
-kpos <- array(0)
-for (i in 1:N) kpos[i] <- runif(1, klimits[i], klimits[i+1])
-kpos <- sample (kpos)
+# Dada uma amostragem gerada por sample*, devolve os limites de plotagem para a variavel
+limits <- function (pos) {
+	if (attr(pos,"distribution") == "uniform") {
+		return (c(attr(pos,"min"),attr(pos,"max")))
+	}
+	return (NULL);
+}
 
-# Rodando o modelo para os diferentes r e k
-# Soh me interessa o resultado final
-res <- array(0)
-for (i in 1:N) res[i] <- modelRun(5, rpos[i], kpos[i], 100)[100]
-print(res)
-X <- data.frame(rpos,kpos, res)
+### Plots e analises
 
-# Plots e analises
-# Plot de sobrevivencia
-plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Sobrevivencia")
-points(X$rpos[X$res>0.001],X$kpos[X$res>0.001], pch=0)
-points(X$rpos[X$res<=0.001],X$kpos[X$res<=0.001], pch=1)
-segments(1,10,1,50,lty=2)
-
-# Plot da populacao final
-Max <- max(X$res)
-Min <- min(X$res)
-plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Pop Final")
-points(X$rpos,X$kpos,col=rgb((X$res-Min)/(Max-Min),0,0),pch=19)
-
-# Geramos um modelo linear para prever a populacao em qualquer ponto
-# Ele claramente falha ao identificar a superficie de sobrevivencia
-modellm <- lm (X$res ~ X$rpos + X$kpos)
-print (modellm)
-print (summary(modellm))
-rpred <- rep(1:N/N*(2-0) + 0 - (1/N),N)
-kpred <- rep(1:N/N*(50-10) + 10 - 1/N*(50-10)/2, each=N)
-prd <- modellm$coefficients[1] + modellm$coefficients[2]*rpred + modellm$coefficients[3]*kpred
-# Normalizacao, jogando fora < 0 
-prd <- prd / max(prd)
-prd[prd < 0] <- 0
-plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Pop Final Predita") 
-points(rpred,kpred,col=rgb(prd,0,0),pch=19)
-
-# Correlacao entre k e r
-print(cor(kpos,rpos))
+# Funcao acessoria - nao eh para uso externo
+oneTestPlot <- function(p1, p2, test) {
+	plot(0,0, xlim=limits(p1),ylim=limits(p2),xlab=paste("Valores de ",attr(p1,"name")),ylab=paste("Valores de ",attr(p2,"name")))
+	points(p1[test],p2[test], pch='+')
+	points(p1[!test],p2[!test], pch='-')
+}
+# Plota o resultado de um teste logico pelo hipercubo
+testPlot <- function(vars, test, ...) {
+	l <- length(vars)-1
+	par(mfrow=c(l,l), ...)
+	for (i in 1:l) {
+		for (j in (l+1):2) {
+			if (i >= j) {
+				plot.new()
+			} else {
+				oneTestPlot(vars[[j]],vars[[i]],test)
+			}
+		}
+	}
+}
