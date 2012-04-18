@@ -1,6 +1,8 @@
-# Exemplos de utilizacao do pse:
+### Exemplos de utilizacao do pse:
 source("pse.R")
-# Modelo numerico: crescimento logistico simples
+### Modelo numerico: crescimento logistico simples
+# O modelo tem 4 parametros: r, K, populacao inicial e tempo final
+# Vamos estudar qual a influencia de cada um deles
 modelRun <- function (Xo, r, K, Time) {
 	X <- Xo
 	for (i in 0:Time) {
@@ -8,62 +10,63 @@ modelRun <- function (Xo, r, K, Time) {
 	}
 	return (X)
 }
-print(modelRun(1,2,3,4))
-# Descrevendo o espaco de parametros e gerando o hipercubo
+
+### Descrevendo o espaco de parametros e gerando o hipercubo
 # Total de amostras sera 100:
 N <- 100
-# r eh uniformemente distribuido entre 0 e 2, semelhante para os demais:
+# r eh uniformemente distribuido entre 0 e 2
+# os outros parametros seguem logica semelhante
 # (Samples para outras distribuicoes serao implementados posteriormente!)
-r <- sampleunif(N, 0, 2,"r")
-k <- sampleunif(N, 10, 50,"k")
-x <- sampleunif(N,1,10,"x")
-Time <- sampleunif(N,50,150,"T")
-# Rodando o modelo para os diferentes xo, r e k
-res <- mapply(modelRun, x, r, k, Time)
-X <- data.frame(x,r,k,res)
+r <- sampleunif(N, 0, 2, "r")
+k <- sampleunif(N, 10, 50, "k")
+x <- sampleunif(N, 1, 10, "x")
+# O tempo final eh distribuido com forma normal de media = 100 e sd = 20
+# TODO: samplenorm estah tomando os quantis, e nao uma amostra aleatoria!
+# Como tomar uma amostra aleatoria de um intervalo de maneira eficiente??
+Time <- samplenorm(N, 100, 20, "T")
 
-# Plots e analises
+# Correlacao entre as variaveis geradas. Veja que ela nao eh nec. 0
+cor(cbind(r,k,Time,x))
+
+# TODO: correcao de correlacoes!
+# LHS(r,k,Time,x, <matriz de cor esperada>)
+
+# Rodando o modelo para os diferentes parametros
+# O objeto res contem a saida do modelo, no nosso caso, a populacao final
+res <- mapply(modelRun, x, r, k, Time)
+
+### Plots e analises
+# TODO: Gerar uma estrutura mais generica para plotar graficos
+
 # Plot de sobrevivencia
+# Nesta funcao, testamos uma condicao da saida do modelo: populacao
+# final maior do que 0 (mais um errinho numerico)
+# Note que as funcoes de plot aceitam parametros graficos com algumas
+# condicoes (mais sobre isso no manual)
+# A funcao plota + onde o teste eh verdadeiro, - onde eh falso
 testPlot(list(r,x,Time,k), test=res>0.0001, mar=c(4,4,1,2))
 
 # Plot da populacao final
+# TODO: deixar maior controle sobre a cor que deve ser plotada, etc
 gradPlot(list(r,x,Time,k), res, mar=c(4,4,1,2))
 
 # Geramos um modelo linear para prever a populacao em qualquer ponto
-# Ele claramente falha ao identificar a superficie de sobrevivencia
+# O resultado comum para N suficiente eh um modelo com efeito
+# significativo e importante de r e k, e efeito desprezivel de T e x
+modellm <- lm (res ~ r + x + Time + k)
+print (modellm)
+# O sumario do modelo traz as estatisticas da ANOVA correspondente
+print (summary(modellm))
+# anova(modellm)
+
+# Plot da populacao prevista pelo modelo e realizada nas simulacoes
 # WORK IN PROGRESS!!!
-modellm <- lm (res ~ r + k + Time + x)
+# COMO EXTRAIR UMA "FATIA" MEANINGFUL DO CUBO??
+predPlot(list(r,x,Time,k), res, modellm)
+
+# Mais um modelo linear, agora restrito a regiao r > 1
+modellm <- lm (res ~ r + x + Time + k, subset=(r>0.0001))
 print (modellm)
 print (summary(modellm))
-rpred <- rep(1:N/N*(2-0) + 0 - (1/N),N)
-kpred <- rep(1:N/N*(50-10) + 10 - 1/N*(50-10)/2, each=N)
-p1pred <- rep(1:N/N*(limits(p1)[2]-limits(p1)[1]) + limits(p1)[1] - 1/N*(limits(p1)[2]-limits(p1)[1])/2, N)
-prd <- modellm$coefficients[1] + modellm$coefficients[2]*rpred + modellm$coefficients[3]*kpred
-# Normalizacao
-Max <- max(res)
-Min <- min(res)
-prd <- (prd-Min) / (Max-Min)
-prd[prd < 0] <- 0
-prd[prd > 1 ] <- 1
-plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Pop Final Predita E Realizada") 
-points(rpred,kpred,col=rgb(prd,0,0),pch=15)
-points(X$r,X$k,col=rgb((X$res-Min)/(Max-Min),0,0),pch=23)
+predPlot(list(r,x,Time,k), res, modellm)
 
-# Mais um modelo linear, agora restrito a regiao de sobrevivencia
-Xcor <- X[(X$res > 0.001) ,]
-modellm <- lm (Xcor$res ~ Xcor$r + Xcor$k)
-print (modellm)
-print (summary(modellm))
-rpred <- rep(1:N/N*(2-1) + 1 - (1/N),N)
-kpred <- rep(1:N/N*(50-10) + 10 - 1/N*(50-10)/2, each=N)
-prd <- modellm$coefficients[1] + modellm$coefficients[2]*rpred + modellm$coefficients[3]*kpred
-# Normalizacao, jogando fora < 0 
-prd <- (prd-Min) / (Max-Min)
-prd[prd < 0] <- 0
-prd[prd > 1 ] <- 1
-plot(0,0, xlim=c(0,2),ylim=c(10,50),xlab="Valores de r",ylab="Valores de K",main="Pop Final Predita E Realizada") 
-points(rpred,kpred,col=rgb(prd,0,0),pch=15)
-points(X$r,X$k,col=rgb((X$res-Min)/(Max-Min),0,0),pch=23)
-
-# Correlacao entre as variaveis:
-cor(cbind(r,k,Time,x))
