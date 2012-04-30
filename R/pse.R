@@ -1,42 +1,41 @@
 ### Geradores das amostragens e funcoes acessorias:
-
-# sampleunif: gera uma amostra proveniente de N intervalos de uma
-# distribuicao uniforme
-# Devolve os valores como array, e seta os atributos distribution, max e min
-sampleunif <- function (N, xmin, xmax, name) {
-	limits <- 0:N/N*(xmax-xmin) + xmin
-	pos <- array(0)
-	for (i in 1:N) pos[i] <- runif(1,limits[i],limits[i+1])
+LHSsample <- function (N, name, qprob, ...) {
+	pos <- qprob((1:N)/N - 1/N/2, ...)
 	pos <- sample(pos);
-	attr(pos,"distribution") <- "uniform"
-	attr(pos,"max") <- xmax
-	attr(pos,"min") <- xmin
-	attr(pos,"name") <- name
-	return (pos);
-}
-
-samplenorm <- function (N, mean, sd, name) {
-	pos <- qnorm((1:N)/N - 1/N/2, mean, sd )
-	pos <- sample(pos);
-	attr(pos,"distribution") <- "normal"
-	attr(pos,"mean") <- mean
-	attr(pos,"sd") <- sd
+	attr(pos,"distribution") <- qprob
+	attr(pos,"max") <- qprob(0.99, ...)
+	attr(pos,"min") <- qprob(0.01, ...)
 	attr(pos,"name") <- name
 	return (pos);
 }
 
 # Dada uma amostragem gerada por sample*, devolve os limites de plotagem para a variavel
 limits <- function (pos) {
-	if (attr(pos,"distribution") == "uniform") {
-		return (c(attr(pos,"min"),attr(pos,"max")))
-	} else if (attr(pos,"distribution") == "normal") {
-		m<-attr(pos,"mean"); s <- attr(pos,"sd");
-		return (c(qnorm(0.01,m,s),qnorm(0.99,m,s)))
-	}
-	return (NULL);
+	return (c(attr(pos,"min"),attr(pos,"max")))
 }
 
 ### Plots e analises
+sig <- function (form) {
+	f <- anova(lm(form))$"Pr(>F)"[1]
+	if (f < 0.001) return ("***");
+	if (f < 0.01) return ("**");
+	if (f < 0.05) return ("*");
+	if (f < 0.1) return (".");
+	return (" ");
+}
+oneCorPlot <- function(res, var) {
+	plot(var,res)
+	abline((lm(res~var)))
+	mtext(paste("Cor:",format(cor(var,res), digits=2), sig(res~var)))
+}
+corPlot <- function (vars, res) {
+	nl <- floor(sqrt(length(vars)))
+	nc <- ceiling(length(vars)/nl)
+	par(mfrow=c(nl,nc))
+	for (i in 1:nc) for (j in 1:nl) {
+		if ((i-1)*nc + j <= length(vars)) oneCorPlot(res,vars[[(i-1)*nc+j]])
+	}
+}
 
 # Funcao acessoria - nao eh para uso externo
 oneTestPlot <- function(p1, p2, test) {
@@ -108,12 +107,73 @@ predPlot <- function(vars, res, model, ...) {
 				plot.new()
 			} else {
 				rtmp <- res
-			#	for (k in 0:l+1) { if(k != i & k != j) {
-			#	       print (paste("Corrigindo plot de ",attr(vars[[j]],"name")," x ", attr(vars[[i]],"name")," pela media de ",attr(vars[[k]],"name")))	
-			#		rtmp <- rtmp - cf[k] * vars[[k]]  } }
+				for (k in 0:l+1) { if(k != i & k != j) {
+					rtmp <- rtmp - cf[k+1] * mean(vars[[k]])  } }
 onePredPlot(vars[[j]],vars[[i]],cf[1], cf[j+1],cf[i+1],rtmp)
 			}
 		}
 	}
 	par(opar)
+}
+
+
+### Funcoes para manipulacao das variaveis visando correcao de correlacoes
+
+s <- function (obj, x1, x2) {
+	tmp <- obj[x1]
+	obj[x1] <- obj[x2]
+	obj[x2] <- tmp
+	return (obj)
+}
+
+getE <- function (R, l, COR, i, j) {
+	Tj <- matrix(0,1,length(R[1,]))
+	for (m in 1:(l-1))
+		Tj[,m] <- (1/N*(sum(s(R[,l],i,j)*R[,m])) - COR[l,m])^2
+	return (sum(Tj))
+}
+
+# Uso: Para forcar correlacao = 0
+# newvars <- LHScorcorr(vars)
+# Para aproximar de uma matriz de correlacao dada:
+# newvars <- LHScorcorr(vars,COR)
+
+# NAO MEXA nos parametros l e it
+
+LHScorcorr <- function (vars, COR = matrix(0,length(vars),length(vars)), l = 2, eps = 0.0005, it = 1) {
+	# Condicao de parada: terminamos a correcao
+	if (l == length(vars[1,]) + 1) {
+		return (vars);
+	}
+	# Condicao de skip: correlacoes pequenas o suficiente:
+	if (max(abs(cor(vars)[l,1:(l-1)])) < eps) {
+		return (LHScorcorr (vars, COR, l = l + 1, eps = eps, it = 1));
+	}
+	# Condicao de parada: iteracao maxima atingida para a mesma variavel
+	if (it > 20) { 
+#		print("ERROR: correlacao nao converge para o esperado apos numero maximo de iteracoes");
+		return (LHScorcorr (vars, COR, l = l + 1, eps = eps, it = 1));
+	}
+#	print(paste("INFO: Realizando correcao de correlacao para l =",l,"/",length(vars[1,])))
+	# Aqui comeca o trabalho para corrigir as cors da var[,l]
+	N <- length(vars[,1])
+	# Normaliza as variaveis
+	R<- matrix(0,N,length(vars[1,]))
+	for (i in (1:l))
+		R[,i] <- (vars[,i] - mean(vars[,i]))/sd(vars[,i])
+	# Varre a matrix N por N procurando o menor erro
+	# min* usados para guardar valor e posicao do minimo ateh agora
+	minE <- +Inf
+	mini <- 0
+	minj <- 0
+	for (i in (1:(N-1))) {
+		for (j in ((i+1):N)) {
+			E <- getE(R, l, COR, i, j)
+			if (E < minE) {mini <- i; minj <- j; minE <- E}
+		}
+	}
+	vars[,l] <- s(vars[,l], mini, minj)
+	# Variavel corrigida, repete o procedimento com a mesma variavel
+	# ateh a correlacao estar pequena o suficiente
+	LHScorcorr(vars,COR,l=l,eps=eps,it=it+1)
 }

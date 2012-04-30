@@ -1,8 +1,4 @@
-### Exemplos de utilizacao do pse:
 source("pse.R")
-### Modelo numerico: crescimento logistico simples
-# O modelo tem 4 parametros: r, K, populacao inicial e tempo final
-# Vamos estudar qual a influencia de cada um deles
 modelRun <- function (Xo, r, K, Time) {
 	X <- Xo
 	for (i in 0:Time) {
@@ -10,6 +6,32 @@ modelRun <- function (Xo, r, K, Time) {
 	}
 	return (X)
 }
+# First sampling:
+N <-20
+quant <- (1:N)/N - 1/N/2
+quant
+# Triple N
+newquant <- c((1:N)/N - 5/N/6, (1:N)/N - 1/N/6  )
+# Construo o cubo pequeno
+r <- qnorm(quant, 0, 1); r<-sample(r)
+k <- qt(quant, 4, 1); k<-sample(k)
+cor(r,k)
+newvars <- LHScorcorr (cbind(r,k))
+newvars[,1] -> r; newvars[,2] ->k;
+cor(r, k)
+# EXTENDENDO o cubo
+newr <-qnorm(newquant, 0, 1); newr<-sample(newr)
+newk <- qt(newquant, 4,1); newk<-sample(newk)
+newvars <-  LHScorcorr (cbind(newr,newk))
+newr <- newvars[,1]; newk<- newvars[,2];
+print(cor(r,k)^2); print(cor(newr, newk)^2); print(cor(c(r,newr),c(k,newk))^2)
+print(cor(c(r,newr),c(k,newk))^2 < (cor(r,k)^2 + cor(newr, newk)^2) )
+mean(r); mean(newr); mean(c(newr,r))
+sd(r); sd(newr); sd(c(newr,r))
+
+
+
+
 
 ### Descrevendo o espaco de parametros e gerando o hipercubo
 # Definicao do numero total de amostras:
