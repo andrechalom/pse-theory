@@ -1,0 +1,6 @@
+par(cex=2, bty="n")
+plot(1,1,xlim=c(1,4),ylim=c(1,6),type='n', xlab="", ylab="",)
+polygon(c(1,2,3),c(2,5,4))
+symbols(c(1,3,100),c(2,4,100),circles=c(1,1,4),add=TRUE)
+text(1.3,2,expression(a[1]))
+text(3,3.3,expression(a[2]))

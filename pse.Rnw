@@ -20,8 +20,7 @@
 	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 \newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
 
-
-\usepackage{Sweave}
+\SweaveOpts{fig=T,echo=F}
 \begin{document}
 \setkeys{Gin}{width=0.8\textwidth}
 
