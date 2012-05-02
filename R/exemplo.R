@@ -137,46 +137,34 @@ tval <- function (prcc, df) {
 psig <- uniroot(tval, c(0,1), N-5)$root ### df deve ser alterado NA MAO
 abline(h=0);abline(h=psig,lty=2);abline(h=-psig,lty=2)
 
-# TODO: che cazzo???
-chisq.test(table(res,r))
-chisq.test(res,Time)
-chisq.test(res,k)
+# O teste de KW recebe como input um vetor x e um vetor
+# de fatores g. Para simplificar o uso do teste no caso
+# de variaveis continuas, criamos uma funcao acessoria:
+kruskal.test.c <- function (res, x, N) {
+	cats <- cut(x, breaks=quantile(x, seq(0,1,1/N)))
+	return(kruskal.test(res~cats))
+}
 
-Ntest <- 5
-cats <- qunif((1:Ntest)/Ntest, 0.25, 2)
-rcats <- array(dim=N)
-for (i in Ntest:1)
-	rcats[r < cats[i]] <- i
-rescats <-array(2,dim=N)
-rescats[res<median(res)] <- 1
-table(rescats,rcats)
-chisq.test(table(rescats,rcats))
-kruskal.test(res,rcats)
+# Teste de Kruskal-Wallis p/ variavel r:
+kruskal.test.c(res,r,5)
 
+# Teste de KW para N=2 ateh 15:
 Kruskal <- array(dim=15)
 for (Ntest in (2:15)) {
-	cats <- qunif((1:Ntest)/Ntest, 1, 10)
-	xcats <- array(dim=N)
-	for (i in Ntest:1)
-		xcats[x < cats[i]] <- i
-	kruskal.test(res,xcats)$p.value -> Kruskal[Ntest]
+	kruskal.test.c(res,x,Ntest)$p.value -> Kruskal[Ntest]
 }
 Kruskal
 plot(Kruskal, ylim=c(0,1))
-abline(h=0.05)
+abline(h=0.05) # Significancia usual
 
 
 Kruskal <- array(dim=15)
 for (Ntest in (2:15)) {
-	cats <- qunif((1:Ntest)/Ntest, 10, 50)
-	kcats <- array(dim=N)
-	for (i in Ntest:1)
-		kcats[k < cats[i]] <- i
-	kruskal.test(res,kcats)$p.value -> Kruskal[Ntest]
+	kruskal.test.c(res,k,Ntest)$p.value -> Kruskal[Ntest]
 }
 Kruskal
 plot(Kruskal, ylim=c(0,1))
 abline(h=0.05)
 
 cor(res,k)
-anova(lm(res~xcats))
+anova(lm(res~x))
