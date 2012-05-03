@@ -13,5 +13,5 @@ capitulo1.tex: capitulo1.Rnw
 	R CMD Sweave capitulo1.Rnw
 
 clean:
-	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf
+	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf capitulo1.tex pse.tex
 
