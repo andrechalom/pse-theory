@@ -73,6 +73,7 @@ corPlot(list(r,k,Time,x),res)
 # A funcao plota + onde o teste eh verdadeiro, - onde eh falso
 testPlot(list(r,x,Time,k), test=res>0.0001, mar=c(4,4,1,2))
 
+testPlot(list(r,x,Time,k), test=res>0.0001, convex=TRUE, mar=c(4,4,1,2))
 # Plot da populacao final
 # TODO: deixar maior controle sobre a cor que deve ser plotada, etc
 gradPlot(list(r,x,Time,k), res, mar=c(4,4,1,2))
@@ -168,3 +169,14 @@ abline(h=0.05)
 
 cor(res,k)
 anova(lm(res~x))
+
+
+## ConvexHull
+test
+require(spatstat)
+oneTestPlot(r,k, test=res>0.0001)
+xTrue <- r[res<0.0001]; kk <- k[res<0.0001]
+W <- owin(c(min(rr),max(rr)), c(min(kk),max(kk)))
+P <- ppp(rr,kk,window=W)
+C <-convexhull(P)
+plot(C, add=T, col=cm.colors(1), density=10)

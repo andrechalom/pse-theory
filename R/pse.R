@@ -38,13 +38,26 @@ corPlot <- function (vars, res) {
 }
 
 # Funcao acessoria - nao eh para uso externo
-oneTestPlot <- function(p1, p2, test) {
+oneTestPlot <- function(p1, p2, test, convex=FALSE) {
+	if (convex) {
+		require(spatstat)
+		W <- owin(c(min(p1[test]),max(p1[test])), c(min(p2[test]),max(p2[test])))
+		P <- ppp(p1[test],p2[test],window=W)
+		cTrue <-convexhull(P)
+		W <- owin(c(min(p1[!test]),max(p1[!test])), c(min(p2[!test]),max(p2[!test])))
+		P <- ppp(p1[!test],p2[!test],window=W)
+		cFalse <- convexhull(P)
+	}
 	plot(0,0, xlim=limits(p1),ylim=limits(p2),xlab=paste("Valores de ",attr(p1,"name")),ylab=paste("Valores de ",attr(p2,"name")))
+	if (convex) {
+		plot(cTrue, add=T, col=cm.colors(1), density=10)
+		plot(cFalse, add=T, col=cm.colors(2)[2], density=10)
+	}
 	points(p1[test],p2[test], pch='+')
 	points(p1[!test],p2[!test], pch='-')
 }
 # Plota o resultado de um teste logico pelo hipercubo
-testPlot <- function(vars, test, ...) {
+testPlot <- function(vars, test, convex=FALSE, ...) {
 	l <- length(vars)-1
 	opar <- par(mfrow=c(l,l), ...)
 	for (i in 1:l) {
@@ -52,7 +65,7 @@ testPlot <- function(vars, test, ...) {
 			if (i >= j) {
 				plot.new()
 			} else {
-				oneTestPlot(vars[[j]],vars[[i]],test)
+				oneTestPlot(vars[[j]],vars[[i]],test, convex)
 			}
 		}
 	}
