@@ -9,6 +9,17 @@ LHSsample <- function (N, name, qprob, ...) {
 	return (pos);
 }
 
+LHSextend <- function (old, ...) {
+	qprob <- attr(old, "distribution")
+	newpos <- qprob(c((1:N)/N - 5/N/6, (1:N)/N - 1/N/6), ...)
+	newpos <- sample(newpos)
+	attr(newpos,"distribution") <- qprob
+	attr(newpos,"max") <- attr(old, "name")
+	attr(newpos,"min") <- attr(old, "name")
+	attr(newpos,"name") <- attr(old, "name")
+	return (newpos);
+}
+
 # Dada uma amostragem gerada por sample*, devolve os limites de plotagem para a variavel
 limits <- function (pos) {
 	return (c(attr(pos,"min"),attr(pos,"max")))
@@ -129,64 +140,26 @@ onePredPlot(vars[[j]],vars[[i]],cf[1], cf[j+1],cf[i+1],rtmp)
 	par(opar)
 }
 
+# Funcao de correcao de correlacoes
+source("corcorr.R")
 
-### Funcoes para manipulacao das variaveis visando correcao de correlacoes
-
-s <- function (obj, x1, x2) {
-	tmp <- obj[x1]
-	obj[x1] <- obj[x2]
-	obj[x2] <- tmp
-	return (obj)
+# Metodo de calcular a PRCC:
+source("pcor.R")
+pcor <- function (y, xmat) {
+	n <- dim(xmat)[2]
+	resmat <- matrix(0, 1, n)
+	colnames(resmat) <- colnames(xmat)
+	for (i in seq(1:n)) 
+		resmat[i] <- pcor.test(y, xmat[,i], xmat[,-i], method="spearman")$estimate
+	return(resmat)
 }
-
-getE <- function (R, l, COR, i, j) {
-	Tj <- matrix(0,1,length(R[1,]))
-	for (m in 1:(l-1))
-		Tj[,m] <- (1/N*(sum(s(R[,l],i,j)*R[,m])) - COR[l,m])^2
-	return (sum(Tj))
-}
-
-# Uso: Para forcar correlacao = 0
-# newvars <- LHScorcorr(vars)
-# Para aproximar de uma matriz de correlacao dada:
-# newvars <- LHScorcorr(vars,COR)
-
-# NAO MEXA nos parametros l e it
-
-LHScorcorr <- function (vars, COR = matrix(0,length(vars),length(vars)), l = 2, eps = 0.0005, it = 1) {
-	# Condicao de parada: terminamos a correcao
-	if (l == length(vars[1,]) + 1) {
-		return (vars);
+	
+plot.pcor <- function (PRCC, N, nvars) {
+	barplot(PRCC, ylim=c(-1,1), main="PRCC analysis")
+	#Desenha as linhas a partir das quais o PRCC eh significativo
+	tval <- function (prcc, df) {
+		return(prcc*(sqrt(df/(1-prcc*prcc))) - qt(0.975,df) ) 
 	}
-	# Condicao de skip: correlacoes pequenas o suficiente:
-	if (max(abs(cor(vars)[l,1:(l-1)])) < eps) {
-		return (LHScorcorr (vars, COR, l = l + 1, eps = eps, it = 1));
-	}
-	# Condicao de parada: iteracao maxima atingida para a mesma variavel
-	if (it > 20) { 
-#		print("ERROR: correlacao nao converge para o esperado apos numero maximo de iteracoes");
-		return (LHScorcorr (vars, COR, l = l + 1, eps = eps, it = 1));
-	}
-#	print(paste("INFO: Realizando correcao de correlacao para l =",l,"/",length(vars[1,])))
-	# Aqui comeca o trabalho para corrigir as cors da var[,l]
-	N <- length(vars[,1])
-	# Normaliza as variaveis
-	R<- matrix(0,N,length(vars[1,]))
-	for (i in (1:l))
-		R[,i] <- (vars[,i] - mean(vars[,i]))/sd(vars[,i])
-	# Varre a matrix N por N procurando o menor erro
-	# min* usados para guardar valor e posicao do minimo ateh agora
-	minE <- +Inf
-	mini <- 0
-	minj <- 0
-	for (i in (1:(N-1))) {
-		for (j in ((i+1):N)) {
-			E <- getE(R, l, COR, i, j)
-			if (E < minE) {mini <- i; minj <- j; minE <- E}
-		}
-	}
-	vars[,l] <- s(vars[,l], mini, minj)
-	# Variavel corrigida, repete o procedimento com a mesma variavel
-	# ateh a correlacao estar pequena o suficiente
-	LHScorcorr(vars,COR,l=l,eps=eps,it=it+1)
+	psig <- uniroot(tval, c(0,1), N-nvars-1)$root ### df deve ser alterado NA MAO
+	abline(h=0);abline(h=psig,lty=2);abline(h=-psig,lty=2)
 }

@@ -22,7 +22,7 @@ getE <- function (R, l, COR, i, j) {
 
 # NAO MEXA nos parametros l e it
 
-LHScorcorr <- function (vars, COR = matrix(0,length(vars),length(vars)), l = 2, eps = 0.0005, it = 1) {
+LHScorcorr <- function (vars, COR = matrix(0,length(vars),length(vars)), l = 2, eps = 0.0005, it = 1, echo=FALSE) {
 	# Condicao de parada: terminamos a correcao
 	if (l == length(vars[1,]) + 1) {
 		return (vars);
@@ -33,10 +33,10 @@ LHScorcorr <- function (vars, COR = matrix(0,length(vars),length(vars)), l = 2, 
 	}
 	# Condicao de parada: iteracao maxima atingida para a mesma variavel
 	if (it > 20) { 
-		print("ERROR: correlacao nao converge para o esperado apos numero maximo de iteracoes");
+		if (echo==T) print("WARNING: correlacao nao converge para o esperado apos numero maximo de iteracoes");
 		return (LHScorcorr (vars, COR, l = l + 1, eps = eps, it = 1));
 	}
-	print(paste("INFO: Realizando correcao de correlacao para l =",l,"/",length(vars[1,])))
+	if (echo==T) print(paste("INFO: Realizando correcao de correlacao para l =",l,"/",length(vars[1,])))
 	# Aqui comeca o trabalho para corrigir as cors da var[,l]
 	# Normaliza as variaveis
 	N <- length(vars[,1])
