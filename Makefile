@@ -1,17 +1,16 @@
-all: pse.pdf
+PROJ=pse
 
-pse.pdf: pse.tex chalom.bib Makefile capitulo1.tex
-	-pdflatex pse
-	-bibtex pse
-	-pdflatex pse
-	pdflatex pse
+all: ${PROJ}.pdf
 
-pse.tex: pse.Rnw
-	R CMD Sweave pse.Rnw
+${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile capitulo1.tex
+	-pdflatex ${PROJ}
+	-bibtex ${PROJ}
+	-pdflatex ${PROJ}
+	pdflatex ${PROJ}
 
-capitulo1.tex: capitulo1.Rnw
-	R CMD Sweave capitulo1.Rnw
+%.tex:
+	R CMD Sweave $*.Rnw
 
 clean:
-	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf capitulo1.tex pse.tex
+	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf capitulo1.tex ${PROJ}.tex
 
