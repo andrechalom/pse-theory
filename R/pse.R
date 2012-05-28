@@ -5,6 +5,8 @@
 # Para aproximar de uma matriz de correlacao dada:
 # newvars <- LHScorcorr(vars,COR)
 
+system("R CMD SHLIB corcorr.c")
+
 # NAO MEXA nos parametros l e it
 LHScorcorr <- function (vars, COR = matrix(0,length(vars),length(vars)), l = 2, eps = 0.0005, it = 1, echo=FALSE, maxIt = 2*sqrt(dim(vars)[1])) {
 	N <- dim(vars)[1]; M <- dim(vars)[2]
