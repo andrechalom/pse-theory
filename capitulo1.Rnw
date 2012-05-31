@@ -15,11 +15,10 @@ Full working examples are given in the R language, included at the appendix.
 
 NOTA: V\~ ao ser incluidas muito mais refs posteriormente!
 
-%TODO Incluir uma {\em Key references:}  a cada sessao!
-%TODO: Toy Model morfometrico, estoque de carbono??
-%TODO: Ca\c car todas as refs da Marino08
 %TODO: Gente grande na area: Saltelli, Helton, Iman, McKay, Sobol, Conover. LER todos eles
-
+%TODO: NEXT STEPS: Calibracao de modelos de distribuicao potencial - Geneticos? Maxima Entropia? Analisar essas ``caixas pretas'' em relacao a sensitividade
+%TODO Modelos de tradeoffs x coexistencia. r-K continuum
+%TODO Estudar o exemplo Lotka-Volterra competitivo com correlacao r-K. What gives?
 \section{Introduction}\label{Introduction}
 There is a growing trend in the use of mathematical modelling tools in the
 study of many areas of the biological sciences. The use of models is essencial
@@ -447,6 +446,7 @@ mtext('b',adj=0, cex=1.5)
 \end{figure}
 \setkeys{Gin}{width=0.8\textwidth}
 
+%TODO
 \begin{verbatim}
 a1 + b*a2 < X
 a1 - b*a2 < X
@@ -559,6 +559,10 @@ Descrever o problema e tecnicas para resolve-lo.
 ConvexHull?
 \end{verbatim}
 \section{Quantitative output analysis}\label{QuantAnal}
+% TODO: Incluir mais discussao sobre as propriedades estatisticas do resultado. Em especial, como a dist das saidas converge? Quais sao as condicoes? O que acontece com os termos de correlacao?
+% TODO: Mostrar o caso y ~ a + bx - explorar o espaco de parametros a X b, com termo de correlacao entre a e b.
+% TODO Caso dos dados reais: termo de correlacao deve ser usado? O que ganhamos? Ler Bill Shipley. Gancho para artigo do May, apud Taylor (J theor Biol 88 (135) 543--568
+% TODO: Enxugar essa sessao!!
 \subsection{Uncertainty analysis and visualization}
 The first question we would like to answer, in the context of quantitative 
 analysis, is what is the probability distribution of the response variable $y$
