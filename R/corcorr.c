@@ -11,7 +11,7 @@ void sw (double *obj, int i, int j, int k) {
 	obj[j + k] = tmp;
 }
 /* Funcao procura a menor correlacao entre as variaveis dadas apos um switch */
-void corcorr (double *vars, double *cor, int * N, int * M, int * l) {
+void corcorr (double *vars, double *cor, int * N, int * M, int * l, int * FLAGSTOP) {
 	/* R: Matriz temporaria para guardar os diferentes cenarios. Tj: vetor temporario */
 	double *R;
 	R = (double *) calloc((*N)*(*M), sizeof (double));
@@ -30,8 +30,15 @@ void corcorr (double *vars, double *cor, int * N, int * M, int * l) {
 			thisR = (thisV-mean)/sd;
 	}
 	/* min* usados para guardar o minimo ateh agora */
-	double minE = DBL_MAX, E, Tj, tmp;
-	int mini=0, minj=3;
+	double minE = 0, E, Tj, tmp;
+	int mini=0, minj=0;
+	/* Calcula o valor de E antes de realizar qualquer troca */
+	for (m=0; m < *l-1;m++) {
+		Tj = 0;
+		for (k=0;k<*N;k++)
+			Tj += R[k + (*N) * (*l-1)] * R[k+(*N)*m];
+		minE += (Tj/(*N) - cor[(*l-1)+m*(*M)])*(Tj/(*N) - cor[(*l-1)+m*(*M)]);
+	}
 	for (i =0; i < *N-1; i++) 
 		for (j = i+1; j < *N; j++) {
 			E =0;
@@ -41,7 +48,7 @@ void corcorr (double *vars, double *cor, int * N, int * M, int * l) {
 				Tj = 0;
 				for (k=0;k<*N;k++)
 					Tj += R[k + (*N) * (*l-1)] * R[k+(*N)*m];
-			E += (Tj - cor[*l + m*(*M)])*(Tj - cor[*l + m*(*M)])/(*N)/(*N);
+				E += (Tj/(*N) - cor[(*l-1)+m*(*M)])*(Tj/(*N) - cor[(*l-1)+m*(*M)]);
 			}
 			// trabalha com E aqui
 			if (E < minE) {
@@ -52,9 +59,14 @@ void corcorr (double *vars, double *cor, int * N, int * M, int * l) {
 			// Finalmente, destroca i e j
 			sw(R, i, j, (*l-1)*(*N));
 
+		}
+
+	if (mini == 0 && minj == 0) {
+		*FLAGSTOP = 1;
+	} else {
+		/* Troca o valor da variavel na posicao i e j e finaliza */
+		sw(vars, mini, minj, (*l-1)*(*N));
 	}
-	/* Troca o valor da variavel na posicao i e j e finaliza */
-	sw(vars, mini, minj, (*l-1)*(*N));
 	free(R);
 	return;
 }

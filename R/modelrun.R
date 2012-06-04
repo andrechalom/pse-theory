@@ -12,7 +12,7 @@ modelRun <- function (Xo, r, K, Time) {
 }
 ### Descrevendo o espaco de parametros e gerando o hipercubo
 # Definicao do numero total de amostras:
-N <- 1000
+N <- 100
 # r eh uniformemente distribuido entre 0 e 2
 # os outros parametros seguem logica semelhante
 r <- LHSsample(N, "r", qunif, 0.25, 2)
@@ -27,13 +27,16 @@ M <- cor(cbind(r,k,Time,x))
 M
 max(abs(M[M!=1]))
 # Correcao das variaveis para apresentarem correlacao 0
- newvars <- LHScorcorr (cbind(r,k,Time,x))
+#  newvars <- LHScorcorr (cbind(r,k,Time,x))
 # Correcao das variaveis para r e k terem correlacao negativa
-#MyCor <- matrix(c(   1,-0.5,   0,   0,
-#		  -0.5,   1,   0,   0,
-#		     0,   0,   1,   0,
-#		     0,   0,   0,   1),4,4)
-#newvars <- LHScorcorr (cbind(r,k,Time,x), MyCor)
+MyCor <- matrix(c(   1,-0.1,   -0.2,   -0.3,
+		  0.1,   1,   -0.4,   -0.5,
+		     0.2,   0.3,   1,   0,
+		     0.4,   0.5,   0,   1),4,4)
+newvars <- LHScorcorr (cbind(r,k,Time,x), MyCor)
+print(MyCor);
+print(cor(newvars))
+
 # Uso a notacao [1:N] para manter os atributos - **TODO** refazer pra ficar menos pentelho
 k[1:N] <- newvars[,2]
 Time[1:N] <- newvars[,3]

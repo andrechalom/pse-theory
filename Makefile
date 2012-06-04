@@ -13,4 +13,3 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile capitulo1.tex
 
 clean:
 	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf capitulo1.tex ${PROJ}.tex
-
