@@ -76,7 +76,16 @@ of our models, and to distinguish the general use of this expression by the
 statistical and the modeling community \cite{Ross90}.
 
 \begin{verbatim}
-TODO
+TODO p.12 a 17
+Mesmo modelo, mesmo num de pars, parametros diferentes.
+Correlacao entre parametros
+Ex1: polinomio quadratico
+Ex2: r-K
+
+Par space, constraints 94
+
+biol models 168
+
 \end{verbatim}
 
 Also, it should be mentioned that the parameter space may be constrained or
@@ -209,6 +218,8 @@ stratified random sampling than by simple random sampling
 (see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
 next session, the Latin Hypercube sampling is a practical and easy to understand
 stratified sampling strategy.
+
+% TODO Another class of methods is the MCMC
 
 \begin{figure}[htbp]
 	\begin{center}
