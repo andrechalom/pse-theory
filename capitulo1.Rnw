@@ -13,8 +13,6 @@ We present improvements to the methods discussed, and
 assess how are these questions being currently addressed in the literature.
 Full working examples are given in the R language, included at the appendix.
 
-NOTA: V\~ ao ser incluidas muito mais refs posteriormente!
-
 %TODO: Gente grande na area: Saltelli, Helton, Iman, McKay, Sobol, Conover. LER todos eles
 %TODO: NEXT STEPS: Calibracao de modelos de distribuicao potencial - Geneticos? Maxima Entropia? Analisar essas ``caixas pretas'' em relacao a sensitividade
 %TODO Modelos de tradeoffs x coexistencia. r-K continuum
@@ -48,7 +46,8 @@ model runs.
 The disciplines of uncertainty and sensivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
 developed in the 1980 and 1990 decades by researches such as Saltelli, 
-Helton, Iman, Conovoer, Sobol' and McKay. More recently, these analyses
+Helton, Iman, Conovoer, Sobol' and McKay. %TODO citations!
+More recently, these analyses
 have been 
 successfully applied to biological models, in order to explore the possible 
 outcomes from the model output, estimate their
@@ -70,50 +69,75 @@ have used such techniques in the exploration of ecological models in section
 in the Appendixes.
 
 \subsection{Parameter spaces}\label{ps}
-In order to better pose our questions, we need first to have a precise 
-definition of what is the parameter space (or PS for short)
-of our models, and to distinguish the general use of this expression by the
-statistical and the modeling community \cite{Ross90}.
+In order to better pose our questions, we need first to discuss some
+properties of the parameter space (or PS for short) of our models.
 
-\begin{verbatim}
-TODO p.12 a 17
-Mesmo modelo, mesmo num de pars, parametros diferentes.
-Correlacao entre parametros
-Ex1: polinomio quadratico
-Ex2: r-K
+The parameters (or inputs) are quantities $x_1, x_2, \cdots, x_m$ which
+will be used to run the model. In our discussion, we will assume that
+all the $x_i$ are real valued.
+These quantities are unknown, and one first
+challenge is to determine which set of values better
+fit a model to the available data, which is the subject of linear and
+nonlinear estimation.
 
-Par space, constraints 94
+However, the same model may be
+parametrized in different ways, as discussed by Ross \cite{Ross90}. For
+example, in population ecology, 
+the logistic growth equation may be represented with two
+parameters $r$ and $K$ as:
+\begin{equation}
+		\frac{dN}{dt} = rN\left(1-\frac{N}{K}\right)
+		\label{logrk}
+\end{equation}
+However, the same equation may be written as
+\begin{equation}
+		\frac{dN}{dt} = \alpha N + \beta N^2
+		\label{logalphabeta}
+\end{equation}
+Here, the two parameters are $\alpha = r$ and $\beta = -r/K$. 
+While the first equation is far more commonly used in the biological 
+context, both are equivalent, and using one or the other model
+is simply a matter of choice.
 
-biol models 168
+There are many other ways of writing this equation, and one of special
+interest when trying to fit real data is in terms of orthogonal 
+polynomials, such as:
+\begin{equation}
+		\frac{dN}{dt} = \theta_0 + \theta_1(x-\bar x) + \theta_2((x-\bar x)^2 - (\overline {x - \bar {x}})^2)
+		\label{logtheta}
+\end{equation}
+Where $\theta_0$ can be calculated from $\theta_1$ and $\theta_2$. This
+more complicated formula has several numerical advantages over the previous,
+as the parameters $\theta_1$ and $\theta_2$ can be estimated with much more
+accuracy, and will not be correlated (as is the case with $\alpha$ and
+$\beta$). However, these parameters are hard to interpret in biological
+terms. 
 
-\end{verbatim}
+These different formulas illustrate the existence of {\em interpretable}
+(Eq. \ref{logrk}), {\em defining}, or algebraic (Eq. \ref{logalphabeta})
+and {\em computing} (Eq. \ref{logtheta}) parameters. Most of the times,
+it would be preferable to estimate the values that best fit some data by
+using computing parameters, and then to transform them to interpretable
+parameters in order to present the results.
 
-Also, it should be mentioned that the parameter space may be constrained or
-unconstrained. This will have an impact on some of the available sampling 
+Also, it should be mentioned that the parameter space may be constrained.
+This will have an impact on some of the available sampling 
 and analysis techniques.
 
-For example, let us consider the space of all triangles with one fixed side. We
-will use as parameters the angles of the triangle (fig. \ref{fig:triangle}),
-$a_1$, $a_2$ and $a_3$. As the sum of the angles is $180 ^o$, we can fix 
-$a_3 = 180 ^o - a_1 - a_2$. In addition, the sum of $a_1 + a_2$ must not 
-exceed $180 ^o$. The condition
+The simplest constraint is requiring some parameter to be positive or
+negative. Also, there may be combinations of values that are meaningless.
+For example, if we model a community with $N$ individuals and $S$ species,
+the number of individuals and species, considered on their own, may be
+any positive number. However, it is clear that the number of species may
+not be bigger than the number of individuals, which imposes the
+condition $S \leq N$. This condition is called a {\em constraint}, and
+limits the values that the parameter vector
+may assume.
 
-\begin{equation}
-	a_1 + a_2 \leq 180 ^o
-	\label{samplecond}
-\end{equation}
-
-is called a constraint, and limits the values that the parameter vector
-may assume. We will return to questions related to constrained parameter
+If we consider the m-dimensional space consisting on all possible 
+combination of values for the parameters, our parameter space will be the
+subset of this space that respects all our constraints. We will return to questions related to constrained parameter
 spaces in section \ref{ext}.
-
-\begin{figure}[htbp]
-	\begin{center}
-		\includegraphics[width=200 pt]{fig/figTriangle.png}
-	\end{center}
-	\caption{A sample triangle with the angles $a_1$ and $a_2$ highlighted.}
-	\label{fig:triangle}
-\end{figure}
 
 \subsection{Problems in parameter space exploration}\label{PSE}
 Next, we turn our attention to the kind of problems we might want to address
@@ -159,6 +183,7 @@ $D_i(x)$, which represent our degree of knowledge about the values that $x_i$ ma
 assume (see figure \ref{fig:Di} for examples).
 
 \begin{verbatim}
+TODO
 Conseguir dados reais para gerar Dis
 \end{verbatim}
 
@@ -218,8 +243,12 @@ stratified random sampling than by simple random sampling
 (see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
 next session, the Latin Hypercube sampling is a practical and easy to understand
 stratified sampling strategy.
-
 % TODO Another class of methods is the MCMC
+\begin{verbatim}
+Here, we also give an overview of Markov Chain Monte Carlo 
+methods, and their relation with LHS. 
+\end{verbatim}
+
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -457,8 +486,8 @@ mtext('b',adj=0, cex=1.5)
 \end{figure}
 \setkeys{Gin}{width=0.8\textwidth}
 
-%TODO
 \begin{verbatim}
+TODO
 a1 + b*a2 < X
 a1 - b*a2 < X
 a1 * a2 < X -> escala exp
@@ -502,10 +531,6 @@ the following conditions are respected:
 		discussed on session \ref{QuantAnal}).
 \end{itemize}
 
-\begin{verbatim}
-Here, we also give an overview of Markov Chain Monte Carlo 
-methods, and their relation with LHS. 
-\end{verbatim}
 
 \subsection{Adaptative refinement}
 After generating the $N$ Latin Hypercube samples and running the model with
@@ -566,6 +591,7 @@ ecological model, it is possible to identify qualitatively different
 behaviours of the model, possibly clustered into separate regions. In this
 section, we will focus on tools to identify the different regions.
 \begin{verbatim}
+TODO
 Descrever o problema e tecnicas para resolve-lo.
 ConvexHull?
 \end{verbatim}
@@ -760,6 +786,7 @@ segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
 Other than the central tendency of the results, their dispersal may be 
 dependent on the input parameters. 
 \begin{verbatim}
+TODO?
 Descrever eFAST
 ANOVA-like SOBOL
 Kleijnen p17
@@ -768,17 +795,20 @@ Pauleira demais? Serah que fazemos essa parte??
 \end{verbatim}
 \subsection{Statistical independence}
 \begin{verbatim}
+TODO?
 Fazer ou nao?
 Chi-square testing Kleijnen p18
 \end{verbatim}
 \subsection{Top-down correlation coefficient}\label{TDCC}
 \begin{verbatim}
+TODO?
 Metodo de TDCC do Conover. Pesquisar fonte e descrever
 \end{verbatim}
 \subsection{Time dependency}
 In models where time is an explicit variable, it may be useful to consider
 how are the correlation and variance-decomposition indexes varying with time.
 \begin{verbatim}
+TODO?
 Descrever o problema com mais detalhe, mostrar mais indices
 \end{verbatim}
 Figure \ref{fig:Time} shows as an example the evolution of the PRCC of a 
@@ -796,6 +826,7 @@ source('fig/figTime.R');
 
 \subsection{Averaging stochastic model runs}
 \begin{verbatim}
+TODO?
 Here, we must discuss the averaging of model runs in Segovia04
 \end{verbatim}
 \section{Use of Latin Hypercube in ecological studies}\label{Studies}
@@ -815,6 +846,7 @@ alguma medida de sucesso de uso?
 % dos artigos publicados em Amer Nat, Ecolog, J Ecol, Oikos e Oecol
 deiferentes tecnicas de analise, mplementacoes??
 selecionar as revistas de (engenharia vs. eco vs. biogeral)
+TODO
 \end{verbatim}
 
 \section{Appendix: An R implementation of the sampling and analysis methods}
@@ -823,6 +855,7 @@ for the sampling and analysis methods described in the R language. These
 implementations are not necessarily the most efficient, but are designed
 to be clearly understandable and to illustrate the points made in this work.
 \begin{verbatim}
+TODO?
 Usar Sweave para inserir os exemplos de codigo aqui
 \end{verbatim}
 
