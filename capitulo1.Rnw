@@ -134,6 +134,14 @@ condition $S \leq N$. This condition is called a {\em constraint}, and
 limits the values that the parameter vector
 may assume.
 
+Another related concept that should not be confused with the constraints is the
+correlation between variables. For example, acidic soils are likely to have a 
+lower cation exchange capacity, and more alkaline soils are likely to have a 
+larger CEC \cite{Sparks03}. Thus, those variables are {\em correlated}. 
+Correlations have a profound impact on some analysis, however, they are difficult
+to measure, and data on correlations are not generally available on the 
+literature.
+
 If we consider the m-dimensional space consisting on all possible 
 combination of values for the parameters, our parameter space will be the
 subset of this space that respects all our constraints. We will return to questions related to constrained parameter
@@ -181,6 +189,11 @@ response as a single value $y$, without loss of generality.
 Each of the input parameters $x_i$ is associated with a probability distribution
 $D_i(x)$, which represent our degree of knowledge about the values that $x_i$ may
 assume (see figure \ref{fig:Di} for examples).
+
+Taken together, all the distributions $D_i$ form the {\em joint probability
+distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
+account not only the individual distribution of each parameter, but also
+all the correlation terms between them. 
 
 \begin{verbatim}
 TODO
@@ -243,6 +256,9 @@ stratified random sampling than by simple random sampling
 (see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
 next session, the Latin Hypercube sampling is a practical and easy to understand
 stratified sampling strategy.
+
+Another class of Monte Carlo methods that should be mentioned here is the Markov
+Chain Monte Carlo (MCMC), which is also used on similar analyses. 
 % TODO Another class of methods is the MCMC
 \begin{verbatim}
 Here, we also give an overview of Markov Chain Monte Carlo 
@@ -314,7 +330,7 @@ current understanding of the biology of the given system. This function might
 be estimated by an expert in the field, it might represent a data set from
 field or laboratory work, or in some cases it may be simply the broadest
 possible set of parameters, in some cases where the actual values are unknown
-or experiments are unfeasible (see fig. \ref{Di}). 
+or experiments are unfeasible (see fig. \ref{fig:Di}). 
 
 In possession of the distribution function $D_i$, we must sample one point
 from each equally probable interval. There are two approaches used here:
@@ -322,7 +338,6 @@ it is possible to choose a random value from within the interval (as proposed
 by \cite{McKay79}), or instead, we can use the midpoint from each interval 
 \cite{Huntington98}. We will use the second approach here.
 
-%TODO Precisa de mais revisao aqui??
 The integral of the distribution function is called the cummulative distribution
 function $F_i(x)$. This function relates the values $x$ that the parameter may assume
 with the probability $p$ that the parameter is less than or equal to $x$.
@@ -338,14 +353,6 @@ from the inverse cummulative distribution $F_i^{-1}(x)$ as:
 	x_{i,k} = F_i^{-1}\left( \frac{k-0.5}{N}\right)
 	\label{inverseCDF}
 \end{equation}
-
-%After repeating this procedure with the $m$ parameter dimensions,
-%we could define the points from our parameter space by associating the coordinates
-%as $\bu{x_1} = [ x_{11}, x_{21}, \cdots x_{m1} ]$, 
-%$\bu{x_2} = [ x_{21}, x_{22}, \cdots, x_{m2} ]$. 
-
-%However, by doing this, we would be pairing the smallest values from all dimensions\ldots
-
 
 \begin{figure}[htpb]
 	\begin{center}
@@ -373,9 +380,6 @@ text(qnorm(0.9), 0.1, expression(x[3]))
 
 The samples from each dimension are subsequently shuffled, to randomize
 the order in which each value will be used
-%so the first position
-%in the parameter vector $\bu{x}$ might correspond to the third interval from the
-%first dimension, the twelfth interval from the second dimension, and so on 
 (see example on figure \ref{fig:Samples}).
 As the samples come from the distributions $D_i$, and are only reordered, their
 (marginal) distribution 
@@ -416,8 +420,9 @@ We will present the general case of prescribing a correlation matrix, and will
 also present results for the trivial case of zero correlation terms. Other
 methods have been proposed to address this problem \cite{Ye98, Steinberg06, Florian92}, 
 including methods that deal with higher-order correlation terms \cite{Tang98}
-using orthogonal designs. These methods, however, impose severe restrictions 
-on the number of samples that must be chosen.
+using orthogonal designs. These methods, however, either impose severe 
+restrictions on the number of samples that must be chosen or are too
+computationally intensive. 
 
 In order to obtain the samples with prescribed correlation terms, we define the 
 desired $m \times m$ correlation matrix between the variables, in which 
@@ -597,7 +602,7 @@ ConvexHull?
 \end{verbatim}
 \section{Quantitative output analysis}\label{QuantAnal}
 % TODO: Incluir mais discussao sobre as propriedades estatisticas do resultado. Em especial, como a dist das saidas converge? Quais sao as condicoes? O que acontece com os termos de correlacao?
-% TODO: Mostrar o caso y ~ a + bx - explorar o espaco de parametros a X b, com termo de correlacao entre a e b.
+% TODO: Mostrar o caso y ~ a + bx - explorar o espaco de parametros a X b, com termo de correlacao entre a e b. Smith Example
 % TODO Caso dos dados reais: termo de correlacao deve ser usado? O que ganhamos? Ler Bill Shipley. Gancho para artigo do May, apud Taylor (J theor Biol 88 (135) 543--568
 % TODO: Enxugar essa sessao!!
 \subsection{Uncertainty analysis and visualization}
@@ -611,12 +616,19 @@ This can be done by fitting a density curve to the output $y$ or an empiric
 cumulative distribution function (ecdf). If there is any theoretical reason
 to believe that the distribution of $y$ should follow one given distribution,
 it is possible to fit this function to the actual output data and estimate
-the distribution parameters. If the input parameter distibution functions $D_i$
+the distribution parameters. If the joint distribution of the input parameters
 correspond to the actual probability of some natural system to exhibit some
-given parameter value (as opposed to the case where we have no biologically 
+given set of parameter values (as opposed to the case where we have no 
+biologically 
 relevant estimates for some parameters), the estimate represented by the
 density and ecdf functions approaches the actual distribution that the
-variable $y$ should present in nature. 
+variable $y$ should present in nature. This functions may be used, for example,
+to provide confidence intervals on the model responses.
+
+However, this is only the case when the input variables are uncorrelated or
+when enough correlation terms have been taken into account. We will see an
+example (based on \cite{Smith02}) where ignoring the correlation terms will
+lead to inaccuracies on the estimation of confidence intervals.
 
 The next reasonable step is to construct and interpret scatterplots relating
 the result to each input parameter. These scatterplots may aid in the visual
@@ -651,7 +663,7 @@ linear relation between the variables. The square of $\rho$, usually written as
 $R^2$, measures the fraction of the variance in the output that can be accounted
 for by a linear effect of $x_i$.
 Is is usual to test the significance of this linear relation by a t-test 
-\cite{estatisticabasica}.
+\cite{Freedman07}.
 
 Other than examining the individual relationships between the parameters and 
 the output, we can investigate the joint effect of several $x_i$, as
