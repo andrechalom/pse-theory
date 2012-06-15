@@ -1,5 +1,5 @@
 \SweaveOpts{fig=T,echo=F}
-\section*{Abstract}
+\begin{abstract}
 In recent years, both the scientific community and policy makers are gaining
 confidence in the formulation and use of mathematical models in ecological 
 studies. We are thus seeing a flourishing of more elaborate and complex models, 
@@ -17,6 +17,12 @@ Full working examples are given in the R language, included at the appendix.
 %TODO: NEXT STEPS: Calibracao de modelos de distribuicao potencial - Geneticos? Maxima Entropia? Analisar essas ``caixas pretas'' em relacao a sensitividade
 %TODO Modelos de tradeoffs x coexistencia. r-K continuum
 %TODO Estudar o exemplo Lotka-Volterra competitivo com correlacao r-K. What gives?
+\end{abstract}
+
+\cleardoublepage
+\tableofcontents
+\cleardoublepage
+
 \section{Introduction}\label{Introduction}
 There is a growing trend in the use of mathematical modelling tools in the
 study of many areas of the biological sciences. The use of models is essencial
@@ -842,6 +848,21 @@ TODO?
 Here, we must discuss the averaging of model runs in Segovia04
 \end{verbatim}
 \section{Use of Latin Hypercube in ecological studies}\label{Studies}
+The importance of sensitivity and uncertainty analyses in the development 
+and use of ecological models is widely recognized. Searching for the terms
+``Sensitivity Analysis, Uncertainty Analysis or Parameter Space
+Exploration'' in the Web of Knowledge reports 978 papers in six major
+journals (see fig. \ref{fig:WoK} and legend for details), with 28065
+citations. However,
+most of these papers rely on full and individual parameter space
+exploration, which, as discussed in section \ref{Sampling}, are not
+optimal. When restricting those results with the keywords ``Latin Hypercube,
+MCMC, Markov, Monte Carlo'', just 101 works show up in the results. Of 
+those, only 12 (about $1\%$) use Latin Hypercube Sampling. 
+
+Here, we will discuss the use of LHS in the recent ecological literature
+\cite{Fisher10, Thebault10, Estill12, Nathan01, Lovvorn96, Hamilton10}.
+
 Here we present some relevant papers in the ecological literature that made 
 use of LH sampling or similar parameter space exploration techniques. We also 
 try to summarize what are the prerequisites that a model must fulfill in 
@@ -850,8 +871,6 @@ what are the cautions that must be taken in running the sampling, what are
 the potential pitfalls interpreting the results.
 
 \begin{verbatim}
-Discutir Fisher10, e Thebault10, Johnson12.
-Fazer uma sistematica? revisao da literatura
 efeito fundador
 trabalhos que usaram lhs pra resvoler A, B ou C (din pop? sad? etc)
 alguma medida de sucesso de uso?
@@ -861,7 +880,12 @@ selecionar as revistas de (engenharia vs. eco vs. biogeral)
 TODO
 \end{verbatim}
 
-\section{Appendix: An R implementation of the sampling and analysis methods}
+%TODO Figura de artigos e citacoes por ano
+\section*{Acknowledgements}
+We would like to thank Camila Castanho (IB/USP) for the several insightful comments.
+This work was supported by a CAPES scholarship.
+\appendix
+\section{An R implementation of the sampling and analysis methods}
 In this section, we perform a code analysis of some possible implementations
 for the sampling and analysis methods described in the R language. These
 implementations are not necessarily the most efficient, but are designed
@@ -871,12 +895,9 @@ TODO?
 Usar Sweave para inserir os exemplos de codigo aqui
 \end{verbatim}
 
-\section{Appendix: Proof of Theorem 1}
+\section{Proof of Theorem 1}
 
 \begin{verbatim}
 TODO
 \end{verbatim}
 
-\section*{Acknowledgements}
-We would like to thank Camila Castanho (IB/USP) for the several insightful comments.
-This work was supported by a CAPES scholarship.
