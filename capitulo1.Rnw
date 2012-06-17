@@ -116,7 +116,8 @@ Where $\theta_0$ can be calculated from $\theta_1$ and $\theta_2$. This
 more complicated formula has several numerical advantages over the previous,
 as the parameters $\theta_1$ and $\theta_2$ can be estimated with much more
 accuracy, and will not be correlated (as is the case with $\alpha$ and
-$\beta$). However, these parameters are hard to interpret in biological
+$\beta$, as well as $r$ and $K$). However, these parameters are hard to
+interpret in biological
 terms. 
 
 These different formulas illustrate the existence of {\em interpretable}
@@ -140,17 +141,20 @@ condition $S \leq N$. This condition is called a {\em constraint}, and
 limits the values that the parameter vector
 may assume.
 
-Another related concept that should not be confused with the constraints is the
-correlation between variables. For example, acidic soils are likely to have a 
-lower cation exchange capacity, and more alkaline soils are likely to have a 
+Another related concept that should not be confused with the constraints
+is the correlation between variables. For example, acidic soils are likely 
+to have a lower cation exchange capacity (CEC), and more alkaline soils are 
+likely to have a 
 larger CEC \cite{Sparks03}. Thus, those variables are {\em correlated}. 
-Correlations have a profound impact on some analysis, however, they are difficult
+Correlations have a profound impact on some analysis, however, they are
+difficult
 to measure, and data on correlations are not generally available on the 
 literature.
 
 If we consider the m-dimensional space consisting on all possible 
 combination of values for the parameters, our parameter space will be the
-subset of this space that respects all our constraints. We will return to questions related to constrained parameter
+subset of this space that respects all our constraints. We 
+will return to questions related to constrained parameter
 spaces in section \ref{ext}.
 
 \subsection{Problems in parameter space exploration}\label{PSE}
@@ -201,24 +205,30 @@ distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
 account not only the individual distribution of each parameter, but also
 all the correlation terms between them. 
 
-\begin{verbatim}
-TODO
-Conseguir dados reais para gerar Dis
-\end{verbatim}
-
 \begin{figure}[htpb]
 	\begin{center}
 	
 <<Di>>=
 par(mfrow=c(2,2))
-curve(dlnorm(x), 0.01,3, xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Substance degradation\ncoefficient (theoretical)')
+curve(dexp(x, rate=1), 0,5,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Life expectancy of a species\n(theoretical)')
+mtext('a', line=-1)
+curve(dgamma(x,5,1), 0.01,15, xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Number of parasites per host\n(phenomenological)')
+mtext('b', line=-1)
 uptake <- datasets::CO2$uptake
 plot(density(uptake),xlab=expression(x[i]),ylab=expression(D[i](x[i])), main=expression(paste('Uptake of ',CO[2], ' by plants (empirical)')))
-curve(dgamma(x, shape=1), 0,5,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Life expectancy of the spotted\ncuckoo (specialist estimate)')
+mtext('c', line=-1)
 curve(dunif,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Proportion of patches sampled\n(Unknown)')
+mtext('d', line=-1)
 @
 	\end{center}
-	\caption{Four different possible origins from $D_i$ *TODO* melhorar explicacao}
+	\caption{Four different possible origins from $D_i$. Pannel ``a'' shows 
+	the exponential distribution of life expectancy, which can be deduced
+	from theory \cite{Cole54}. Pannel ``b'' shows a gamma distribution,
+	which can be used to model the number of parasites per host, but has
+	no theoretical derivation \cite{Bolker08}. Pannel ``c'' shows data 
+	from an empirical study on the $CO_2$ uptake from plants 
+	\cite{Potvin90}, and pannel ``d'' shows an example where no prior
+	information can be used.}
 	\label{fig:Di}
 \end{figure}
 
@@ -251,6 +261,8 @@ the effect of each parameter and the combined effect of changing any
 combined number of parameters. This sampling scheme is called random 
 sampling, or Monte Carlo sampling,
 and has been applied to many biological models \cite{Letcher96}.
+One important feature of the Monte Carlo sampling is that its accuracy
+does not depend on the number of dimensions of the problem \cite{MacKay03}.
 
 Stratified sampling strategies, which are a special case of Monte 
 Carlo sampling, consist in strategies for chosing these random samples while,
@@ -264,13 +276,13 @@ next session, the Latin Hypercube sampling is a practical and easy to understand
 stratified sampling strategy.
 
 Another class of Monte Carlo methods that should be mentioned here is the Markov
-Chain Monte Carlo (MCMC), which is also used on similar analyses. 
-% TODO Another class of methods is the MCMC
-\begin{verbatim}
-Here, we also give an overview of Markov Chain Monte Carlo 
-methods, and their relation with LHS. 
-\end{verbatim}
-
+Chain Monte Carlo (MCMC), which is also used on similar analyses \cite{MacKay03}. This
+methods consists in generating a sequence of points $\{\bu{x}^{(t)}\}$ from
+the parameter space whose distribution {\em converges} to the joint
+probability distribution $\bu{D}(\bu{x})$, and in which each sample $\bu{x}^{(t)}$
+is chosen based on the previous $\bu{x}^{(t-1)}$. MCMC methods perform better
+than LHS methods for estimating the distribution of the model responses,
+however, they require a substantially larger number of model runs.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -542,8 +554,8 @@ the following conditions are respected:
 		discussed on session \ref{QuantAnal}).
 \end{itemize}
 
-
 \subsection{Adaptative refinement}
+% TODO REFORMULAR!!
 After generating the $N$ Latin Hypercube samples and running the model with
 the determined parameters, it may become necessary to increase the number
 of samples. In simple Monte Carlo simulations, increasing the number of samples
@@ -636,6 +648,8 @@ when enough correlation terms have been taken into account. We will see an
 example (based on \cite{Smith02}) where ignoring the correlation terms will
 lead to inaccuracies on the estimation of confidence intervals.
 
+%TODO smith02!!!
+
 The next reasonable step is to construct and interpret scatterplots relating
 the result to each input parameter. These scatterplots may aid in the visual
 identification of patterns, and altough they cannot be used to ``prove'' 
@@ -649,6 +663,144 @@ increasingly complex patterns in the model responses. It should be stressed
 that no single tool will capture all the relations between the input and
 output. Instead, several tools should be applied to any particular model.
 
+\subsection{Sensitivity analysis}
+The question of ``what is the effect of some combination of parameters to
+the model output'' may be answered by testing the relation between
+the parameters and outputs. 
+There are extensive reviews about detecting these relations after
+generating samples with Latin Hypercubes \cite{Marino08, Kleijnen99}, 
+so we will give just a brief overview. We will first note that
+the methods used must take into account the variation of all the 
+parameters. For example, instead of calculating the correlation between
+the result and some parameter, partial correlation coefficients should
+be used, which
+discount the effect of all other parameters. 
+
+These relations between the result and the parameters may be classified,
+in order of
+increasing complexity, as:
+
+\begin{itemize}
+		\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
+		\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient (fig. \ref{fig:PRCC}),
+		\item Trends in central location, for which the Kruskal-Wallis test may be applied (fig. \ref{fig:Kruskal}),
+		\item Trends in variability, for which the FAST method and Sobol' indices may be used (fig. \ref{fig:eFAST}),
+		\item Statistical independence, for which the chi-square test may be used
+\end{itemize}
+
+\begin{figure}[htbp]
+	\begin{center}
+<<PRCC>>=
+source('fig/figPRCC.R')
+@
+	\end{center}
+	\caption{PRCC coefficients for 4 input variables on a model. Values
+	between the dashed lines are not statistically significant. The 
+	four panels 
+	present results from different sample sizes.}
+	\label{fig:PRCC}
+\end{figure}
+
+\subsection{Top-down correlation coefficient}\label{TDCC}
+\begin{verbatim}
+TODO?
+Metodo de TDCC do Conover. Pesquisar fonte e descrever
+\end{verbatim}
+\subsection{Time dependency}
+In models where time is an explicit variable, it may be useful to consider
+how are the correlation and variance-decomposition indexes varying with time.
+\begin{verbatim}
+TODO?
+Descrever o problema com mais detalhe, mostrar mais indices
+\end{verbatim}
+Figure \ref{fig:Time} shows as an example the evolution of the PRCC of a 
+three-dimensional hypercube with parameters $r$, $K$ and $X_0$.
+\begin{figure}[htbp]
+	\begin{center}
+<<Time>>=
+source('fig/figTime.R');
+@
+	\end{center}
+	\caption{Time dependency of the PRCC values from the model. Values 
+	between the dashed lines are not significant.}
+	\label{fig:Time}
+\end{figure}
+
+\begin{figure}[htbp]
+	\begin{center}
+<<Kruskal, height=3.5>>=
+par(mfrow=c(1,2), mar=c(3,2,2,1), pch=4)
+x<-seq(-1,0.97,0.01)
+y<-(x-1)*(x+1)+rnorm(x,0,0.25)
+xcats <- rep(c(1,2), each=length(x)/2)
+K <- kruskal.test(y,xcats)$p.value
+plot(x,y, xlab='', ylab='',main=paste('N = 2, p =',format(K, digits=2)))
+abline(v=0, lty=3)
+ymean = tapply(y,xcats,mean)
+segments(c(-1,0),ymean,c(0,1),ymean, lwd=3)
+xcats <- rep(c(1,2,3), each=length(x)/3)
+K <- kruskal.test(y,xcats)$p.value
+plot(x,y, xlab='', ylab='',main=paste('N = 3, p =',format(K, digits=2)))
+abline(v=-0.333,lty=3); abline(v=0.333,lty=3)
+ymean = tapply(y,xcats,mean)
+segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
+@
+	\end{center}
+	\caption{Example of application of the Kruskal-Wallis test on the
+	same data set, which present a strong quadratic component, by
+	dividing the range in 2 intervals (right) or 3 intervals (left).
+	The dashed lines are the divisions between the intervals, and
+	the strong horizontal lines are the sample means for each 
+	interval.}
+	\label{fig:Kruskal}
+\end{figure}
+
+\subsection{Averaging stochastic model runs}
+\begin{verbatim}
+TODO?
+Here, we must discuss the averaging of model runs in Segovia04
+\end{verbatim}
+\section{Use of Latin Hypercube in ecological studies}\label{Studies}
+The importance of sensitivity and uncertainty analyses in the development 
+and use of ecological models is widely recognized. Searching for the terms
+``Sensitivity Analysis, Uncertainty Analysis or Parameter Space
+Exploration'' in the Web of Knowledge reports 978 papers in six major
+journals (see fig. \ref{fig:WoK} and legend for details), with 28065
+citations. However,
+most of these papers rely on full and individual parameter space
+exploration, which, as discussed in section \ref{Sampling}, are not
+optimal. When restricting those results with the keywords ``Latin Hypercube,
+MCMC, Markov, Monte Carlo'', just 101 works show up in the results. Of 
+those, only 12 (about $1\%$) use Latin Hypercube Sampling. 
+
+Here, we will discuss the use of LHS in the recent ecological literature
+\cite{Fisher10, Thebault10, Estill12, Nathan01, Lovvorn96, Hamilton10}.
+
+Here we present some relevant papers in the ecological literature that made 
+use of LH sampling or similar parameter space exploration techniques. We also 
+try to summarize what are the prerequisites that a model must fulfill in 
+order to use it, 
+what are the cautions that must be taken in running the sampling, what are 
+the potential pitfalls interpreting the results.
+
+\begin{verbatim}
+efeito fundador
+trabalhos que usaram lhs pra resvoler A, B ou C (din pop? sad? etc)
+alguma medida de sucesso de uso?
+% dos artigos publicados em Amer Nat, Ecolog, J Ecol, Oikos e Oecol
+deiferentes tecnicas de analise, mplementacoes??
+selecionar as revistas de (engenharia vs. eco vs. biogeral)
+TODO
+\end{verbatim}
+
+%TODO Figura de artigos e citacoes por ano
+\section*{Acknowledgements}
+We would like to thank Camila Castanho (IB/USP) for the several insightful comments.
+This work was supported by a CAPES scholarship.
+
+\cleardoublepage
+\appendix
+\section{Appendix: Details about sensitivity analyses}
 \subsection{Linear relation}\label{linear}
 The most straightforward relationship between $y$ and $x_i$ is the linear, 
 represented by $y \sim x_i$. This is case if, every time $x_i$ is increased, 
@@ -736,18 +888,6 @@ indicator of monotonic interactions between $y$ and $x_i$, and is subject
 to significance testing as described in \cite{Marino08}. As shown on figure
 \ref{fig:PRCC}, this measure will perform better with increasing $N$.
 
-\begin{figure}[htbp]
-	\begin{center}
-<<PRCC>>=
-source('fig/figPRCC.R')
-@
-	\end{center}
-	\caption{PRCC coefficients for 4 input variables on a model. Values
-	between the dashed lines are not statistically significant. The 
-	four panels 
-	present results from different sample sizes.}
-	\label{fig:PRCC}
-\end{figure}
 
 \subsection{Trends in central location}
 Even if the relation between $y$ and $x_i$ is non monotonic, it may be 
@@ -771,34 +911,6 @@ may have a large impact on the test results. It is then recommended that
 this test should be repeated with different values to obtain a more 
 comprehensive picture of the interactions between $x_i$ and $y$ (fig. \ref{fig:Kruskal}).
 
-\begin{figure}[htbp]
-	\begin{center}
-<<Kruskal, height=3.5>>=
-par(mfrow=c(1,2), mar=c(3,2,2,1), pch=4)
-x<-seq(-1,0.97,0.01)
-y<-(x-1)*(x+1)+rnorm(x,0,0.25)
-xcats <- rep(c(1,2), each=length(x)/2)
-K <- kruskal.test(y,xcats)$p.value
-plot(x,y, xlab='', ylab='',main=paste('N = 2, p =',format(K, digits=2)))
-abline(v=0, lty=3)
-ymean = tapply(y,xcats,mean)
-segments(c(-1,0),ymean,c(0,1),ymean, lwd=3)
-xcats <- rep(c(1,2,3), each=length(x)/3)
-K <- kruskal.test(y,xcats)$p.value
-plot(x,y, xlab='', ylab='',main=paste('N = 3, p =',format(K, digits=2)))
-abline(v=-0.333,lty=3); abline(v=0.333,lty=3)
-ymean = tapply(y,xcats,mean)
-segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
-@
-	\end{center}
-	\caption{Example of application of the Kruskal-Wallis test on the
-	same data set, which present a strong quadratic component, by
-	dividing the range in 2 intervals (right) or 3 intervals (left).
-	The dashed lines are the divisions between the intervals, and
-	the strong horizontal lines are the sample means for each 
-	interval.}
-	\label{fig:Kruskal}
-\end{figure}
 
 \subsection{Trends in variability}
 Other than the central tendency of the results, their dispersal may be 
@@ -817,74 +929,6 @@ TODO?
 Fazer ou nao?
 Chi-square testing Kleijnen p18
 \end{verbatim}
-\subsection{Top-down correlation coefficient}\label{TDCC}
-\begin{verbatim}
-TODO?
-Metodo de TDCC do Conover. Pesquisar fonte e descrever
-\end{verbatim}
-\subsection{Time dependency}
-In models where time is an explicit variable, it may be useful to consider
-how are the correlation and variance-decomposition indexes varying with time.
-\begin{verbatim}
-TODO?
-Descrever o problema com mais detalhe, mostrar mais indices
-\end{verbatim}
-Figure \ref{fig:Time} shows as an example the evolution of the PRCC of a 
-three-dimensional hypercube with parameters $r$, $K$ and $X_0$.
-\begin{figure}[htbp]
-	\begin{center}
-<<Time>>=
-source('fig/figTime.R');
-@
-	\end{center}
-	\caption{Time dependency of the PRCC values from the model. Values 
-	between the dashed lines are not significant.}
-	\label{fig:Time}
-\end{figure}
-
-\subsection{Averaging stochastic model runs}
-\begin{verbatim}
-TODO?
-Here, we must discuss the averaging of model runs in Segovia04
-\end{verbatim}
-\section{Use of Latin Hypercube in ecological studies}\label{Studies}
-The importance of sensitivity and uncertainty analyses in the development 
-and use of ecological models is widely recognized. Searching for the terms
-``Sensitivity Analysis, Uncertainty Analysis or Parameter Space
-Exploration'' in the Web of Knowledge reports 978 papers in six major
-journals (see fig. \ref{fig:WoK} and legend for details), with 28065
-citations. However,
-most of these papers rely on full and individual parameter space
-exploration, which, as discussed in section \ref{Sampling}, are not
-optimal. When restricting those results with the keywords ``Latin Hypercube,
-MCMC, Markov, Monte Carlo'', just 101 works show up in the results. Of 
-those, only 12 (about $1\%$) use Latin Hypercube Sampling. 
-
-Here, we will discuss the use of LHS in the recent ecological literature
-\cite{Fisher10, Thebault10, Estill12, Nathan01, Lovvorn96, Hamilton10}.
-
-Here we present some relevant papers in the ecological literature that made 
-use of LH sampling or similar parameter space exploration techniques. We also 
-try to summarize what are the prerequisites that a model must fulfill in 
-order to use it, 
-what are the cautions that must be taken in running the sampling, what are 
-the potential pitfalls interpreting the results.
-
-\begin{verbatim}
-efeito fundador
-trabalhos que usaram lhs pra resvoler A, B ou C (din pop? sad? etc)
-alguma medida de sucesso de uso?
-% dos artigos publicados em Amer Nat, Ecolog, J Ecol, Oikos e Oecol
-deiferentes tecnicas de analise, mplementacoes??
-selecionar as revistas de (engenharia vs. eco vs. biogeral)
-TODO
-\end{verbatim}
-
-%TODO Figura de artigos e citacoes por ano
-\section*{Acknowledgements}
-We would like to thank Camila Castanho (IB/USP) for the several insightful comments.
-This work was supported by a CAPES scholarship.
-\appendix
 \section{An R implementation of the sampling and analysis methods}
 In this section, we perform a code analysis of some possible implementations
 for the sampling and analysis methods described in the R language. These

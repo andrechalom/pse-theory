@@ -6,10 +6,10 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile capitulo1.tex
 	-pdflatex ${PROJ}
 	-bibtex ${PROJ}
 	-pdflatex ${PROJ}
-	pdflatex ${PROJ}
+	pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 	evince ${PROJ}.pdf > /dev/null &
 
-capitulo1.tex: capitulo1.Rnw
+capitulo1.tex: capitulo1.Rnw corcorr.so
 	R CMD Sweave capitulo1.Rnw
 
 pse.tex: pse.Rnw
@@ -18,8 +18,5 @@ pse.tex: pse.Rnw
 clean:
 	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf capitulo1.tex ${PROJ}.tex *.toc
 
-corcorr.o: corcorr.c
-	gcc -std=gnu99 -I/usr/share/R/include -DNDEBUG      -fpic  -O3 -pipe  -g  -c corcorr.c -o corcorr.o
-
-corcorr.so: corcorr.o
-	gcc -std=gnu99 -shared -o corcorr.so corcorr.o -L/usr/lib/R/lib -lR
+corcorr.so: R/corcorr.c
+	cd R; make corcorr.so

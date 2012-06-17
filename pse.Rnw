@@ -24,8 +24,6 @@
 \begin{document}
 \setkeys{Gin}{width=0.8\textwidth}
 
-
-
 \begin{center}
   {\Large Review and improvements to methods of parameter space exploration of ecological models using R}
 
@@ -44,6 +42,7 @@ Affiliation    & Department of Ecology, \\
 
 \input capitulo1.tex
 
+\cleardoublepage
 \bibliographystyle{plain}
 \bibliography{chalom}
 
