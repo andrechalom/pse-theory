@@ -1,0 +1,31 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+
+\begin{document}
+\setkeys{Gin}{width=0.8\textwidth}
+
+
+\input revlit.tex
+
+\cleardoublepage
+\bibliographystyle{plain}
+\bibliography{chalom}
+
+\end{document}

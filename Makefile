@@ -2,7 +2,7 @@ PROJ=pse
 
 all: ${PROJ}.pdf
 
-${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile capitulo1.tex
+${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile capitulo1.tex revlit.tex
 	-pdflatex ${PROJ}
 	-bibtex ${PROJ}
 	-pdflatex ${PROJ}
