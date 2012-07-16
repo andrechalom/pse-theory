@@ -346,11 +346,17 @@ pcor <- function (y, xmat) {
 	colnames(resmat) <- colnames(xmat)
 	for (i in seq(1:n)) 
 		resmat[i] <- pcor.test(y, xmat[,i], xmat[,-i], method="spearman")$estimate
+	attr(resmat,"N") <- dim(xmat)[1]
 	return(resmat)
 }
 	
-plot.pcor <- function (PRCC, N, nvars) {
-	barplot(PRCC, ylim=c(-1,1), main="PRCC analysis")
+plot.pcor <- function (PRCC, N=attr(PRCC,"N"), nvars=dim(PRCC)[2], ...) {
+	plot.pars <-list(...)
+	if (is.null(plot.pars[["main"]])) {
+			barplot(PRCC, ylim=c(-1,1), main="PRCC analysis", ...)
+	} else {
+			barplot(PRCC, ylim=c(-1,1), ...)
+	}
 	#Desenha as linhas a partir das quais o PRCC eh significativo
 	tval <- function (prcc, df) {
 		return(prcc*(sqrt(df/(1-prcc*prcc))) - qt(0.975,df) ) 

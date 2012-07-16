@@ -13,9 +13,14 @@ We present improvements to the methods discussed, and
 assess how are these questions being currently addressed in the literature.
 Full working examples are given in the R language, included at the appendix.
 
+%GA: sensitividade a p. mut, p. crossov, elitismo, num de genomas, num de its
+ % 4 MaxEnt: lhs dos betas - capitulo 2?
 %TODO: Gente grande na area: Saltelli, Helton, Iman, McKay, Sobol, Conover. LER todos eles
 %TODO: NEXT STEPS: Calibracao de modelos de distribuicao potencial - Geneticos? Maxima Entropia? Analisar essas ``caixas pretas'' em relacao a sensitividade
-%TODO Modelos de tradeoffs x coexistencia. r-K continuum
+% Inputs explicitos VS inputs implicitos (grain!)
+%TODO Modelos de tradeoffs x coexistencia. r-K continuum revisoes
+%TODO coexistencia de especies Ecology Letters, (2007) 10: 95–104 ca'car referencia da ann rev Chesson, P. (2000). Mechanisms of maintenance of species
+% diversity. Annu. Rev. Ecol. Syst., 31, 343–366.
 %TODO Estudar o exemplo Lotka-Volterra competitivo com correlacao r-K. What gives?
 \end{abstract}
 
@@ -622,6 +627,8 @@ ConvexHull?
 % TODO: Incluir mais discussao sobre as propriedades estatisticas do resultado. Em especial, como a dist das saidas converge? Quais sao as condicoes? O que acontece com os termos de correlacao?
 % TODO: Mostrar o caso y ~ a + bx - explorar o espaco de parametros a X b, com termo de correlacao entre a e b. Smith Example
 % TODO Caso dos dados reais: termo de correlacao deve ser usado? O que ganhamos? Ler Bill Shipley. Gancho para artigo do May, apud Taylor (J theor Biol 88 (135) 543--568
+% Lotka Volterra generalizado, adicionando species - vc consegue montar comunidades robustas com mtas especies
+% LHS com n especies, forca de interacao (variancia da normal de media 0), etc
 % TODO: Enxugar essa sessao!!
 \subsection{Uncertainty analysis and visualization}
 The first question we would like to answer, in the context of quantitative 
