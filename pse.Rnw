@@ -2,8 +2,6 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \setlength{\topmargin}{0cm}
-\input acentos
-%\input psfig.sty
 
 % Create friendly environments for theorems, propositions, &c.
 \newtheorem{theorem}{Theorem}[section]
