@@ -77,7 +77,7 @@ sig <- function (form) {
 	return (" ");
 }
 oneCorPlot <- function(res, var) {
-	plot(var,res)
+	plot(var,res, xlab=attr(var, "name"))
 	abline((lm(res~var)))
 	mtext(paste("Cor:",format(cor(var,res), digits=2), sig(res~var)))
 }

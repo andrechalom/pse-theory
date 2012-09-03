@@ -522,8 +522,25 @@ a1 * a2 < X -> escala exp
 a1 / a2 < X -> escala log
 cacar envelopes, EcoSim macroecologia
 J Biogeogr
-For a given transformation T, how are the D_i affected?
 \end{verbatim}
+
+\begin{figure}[htbp]
+	\begin{center}
+<<TDi, height=3.5>>=
+x<- rnorm(1000); y<- rnorm(1000);
+
+a <-1; K <-0.1;
+par(mfrow=c(2,2))
+plot(x[ x+a*y < K], y [ x+a*y < K], main="x+ay < K", xlab="", ylab="")
+plot(x[ x * y < K], y [ x * y < K], main="xy < K", xlab="", ylab="")
+plot(x[ x * y > K], y [ x * y > K], main="xy > K", xlab="", ylab="")
+plot(x[ x / y < K], y [ x / y < K], main="x/y < K", xlab="", ylab="")
+@
+	\end{center}
+	\caption{Four samples of constraints on the parameter space,
+	and the general shape imposed by those constraints.}
+	\label{fig:TDi}
+\end{figure}
 
 \subsection{Stochastic models}
 When dealing with stochastic models, like several relevant individual based 
