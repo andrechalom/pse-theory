@@ -1,4 +1,5 @@
 \documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \setlength{\topmargin}{0cm}
