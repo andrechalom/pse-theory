@@ -7,7 +7,7 @@
 # Para aproximar de uma matriz de correlacao dada:
 # newvars <- LHScorcorr(vars,COR)
 
-system("R CMD SHLIB corcorr.c")
+# system("R CMD SHLIB corcorr.c")
 
 # NAO MEXA nos parametros l e it
 LHScorcorr <- function (vars, COR = matrix(0,dim(vars)[2],dim(vars)[2]), l = 2, eps = 0.0005, it = 1, echo=FALSE, maxIt = 2*sqrt(dim(vars)[1])) {
@@ -81,22 +81,25 @@ sig <- function (form) {
 	if (f < 0.1) return (".");
 	return (" ");
 }
-oneCorPlot <- function(res, var, name) {
-#		if(is.null(name)) name=attr(var,"name");
-	plot(var,res, xlab=name)
+oneCorPlot <- function(res, var, name, log, first) {
+		# TODO: Melhorar essa funcao que deforma o primeiro da linha!!
+		if (first) par(mar=c(5,2,4,0.5), yaxt='s')
+		else par (mar=c(5,0.5,4,0.5), yaxt='n')
+	plot(var,res, xlab=name, log=log, ylab= "", )
 	l <- lm(res~var)
 	if (!is.na(coefficients(l)[2])) 
 			abline((lm(res~var)))
 	mtext(paste("Cor:",format(cor(var,res), digits=2), sig(res~var)))
 }
-corPlot <- function (vars, res, ...) {
+corPlot <- function (vars, res, log="", ...) {
 	nl <- floor(sqrt(length(vars)))
 	nc <- ceiling(length(vars)/nl)
-	par(mfrow=c(nl,nc), ...)
+	opar <- par(mfrow=c(nl,nc), pch='.', ...)
 	for (i in 1:nl) for (j in 1:nc) {
 			index <- (i-1)*nc+j;
-		if (index <= length(vars)) oneCorPlot(res,vars[[index]], names(vars)[index])
+		if (index <= length(vars)) oneCorPlot(res,vars[[index]], names(vars)[index], log, first = (j == 1))
 	}
+	par(opar)
 }
 
 # Funcao acessoria - nao eh para uso externo

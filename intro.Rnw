@@ -1,0 +1,212 @@
+\SweaveOpts{fig=T,echo=F}
+\section{Introduction}\label{Introduction}
+There is a growing trend in the use of mathematical modelling tools in the
+study of many areas of the biological sciences. The use of models is essencial
+as they present an opportunity to address questions that are impossible or
+impractical to answer in either in purely theoretical analyses or in field 
+or laboratory experiments, and to identify the most important proccesses which
+should then be investigated by experiments. Of particular interest are the 
+Individual Based
+Models (IBM), which represent individuals that move and interact in space,
+according to some decision-making rules. 
+These models permit a great level of detail and realism to be included,
+as well as linking multiple levels of complexity in a system.
+
+On the other hand, more realistic models employ a vast selection of input
+parameters, from temperature and rainfall to metabolic and encounter rates,
+which may be difficult to accurately measure. While variations in some of those
+parameters will have negligible impact on the model output, other parameters
+may profoundly impact the validity of a model's predictions, and it may be
+impossible to determine {\em a priori} which are the most important parameters.
+In theory, this could be done by evaluating the model at all possible 
+combinations of parameters, however this would require a prohibitive number of
+model runs, specially considering that a single run of those models may take
+days to complete. Our challenge then consists in providing the best estimates
+for the importance of the several parameters, requiring the least number of
+model runs.
+
+The disciplines of uncertainty and sensivity analysis have been developed in
+the context of the physical sciences and engineering, and have been greatly
+developed in the 1980 and 1990 decades by researches such as Saltelli, 
+Helton, Iman, Conovoer, Sobol' and McKay. %TODO citations!
+More recently, these analyses
+have been 
+successfully applied to biological models, in order to explore the possible 
+outcomes from the model output, estimate their
+probability distribution and the dependency of the output 
+on different combinations of parameters, and to assess which parameters 
+require more experimental effort in order to be more confidently estimated. 
+This kind of parameter space exploration is considered a fundamental step
+prior to using the model in management decisions \cite{Bart95}. 
+
+One approach to the parameter space exploration, which will be described here,
+is to generate samples from the parameter space, run the model with these 
+samples, and analyse the qualitative or quantitative differences in the
+model output. Section \ref{Sampling} will present the sampling techniques,
+with empashis on the Latin Hypercube method, while sections \ref{QualAnal} and
+\ref{QuantAnal} will deal with qualitative and quantitative analyses, 
+respectively. Then, we briefly review some relevant research papers which
+have used such techniques in the exploration of ecological models in section
+\ref{Studies}, and present a full working example of the sampling and analysis
+in the Appendixes.
+
+\subsection{Parameter spaces}\label{ps}
+In order to better pose our questions, we need first to discuss some
+properties of the parameter space (or PS for short) of our models.
+
+The parameters (or inputs) are quantities $x_1, x_2, \cdots, x_m$ which
+will be used to run the model. In our discussion, we will assume that
+all the $x_i$ are real valued.
+These quantities are unknown, and one first
+challenge is to determine which set of values better
+fit a model to the available data, which is the subject of linear and
+nonlinear estimation.
+
+However, the same model may be
+parametrized in different ways, as discussed by Ross \cite{Ross90}. For
+example, in population ecology, 
+the logistic growth equation may be represented with two
+parameters $r$ and $K$ as:
+\begin{equation}
+		\frac{dN}{dt} = rN\left(1-\frac{N}{K}\right)
+		\label{logrk}
+\end{equation}
+However, the same equation may be written as
+\begin{equation}
+		\frac{dN}{dt} = \alpha N + \beta N^2
+		\label{logalphabeta}
+\end{equation}
+Here, the two parameters are $\alpha = r$ and $\beta = -r/K$. 
+While the first equation is far more commonly used in the biological 
+context, both are equivalent, and using one or the other model
+is simply a matter of choice.
+
+There are many other ways of writing this equation, and one of special
+interest when trying to fit real data is in terms of orthogonal 
+polynomials, such as:
+\begin{equation}
+		\frac{dN}{dt} = \theta_0 + \theta_1(x-\bar x) + \theta_2((x-\bar x)^2 - (\overline {x - \bar {x}})^2)
+		\label{logtheta}
+\end{equation}
+Where $\theta_0$ can be calculated from $\theta_1$ and $\theta_2$. This
+more complicated formula has several numerical advantages over the previous,
+as the parameters $\theta_1$ and $\theta_2$ can be estimated with much more
+accuracy, and will not be correlated (as is the case with $\alpha$ and
+$\beta$, as well as $r$ and $K$). However, these parameters are hard to
+interpret in biological
+terms. 
+
+These different formulas illustrate the existence of {\em interpretable}
+(Eq. \ref{logrk}), {\em defining}, or algebraic (Eq. \ref{logalphabeta})
+and {\em computing} (Eq. \ref{logtheta}) parameters. Most of the times,
+it would be preferable to estimate the values that best fit some data by
+using computing parameters, and then to transform them to interpretable
+parameters in order to present the results.
+
+Also, it should be mentioned that the parameter space may be constrained.
+This will have an impact on some of the available sampling 
+and analysis techniques.
+
+The simplest constraint is requiring some parameter to be positive or
+negative. Also, there may be combinations of values that are meaningless.
+For example, if we model a community with $N$ individuals and $S$ species,
+the number of individuals and species, considered on their own, may be
+any positive number. However, it is clear that the number of species may
+not be bigger than the number of individuals, which imposes the
+condition $S \leq N$. This condition is called a {\em constraint}, and
+limits the values that the parameter vector
+may assume.
+
+Another related concept that should not be confused with the constraints
+is the correlation between variables. For example, acidic soils are likely 
+to have a lower cation exchange capacity (CEC), and more alkaline soils are 
+likely to have a 
+larger CEC \cite{Sparks03}. Thus, those variables are {\em correlated}. 
+Correlations have a profound impact on some analysis, however, they are
+difficult
+to measure, and data on correlations are not generally available on the 
+literature.
+
+If we consider the m-dimensional space consisting on all possible 
+combination of values for the parameters, our parameter space will be the
+subset of this space that respects all our constraints. We 
+will return to questions related to constrained parameter
+spaces in section \ref{ext}.
+
+\subsection{Problems in parameter space exploration}\label{PSE}
+Next, we turn our attention to the kind of problems we might want to address
+with the exploration of the parameter space. First, the simplest case is asking
+``is there a region of my parameter space where condition X holds?'' This 
+condition might be, for example, the extinction or coexistance of species, 
+some pattern of distribution or abundance of species. We also might be 
+interested in mapping where are these regions. In complex models, where several 
+different regions might exist where the qualitative results of the models are 
+very different, we may ask how many of these regions are there, as well as map
+the frontiers between them. We will explore some tools that deal with these 
+qualitative problems in section \ref{QualAnal}.
+
+Another class of problems arises when the model produces some quantitative 
+response, and we are interessed in determining the dependency of this response 
+to the input parameters. For example, when modeling the dynamics of a 
+population, we might want to know how the final population varies with each 
+of the input parameters. In this context of quantitative analysis, the 
+questions are divided in two classes: first, how much the variation of the 
+input parameters is translated into the total variation of the results, 
+which is the topic of uncertainty analysis, 
+and second, how much of the variation in the results can be ascribed to the 
+variation of each individual parameter, which is the topic of sensitivity 
+analysis \cite{Helton03, Helton05}. We will present the techniques and results
+from both uncertainty and sensitivity analysis in section \ref{QuantAnal}.
+A similar problem is to determine simply which parameters play any role on 
+the model output. This simpler problem will be addressed by Morris screening
+in section \ref{Morris}.
+
+All these problems may be formulated in a general way, defining some response 
+from the model $\bu{Y}$ as a function of the input parameter vector $\bu{x}$:
+
+\begin{equation}
+	\bu{Y} = \bu{f}(\bu{x})
+	\label{genmodel}
+\end{equation}
+
+In the equation \ref{genmodel}, all the quantities are vectors, indicated by
+the boldface. Here, $\bu{x} = [ x_1,x_2,\dots,x_m ]$ represent the parameters
+to the model $\bu{f}$, and $\bu{Y} = [ y_1,y_2,\dots,y_n ]$ represent the some
+quantitative responses from the model. In some sections, we will discuss the
+response as a single value $y$, without loss of generality.
+
+Each of the input parameters $x_i$ is associated with a probability distribution
+$D_i(x)$, which represent our degree of knowledge about the values that $x_i$ may
+assume (see figure \ref{fig:Di} for examples).
+
+Taken together, all the distributions $D_i$ form the {\em joint probability
+distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
+account not only the individual distribution of each parameter, but also
+all the correlation terms between them. 
+
+\begin{figure}[htpb]
+	\begin{center}
+	
+<<Di>>=
+par(mfrow=c(2,2))
+curve(dexp(x, rate=1), 0,5,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Life expectancy of a species\n(theoretical)')
+mtext('a', line=-1)
+curve(dgamma(x,5,1), 0.01,15, xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Number of parasites per host\n(phenomenological)')
+mtext('b', line=-1)
+uptake <- datasets::CO2$uptake
+plot(density(uptake),xlab=expression(x[i]),ylab=expression(D[i](x[i])), main=expression(paste('Uptake of ',CO[2], ' by plants (empirical)')))
+mtext('c', line=-1)
+curve(dunif,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Proportion of patches sampled\n(Unknown)')
+mtext('d', line=-1)
+@
+	\end{center}
+	\caption{Four different possible origins from $D_i$. Pannel ``a'' shows 
+	the exponential distribution of life expectancy, which can be deduced
+	from theory \cite{Cole54}. Pannel ``b'' shows a gamma distribution,
+	which can be used to model the number of parasites per host, but has
+	no theoretical derivation \cite{Bolker08}. Pannel ``c'' shows data 
+	from an empirical study on the $CO_2$ uptake from plants 
+	\cite{Potvin90}, and pannel ``d'' shows an example where no prior
+	information can be used.}
+	\label{fig:Di}
+\end{figure}

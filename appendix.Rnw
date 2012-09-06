@@ -1,0 +1,130 @@
+\SweaveOpts{fig=T,echo=F}
+\section{Appendix: Details about sensitivity analyses}
+\subsection{Linear relation}\label{linear}
+The most straightforward relationship between $y$ and $x_i$ is the linear, 
+represented by $y \sim x_i$. This is case if, every time $x_i$ is increased, 
+$y$ increases by aproximately the same ammount.
+The Pearson correlation coefficient is the commonly used measure to test for
+a linear correlation:
+
+\begin{equation}
+	\rho_{yx_i} = \frac{\sigma_{yx_i}}{\sigma_y\sigma_{x_i}}
+	\label{PearsonRho}
+\end{equation}
+
+Where $\sigma_a$ is the variance of $a$ and $\sigma_{ab}$ is the covariance 
+between $a$ and $b$. The correlation coefficient is a measure of the predicted
+change in $y$ when $x_i$ is changed one unit, relative to its standard
+deviations, and, as such, approaches $\pm 1$ when there is a strong
+linear relation between the variables. The square of $\rho$, usually written as
+$R^2$, measures the fraction of the variance in the output that can be accounted
+for by a linear effect of $x_i$.
+Is is usual to test the significance of this linear relation by a t-test 
+\cite{Freedman07}.
+
+Other than examining the individual relationships between the parameters and 
+the output, we can investigate the joint effect of several $x_i$, as
+$y \sim x_1 + x_2 + \cdots + x_m$. In this case, the multiple $R^2$ represent
+the fraction of the variance on the output due to linear effects of all 
+the $x_i$ considered.
+
+However, a measure of $\rho$ close to zero does not mean that
+no relationship exists between $y$ and $x_i$ - for instance, $x^2 + y = 1$, 
+$x \in [-1,1]$ presents $\rho = 0$, so clearly other methods might be needed.
+
+The Partial Correlation Coefficient (PCC) between $x_i$ and $y$ is the measure
+of the linear effect of $x_i$ on $y$ after the linear effects of the remaining
+parameters have been discounted. In order to calculate the PCC, first we fit
+a linear model of $x_i$ as a function of the remaining parameters:
+
+\begin{equation}
+	\hat{x}_i \sim x_1 + x_2 + \cdots + x_{i-1} + x_{i+1} + \cdots + x_m
+	\label{PCChatx}
+\end{equation}
+
+A corresponding model is done with $y$:
+
+\begin{equation}
+	\hat{y} \sim x_1 + x_2 + \cdots + x_{i-1} + x_{i+1} + \cdots + x_m
+	\label{PCChaty}
+\end{equation}
+
+The PCC is calculated as the correlation between the residuals of these two
+models:
+
+\begin{equation}
+	PCC(y, x_i) = \rho \left( (y - \hat y), (x_i - \hat{x}_i) \right)
+	\label{PCC}
+\end{equation}
+
+
+\subsection{Monotonic relation}\label{PRCC}
+
+Let us refer to each value of $y$ as $y_k$ and each value of $x_i$ as 
+$x_{ik}$. The rank transformation of $y$, 
+represented by $r(y_k)$ can
+be found by sorting the values $y_k$, and assigning rank 1 to the smallest, 2 
+to the second smallest, etc, and $N$ to the largest. The rank of $x_{ik}$,
+$r(x_{ik})$, can be found in a similar way.
+
+If there exists a strictly monotonic relation between $y$ and $x_i$, that is,
+if every time $x_i$ increases, $y$ either always increase or always decreases
+by any positive ammount, it should
+be clear that the ranks of $y$ and $x_i$ present a linear relationship: 
+$r(y) \sim r(x_i)$.
+
+The correlation between $r(y)$ and $r(x_i)$ is called the Spearman 
+correlation coefficient
+$\eta_{yx_i}$. The same analyses presented on section \ref{linear} can also be
+applied for the rank transformed data, including significance testing and 
+multiple regression.
+
+If the procedure described to calculate the PCC is followed on rank transformed
+data, that is, if $y$ and $x_i$ are rank transformed and fitted as linear models
+of the remaining parameters, the correlation between the residuals is called
+PRCC, or Partial Rank Correlation Coefficient. This measure is a robust
+indicator of monotonic interactions between $y$ and $x_i$, and is subject
+to significance testing as described in \cite{Marino08}. This measure will 
+perform better with increasing $N$.
+
+\subsection{Trends in central location}
+Even if the relation between $y$ and $x_i$ is non monotonic, it may be 
+important and well-defined. The case in which $y \sim x_i^2$, $x_i \in (-1,1)$
+is a common example. This relation may be difficult to visualize, and sometimes
+may not be expressed analytically. In these cases, the Kruskal-Wallis rank
+sum test may be used to indicate the presence of such relations 
+\cite{Kleijnen99}.
+
+In order to perform the test, the distribution of $x_i$ must be divided 
+into a number $N_{test}$ of disjoint intervals. The model response $y$ is then
+grouped with respect to these intervals, and the Kruskal-Wallis test is used
+to investigate if the $y$ values have aproximately the same distribution
+in each of those intervals. A low p-value for this test indicates that the
+mean and median of $y$ is likely to be different for each interval considered,
+and thus that the parameter $x_i$ have a (possibly non monotonic) relationship
+with $y$.
+
+The number of intervals $N_{test}$ is not fixed as any ``magical number'', and
+may have a large impact on the test results. It is then recommended that 
+this test should be repeated with different values to obtain a more 
+comprehensive picture of the interactions between $x_i$ and $y$ (fig. \ref{fig:Kruskal}).
+
+
+\subsection{Trends in variability}\label{FAST}
+
+Other than the central tendency of the results, their dispersal may be 
+dependent on the input parameters. 
+
+Two methods are used: eFAST \cite{Saltelli99} and Sobol' \cite{Archer97}.
+\begin{verbatim}
+TODO?
+Descrever eFAST
+ANOVA-like SOBOL
+Kleijnen p17
+\end{verbatim}
+% \subsection{Statistical independence}
+% \begin{verbatim}
+% TODO?
+% Fazer ou nao?
+% Chi-square testing Kleijnen p18
+% \end{verbatim}

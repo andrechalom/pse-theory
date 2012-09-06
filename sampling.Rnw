@@ -1,0 +1,389 @@
+\SweaveOpts{fig=T,echo=F}
+\section{Sampling Techniques}\label{Sampling}
+There are several strategies that can be used to choose the samples from the
+parameter space that will be used as input to our model of interest. Here,
+we will present some of them, along with their limitations, to justify our 
+choice for the Latin Hypercube Sampling, which we will describe in section
+\ref{LHS}.
+
+One way of exploring the parameter space is to choose a number of possible 
+values for each parameter, and run the model for every combination of those 
+values. This is called full parameter space exploration, as done 
+in \cite{Turchin97}, and altough it 
+possesses many advantages, it may become very costly in terms of computer time. 
+In addition, the number of possible combinations increases exponentially with 
+the number of parameter dimensions considered.
+
+To circumvent the exponential increase in the number of samples, it is usual
+to explore the parameter space in the following fashion: holding all but one
+parameter constant, we analyse how the output of a model is affected by one
+parameter dimension at a time (as done in \cite{Yang08}). This analysis is
+refered to as individual parameter perturbance.
+This kind of analysis
+is, however, limited by the fact that the combinations of changed parameters
+may give rise to complex and unexpected behaviours. 
+Often, algorithms based on individual parameter perturbance are used as a first 
+step in order to discriminate between parameters
+that may have a substantial impact on the output, and parameters that are less
+relevant. 
+
+Another viable option would be to
+chose $N$ random samples from the entire space, in order to analyse both
+the effect of each parameter and the combined effect of changing any
+combined number of parameters. This sampling scheme is called random 
+sampling, or Monte Carlo sampling,
+and has been applied to many biological models \cite{Letcher96}.
+One important feature of the Monte Carlo sampling is that its accuracy
+does not depend on the number of dimensions of the problem \cite{MacKay03}.
+
+Stratified sampling strategies, which are a special case of Monte 
+Carlo sampling, consist in strategies for chosing these random samples while,
+at the same, making sure that every subdivision (or {\em strata}) of
+the distribution is well represented.
+As shown on \cite{McKay79}, the estimatives of the statistical properties (such
+as the mean or the variance) of the model output are better represented by 
+stratified random sampling than by simple random sampling
+(see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
+next session, the Latin Hypercube sampling is a practical and easy to understand
+stratified sampling strategy.
+
+Another class of Monte Carlo methods that should be mentioned here is the Markov
+Chain Monte Carlo (MCMC), which is also used on similar analyses \cite{MacKay03}. This
+methods consists in generating a sequence of points $\{\bu{x}^{(t)}\}$ from
+the parameter space whose distribution {\em converges} to the joint
+probability distribution $\bu{D}(\bu{x})$, and in which each sample $\bu{x}^{(t)}$
+is chosen based on the previous $\bu{x}^{(t-1)}$. MCMC methods perform better
+than LHS methods for estimating the distribution of the model responses,
+however, they require a substantially larger number of model runs.
+
+\begin{figure}[htbp]
+	\begin{center}
+<<SamplingMethods>>=
+par(mfrow=c(2,2), pch=4, lty=3)
+x<-rep(seq(0,1,0.2),6)
+y<-rep(seq(0,1,0.2),each=6)
+plot(x,y,xlab='',ylab='',main='Full PS exploration')
+x<-c(seq(0,1,0.2),rep(0.4,6))
+y<-c(rep(0.4,6),seq(0,1,0.2))
+plot(x,y,xlab='',ylab='',main='Individual parameter perturbation')
+x<-runif(10,0,1)
+y<-runif(10,0,1)
+plot(x,y,xlab='',ylab='',main='Simple random sampling')
+x<-sample(qunif((1:10)/10-1/10/2,0,1))
+y<-sample(qunif((1:10)/10-1/10/2,0,1))
+plot(x,y,xlab='',ylab='',main='Latin Hypercube sampling')
+for (i in (seq(0,1,0.1))) {abline(h=i); abline(v=i) }
+@
+	\end{center}
+	\caption{Illustration of four sampling methods. While the
+	full parameter space exploration is clearly representative
+	of the whole space, it requires a very large number of samples.
+	The individual parameter perturbation chooses samples by
+	holding one parameter constant and varying the other, and
+	clearly cannot take into account interactions between 
+	parameters. The random sampling uses information about the
+	whole parameter space with a small number of samples, but
+	can oversample some regions while undersampling others. The
+	Latin Hypercube (section \ref {LHS}) samples all the 
+	intervals with equal intensity.}
+	\label{fig:SamplingMethods}
+\end{figure}
+
+\subsection{Latin Hypercube: Definition and use}\label{LHS}
+In this section, we describe the Latin Hypercube Sampling, and show how it can
+be used to efficiently solve the questions posed in section \ref{Introduction}.
+We also
+discuss what are the available methods for obtaining the LHS. 
+
+Firstly, let us define, in the context of statistical sampling, what is a 
+Latin Square:
+\begin{definition}
+If we divide each side in a square in $N$ intervals, and then take samples
+from the square, the resulting square will be called
+Latin if and only if there is exactly one sample in each row and each column.
+\end{definition}
+
+A Latin Hypercube is simply the generalization of the Latin
+Square to an arbitrary number of dimensions $m$. 
+From these definitions, it is clear that the number of samples is fixed as $N$
+We will show how to estimate the optimal $N$ in section \ref{TDCC}, but for
+now it is 
+relevant to note that $N$ does not depend on the number of parameters considered.
+
+We will now construct the Latin Hypercube. Let's fix our attention in one parameter
+dimension $i$ of the parameter space.
+The first step we should take is to divide the range of $x_i$
+in $N$ equally probable intervals. In order to do so, we will turn our attention
+to the probability distribution of $x_i$, defined on section \ref{ps} as $D_i$.
+Recall that this probability distribution must be chosen in a way that represents our
+current understanding of the biology of the given system. This function might
+be estimated by an expert in the field, it might represent a data set from
+field or laboratory work, or in some cases it may be simply the broadest
+possible set of parameters, in some cases where the actual values are unknown
+or experiments are unfeasible (see fig. \ref{fig:Di}). 
+
+In possession of the distribution function $D_i$, we must sample one point
+from each equally probable interval. There are two approaches used here:
+it is possible to choose a random value from within the interval (as proposed
+by \cite{McKay79}), or instead, we can use the midpoint from each interval 
+\cite{Huntington98}. We will use the second approach here.
+
+The integral of the distribution function is called the cummulative distribution
+function $F_i(x)$. This function relates the values $x$ that the parameter may assume
+with the probability $p$ that the parameter is less than or equal to $x$.
+We will refer to the inverse of the cummulative distribution function, $F_i^{-1}$,
+as the quantile function of the parameter $x_i$, as it associates every probability
+value $p$ in the range $(0,1)$ to the value $x$ such that $P(x_i \leq x) = p$.
+We divide the range $(0,1)$ in $N$ intervals of size $1/N$, and use this quantile
+function to determine the $x$ values as the midpoints of each interval. 
+Summarizing, we take the $N$ points, represented as $x_{i,k}$, $k \in [1,N]$, 
+from the inverse cummulative distribution $F_i^{-1}(x)$ as:
+
+\begin{equation}
+	x_{i,k} = F_i^{-1}\left( \frac{k-0.5}{N}\right)
+	\label{inverseCDF}
+\end{equation}
+
+\begin{figure}[htpb]
+	\begin{center}
+<<Samples>>=
+par(cex=1.7)
+x<-seq(-3,3,0.01)
+plot(x, dnorm(x), type='l', xlab='Probability distribution of x', ylab='')
+segments(qnorm(0.2), 0, qnorm(0.2), dnorm(qnorm(0.2)))
+segments(qnorm(0.4), 0, qnorm(0.4), dnorm(qnorm(0.4)))
+segments(qnorm(0.6), 0, qnorm(0.6), dnorm(qnorm(0.6)))
+segments(qnorm(0.8), 0, qnorm(0.8), dnorm(qnorm(0.8)))
+text(qnorm(0.1), 0.1, expression(x[5]))
+text(qnorm(0.3), 0.1, expression(x[1]))
+text(qnorm(0.5), 0.1, expression(x[4]))
+text(qnorm(0.7), 0.1, expression(x[2]))
+text(qnorm(0.9), 0.1, expression(x[3]))
+@
+	\end{center}
+	\caption{Sample normal probability distribution, with 5 samples 
+	collected and shuffled. Note that the first sample correspond to the 
+	second interval, the second sample correspond to the fourth interval,
+	and so on.}
+	\label{fig:Samples}
+\end{figure}
+
+The samples from each dimension are subsequently shuffled, to randomize
+the order in which each value will be used
+(see example on figure \ref{fig:Samples}).
+As the samples come from the distributions $D_i$, and are only reordered, their
+(marginal) distribution 
+will remain that of $D_i$. However, the joint distribution
+of the parameters is still not well defined. In particular, this simple shuffling
+may result in some of the parameters to be positively or negatively correlated with
+each others, which might be undesirable. Some techniques have been developed to
+eliminate these correlation terms or to impose different correlations between the
+variables, and will be presented on section \ref{ext}.
+
+It should be noted that, in the mathematical literature, it is usual to refer 
+to a somewhat different object as a Latin Square: this would be a square whose 
+sides are divided in $N$ intervals, and is filled with $N$ different symbols, 
+such that for each row and column there is exactly one occurrence of each 
+symbol. The figure \ref{fig:glassLS} shows an example of one ``full'' Latin 
+Square.
+
+\begin{figure}[htpb]
+	\begin{center}
+		\includegraphics[width=200 pt]{fig/glassLS.png}
+	\end{center}
+	\caption{A stained glass window at the Caius College, Cambridge, 
+	showing a full Latin Square. Notice how there is only one occurence 
+	of each color in each row and in each column.}
+	\label{fig:glassLS}
+\end{figure}
+
+\subsection{Algorithms and extensions}\label{ext}
+As described above, the LH sampling generates an uniform distribution of samples 
+in each parametric dimension. However, there is no guarantee that the correlation 
+between two or more parameters will be zero, and the classical algorithm
+from McKay \cite{McKay79} usually produces correlations as high as 0.3 between
+pairs of factors, which can difficult or even compromise further analyses. In this
+section, we will present one algorithm designed to take into
+account the correlation between the parameter variables \cite{Huntington98}, using
+a single-switch-optimized sample reordering scheme. 
+We will present the general case of prescribing a correlation matrix, and will 
+also present results for the trivial case of zero correlation terms. Other
+methods have been proposed to address this problem \cite{Ye98, Steinberg06, Florian92}, 
+including methods that deal with higher-order correlation terms \cite{Tang98}
+using orthogonal designs. These methods, however, either impose severe 
+restrictions on the number of samples that must be chosen or are too
+computationally intensive. 
+
+In order to obtain the samples with prescribed correlation terms, we define the 
+desired $m \times m$ correlation matrix between the variables, in which 
+$C_{i,j}^*$ stands for the correlation between $x_i$ and $x_j$.
+
+The next step is done iteratively for each parameter dimension, starting with the second one. Suppose that the method has already been applied to $i=1,2,....,l-1$, 
+and we will apply it to $i=l$. The square sum of the errors in the correlations 
+between $x_l$ and the anterior parameters is given by
+
+\begin{equation}
+	E = \sum_{k=1}^{l-1} \left( C_{l, k} - C_{l,k}^* \right) ^2
+	\label{Error}
+\end{equation}
+
+Afterwards, we calculate, for each pair of values sampled from the parameter 
+dimension $l$, what would be the error in the correlation if they were switched.
+The pair that corresponds to the greater error reduction is then switched, and
+the procedure is repeated iteratevely until the error is acceptably small.
+
+Here, we also consider how to treat a constrained parameter space, as described
+in section \ref{ps} (the case in which $a_1+a_2 <180^o$). Clearly, this
+parameter space is not square, in the sense that, if we define the ranges of
+the variables $a_1$ and $a_2$ independently as $(0,180)$, not all combinations
+of parameters will be meaningful. What can be done in this case is to create
+a new parameter $\hat{a_1}$, defined as
+\begin{equation}
+	\hat{a_1} = \frac{a_1}{180-a_2}
+	\label{hata1}
+\end{equation}
+
+This new parameter varies between 0 and 1, and all combinations of 
+$\hat{a_1}, a_2$ are points from our parameter space. Now, care must be 
+exercised after applying such transformations in order to preserve the marginal
+distributions from the original variables, as exemplified on figure 
+\ref{fig:Trans}.
+
+\setkeys{Gin}{width=1.0\textwidth}
+\begin{figure}[htbp]
+	\begin{center}
+<<Trans, height=3.5>>=
+par(mfrow=c(1,2), xaxs='i', yaxs='i', cex=1, mar=c(4,4.2,2,1))
+N <- 15
+a1 <- rep(qunif((1:N)/N , 0, 180),N)
+a2 <- rep(qunif((1:N)/N , 0, 180),each=N)
+# a1 de 0 a 180, a2 de 0 a 180, equispacados
+plot(c(180,0),c(0,180), xlab=expression(a[1]), ylab=expression(a[2]), type='l', xlim=c(0,180), ylim=c(0,180))
+mtext('a',adj=0, cex=1.5)
+p1 <- a1[a1+a2<179] # rounding errors
+p2 <- a2[a1+a2<179]
+points(p1,p2, pch=4, cex=0.4)
+
+# a2 de 0 a 180, \hat a1 de 0 a 1
+# \hat a1 = f(a1, a2) = a1 / (180-a2)
+plot(0,0, xlab=expression(hat(a)[1]), ylab=expression(a[2]), type='n', xlim=c(0,1), ylim=c(0,180))
+p1 <- p1 / (180-p2)
+points(p1,p2, pch=4, cex=0.4)
+mtext('b',adj=0, cex=1.5)
+@
+	\end{center}
+	\caption{a. The constrained parameter space considered, 
+	with the line representing $a_1+a_2=180$. The symbols represent 
+	a uniform sample taken from the space. b. The transformed parameter 
+	space $\hat{a_1}, a_2$ (see eq. \ref{hata1}), showing the same sampled
+	points.}
+	\label{fig:Trans}
+\end{figure}
+\setkeys{Gin}{width=0.8\textwidth}
+
+\begin{verbatim}
+TODO
+a1 + b*a2 < X
+a1 - b*a2 < X
+a1 * a2 < X -> escala exp
+a1 / a2 < X -> escala log
+cacar envelopes, EcoSim macroecologia
+J Biogeogr
+\end{verbatim}
+
+\begin{figure}[htbp]
+	\begin{center}
+<<TDi>>=
+x<- rnorm(1000); y<- rnorm(1000);
+
+a <-1; K <-0.1;
+par(mfrow=c(2,2))
+plot(x[ x+a*y < K], y [ x+a*y < K], main="x+ay < K", xlab="", ylab="")
+plot(x[ x * y < K], y [ x * y < K], main="xy < K", xlab="", ylab="")
+plot(x[ x * y > K], y [ x * y > K], main="xy > K", xlab="", ylab="")
+plot(x[ x / y < K], y [ x / y < K], main="x/y < K", xlab="", ylab="")
+@
+	\end{center}
+	\caption{Four samples of constraints on the parameter space,
+	and the general shape imposed by those constraints.}
+	\label{fig:TDi}
+\end{figure}
+
+\subsection{Stochastic models}
+When dealing with stochastic models, like several relevant individual based 
+models (IBM), the questions presented become complicated by the fact that 
+running the same model with exactly the same parameters might wield largely 
+different results, both quantitative and qualitatively. In this scenario,
+we must be able to diferentiate the variation in responses due to the variation
+of the parameters with the variation in response due to stochastic effects.
+
+We will proceed first by defining the variation due to the input parameters as
+the epistemic uncertainty. This uncertainty arises from the fact that we do
+now know what are the correct values for a given parameter in a given natural
+system, and is related to the probability distributions $D_i$, presented 
+in section \ref{PSE}. The variation in the behaviour of the model which is
+caused by stochastic effects is called stochastic uncertainty, and is inherent
+to the model. 
+
+It is important to note that the two uncertainty components are impossible
+to disentangle in general stochastic models. This has prevented the general
+analysis of such models until recently. In recent years, studies have shown
+that the important parameters and their effects can be correctly identified
+by running such models repeatedly for the same input variables and then
+averaging the output \cite{Segovia04}, given that
+the following conditions are respected:
+
+\begin{itemize}
+	\item Sample sizes should be large, relative to the aleatory
+		uncertainty.
+	\item The output values should be unimodal, that is, the output values
+		for a given parameter choice should be clustered around a 
+		central value.
+	\item The correct analysis tools should be used (as will be
+		discussed on session \ref{QuantAnal}).
+\end{itemize}
+
+\subsection{Adaptative refinement}
+After generating the $N$ Latin Hypercube samples and running the model with
+the determined parameters, it may become necessary to increase the number
+of samples. In simple Monte Carlo simulations, increasing the number of samples
+can be done easily by generating new random points and running the model with
+them. However, to maintain the desirable properties of the Latin Hypercube,
+care must be taken to (1) keep the marginal distribution of the points equal
+to the parameter original distibution and (2) keep the correlation terms
+equal to zero, or equal to the ascribed values. 
+
+We refer to this increase in the number of sample points as a sampling
+refinement, and as it is done on demand after examining the already 
+generated outputs, we refer to it as an adaptative sampling refinement.
+This technique can be applied while estimating Iman and Conover's TDCC,
+which will be used to determine the optimum $N$ size (section \ref{TDCC}).
+
+Our construction will start by defining a new sequence of values $\gamma_i$
+for every parameter dimension, with 
+\begin{eqnarray}
+	\gamma_{i,k} = F_i^{-1}\left( \frac{k-1/6}{N}\right) \\
+	\gamma_{i,2k} = F_i^{-1}\left( \frac{k-5/6}{N}\right)
+	\label{gamma}
+\end{eqnarray}
+
+For every $k \in [1,N]$, and so $\gamma_i$ has $2N$ elements. Following this,
+Huntington \& Lyrintzis' algorithm \cite{Huntington98} is applied on the set of
+$\gamma_i$ in order to minimize the correlation between them.
+The extended Latin Hypercube is formed by concatenating the original $x_i$
+values to the $\gamma_i$ values, and obtaining a cube with $3N$ samples
+defined as $z_i$, of which just $2N$ must be calculated.
+
+The extended Latin Hypercube presents the following desirable 
+properties:
+\begin{itemize}
+		\item The expected sample mean is equal to the distribution mean
+			for each parameter: 
+			$ \left< \bar z_i \right> = \left< D_i \right>$
+		\item The expected sample variance is equal to the distribution 
+			variance for each parameter:
+			$ \left< \bar \sigma(z_i) \right> = \left< \sigma(D_i) \right> $
+		\item The correlation between any two variables is 
+			bounded by the following expression:
+			$ \rho^2_{z_iz_j} \leq \rho^2_{x_ix_j} + \rho^2_{\gamma_i\gamma_j} $
+\end{itemize}

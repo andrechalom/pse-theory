@@ -1,0 +1,118 @@
+\SweaveOpts{fig=T,echo=F}
+\section{Quantitative output analysis}\label{QuantAnal}
+\subsection{Morris screening}\label{Morris}
+A first problem in parameter space exploration is to simply 
+determine which parameters affect the model output, irrespective of our ability
+to estimate their value or distribution.
+
+In order to identify the parameters of interest, Morris \cite{Morris91} presented
+a series of sampling plans to determine the importance of the parameters using
+a number of model evaluations on the same order that the number of parameters.
+The goal of the Morris screening is to classify parameters as having effect that
+are (a) negligible, (b) linear or (c) other (non-linear or involved in interactions
+with other terms). In order to do so, the method investigates the mean
+and variance the effect of $x_i$ on the output $y$. A large mean effect
+indicates a parameter with a relevant effect, while a large variance indicates 
+either non-linear effects or relevant interactions with other parameters.
+
+Morris screening is specially useful for identifying parameters that play no role
+at all on the model output.
+
+\subsection{Uncertainty analysis}
+% TODO: Incluir mais discussao sobre as propriedades estatisticas do resultado. Em especial, como a dist das saidas converge? Quais sao as condicoes? O que acontece com os termos de correlacao?
+The next question we would like to answer, in the context of quantitative 
+analysis, is what is the probability distribution of the response variable $y$
+given that we know the join probabilities of the input parameters $\bu{x}$ 
+(see definitions in section \ref{PSE}), which is the subject of uncertainty
+analysis \cite{Helton03}. 
+
+This can be done by fitting a density curve to the output $y$ or an empiric
+cumulative distribution function (ecdf). If there is any theoretical reason
+to believe that the distribution of $y$ should follow one given distribution,
+it is possible to fit this function to the actual output data and estimate
+the distribution parameters. If the joint distribution of the input parameters
+correspond to the actual probability of some natural system to exhibit some
+given set of parameter values (as opposed to the case where we have no 
+biologically 
+relevant estimates for some parameters), the estimate represented by the
+density and ecdf functions approaches the actual distribution that the
+variable $y$ should present in nature. This functions may be used, for example,
+to provide confidence intervals on the model responses.
+
+However, this is only the case when the input variables are uncorrelated or
+when enough correlation terms have been taken into account. Smith (\cite{Smith02})
+provides an example where ignoring the correlation terms 
+leads to inaccuracies on the estimation of confidence intervals.
+
+The next reasonable step is to construct and interpret scatterplots relating
+the result to each input parameter. These scatterplots may aid in the visual
+identification of patterns, and altough they cannot be used to ``prove'' 
+any relationship between the model response and input, they may direct the
+research effort to the correct analyses. There are extensive reviews of the
+use of scatterplots to identify the important factors and emerging patterns
+in sensitivity analyses \cite{Kleijnen99}.
+
+We will present here some quantitative analyses tools, aimed at identifying
+increasingly complex patterns in the model responses. It should be stressed
+that no single tool will capture all the relations between the input and
+output. Instead, several tools should be applied to any particular model.
+
+\subsection{Sensitivity analysis}
+The question of ``what is the effect of some combination of parameters to
+the model output'' may be answered by testing the relation between
+the parameters and outputs. 
+There are extensive reviews about detecting these relations after
+generating samples with Latin Hypercubes \cite{Marino08, Kleijnen99}, 
+so we will give just a brief overview. We will first note that
+the methods used must take into account the variation of all the 
+parameters. For example, instead of calculating the correlation between
+the result and some parameter, partial correlation coefficients should
+be used, which
+discount the effect of all other parameters. 
+
+These relations between the result and the parameters may be classified,
+in order of
+increasing complexity, as:
+
+\begin{itemize}
+		\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
+		\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient,
+		\item Trends in central location, for which the Kruskal-Wallis test may be applied (fig. \ref{fig:Kruskal}),
+		\item Trends in variability, for which the FAST method and Sobol' indices may be used,
+		\item Statistical independence, for which the chi-square test may be used
+\end{itemize}
+
+\subsection{Top-down correlation coefficient}\label{TDCC}
+\begin{verbatim}
+TODO?
+Metodo de TDCC do Conover. Pesquisar fonte e descrever
+\end{verbatim}
+
+\begin{figure}[htbp]
+	\begin{center}
+<<Kruskal, height=3.5>>=
+par(mfrow=c(1,2), mar=c(3,2,2,1), pch=4)
+x<-seq(-1,0.97,0.01)
+y<-(x-1)*(x+1)+rnorm(x,0,0.25)
+xcats <- rep(c(1,2), each=length(x)/2)
+K <- kruskal.test(y,xcats)$p.value
+plot(x,y, xlab='', ylab='',main=paste('N = 2, p =',format(K, digits=2)))
+abline(v=0, lty=3)
+ymean = tapply(y,xcats,mean)
+segments(c(-1,0),ymean,c(0,1),ymean, lwd=3)
+xcats <- rep(c(1,2,3), each=length(x)/3)
+K <- kruskal.test(y,xcats)$p.value
+plot(x,y, xlab='', ylab='',main=paste('N = 3, p =',format(K, digits=2)))
+abline(v=-0.333,lty=3); abline(v=0.333,lty=3)
+ymean = tapply(y,xcats,mean)
+segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
+@
+	\end{center}
+	\caption{Example of application of the Kruskal-Wallis test on the
+	same data set, which present a strong quadratic component, by
+	dividing the range in 2 intervals (right) or 3 intervals (left).
+	The dashed lines are the divisions between the intervals, and
+	the strong horizontal lines are the sample means for each 
+	interval.}
+	\label{fig:Kruskal}
+\end{figure}

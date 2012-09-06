@@ -28,26 +28,35 @@ model <- function (x) {
 # Roda o modelo e faz as analises:
 ires <- model(ivars)
 # Partial rank correlation coefficients
-prcc <- pcc(ivars, ires, nboot=100, rank=TRUE)
+iprcc <- pcc(ivars, ires, nboot=1000, rank=TRUE)
 # Sorted by PRCC:
 order(- iprcc$PRCC$original) -> O
 iprcc$X <- iprcc$X[,O]
 iprcc$PRCC <- iprcc$PRCC[O,]
 # Morris Screening Method
+maxes <- apply(ivars, 2, max)
+maxes[maxes<1] <- 1
+mines <- apply(ivars, 2, min)
+mines[mines>0] <- 0
 imorr <- morris (model   = model, 
 				factors = names(ivars),
-				r       = 20,
-				design  = list(type="simplex", scale.factor=1))
+				r       = 2,
+				design  = list(type="simplex", scale.factor=1),
+				binf = mines,
+				bsup = maxes
+				)
+
 # Analise eFAST
 qarg <- list()
 for (i in 1:dim(ivars)[2]) 
 		qarg[[i]] <- list(mean=mean(ivars[,i]), sd=sd(ivars[,i]))
-fast <- fast99 (model   = model, 
+ifast <- fast99 (model   = model, 
 				factors = names(ivars),
-				n       = 350,
+				n       = 66,
 				q       = "qnorm", 
 				q.arg   = qarg
 				)
+
 save(ires, iprcc, imorr, ifast, ivars, file="Independent.Rdata")
 
 #################### PARTE 2: DEPENDENTE DE DENSIDADE
@@ -93,24 +102,31 @@ myenv <- new.env()
 assign("Gl",0, envir=myenv)
 dres <- model(dvars)
 # Partial rank correlation coefficients
-dprcc <- pcc(dvars, dres, nboot=100, rank=TRUE)
+dprcc <- pcc(dvars, dres, nboot=1000, rank=TRUE)
 # Sorted by PRCC:
 order(- dprcc$PRCC$original) -> O
 dprcc$X <- dprcc$X[,O]
 dprcc$PRCC <- dprcc$PRCC[O,]
 # Morris Screening Method
+# Corrige (bug?) com "a" variando de 0 a 0.005
+maxes <- apply(dvars, 2, max)
+maxes[maxes<1] <- 1
+mines <- apply(dvars, 2, min)
+mines[mines>0] <- 0
 dmorr <- morris (model   = model, 
 				factors = names(dvars),
-				r       = 20,
-				design  = list(type="simplex", scale.factor=1))
+				r       = 2,
+				design  = list(type="simplex", scale.factor=1),
+				binf = mines,
+				bsup = maxes
+				)
+
 # Analise eFAST
 qarg <- list()
 for (i in 1:dim(dvars)[2]) 
 		qarg[[i]] <- list(mean=mean(dvars[,i]), sd=sd(dvars[,i]))
-assign("Gl",0, envir=myenv)
-dfast <- fast99 (model   = model, 
-				factors = names(dvars),
-				n       = 66,
+assign("Gl",0, envir=myenv); 
+dfast <- fast99 (model   = model, factors = names(dvars), n = 66,				
 				q       = "qnorm", 
 				q.arg   = qarg
 				)

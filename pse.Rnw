@@ -39,10 +39,29 @@ Affiliation    & Department of Ecology, \\
 
 \mbox{}\vspace{-14mm}\mbox{}
 
-\input capitulo1.tex
+\input abstract.tex
+
+\cleardoublepage
+\tableofcontents
+\cleardoublepage
+
+\input intro.tex
+\input sampling.tex
+\input qualanal.tex
+\input quantanal.tex
+\input leslie.tex
+\input revlit.tex
+\input ack.tex
+
+\cleardoublepage
+\appendix
+\input appendix.tex
 
 \cleardoublepage
 \bibliographystyle{plain}
 \bibliography{chalom}
+
+% Para o capitulo 2:
+% TODO Ler Bill Shipley. Gancho para artigo do May, apud Taylor (J theor Biol 88 (135) 543--568
 
 \end{document}
