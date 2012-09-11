@@ -1,5 +1,6 @@
 \SweaveOpts{fig=T,echo=F}
 \section{Sensitivity of a density-dependent population matrix model}
+\subsection{Model description}
 In this section, we demonstrate the uses and advantages of the methods
 outlined in the previous sections by performing sensitivity analyses
 on a density-dependent model of the tropical palm {\em Euterpe edulis}
@@ -24,7 +25,8 @@ section \ref{LHS}). All code used is freely available on the web.
 
 The models analysed are based on a Lefkovitch matrix with seven size
 classes. The
-matrix used on the density-independent model is, with $P_i$ being the 
+matrix used on the density-independent model is, %REESCREVER
+with $P_i$ being the 
 probability of a tree surviving and remaining in the same class
 (statis), $G_i$
 being the probability of a tree surviving and growing to the next class,
@@ -47,7 +49,7 @@ and $F_i$ being the number of offspring produced per reproductive palm:
 
 As usually done on this modelling approach, the dominant eigenvalue 
 $\lambda$ was calculated for this matrix. This value is related to the
-predicted population growth rate.
+predicted population growth rate. %PRIMEIRO o QUE EH, DEPOIS, O QUE EU FIZ
 
 The density dependent model uses the same matrix, but now the growth
 term of the first size class is a decreasing function of the population
@@ -57,6 +59,9 @@ density:
 		G_1 = \frac{ G_m }{1+ a N_1} \exp \left(- \frac{z}{\rho} N_7 \right)
 		\label{G_1}
 \end{equation}
+
+% OQUE EH N_1 E N_7
+% exPLICAR A EQ
 
 The parameters $G_m$ and $a$ represent the maximum transition 
 rate at low densities and the strength of reduction in $G_1$ with 
@@ -76,13 +81,15 @@ assuming a normal distribution of parameters. In the case of the density depende
 parameters $Gm$, $z$ and $a$, only the mean estimate was given on the paper,
 so conservative values were used for the standard deviations.
 
+\subsection{Results}
 The first analysis to be performed in the models is the Morris screening,
-presented on figure \ref{fig:Morris}. This analysis (which required 30
-model runs for each model), shows that the fecundity parameter $F_7$ is 
+presented on figure \ref{fig:Morris}. This analysis, which required 30
+model runs for each model, shows that the fecundity parameter $F_7$ is 
 dominant on the output for both models. However, there are significant differences
 on the intermediate effect sizes, as for the density-independent model, the next
 most important parameters are the growth probabilities, with statis probabilities
-playing little role. In the density-dependent model, this pattern is not evident. Instead, the next most important parameter after $F_7$ seems to be
+playing little role. In the density-dependent model, this pattern 
+is not evident. Instead, the next most important parameter after $F_7$ seems to be
 $z$, which represent the size of the adult canopy, and is related to 
 the density dependence.
 Altough some variables have very little impact, no variable is completely 
@@ -112,7 +119,8 @@ mtext('(b)', at=min(mu))
 \end{figure}
 
 Subsequently, we generate a Latin Hypercube consisting of all relevant variables
-for each model and run the models for each of the 650 combinations of parameters. The 
+% ESCALA DE MORRIS
+for each model and run the models for each of the 650 combinations of parameters. The %NHE NHE NHE NHE
 distribution of the model responses can be seen as representing the distribution
 of eigenvalues and total population size from real species that are well represented
 by these models. Figure \ref{fig:ecdf} shows these distributions, which suggest that
@@ -124,7 +132,6 @@ Considering the density-dependent
 model, the mean stable population predicted (mean $2769 \pm 1877$ sd trees 
 in each $25m^2$ plot), 
 is comparable to, altough slightly higher, the population  actually measured by the study ($1960 \pm 560$ trees per plot, mean and sd calculated over three years).
-
 
 We generate scatterplots between the result from the models and each 
 independent parameter, in order to visually identify the relations
@@ -290,9 +297,30 @@ by first-order and linear relations with $F_7$ and the growth terms, which shoul
 as a surprise, as the matrix growth model is a linear model.
 However, the density-dependent model is much more poorly predicted by linear terms alone:
 now the interaction and linear terms (present in the total order estimate) are responsible
-for the majority of the model output, in particular interactions involving $S_7$, the
+for the majority of the model output, in particular interactions involving $P_7$, the
 statis for adult plants. The eFAST analysis is substantially more intensive
 in terms of computer time. The analyses presented here required 
 924 and 1056 runs of the simulations, respectively.
 
-TODO: discutir esses resultados
+% COERENCIA ENTRE MAIN EFFECT E FIRST ORDER
+
+\subsection{Discussion}
+Discutir! Incuir comparacao com os indices de elasticidade
+
+\subsection{Conclusions}
+
+The results from the uncertainty and sensitivity analyses presented show some of the 
+advantages from the methodology described in this work that are unavailable to the 
+usual framework used in ecological studies. First, we have been able to quantify the
+uncertainty in the assymptotic growth rate (related to $\lambda$) and the stable
+population size related to the uncertainty in the model inputs. Also, we provide
+a common framework to investigate side-by-side the linear and non-linear matrix models,
+from which we were able to point out the similarities and discrepancies between the models.
+Analyses based on matrix elasticities are also unable to investigate the role played by
+parameters not directly present on the matrix, as the size of the adult trees canopy $z$
+in our case.
+Finally, our approach permits the identification and quantifiation of relative importance
+of non-linearities and interactions between
+the input parameters in determining the model's outcome.
+
+% conhecimento previo

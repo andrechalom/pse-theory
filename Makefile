@@ -9,8 +9,17 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex abstract.tex intro.tex s
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 	evince ${PROJ}.pdf > /dev/null &
 
-leslie.tex: leslie.Rnw R/Independent-unif.Rdata R/Dependent-unif.Rdata R/pse.R
+leslie.tex: leslie.Rnw R/Independent.Rdata R/Dependent.Rdata R/pse.R
 	./mkcap.sh leslie
+
+abstract.tex: abstract.Rnw
+	./mkcap.sh abstract
+
+ack.tex: ack.Rnw
+	./mkcap.sh ack
+
+revlit.tex: revlit.Rnw
+	./mkcap.sh revlit
 
 intro.tex: intro.Rnw
 	./mkcap.sh intro
@@ -31,4 +40,4 @@ pse.tex: pse.Rnw
 	R CMD Sweave pse.Rnw
 
 clean:
-	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf intro.tex sampling.tex ${PROJ}.tex *.toc qualanal.tex quantanal.tex appendix.tex leslie.tex
+	rm -rf *.dvi *.bbl *.blg *.log *.aux *~ *.pdf *.toc *.tex
