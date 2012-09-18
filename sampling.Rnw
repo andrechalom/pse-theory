@@ -126,7 +126,8 @@ In possession of the distribution function $D_i$, we must sample one point
 from each equally probable interval. There are two approaches used here:
 it is possible to choose a random value from within the interval (as proposed
 by \cite{McKay79}), or instead, we can use the midpoint from each interval 
-\cite{Huntington98}. We will use the second approach here.
+\cite{Huntington98}. As the statistical properties of the generated samples
+are very similar, we will use the second approach here.
 
 The integral of the distribution function is called the cummulative distribution
 function $F_i(x)$. This function relates the values $x$ that the parameter may assume

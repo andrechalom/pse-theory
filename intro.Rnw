@@ -27,8 +27,8 @@ model runs.
 
 The disciplines of uncertainty and sensivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
-developed in the 1980 and 1990 decades by researches such as Saltelli, 
-Helton, Iman, Conovoer, Sobol' and McKay. %TODO citations!
+developed in the 1980 and 1990 decades by researchers such as Saltelli, 
+Helton, Iman, Conover, Sobol' and McKay. 
 More recently, these analyses
 have been 
 successfully applied to biological models, in order to explore the possible 

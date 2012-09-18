@@ -25,12 +25,7 @@ section \ref{LHS}). All code used is freely available on the web.
 
 The models analysed are based on a Lefkovitch matrix with seven size
 classes. The
-matrix used on the density-independent model is, %REESCREVER
-with $P_i$ being the 
-probability of a tree surviving and remaining in the same class
-(statis), $G_i$
-being the probability of a tree surviving and growing to the next class,
-and $F_i$ being the number of offspring produced per reproductive palm:
+matrix used on the density-independent model is
 
 \begin{equation}
 		A = \left[
@@ -47,9 +42,15 @@ and $F_i$ being the number of offspring produced per reproductive palm:
 		\label{LefMatrix}
 \end{equation}
 
-As usually done on this modelling approach, the dominant eigenvalue 
-$\lambda$ was calculated for this matrix. This value is related to the
-predicted population growth rate. %PRIMEIRO o QUE EH, DEPOIS, O QUE EU FIZ
+Here, $P_i$ is the 
+probability of a tree surviving and remaining in the same class
+(statis), $G_i$
+being the probability of a tree surviving and growing to the next class,
+and $F_i$ being the number of offspring produced per reproductive palm.
+
+The dominant eigenvalue of this matrix is related to the predicted population
+growth rate. We calculated the dominant eigenvalue for this matrix, as usually
+done on this modelling approach.
 
 The density dependent model uses the same matrix, but now the growth
 term of the first size class is a decreasing function of the population
@@ -60,24 +61,50 @@ density:
 		\label{G_1}
 \end{equation}
 
-% OQUE EH N_1 E N_7
-% exPLICAR A EQ
-
+Here, $N_1$ and $N_7$ represent the number of seedlings and adults per patch.
 The parameters $G_m$ and $a$ represent the maximum transition 
 rate at low densities and the strength of reduction in $G_1$ with 
 increasing seedling densities. The remaining parameters $z$ and $\rho$
 represent the crown area of an adult tree and the plot size (which is 
 fixed as 25$m^2$), and their ratio is related to the reduction of
 recruitment due to the presence of adults, due to the fact that few
-seedlings are able to grow underneath the canopy of an adult.
+seedlings are able to grow underneath the canopy of an adult. 
 
 As this model does not produce any static matrix, it is not meaningful to
 calculate any eigenvalue. Instead, the total population corresponding to
 the stable population distribution is used as model output.
 
+A na\"ive approach to estimating the parameter sensitivities of this model would 
+use the stasis, growth and fecundities given. However, this is not possible,
+as the probabilities of stasis and growth for a given class are not independent, as
+$P_i+G_i \leq 1$ for all classes. As discussed on section \ref{ps}, we need to
+use an alternative parametrization for this model.
+
+We will represent by $s_i$ the probability of survival for each class, calculated
+as $s_i = P_i+G_i$, and by lowercase $g_i$ the probability of growth, calculated
+as $g_i = (s_i - P_i) / s_i$. Using the notation for complementary probabilities
+$\overline{g_i} = 1-g_i$, we can now write the Lefkovitch matrix as:
+
+\begin{equation}
+		A = \left[
+		\begin{array} {ccccccc}
+				s_1 \cdot \overline{g_1} &   0 &   0 &   0 &   0 &   0 & F_7 \\
+				s_1 \cdot g_1 & s_2 \cdot \overline{g_2} &   0 &   0 &   0 &   0 &   0 \\
+				  0 & s_2 \cdot g_2 & s_3 \cdot \overline{g_3} &   0 &   0 &   0 &   0 \\
+				  0 &   0 & s_3 \cdot g_3 & s_4 \cdot \overline{g_4} &   0 &   0 &   0 \\
+				  0 &   0 &   0 & s_4 \cdot g_4 & s_5 \cdot \overline{g_5} &   0 &   0 \\
+				  0 &   0 &   0 &   0 & s_5 \cdot g_5 & s_6 \cdot \overline{g_6} &   0 \\
+				  0 &   0 &   0 &   0 &   0 & s_6 \cdot g_6 & s_7 
+		\end{array}
+		\right]
+		\label{LefMatrixReparam}
+\end{equation}
+
 The models have, respectively, 14 and 16 parameters. All analyses have 
 been done with mean and standard deviation calculated from Silva Matos paper,
-assuming a normal distribution of parameters. In the case of the density dependence
+assuming a normal distribution of parameters truncated at the $[0,1]$ interval
+for probabilites, and on $[0,+\inf)$ for the other parameters.
+In the case of the density dependence
 parameters $Gm$, $z$ and $a$, only the mean estimate was given on the paper,
 so conservative values were used for the standard deviations.
 

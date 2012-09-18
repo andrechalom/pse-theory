@@ -1,5 +1,7 @@
 source("pse.R")
+source("getData.R")
 library(sensitivity)
+library(msm)
 # Hipercubo gerado de tamanho 650
 load("leslie.Rdata")
 
@@ -8,15 +10,15 @@ ivars <- vars[,1:14]
 
 # Gera a matriz de Leslie
 # Calcula o autovalor dominante
-LeslieIndep <- function (p11, p17, p21, p22, p32, p33, p43, p44, p54, p55, p65, p66, p76, p77) {
+LeslieIndep <- function (s1, F7, g1, s2, g2, s3, g3, s4, g4, s5, g5, s6, g6, s7) {
 	L <- matrix(
-			c(p11,   0,   0,   0,   0,   0, p17,
-			  p21, p22,   0,   0,   0,   0,   0,
-		        0, p32, p33,   0,   0,   0,   0,
-			    0,   0, p43, p44,   0,   0,   0,
-			    0,   0,   0, p54, p55,   0,   0,
-			    0,   0,   0,   0, p65, p66,   0,
-			    0,   0,   0,   0,   0, p76, p77), nrow=7, ncol=7, byrow=TRUE)
+			c(s1*(1-g1),   0,   0,   0,   0,   0, F7,
+			  s1*g1, s2*(1-g2),   0,   0,   0,   0,   0,
+		        0, s2*g2, s3*(1-g3),   0,   0,   0,   0,
+			    0,   0, s3*g3, s4*(1-g4),   0,   0,   0,
+			    0,   0,   0, s4*g4, s5*(1-g5),   0,   0,
+			    0,   0,   0,   0, s5*g5, s6*(1-g6),   0,
+			    0,   0,   0,   0,   0, s6*g6, s7), nrow=7, ncol=7, byrow=TRUE)
 	result <- Mod(eigen(L)$values[1])
 	return (result);
 }
@@ -27,12 +29,14 @@ model <- function (x) {
 }
 # Roda o modelo e faz as analises:
 ires <- model(ivars)
+
 # Partial rank correlation coefficients
 iprcc <- pcc(ivars, ires, nboot=1000, rank=TRUE)
 # Sorted by PRCC:
 order(- iprcc$PRCC$original) -> O
 iprcc$X <- iprcc$X[,O]
 iprcc$PRCC <- iprcc$PRCC[O,]
+
 # Morris Screening Method
 maxes <- apply(ivars, 2, max)
 maxes[maxes<1] <- 1
@@ -47,13 +51,28 @@ imorr <- morris (model   = model,
 				)
 
 # Analise eFAST
-qarg <- list()
-for (i in 1:dim(ivars)[2]) 
-		qarg[[i]] <- list(mean=mean(ivars[,i]), sd=sd(ivars[,i]))
+
+qarg <- list(
+			 list(mean=sobrevmeans[1], sd=sobrevsds[1], lower=0, upper=1),
+			 list(mean=fertilitymean, sd=fertilitysd, lower=0, upper=500),
+			 list(mean=realgrowthmeans[1], sd=realgrowthsds[1], lower=0, upper=1),
+			 list(mean=sobrevmeans[2], sd=sobrevsds[2], lower=0, upper=1),
+			 list(mean=realgrowthmeans[2], sd=realgrowthsds[2], lower=0, upper=1),
+			 list(mean=sobrevmeans[3], sd=sobrevsds[3], lower=0, upper=1),
+			 list(mean=realgrowthmeans[3], sd=realgrowthsds[3], lower=0, upper=1),
+			 list(mean=sobrevmeans[4], sd=sobrevsds[4], lower=0, upper=1),
+			 list(mean=realgrowthmeans[4], sd=realgrowthsds[4], lower=0, upper=1),
+			 list(mean=sobrevmeans[5], sd=sobrevsds[5], lower=0, upper=1),
+			 list(mean=realgrowthmeans[5], sd=realgrowthsds[5], lower=0, upper=1),
+			 list(mean=sobrevmeans[6], sd=sobrevsds[6], lower=0, upper=1),
+			 list(mean=realgrowthmeans[6], sd=realgrowthsds[6], lower=0, upper=1),
+			 list(mean=sobrevmeans[7], sd=sobrevsds[7], lower=0, upper=1)
+			 )
+
 ifast <- fast99 (model   = model, 
 				factors = names(ivars),
 				n       = 66,
-				q       = "qnorm", 
+				q       = "qtnorm",
 				q.arg   = qarg
 				)
 
@@ -69,7 +88,7 @@ densdep <- function (Gm, a, N1, z, N7) {
 		G1 <- Gm / (1+a*N1) * exp(-z/rho*N7)
 		return (G1)
 }
-LeslieDep <- function (p11, p17, p22, p32, p33, p43, p44, p54, p55, p65, p66, p76, p77, Gm, a, z) {
+LeslieDep <- function (s1, F7, s2, g2, s3, g3, s4, g4, s5, g5, s6, g6, s7, gm, a, z) {
 		assign("Gl", get("Gl",envir=myenv)+1, envir=myenv)
 		Np <- c(100,rep(1, 6))
 		epsilon = 10e-4
@@ -77,15 +96,15 @@ LeslieDep <- function (p11, p17, p22, p32, p33, p43, p44, p54, p55, p65, p66, p7
 		nIter <- 0 
 		while (exit == FALSE) {
 				nIter <- nIter + 1
-				p21 <- densdep(Gm, a, Np[1], z, Np[7])
-				L <- matrix(
-							c(p11,   0,   0,   0,   0,   0, p17,
-							  p21, p22,   0,   0,   0,   0,   0,
-							  0, p32, p33,   0,   0,   0,   0,
-							  0,   0, p43, p44,   0,   0,   0,
-							  0,   0,   0, p54, p55,   0,   0,
-							  0,   0,   0,   0, p65, p66,   0,
-							  0,   0,   0,   0,   0, p76, p77), nrow=7, ncol=7, byrow=TRUE)
+				g1 <- densdep(gm, a, Np[1], z, Np[7])
+	L <- matrix(
+			c(s1*(1-g1),   0,   0,   0,   0,   0, F7,
+			  s1*g1, s2*(1-g2),   0,   0,   0,   0,   0,
+		        0, s2*g2, s3*(1-g3),   0,   0,   0,   0,
+			    0,   0, s3*g3, s4*(1-g4),   0,   0,   0,
+			    0,   0,   0, s4*g4, s5*(1-g5),   0,   0,
+			    0,   0,   0,   0, s5*g5, s6*(1-g6),   0,
+			    0,   0,   0,   0,   0, s6*g6, s7), nrow=7, ncol=7, byrow=TRUE)
 				newp <- L %*% Np
 				if (sqrt (sum(newp-Np)^2) < epsilon | nIter == 500000 ) exit = TRUE
 				Np <- newp
@@ -101,6 +120,7 @@ model <- function (x) {
 myenv <- new.env()
 assign("Gl",0, envir=myenv)
 dres <- model(dvars)
+
 # Partial rank correlation coefficients
 dprcc <- pcc(dvars, dres, nboot=1000, rank=TRUE)
 # Sorted by PRCC:
@@ -122,12 +142,28 @@ dmorr <- morris (model   = model,
 				)
 
 # Analise eFAST
-qarg <- list()
-for (i in 1:dim(dvars)[2]) 
-		qarg[[i]] <- list(mean=mean(dvars[,i]), sd=sd(dvars[,i]))
+qarg <- list(
+			 list(mean=sobrevmeans[1], sd=sobrevsds[1], lower=0, upper=1),
+			 list(mean=fertilitymean, sd=fertilitysd, lower=0, upper=500),
+			 list(mean=sobrevmeans[2], sd=sobrevsds[2], lower=0, upper=1),
+			 list(mean=realgrowthmeans[2], sd=realgrowthsds[2], lower=0, upper=1),
+			 list(mean=sobrevmeans[3], sd=sobrevsds[3], lower=0, upper=1),
+			 list(mean=realgrowthmeans[3], sd=realgrowthsds[3], lower=0, upper=1),
+			 list(mean=sobrevmeans[4], sd=sobrevsds[4], lower=0, upper=1),
+			 list(mean=realgrowthmeans[4], sd=realgrowthsds[4], lower=0, upper=1),
+			 list(mean=sobrevmeans[5], sd=sobrevsds[5], lower=0, upper=1),
+			 list(mean=realgrowthmeans[5], sd=realgrowthsds[5], lower=0, upper=1),
+			 list(mean=sobrevmeans[6], sd=sobrevsds[6], lower=0, upper=1),
+			 list(mean=realgrowthmeans[6], sd=realgrowthsds[6], lower=0, upper=1),
+			 list(mean=sobrevmeans[7], sd=sobrevsds[7], lower=0, upper=1),
+			 list(mean=gmmean, sd=0.06, lower=0, upper=1),
+			 list(mean=0.01228, sd=0.01228/3, lower=0, upper=1),
+			 list(mean=7, sd=1, lower=0, upper=20)
+			 )
+
 assign("Gl",0, envir=myenv); 
 dfast <- fast99 (model   = model, factors = names(dvars), n = 66,				
-				q       = "qnorm", 
+				q       = "qtnorm", 
 				q.arg   = qarg
 				)
 
