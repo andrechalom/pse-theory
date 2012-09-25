@@ -1,4 +1,14 @@
 library(sensitivity)
+# Para FAST99
+myplot <- function(x, ylim = c(0, 1), ...) {
+		  if (! is.null(x$y)) {
+				      S <- rbind(x$D1 / x$V, 1 - x$Dt / x$V - x$D1 / x$V)
+    colnames(S) <- colnames(x$X)
+	    bar.col <- c("white","grey")
+	    barplot(S, ylim = ylim, col = bar.col)
+		    legend("topleft", c("main effect", "interactions"), fill = bar.col)
+		  }
+}
 ########################CORCORR
 
 # Uso: Para forcar correlacao = 0
@@ -60,11 +70,11 @@ sig <- function (form) {
 	if (f < 0.1) return (".");
 	return (" ");
 }
-oneCorPlot <- function(res, var, name, log, first) {
+oneCorPlot <- function(res, var, name, log, first, ...) {
 		# TODO: Melhorar essa funcao que deforma o primeiro da linha!!
 		if (first) par(mar=c(5,2,4,0.5), yaxt='s')
 		else par (mar=c(5,0.5,4,0.5), yaxt='n')
-	plot(var,res, xlab=name, log=log, ylab= "", )
+	plot(var,res, xlab=name, log=log, ylab= "", ...)
 	l <- lm(res~var)
 	if (!is.na(coefficients(l)[2])) 
 			abline((lm(res~var)))
@@ -77,7 +87,7 @@ corPlot <- function (vars, res, log="", ...) {
 	on.exit(par(opar))
 	for (i in 1:nl) for (j in 1:nc) {
 			index <- (i-1)*nc+j;
-		if (index <= length(vars)) oneCorPlot(res,vars[[index]], names(vars)[index], log, first = (j == 1))
+		if (index <= length(vars)) oneCorPlot(res,vars[[index]], names(vars)[index], log, first = (j == 1), ...)
 	}
 }
 

@@ -112,16 +112,16 @@ so conservative values were used for the standard deviations.
 <<load, fig=FALSE>>=
 source('R/pse.R')
 library(xtable)
-load('R/Leslie.Rdata')
+load('R/leslie.Rdata')
 @
 First, we have generated Latin Hypercubes consisting of all relevant variables
 for each model. Then, the models were run for each combination of parameters. 
-By using SBMA (section \ref{SBMA}), we have determined that the sample size
-required for the density independent model is approximately 200, 
-and 500 for the density dependent.
+By using the SBMA measure of concordance (section \ref{SBMA}), we have determined that the sample size
+required for the density independent model is approximately 100, 
+and between 400 and 500 for the density dependent (Table \ref{tabprcc}).
 
 <<table1, fig=FALSE, results=tex>>=
-print(xtable(prcctab, caption='Comparison of PRCC analyses by sample size for both models'))
+print(xtable(tabprcc, caption='Comparison of PRCC analyses by sample size for both models', label='tabprcc'))
 @
 
 If we presume that the data collected is representative of our knowledge about each
@@ -135,35 +135,35 @@ $\lambda$ calculated from the density-independent model
 (mean \Sexpr{round(mean(LHS5@res),2)}, standard deviation \Sexpr{round(sd(LHS5@res),2)}), 
 is very close to the value found by Silva Matos (mean $1.24 \pm 0.06$ se). 
 Considering the density-dependent
-model, the mean stable population predicted 
-(mean \Sexpr{round(mean(dLHS5@res))}, standard deviation \Sexpr{round(sd(dLHS5@res))}
-sd trees in each $25m^2$ plot), 
-is comparable to, altough slightly higher, the population  
+model, the median stable population predicted 
+(\Sexpr{round(median(dLHS5@res))}
+trees in each $25m^2$ plot), 
+is comparable to, altough higher than, the population  
 actually measured by the study ($1960 \pm 560$ trees per plot, mean and 
 sd calculated over three years).
 
-%TODO FROM HERE
-We generate scatterplots between the result from the models and each 
+We have generated scatterplots between the result from the models and each 
 independent parameter, in order to visually identify the relations
 between the inputs and outputs (figs. \ref{fig:iCorr1} to \ref{fig:dCorr2}). 
 It is clear from these scatterplots that the fecundity plays a major role
-on the population dynamics, and that growth ($G_i$) has a 
-greater impact on the model output than stasis ($P_i$) on the 
+on the population dynamics, and may be involved in non-linear interactions.
+Also, growth probabilities ($g_i$) have a 
+greater impact on the model output than survival ($s_i$) on the 
 density-independent model. This is to be
 contrasted with Silva Matos results, which show all of the elasticities
 to be aproximately equal for all parameters.
 In the density-dependent model, the patterns are much more complex. 
-Growth parameters still seem to be more influent than statis, with
-the parameters reducing the recruitment ($a$ and $z$) showing a clear
+Survival parameters seem to be more influent than growth, and
+the parameters reducing the recruitment ($a$ and $z$) show a clear
 negative effect on the population size. However, there is evidence now
-for non-linear effects of the parameters, in particular $P_7$ and $F_7$.
+for non-linear effects of the parameters, in particular $s_1$ and $F_7$.
 \begin{figure}[htpb]
 		\begin{center}
 <<ECDF>>=
 par(mfrow=c(2,1), cex=0.8, mar=c(3,2,1.5,1))
-plot(ecdf(LHS4), do.points=FALSE, main='')
+plot(ecdf(LHS5), do.points=FALSE, main='')
 mtext('(a)', at=0.95)
-plot(ecdf(dLHS4), do.points=FALSE, main='')
+plot(ecdf(dLHS5), do.points=FALSE, main='', xlim=c(-1000, 20000))
 mtext('(b)', at=-500)
 @
 		\end{center}
@@ -178,7 +178,7 @@ mtext('(b)', at=-500)
 \begin{figure}[htpb]
 		\begin{center}
 <<iCorr1>>=
-corPlot(ivars[,c(3,5,7,9,11,13)], ires)
+corPlot(LHS5@data[,c(3,5,7,9,11,13)], LHS5@res)
 @
 		\end{center}
 		\caption{Scatterplots relating the value of the input parameters
@@ -194,11 +194,11 @@ corPlot(ivars[,c(3,5,7,9,11,13)], ires)
 \begin{figure}[htpb]
 		\begin{center}
 <<iCorr2>>=
-corPlot(ivars[,-c(3,5,7,9,11,13)], ires)
+corPlot(LHS5@data[,-c(3,5,7,9,11,13)], LHS5@res)
 @
 		\end{center}
 		\caption{Scatterplots relating the value of the input parameters
-		of stasis and fecundity to the $\lambda$ calculated
+		of survival and fecundity to the $\lambda$ calculated
 		the output for the density independent model. Each plot shows the
 		Pearson correlation coefficient and significance level: 
 		`.' p < 0.1
@@ -210,7 +210,7 @@ corPlot(ivars[,-c(3,5,7,9,11,13)], ires)
 \begin{figure}[htpb]
 		\begin{center}
 <<dCorr1>>=
-corPlot(dvars[,c(4,6,8,10,12,14:16)], dres)
+corPlot(dLHS5@data[,c(4,6,8,10,12,14:16)], dLHS5@res, ylim=c(0, 20000))
 @
 		\end{center}
 		\caption{Scatterplots relating the value of the input parameter 
@@ -226,10 +226,11 @@ corPlot(dvars[,c(4,6,8,10,12,14:16)], dres)
 \begin{figure}[htpb]
 		\begin{center}
 <<dCorr2>>=
-corPlot(dvars[,-c(4,6,8,10,12,14:16)], dres)
+corPlot(dLHS5@data[,-c(4,6,8,10,12,14:16)], dLHS5@res, ylim=c(0, 20000))
 @
 		\end{center}
-		\caption{Scatterplots relating the value of each input parameter to
+		\caption{Scatterplots relating the value of each input parameter of
+		survival and fecundity to
 		the output for the density dependent model. Each plot shows the
 		Pearson correlation coefficient and significance level: 
 		'.' p < 0.1
@@ -244,12 +245,11 @@ all parameters are being varied between runs. In order to investigate the effect
 each parameter on the outputs discounting the effects of the others, we analyse the
 Partial Rank Correlation Coefficient (PRCC, fig. \ref{fig:PRCC}). The PRCC analysis for the density
 independent model is in agreement with our previous expectations, with $F_7$ being
-the most influential parameter, followed by growth probabilities. Stasis probabilities
-follow with very low correlations. The density dependent model presents us with some
-surprises, as now the stasis parameter for the smallest and largest size classes
-jumped to occupy the second and fourth largest positive PRCCs. The remaining parameters
-follow essentially the same distribution as in the density independent model, with
-the new parameters $a$ and $z$ being strongly negatively correlated with the output.
+the most influential parameter, followed by growth probabilities. Survival probabilities
+follow with low correlations. The density dependent model presents us with some
+surprises, as now the survival parameter for the smallest and largest size classes
+jumped to occupy the second and third largest positive PRCCs. The remaining parameters
+follow the new parameters $a$ and $z$, which are strongly negatively correlated with the output.
 
 \begin{figure}[htpb]
 		\begin{center}
@@ -270,9 +270,9 @@ mtext('(b)', at=1)
 		\begin{center}
 <<fast>>=
 par(mfrow=c(2,1), cex.axis=0.7, mar=c(3,2,1,1))
-plot(ifast, ylim=c(0,0.2)); 
+myplot(fast8); 
 mtext('(a)', at=0)
-plot(dfast); 
+myplot(dfast8); 
 mtext('(b)', at=0)
 @
 		\end{center}
@@ -285,20 +285,33 @@ mtext('(b)', at=0)
 The last analysis we present here is the Extended Fourier Amplitude Sensitivity Test 
 (eFAST, fig. \ref{fig:fast}). This analysis provides an estimation of the fraction of variation
 of model output that can be explained by the individual variation of each parameter 
-(which we call first-order sensitivity),
+(which we call first-order sensitivity, or main effect),
 along with the total variation caused by interaction between that parameter and others
-(total-order sensitivity).
-This analysis reveals that the output of the density independent model is mostly explained
-by first-order and linear relations with $F_7$ and the growth terms, which shouldn't come
-as a surprise, as the matrix growth model is a linear model.
-However, the density-dependent model is much more poorly predicted by linear terms alone:
-now the interaction and linear terms (present in the total order estimate) are responsible
-for the majority of the model output, in particular interactions involving $P_7$, the
-statis for adult plants. The eFAST analysis is substantially more intensive
-in terms of computer time. The analyses presented here required 
-924 and 1056 runs of the simulations, respectively.
+(total-order sensitivity). The interaction term for each parameter is the difference
+between its first and total order sensitivities. 
+The eFAST analysis is substantially more intensive
+in terms of computer time than the previously mentioned. The analyses presented here required 
+\Sexpr{length(fast8$y)} and \Sexpr{length(dfast8$y)} runs of the simulations, respectively.
+Table \ref{tabfast} shows the SBMA measure of concordance between different sizes. Note
+that $N_s$ reported should be multiplied by the number of parameters in each model to
+obtain the total number of simulations executed. Notice that, while the main effect $D_i$
+converge for both model, the total order $D_t$ indices are still variable with large sample sizes.
 
-% COERENCIA ENTRE MAIN EFFECT E FIRST ORDER
+<<table2, fig=FALSE, results=tex>>=
+print(xtable(tabfast, caption='Comparison of eFAST analyses by sample size for both models', label='tabfast'), sanitize.text.function = identity)
+@
+
+This analysis reveals that the output of the density independent model is mostly explained
+by first-order relations (which explain \Sexpr{round(sum(fast8$D1/fast8$V)*100)} \% of the 
+output variation), with $F_7$ and the growth terms being the most important. The importance
+of the linear terms shouldn't come
+as a surprise, as the matrix growth model is a linear model.
+The density-dependent model, which has \Sexpr{round(sum(dfast8$D1/dfast8$V)*100)} \% of 
+the output variation predicted by linear terms, exhibit more complex interactions
+between the terms, in particular interactions involving $s_7$, $g_m$ and $a$,
+the
+survival for adult plants, and the terms associated with competition between seedlings, 
+respectively.
 
 \subsection{Discussion}
 Discutir! Incuir comparacao com os indices de elasticidade
@@ -317,6 +330,6 @@ parameters not directly present on the matrix, as the size of the adult trees ca
 in our case.
 Finally, our approach permits the identification and quantifiation of relative importance
 of non-linearities and interactions between
-the input parameters in determining the model's outcome.
-
-% conhecimento previo
+the input parameters in determining the model's outcome, and allows us to incorporate
+our previous knowledge about the system in specifying the range and distribution 
+of each input parameter.

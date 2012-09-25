@@ -90,8 +90,8 @@ fast4 <- fast99 (model = IndepModel, factors = factors, n = 4*66, q = q, q.arg =
 (fs2 <- sbma(fast2, fast4))
 fast8 <- fast99 (model = IndepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
 (fs3 <- sbma(fast4, fast8))
-fast16 <- fast99 (model = IndepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
-(fs4 <- sbma(fast8, fast16))
+#fast16 <- fast99 (model = IndepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
+#(fs4 <- sbma(fast8, fast16))
 
 
 #################### PARTE 2: DEPENDENTE DE DENSIDADE
@@ -172,18 +172,13 @@ dfast4 <- fast99 (model = DepModel, factors = factors, n = 4*66, q = q, q.arg = 
 (dfs2 <- sbma(dfast2, dfast4))
 dfast8 <- fast99 (model = DepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
 (dfs3 <- sbma(dfast4, dfast8))
-dfast8 <- fast99 (model = DepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
-(dfs3 <- sbma(dfast4, dfast8))
-dfast16 <- fast99 (model = DepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
-(dfs4 <- sbma(dfast8, dfast12))
-
-
+#dfast16 <- fast99 (model = DepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
+#(dfs4 <- sbma(dfast8, dfast16))
 tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500"), Independent=c(s1,s2,s3,s4,s5), Dependent=c(ds1,ds2,ds3,ds4,ds5))
-tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528", "528-1056"), rbind(fs1, fs2, fs3, fs4), rbind(dfs1, dfs2, dfs3, dfs4)))
+#tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528", "528-1056"), rbind(fs1, fs2, fs3, fs4), rbind(dfs1, dfs2, dfs3, dfs4)))
+tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528"), rbind(fs1, fs2, fs3), rbind(dfs1, dfs2, dfs3)))
 names(tabfast) <- c("Size", "Di, independent", "Dt, independent", "Di, dependent", "Dt, dependent");
-
-
-save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, file="leslie.Rdata")
+save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, tabprcc, tabfast, file="leslie.Rdata")
 
 # Modelando res como funcao das variaveis mais importantes:
 # library(bbmle)

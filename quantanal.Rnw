@@ -64,7 +64,12 @@ increasing complexity, as:
 
 Subsections \ref{linear} to \ref{FAST} will provide some
 mathematical background for each method, and section \ref{Leslie} 
-will present examples of use of those tests.
+will present examples of use of those tests. We should stress here that
+the application of one method is not enough to draw conclusions about 
+the relations between the input and output variables, as these techniques
+test different hypotheses, and have different statistical powers. Instead,
+every model should be analysed by a combination of techniques, preferably
+one for each category outlined here.
 
 \subsubsection{Linear relation}\label{linear}
 The most straightforward relationship between $y$ and $x_i$ is the linear, 
@@ -204,17 +209,48 @@ segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
 \end{figure}
 
 \subsubsection{Trends in variability}\label{FAST}
-
 Other than the central tendency of the results, their dispersal may be 
-dependent on the input parameters. 
+dependent on the input parameters. A classical approach which may be used
+to test whether the dispersal of the output is related to any input
+parameter is to divide the distribution of $x_i$ must be divided 
+into a number $N_{test}$ of disjoint intervals and group the model response
+$y$ with respect to these intervals, as done on the Kruskal-Wallis test.
+In this case, the ANOVA F statistic can be used to test for equality 
+between the of $y$ conditional to each class \cite{Kleijnen99}.
 
-Two methods are used: eFAST \cite{Saltelli99} and Sobol' \cite{Archer97}.
-\begin{verbatim}
-TODO?
-Descrever eFAST
-ANOVA-like SOBOL
-Kleijnen p17
-\end{verbatim}
+A similar approach, which we will use, is to employ the eFAST indices
+\cite{Saltelli99, Saltelli04},
+which is a variance decomposition method based on the FAST and
+Sobol' indices. While the Sobol' indices were described in 1969, in Russian,
+FAST was developed by Cukier et al. in 1973, and both are identical in all
+but one computation \cite{Archer97}. 
+
+These methods estimate what fraction of the output variance can be explained
+by variation in each parameter $x_i$, which is called the {\em first-order 
+sensitivity of $x_i$} or {\em main effect of $x_i$}. The method estimates
+as well the fraction which is explained by 
+the higher-order interactions between $x_i$ and all other parameters.
+The sum of all terms related to $x_i$ is called the {\em total-order
+sensitivity of $x_i$}. 
+
+The eFAST method estimates the main effect of each parameter by chosing 
+a periodic function $f_i(x_i)$ for each parameter, where the 
+frequency $\phi_i$ of
+each function is distinct, and should, in theory, be incommensurable.
+Each of this functions is sampled $N_s$ times, and a Fourier analysis
+is applied to the model output. The Fourier coefficients at each frequency
+$\phi_i$ is related to the main effect of the variable $x_i$. The total
+order sensitivity of $x_i$ is then calculated as the fraction of the
+variation which is not explained by the complimentary of $x_i$ (that is,
+all parameters but this one).
+
+There are two things that should be noted here about eFAST indices. The
+first one is that the eFAST calculation does not involve the LHS sampling
+scheme, and may require more model evaluations. Also, this method produces
+small positive total-order sensitivity estimates even for parameters 
+which do
+not play any role on the model output, as many numeric approximations are
+involved. 
 
 \subsection{Measuring the concordance with increasing sample size}
 \label{SBMA}
