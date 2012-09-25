@@ -1,3 +1,4 @@
+library(sensitivity)
 ########################CORCORR
 
 # Uso: Para forcar correlacao = 0
@@ -43,28 +44,6 @@ LHScorcorr <- function (vars, COR = matrix(0,dim(vars)[2],dim(vars)[2]), l = 2, 
 }
 ###################################
 
-### Geradores das amostragens e funcoes acessorias:
-LHSsample <- function (N, qprob=qunif, ...) { # name is required for backward compat only
-	pos <- qprob((1:N)/N - 1/N/2, ...)
-	pos <- sample(pos);
-	attr(pos,"distribution") <- qprob # LHSextends depende desse attr
-#	attr(pos,"max") <- qprob(0.99, ...)
-#	attr(pos,"min") <- qprob(0.01, ...)
-#	attr(pos,"name") <- name
-	return (pos);
-}
-
-LHSextend <- function (old, ...) {
-	qprob <- attr(old, "distribution")
-	newpos <- qprob(c((1:N)/N - 5/N/6, (1:N)/N - 1/N/6), ...)
-	newpos <- sample(newpos)
-	attr(newpos,"distribution") <- qprob
-	#     attr(newpos,"max") <- attr(old, "name")
-	#     attr(newpos,"min") <- attr(old, "name")
-	#     attr(newpos,"name") <- attr(old, "name")
-	return (newpos);
-}
-
 # Dada uma amostragem gerada por sample*, devolve os limites de plotagem para a variavel
 limits <- function (pos) {
 		return (c(min(pos), max(pos)))
@@ -95,11 +74,11 @@ corPlot <- function (vars, res, log="", ...) {
 	nl <- floor(sqrt(length(vars)))
 	nc <- ceiling(length(vars)/nl)
 	opar <- par(mfrow=c(nl,nc), pch='.', ...)
+	on.exit(par(opar))
 	for (i in 1:nl) for (j in 1:nc) {
 			index <- (i-1)*nc+j;
 		if (index <= length(vars)) oneCorPlot(res,vars[[index]], names(vars)[index], log, first = (j == 1))
 	}
-	par(opar)
 }
 
 # Funcao acessoria - nao eh para uso externo
@@ -127,6 +106,7 @@ oneTestPlot <- function(p1, p2, test, convex=FALSE, p1name, p2name) {
 testPlot <- function(vars, test, convex=FALSE, ...) {
 	l <- length(vars)-1
 	opar <- par(mfrow=c(l,l), ...)
+	on.exit(par(opar))
 	for (i in 1:l) {
 		for (j in (l+1):2) {
 			if (i >= j) {
@@ -136,7 +116,6 @@ testPlot <- function(vars, test, convex=FALSE, ...) {
 			}
 		}
 	}
-	par(opar)
 }
 
 oneGradPlot <- function (p1, p2, res, p1name, p2name) {
@@ -152,6 +131,7 @@ oneGradPlot <- function (p1, p2, res, p1name, p2name) {
 gradPlot <- function(vars, res, ...) {
 	l <- length(vars)-1
 	opar <- par(mfrow=c(l,l), ...)
+	on.exit(par(opar))
 	for (i in 1:l) {
 		for (j in (l+1):2) {
 			if (i >= j) {
@@ -161,39 +141,99 @@ gradPlot <- function(vars, res, ...) {
 			}
 		}
 	}
-	par(opar)
 }
 
-# onePredPlot <- function(p1, p2, c0, c1, c2, res) {
-#     p1pred <- rep(1:N/N*(limits(p1)[2]-limits(p1)[1]) + limits(p1)[1] - 1/N*(limits(p1)[2]-limits(p1)[1])/2, N)
-#     p2pred <- rep(1:N/N*(limits(p2)[2]-limits(p2)[1]) + limits(p2)[1] - 1/N*(limits(p2)[2]-limits(p2)[1])/2, each=N)
-#     prd <- c0 + p1pred*c1 + p2pred*c2
-# # # Normalizacao
-#     Max <- max(res)
-#     Min <- min(res)
-#     prd <- (prd-Min) / (Max-Min)
-#     prd[prd < 0] <- 0
-#     prd[prd > 1 ] <- 1
-#     plot(0,0, xlim=limits(p1),ylim=limits(p2),xlab=paste("Valores de ",attr(p1,"name")),ylab=paste("Valores de ",attr(p2,"name"))) 
-#     points(p1pred,p2pred,col=rgb(prd,0,0),pch=15)
-#     points(p1,p2,col=rgb((res-Min)/(Max-Min),0,0),pch=23)
-# }
-# 
-# predPlot <- function(vars, res, model, ...) {
-#     l <- length(vars)-1
-#     opar <- par(mfrow=c(l,l), ...)
-#     model$coefficients -> cf
-#     for (i in 1:l) {
-#         for (j in (l+1):2) {
-#             if (i >= j) {
-#                 plot.new()
-#             } else {
-#                 rtmp <- res
-#                 for (k in 0:l+1) { if(k != i & k != j) {
-#                     rtmp <- rtmp - cf[k+1] * mean(vars[[k]])  } }
-# onePredPlot(vars[[j]],vars[[i]],cf[1], cf[j+1],cf[i+1],rtmp)
-#             }
-#         }
-#     }
-#     par(opar)
-# }
+
+sbma <- function (sample1, sample2, absolute=TRUE) {
+		if(class(sample1) == "fast99") 
+				return(data.frame(Di=sbma(sample1$D1, sample2$D1), Dt=sbma(sample1$Dt, sample2$Dt)))
+		if(class(sample1) == "LHS") {
+				x1 <- sample1@prcc$PRCC$original; 
+				x2 <- sample2@prcc$PRCC$original;
+		}
+		else {x1 <- sample1; x2<-sample2;}
+		if (absolute) {x1 <- abs(x1); x2 <- abs(x2);}
+		if (length(x1) != length(x2)) 
+				stop("Sample sizes must be the same!");
+		n <- length(x1);
+		R <- rank(x1);
+		S <- rank(x2);
+		v1 <- -(4*n+5)/(n-1);
+		v2 <- 6/(n^3-n);
+		sbc <- v1+v2*(sum(R*S*(4-(R+S)/(n+1))));
+		return (sbc)
+}
+
+setClass("LHS", representation=representation(
+			N="numeric", data="data.frame", factors="character", q="character", 
+			q.arg="list", COR="matrix", eps="numeric", model="function", res="numeric",
+			prcc = "list")
+)
+
+setMethod(
+		  f="pcc",
+		  signature("LHS"),
+		  definition = function (X, y=NULL, rank=TRUE,nboot=1000, conf=0.95) {
+				  require(sensitivity)
+				  iprcc <- sensitivity::pcc(X@data, as.vector(X@res), nboot=nboot, rank=rank, conf=conf)
+				  return(iprcc);
+		  }
+		  )
+
+setMethod(
+		  f="ecdf",
+		  signature("LHS"),
+		  definition = function (x) {
+				  return(ecdf(x@res));
+		  }
+		  )
+
+setMethod(
+		  f="kruskal.test",
+		  signature("LHS"),
+		  definition = function (x, Ncats=10, do.plot=TRUE, ...) {
+				  k <- NA;
+				  df <- Ncats-1;
+				  for (i in 1:length(x@data)) {
+						  cats <- cut(x@data[,i], breaks=quantile(x@data[,i], seq(0,1,1/Ncats)))
+						  k[i]<-(kruskal.test(x@res~cats))$statistic;
+				  }
+				  names(k) <- x@factors;
+				  if(do.plot) {
+						  plot(k, ylim=c(0, max(k)*1.1), xaxt='n')
+						  axis(1, at=1:length(x@data), labels=x@factors)
+						  abline(h=qchisq(0.05, df=df), lty=2)
+				  }
+				  return (k);
+		  }
+		  )
+
+LHS <- function (model, factors, N, q, q.arg, COR=matrix(0, length(factors), length(factors)), eps=0.0005, nboot=0) {
+	L <- as.data.frame(matrix(nrow=N, ncol=length(factors)));
+	names(L) <- factors
+	for (i in 1:length(factors)) 
+			L[,i] <- sample(do.call(q[[i]], c(list(p = 1:N/N-1/N/2), q.arg[[i]])))
+	L <- LHScorcorr(L, COR,eps=eps); 
+	res <- model(L);
+	prcc <- pcc(L, as.vector(res), rank=TRUE);
+	class(prcc) <- "list";
+	X <- new(Class="LHS", N=N, data=L,factors=factors, q=q, q.arg=q.arg, COR=COR, eps=eps, model=model, res=res, prcc=prcc);
+	return(X);
+}
+
+LHSextend<- function (oldLHS) {
+		newL <- as.data.frame(matrix(nrow=2*oldLHS@N, ncol=length(oldLHS@factors)));
+		names(newL) <- oldLHS@factors
+		for (i in 1:length(oldLHS@factors)) 
+				newL[,i] <- do.call(oldLHS@q[[i]], c(list(p =c((1:N)/N - 5/N/6, (1:N)/N - 1/N/6)), oldLHS@q.arg[[i]]))
+		newL <- LHScorcorr(newL, COR=oldLHS@COR, eps=oldLHS@eps);
+		newres <- oldLHS@model(newL);
+		oldLHS@N <- oldLHS@N*3;
+		oldLHS@data <- rbind(oldLHS@data, newL);
+		oldLHS@res <- c(oldLHS@res, newres);
+		prcc <- pcc(oldLHS@data, as.vector(oldLHS@res), rank=TRUE)
+		class(prcc) <- "list";
+		oldLHS@prcc <- prcc
+		return(oldLHS);
+}
+

@@ -1,5 +1,5 @@
 \SweaveOpts{fig=T,echo=F}
-\section{Sensitivity of a density-dependent population matrix model}
+\section{Sensitivity of a density-dependent population matrix model}\label{Leslie}
 \subsection{Model description}
 In this section, we demonstrate the uses and advantages of the methods
 outlined in the previous sections by performing sensitivity analyses
@@ -9,23 +9,22 @@ was extracted from Silva Matos {\em et al.} paper \cite{SilvaMatos99},
 which compared a density independent matrix model of population growth
 with a density dependent model in which the recruitment of seedlings was
 affected by the number of seedings and adult trees. Silva Matos
-provides results, sensitivities and elasticities for the density independent 
+provided results, sensitivities and elasticities for the density independent 
 model that can be compared to our findings, and results for mean and maximum
 values of the density dependent model - but unfortunately, their methods
 did not allow for a full sensitivity analysis of the density dependent
-model, which will be done here.
+model.
 
-We use the R language to perform the sampling and analysis, with most
+We have used the R language to perform the sampling and analysis, with most
 of the code based on the ``sensitivity'' package, which implements 
-PRCC analysis (see section \ref{PRCC}), Morris screening (see 
-section \ref{Morris}) and eFAST analysis (see section \ref{FAST}), among
-others. We also use our implementation of Huntington \& Lyrintzis' 
+PRCC analysis (see section \ref{PRCC}) and eFAST analysis (see 
+section \ref{FAST}), among
+others. We have also used our implementation of Huntington \& Lyrintzis' 
 algorithm to generate zero correlation between LHS samples (see
 section \ref{LHS}). All code used is freely available on the web.
 
 The models analysed are based on a Lefkovitch matrix with seven size
-classes. The
-matrix used on the density-independent model is
+classes. The matrix used on the density-independent model is
 
 \begin{equation}
 		A = \left[
@@ -45,15 +44,15 @@ matrix used on the density-independent model is
 Here, $P_i$ is the 
 probability of a tree surviving and remaining in the same class
 (statis), $G_i$
-being the probability of a tree surviving and growing to the next class,
-and $F_i$ being the number of offspring produced per reproductive palm.
+is the probability of a tree surviving and growing to the next class,
+and $F_i$ is the number of offspring produced per reproductive palm.
 
 The dominant eigenvalue of this matrix is related to the predicted population
-growth rate. We calculated the dominant eigenvalue for this matrix, as usually
-done on this modelling approach.
+growth rate. We considered the dominant eigenvalue for this matrix as
+the model output, as usually done on this modelling approach.
 
-The density dependent model uses the same matrix, but now the growth
-term of the first size class is a decreasing function of the population
+The density dependent model used the same matrix, but now the growth
+term of the first size class represented a decreasing function of the population
 density:
 
 \begin{equation}
@@ -72,10 +71,11 @@ seedlings are able to grow underneath the canopy of an adult.
 
 As this model does not produce any static matrix, it is not meaningful to
 calculate any eigenvalue. Instead, the total population corresponding to
-the stable population distribution is used as model output.
+the stable population distribution was used as model output.
 
 A na\"ive approach to estimating the parameter sensitivities of this model would 
-use the stasis, growth and fecundities given. However, this is not possible,
+use the stasis, growth and fecundities given. However, this would yield
+erroneous results,
 as the probabilities of stasis and growth for a given class are not independent, as
 $P_i+G_i \leq 1$ for all classes. As discussed on section \ref{ps}, we need to
 use an alternative parametrization for this model.
@@ -103,63 +103,46 @@ $\overline{g_i} = 1-g_i$, we can now write the Lefkovitch matrix as:
 The models have, respectively, 14 and 16 parameters. All analyses have 
 been done with mean and standard deviation calculated from Silva Matos paper,
 assuming a normal distribution of parameters truncated at the $[0,1]$ interval
-for probabilites, and on $[0,+\inf)$ for the other parameters.
+for probabilites, and on $[0,+\infty)$ for the other parameters.
 In the case of the density dependence
 parameters $Gm$, $z$ and $a$, only the mean estimate was given on the paper,
 so conservative values were used for the standard deviations.
 
 \subsection{Results}
-The first analysis to be performed in the models is the Morris screening,
-presented on figure \ref{fig:Morris}. This analysis, which required 30
-model runs for each model, shows that the fecundity parameter $F_7$ is 
-dominant on the output for both models. However, there are significant differences
-on the intermediate effect sizes, as for the density-independent model, the next
-most important parameters are the growth probabilities, with statis probabilities
-playing little role. In the density-dependent model, this pattern 
-is not evident. Instead, the next most important parameter after $F_7$ seems to be
-$z$, which represent the size of the adult canopy, and is related to 
-the density dependence.
-Altough some variables have very little impact, no variable is completely 
-irrelevant to the output, which is expected.
-
-\begin{figure}[htpb]
-		\begin{center}
-<<Morris>>=
-library(sensitivity)
-load("R/Independent.Rdata")
-load("R/Dependent.Rdata")
-par(mfrow=c(2,1), cex=0.85, mar=c(3,2,1.5,1))
-mu = apply(imorr$ee, 2, function(x) mean(abs(x)))
-plot(imorr, log='xy', xlim=c(min(mu), 1.2*max(mu)))
-mtext('(a)', at=min(mu))
-mu = apply(dmorr$ee, 2, function(x) mean(abs(x)))
-plot(dmorr, log='xy', xlim=c(min(mu), 1.2*max(mu)))
-mtext('(b)', at=min(mu))
+<<load, fig=FALSE>>=
+source('R/pse.R')
+library(xtable)
+load('R/Leslie.Rdata')
 @
-		\end{center}
-		\caption{Example of Morris screening on the density independent (a)
-		and density dependent (b) models of population growth. Axis are the
-		absolute values of mean $\mu^*$ and variance $\sigma$ 
-		of the effect of each parameter on the output, both on logarithmic
-		scale. See main text for the description of models and parameters.}
-		\label{fig:Morris}
-\end{figure}
+First, we have generated Latin Hypercubes consisting of all relevant variables
+for each model. Then, the models were run for each combination of parameters. 
+By using SBMA (section \ref{SBMA}), we have determined that the sample size
+required for the density independent model is approximately 200, 
+and 500 for the density dependent.
 
-Subsequently, we generate a Latin Hypercube consisting of all relevant variables
-% ESCALA DE MORRIS
-for each model and run the models for each of the 650 combinations of parameters. The %NHE NHE NHE NHE
-distribution of the model responses can be seen as representing the distribution
-of eigenvalues and total population size from real species that are well represented
-by these models. Figure \ref{fig:ecdf} shows these distributions, which suggest that
+<<table1, fig=FALSE, results=tex>>=
+print(xtable(prcctab, caption='Comparison of PRCC analyses by sample size for both models'))
+@
+
+If we presume that the data collected is representative of our knowledge about each
+of these parameters, the probability distribution of the model responses can 
+be seen as the probability that the real population of palms exhibit each
+value of the model output.
+Figure \ref{fig:ecdf} shows these distributions, which suggest that
 the population is viable for the vast majority of parameters values in the 
 parameter space considered. Also, the  
-$\lambda$ calculated from the density-independent model (mean $1.22 \pm 0.08$ sd), 
+$\lambda$ calculated from the density-independent model 
+(mean \Sexpr{round(mean(LHS5@res),2)}, standard deviation \Sexpr{round(sd(LHS5@res),2)}), 
 is very close to the value found by Silva Matos (mean $1.24 \pm 0.06$ se). 
 Considering the density-dependent
-model, the mean stable population predicted (mean $2769 \pm 1877$ sd trees 
-in each $25m^2$ plot), 
-is comparable to, altough slightly higher, the population  actually measured by the study ($1960 \pm 560$ trees per plot, mean and sd calculated over three years).
+model, the mean stable population predicted 
+(mean \Sexpr{round(mean(dLHS5@res))}, standard deviation \Sexpr{round(sd(dLHS5@res))}
+sd trees in each $25m^2$ plot), 
+is comparable to, altough slightly higher, the population  
+actually measured by the study ($1960 \pm 560$ trees per plot, mean and 
+sd calculated over three years).
 
+%TODO FROM HERE
 We generate scatterplots between the result from the models and each 
 independent parameter, in order to visually identify the relations
 between the inputs and outputs (figs. \ref{fig:iCorr1} to \ref{fig:dCorr2}). 
@@ -177,12 +160,10 @@ for non-linear effects of the parameters, in particular $P_7$ and $F_7$.
 \begin{figure}[htpb]
 		\begin{center}
 <<ECDF>>=
-load("R/Independent.Rdata")
-load("R/Dependent.Rdata")
 par(mfrow=c(2,1), cex=0.8, mar=c(3,2,1.5,1))
-plot(ecdf(ires), do.points=FALSE, main='')
+plot(ecdf(LHS4), do.points=FALSE, main='')
 mtext('(a)', at=0.95)
-plot(ecdf(dres), do.points=FALSE, main='')
+plot(ecdf(dLHS4), do.points=FALSE, main='')
 mtext('(b)', at=-500)
 @
 		\end{center}
@@ -197,8 +178,6 @@ mtext('(b)', at=-500)
 \begin{figure}[htpb]
 		\begin{center}
 <<iCorr1>>=
-source("R/pse.R")
-load("R/Independent.Rdata")
 corPlot(ivars[,c(3,5,7,9,11,13)], ires)
 @
 		\end{center}
@@ -215,8 +194,6 @@ corPlot(ivars[,c(3,5,7,9,11,13)], ires)
 \begin{figure}[htpb]
 		\begin{center}
 <<iCorr2>>=
-source("R/pse.R")
-load("R/Independent.Rdata")
 corPlot(ivars[,-c(3,5,7,9,11,13)], ires)
 @
 		\end{center}
@@ -233,8 +210,6 @@ corPlot(ivars[,-c(3,5,7,9,11,13)], ires)
 \begin{figure}[htpb]
 		\begin{center}
 <<dCorr1>>=
-source("R/pse.R")
-load("R/Dependent.Rdata")
 corPlot(dvars[,c(4,6,8,10,12,14:16)], dres)
 @
 		\end{center}
@@ -251,8 +226,6 @@ corPlot(dvars[,c(4,6,8,10,12,14:16)], dres)
 \begin{figure}[htpb]
 		\begin{center}
 <<dCorr2>>=
-source("R/pse.R")
-load("R/Dependent.Rdata")
 corPlot(dvars[,-c(4,6,8,10,12,14:16)], dres)
 @
 		\end{center}
@@ -281,8 +254,6 @@ the new parameters $a$ and $z$ being strongly negatively correlated with the out
 \begin{figure}[htpb]
 		\begin{center}
 <<PRCC>>=
-load("R/Dependent.Rdata")
-load("R/Independent.Rdata")
 par(mfrow=c(2,1), cex=1, cex.axis=0.7, mar=c(3,2,1.5,1))
 plot(iprcc); abline(h=0, lty=3)
 mtext('(a)', at=1)
@@ -298,8 +269,6 @@ mtext('(b)', at=1)
 \begin{figure}[htpb]
 		\begin{center}
 <<fast>>=
-load("R/Dependent.Rdata")
-load("R/Independent.Rdata")
 par(mfrow=c(2,1), cex.axis=0.7, mar=c(3,2,1,1))
 plot(ifast, ylim=c(0,0.2)); 
 mtext('(a)', at=0)

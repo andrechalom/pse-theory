@@ -5,7 +5,7 @@ study of many areas of the biological sciences. The use of models is essencial
 as they present an opportunity to address questions that are impossible or
 impractical to answer in either in purely theoretical analyses or in field 
 or laboratory experiments, and to identify the most important proccesses which
-should then be investigated by experiments. Of particular interest are the 
+should then be investigated by experiments. One compelling example is made by the
 Individual Based
 Models (IBM), which represent individuals that move and interact in space,
 according to some decision-making rules. 
@@ -43,12 +43,12 @@ One approach to the parameter space exploration, which will be described here,
 is to generate samples from the parameter space, run the model with these 
 samples, and analyse the qualitative or quantitative differences in the
 model output. Section \ref{Sampling} will present the sampling techniques,
-with empashis on the Latin Hypercube method, while sections \ref{QualAnal} and
-\ref{QuantAnal} will deal with qualitative and quantitative analyses, 
-respectively. Then, we briefly review some relevant research papers which
+with empashis on the Latin Hypercube method, while section 
+\ref{QuantAnal} will deal with quantitative analyses.
+We also present an example of the sampling and analysis used in section \ref{Leslie}.
+Then, we briefly review some relevant research papers which
 have used such techniques in the exploration of ecological models in section
-\ref{Studies}, and present a full working example of the sampling and analysis
-in the Appendixes.
+\ref{Studies}.
 
 \subsection{Parameter spaces}\label{ps}
 In order to better pose our questions, we need first to discuss some
@@ -106,7 +106,6 @@ parameters in order to present the results.
 Also, it should be mentioned that the parameter space may be constrained.
 This will have an impact on some of the available sampling 
 and analysis techniques.
-
 The simplest constraint is requiring some parameter to be positive or
 negative. Also, there may be combinations of values that are meaningless.
 For example, if we model a community with $N$ individuals and $S$ species,
@@ -117,6 +116,59 @@ condition $S \leq N$. This condition is called a {\em constraint}, and
 limits the values that the parameter vector
 may assume.
 
+If we consider the m-dimensional space consisting on all possible 
+combination of values for the parameters, our parameter space will be the
+subset of this space that respects all our constraints. For example, consider
+that the parameters we are interested are two angles of a triangle. 
+In this case, the sum of the angles must be less than 180 degrees, $a_1+a_2 <180 \circ$.
+Clearly, this
+parameter space is not square, in the sense that, if we define the ranges of
+the variables $a_1$ and $a_2$ independently as $(0,180)$, not all combinations
+of parameters will be meaningful. What can be done in this case is to create
+a new parameter $\hat{a_1}$, defined as
+\begin{equation}
+	\hat{a_1} = \frac{a_1}{180-a_2}
+	\label{hata1}
+\end{equation}
+
+This new parameter varies between 0 and 1, and all combinations of 
+$\hat{a_1}, a_2$ are points from our parameter space. Now, care must be 
+exercised after applying such transformations in order to preserve the marginal
+distributions from the original variables, as exemplified on figure 
+\ref{fig:Trans}.
+
+\setkeys{Gin}{width=1.0\textwidth}
+\begin{figure}[htbp]
+	\begin{center}
+<<Trans, height=3.5>>=
+par(mfrow=c(1,2), xaxs='i', yaxs='i', cex=1, mar=c(4,4.2,2,1))
+N <- 15
+a1 <- rep(qunif((1:N)/N , 0, 180),N)
+a2 <- rep(qunif((1:N)/N , 0, 180),each=N)
+# a1 de 0 a 180, a2 de 0 a 180, equispacados
+plot(c(180,0),c(0,180), xlab=expression(a[1]), ylab=expression(a[2]), type='l', xlim=c(0,180), ylim=c(0,180))
+mtext('a',adj=0, cex=1.5)
+p1 <- a1[a1+a2<179] # rounding errors
+p2 <- a2[a1+a2<179]
+points(p1,p2, pch=4, cex=0.4)
+
+# a2 de 0 a 180, \hat a1 de 0 a 1
+# \hat a1 = f(a1, a2) = a1 / (180-a2)
+plot(0,0, xlab=expression(hat(a)[1]), ylab=expression(a[2]), type='n', xlim=c(0,1), ylim=c(0,180))
+p1 <- p1 / (180-p2)
+points(p1,p2, pch=4, cex=0.4)
+mtext('b',adj=0, cex=1.5)
+@
+	\end{center}
+	\caption{a. The constrained parameter space considered, 
+	with the line representing $a_1+a_2=180$. The symbols represent 
+	a uniform sample taken from the space. b. The transformed parameter 
+	space $\hat{a_1}, a_2$ (see eq. \ref{hata1}), showing the same sampled
+	points.}
+	\label{fig:Trans}
+\end{figure}
+\setkeys{Gin}{width=0.8\textwidth}
+
 Another related concept that should not be confused with the constraints
 is the correlation between variables. For example, acidic soils are likely 
 to have a lower cation exchange capacity (CEC), and more alkaline soils are 
@@ -125,12 +177,9 @@ larger CEC \cite{Sparks03}. Thus, those variables are {\em correlated}.
 Correlations have a profound impact on some analysis, however, they are
 difficult
 to measure, and data on correlations are not generally available on the 
-literature.
-
-If we consider the m-dimensional space consisting on all possible 
-combination of values for the parameters, our parameter space will be the
-subset of this space that respects all our constraints. We 
-will return to questions related to constrained parameter
+literature. 
+We 
+will return to questions related to correlations in parameter
 spaces in section \ref{ext}.
 
 \subsection{Problems in parameter space exploration}\label{PSE}
@@ -142,8 +191,7 @@ some pattern of distribution or abundance of species. We also might be
 interested in mapping where are these regions. In complex models, where several 
 different regions might exist where the qualitative results of the models are 
 very different, we may ask how many of these regions are there, as well as map
-the frontiers between them. We will explore some tools that deal with these 
-qualitative problems in section \ref{QualAnal}.
+the frontiers between them. 
 
 Another class of problems arises when the model produces some quantitative 
 response, and we are interessed in determining the dependency of this response 
@@ -157,9 +205,6 @@ and second, how much of the variation in the results can be ascribed to the
 variation of each individual parameter, which is the topic of sensitivity 
 analysis \cite{Helton03, Helton05}. We will present the techniques and results
 from both uncertainty and sensitivity analysis in section \ref{QuantAnal}.
-A similar problem is to determine simply which parameters play any role on 
-the model output. This simpler problem will be addressed by Morris screening
-in section \ref{Morris}.
 
 All these problems may be formulated in a general way, defining some response 
 from the model $\bu{Y}$ as a function of the input parameter vector $\bu{x}$:

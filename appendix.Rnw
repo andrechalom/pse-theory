@@ -1,6 +1,4 @@
-\SweaveOpts{fig=T,echo=F}
-\section{Appendix: Details about sensitivity analyses}
-\subsection{Linear relation}\label{linear}
+\subsubsection{Linear relation}\label{linear}
 The most straightforward relationship between $y$ and $x_i$ is the linear, 
 represented by $y \sim x_i$. This is case if, every time $x_i$ is increased, 
 $y$ increases by aproximately the same ammount.
@@ -58,7 +56,7 @@ models:
 \end{equation}
 
 
-\subsection{Monotonic relation}\label{PRCC}
+\subsubsection{Monotonic relation}\label{PRCC}
 
 Let us refer to each value of $y$ as $y_k$ and each value of $x_i$ as 
 $x_{ik}$. The rank transformation of $y$, 
@@ -87,7 +85,7 @@ indicator of monotonic interactions between $y$ and $x_i$, and is subject
 to significance testing as described in \cite{Marino08}. This measure will 
 perform better with increasing $N$.
 
-\subsection{Trends in central location}
+\subsubsection{Trends in central location}
 Even if the relation between $y$ and $x_i$ is non monotonic, it may be 
 important and well-defined. The case in which $y \sim x_i^2$, $x_i \in (-1,1)$
 is a common example. This relation may be difficult to visualize, and sometimes
@@ -108,9 +106,37 @@ The number of intervals $N_{test}$ is not fixed as any ``magical number'', and
 may have a large impact on the test results. It is then recommended that 
 this test should be repeated with different values to obtain a more 
 comprehensive picture of the interactions between $x_i$ and $y$ (fig. \ref{fig:Kruskal}).
+\begin{figure}[htbp]
+	\begin{center}
+<<Kruskal, height=3.5>>=
+par(mfrow=c(1,2), mar=c(3,2,2,1), pch=4)
+x<-seq(-1,0.97,0.01)
+y<-(x-1)*(x+1)+rnorm(x,0,0.25)
+xcats <- rep(c(1,2), each=length(x)/2)
+K <- kruskal.test(y,xcats)$p.value
+plot(x,y, xlab='', ylab='',main=paste('N = 2, p =',format(K, digits=2)))
+abline(v=0, lty=3)
+ymean = tapply(y,xcats,mean)
+segments(c(-1,0),ymean,c(0,1),ymean, lwd=3)
+xcats <- rep(c(1,2,3), each=length(x)/3)
+K <- kruskal.test(y,xcats)$p.value
+plot(x,y, xlab='', ylab='',main=paste('N = 3, p =',format(K, digits=2)))
+abline(v=-0.333,lty=3); abline(v=0.333,lty=3)
+ymean = tapply(y,xcats,mean)
+segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
+@
+	\end{center}
+	\caption{Example of application of the Kruskal-Wallis test on the
+	same data set, which present a strong quadratic component, by
+	dividing the range in 2 intervals (right) or 3 intervals (left).
+	The dashed lines are the divisions between the intervals, and
+	the strong horizontal lines are the sample means for each 
+	interval.}
+	\label{fig:Kruskal}
+\end{figure}
 
 
-\subsection{Trends in variability}\label{FAST}
+\subsubsection{Trends in variability}\label{FAST}
 
 Other than the central tendency of the results, their dispersal may be 
 dependent on the input parameters. 
@@ -122,9 +148,3 @@ Descrever eFAST
 ANOVA-like SOBOL
 Kleijnen p17
 \end{verbatim}
-% \subsection{Statistical independence}
-% \begin{verbatim}
-% TODO?
-% Fazer ou nao?
-% Chi-square testing Kleijnen p18
-% \end{verbatim}

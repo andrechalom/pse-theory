@@ -1,18 +1,15 @@
 \begin{abstract}
-In recent years, both the scientific community and policy makers are gaining
-confidence in the formulation and use of mathematical models in ecological 
-studies. We are thus seeing a flourishing of more elaborate and complex models, 
-and the questions related to the efficient, systematic and error-proof 
+In recent years, we are seeing the formulation and use of 
+elaborate and complex models in ecological studies.
+The questions related to the efficient, systematic and error-proof 
 exploration of parameter spaces are of great importance to better understand, 
 estimate confidences and make use of the output from these models. In this work,
 we investigate some of the relevant questions related to parameter space
 exploration, in particular using the technique known as Latin Hypercube 
-Sampling and focusing in qualitative and quantitative output analysis.
-We present improvements to the methods discussed, and 
-assess how are these questions being currently addressed in the literature.
-Full working examples are given in the R language, included at the appendix.
-
-%TODO coexistencia de especies Ecology Letters, (2007) 10: 95–104 ca'car referencia da ann rev Chesson, P. (2000). Mechanisms of maintenance of species
-% diversity. Annu. Rev. Ecol. Syst., 31, 343–366.
-%TODO Estudar o exemplo Lotka-Volterra competitivo com correlacao r-K. What gives?
+Sampling and focusing in quantitative output analysis.
+We present the analysis of a structured population growth model and contrast
+our findings with results from previously used techniques, known as sensitivity
+and elasticity analyses. We also  
+assess how are the questions related to parameter space analysis being 
+currently addressed in the ecological literature.
 \end{abstract}

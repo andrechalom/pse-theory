@@ -1,26 +1,7 @@
 \SweaveOpts{fig=T,echo=F}
 \section{Quantitative output analysis}\label{QuantAnal}
-\subsection{Morris screening}\label{Morris}
-A first problem in parameter space exploration is to simply 
-determine which parameters affect the model output, irrespective of our ability
-to estimate their value or distribution.
-
-In order to identify the parameters of interest, Morris \cite{Morris91} presented
-a series of sampling plans to determine the importance of the parameters using
-a number of model evaluations on the same order that the number of parameters.
-The goal of the Morris screening is to classify parameters as having effect that
-are (a) negligible, (b) linear or (c) other (non-linear or involved in interactions
-with other terms). In order to do so, the method investigates the mean
-and variance the effect of $x_i$ on the output $y$. A large mean effect
-indicates a parameter with a relevant effect, while a large variance indicates 
-either non-linear effects or relevant interactions with other parameters.
-
-Morris screening is specially useful for identifying parameters that play no role
-at all on the model output.
-
 \subsection{Uncertainty analysis}
-% TODO: Incluir mais discussao sobre as propriedades estatisticas do resultado. Em especial, como a dist das saidas converge? Quais sao as condicoes? O que acontece com os termos de correlacao?
-The next question we would like to answer, in the context of quantitative 
+The first question we would like to answer, in the context of quantitative 
 analysis, is what is the probability distribution of the response variable $y$
 given that we know the join probabilities of the input parameters $\bu{x}$ 
 (see definitions in section \ref{PSE}), which is the subject of uncertainty
@@ -77,17 +58,122 @@ increasing complexity, as:
 \begin{itemize}
 		\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
 		\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient,
-		\item Trends in central location, for which the Kruskal-Wallis test may be applied (fig. \ref{fig:Kruskal}),
-		\item Trends in variability, for which the FAST method and Sobol' indices may be used,
-		\item Statistical independence, for which the chi-square test may be used
+		\item Trends in central location, for which the Kruskal-Wallis test may be applied,
+		\item Trends in variability, for which the FAST method and Sobol' indices may be used.
 \end{itemize}
 
-\subsection{Top-down correlation coefficient}\label{TDCC}
-\begin{verbatim}
-TODO?
-Metodo de TDCC do Conover. Pesquisar fonte e descrever
-\end{verbatim}
+Subsections \ref{linear} to \ref{FAST} will provide some
+mathematical background for each method, and section \ref{Leslie} 
+will present examples of use of those tests.
 
+\subsubsection{Linear relation}\label{linear}
+The most straightforward relationship between $y$ and $x_i$ is the linear, 
+represented by $y \sim x_i$. This is case if, every time $x_i$ is increased, 
+$y$ increases by aproximately the same ammount.
+The Pearson correlation coefficient is the commonly used measure to test for
+a linear correlation:
+
+\begin{equation}
+	\rho_{yx_i} = \frac{\sigma_{yx_i}}{\sigma_y\sigma_{x_i}}
+	\label{PearsonRho}
+\end{equation}
+
+Where $\sigma_a$ is the variance of $a$ and $\sigma_{ab}$ is the covariance 
+between $a$ and $b$. The correlation coefficient is a measure of the predicted
+change in $y$ when $x_i$ is changed one unit, relative to its standard
+deviations, and, as such, approaches $\pm 1$ when there is a strong
+linear relation between the variables. The square of $\rho$, usually written as
+$R^2$, measures the fraction of the variance in the output that can be accounted
+for by a linear effect of $x_i$.
+Is is usual to test the significance of this linear relation by a t-test 
+\cite{Freedman07}.
+
+Other than examining the individual relationships between the parameters and 
+the output, we can investigate the joint effect of several $x_i$, as
+$y \sim x_1 + x_2 + \cdots + x_m$. In this case, the multiple $R^2$ represent
+the fraction of the variance on the output due to linear effects of all 
+the $x_i$ considered.
+
+However, a measure of $\rho$ close to zero does not mean that
+no relationship exists between $y$ and $x_i$ - for instance, $x^2 + y = 1$, 
+$x \in [-1,1]$ presents $\rho = 0$, so clearly other methods might be needed.
+
+The Partial Correlation Coefficient (PCC) between $x_i$ and $y$ is the measure
+of the linear effect of $x_i$ on $y$ after the linear effects of the remaining
+parameters have been discounted. In order to calculate the PCC, first we fit
+a linear model of $x_i$ as a function of the remaining parameters:
+
+\begin{equation}
+	\hat{x}_i \sim x_1 + x_2 + \cdots + x_{i-1} + x_{i+1} + \cdots + x_m
+	\label{PCChatx}
+\end{equation}
+
+A corresponding model is done with $y$:
+
+\begin{equation}
+	\hat{y} \sim x_1 + x_2 + \cdots + x_{i-1} + x_{i+1} + \cdots + x_m
+	\label{PCChaty}
+\end{equation}
+
+The PCC is calculated as the correlation between the residuals of these two
+models:
+
+\begin{equation}
+	PCC(y, x_i) = \rho \left( (y - \hat y), (x_i - \hat{x}_i) \right)
+	\label{PCC}
+\end{equation}
+
+
+\subsubsection{Monotonic relation}\label{PRCC}
+
+Let us refer to each value of $y$ as $y_k$ and each value of $x_i$ as 
+$x_{ik}$. The rank transformation of $y$, 
+represented by $r(y_k)$ can
+be found by sorting the values $y_k$, and assigning rank 1 to the smallest, 2 
+to the second smallest, etc, and $N$ to the largest. The rank of $x_{ik}$,
+$r(x_{ik})$, can be found in a similar way.
+
+If there exists a strictly monotonic relation between $y$ and $x_i$, that is,
+if every time $x_i$ increases, $y$ either always increase or always decreases
+by any positive ammount, it should
+be clear that the ranks of $y$ and $x_i$ present a linear relationship: 
+$r(y) \sim r(x_i)$.
+
+The correlation between $r(y)$ and $r(x_i)$ is called the Spearman 
+correlation coefficient
+$\eta_{yx_i}$. The same analyses presented on section \ref{linear} can also be
+applied for the rank transformed data, including significance testing and 
+multiple regression.
+
+If the procedure described to calculate the PCC is followed on rank transformed
+data, that is, if $y$ and $x_i$ are rank transformed and fitted as linear models
+of the remaining parameters, the correlation between the residuals is called
+PRCC, or Partial Rank Correlation Coefficient. This measure is a robust
+indicator of monotonic interactions between $y$ and $x_i$, and is subject
+to significance testing as described in \cite{Marino08}. This measure will 
+perform better with increasing $N$.
+
+\subsubsection{Trends in central location}
+Even if the relation between $y$ and $x_i$ is non monotonic, it may be 
+important and well-defined. The case in which $y \sim x_i^2$, $x_i \in (-1,1)$
+is a common example. This relation may be difficult to visualize, and sometimes
+may not be expressed analytically. In these cases, the Kruskal-Wallis rank
+sum test may be used to indicate the presence of such relations 
+\cite{Kleijnen99}.
+
+In order to perform the test, the distribution of $x_i$ must be divided 
+into a number $N_{test}$ of disjoint intervals. The model response $y$ is then
+grouped with respect to these intervals, and the Kruskal-Wallis test is used
+to investigate if the $y$ values have aproximately the same distribution
+in each of those intervals. A low p-value for this test indicates that the
+mean and median of $y$ is likely to be different for each interval considered,
+and thus that the parameter $x_i$ have a (possibly non monotonic) relationship
+with $y$.
+
+The number of intervals $N_{test}$ is not fixed as any ``magical number'', and
+may have a large impact on the test results. It is then recommended that 
+this test should be repeated with different values to obtain a more 
+comprehensive picture of the interactions between $x_i$ and $y$ (fig. \ref{fig:Kruskal}).
 \begin{figure}[htbp]
 	\begin{center}
 <<Kruskal, height=3.5>>=
@@ -116,3 +202,73 @@ segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
 	interval.}
 	\label{fig:Kruskal}
 \end{figure}
+
+\subsubsection{Trends in variability}\label{FAST}
+
+Other than the central tendency of the results, their dispersal may be 
+dependent on the input parameters. 
+
+Two methods are used: eFAST \cite{Saltelli99} and Sobol' \cite{Archer97}.
+\begin{verbatim}
+TODO?
+Descrever eFAST
+ANOVA-like SOBOL
+Kleijnen p17
+\end{verbatim}
+
+\subsection{Measuring the concordance with increasing sample size}
+\label{SBMA}
+We will now turn our attention to the problem of determining the optimal
+number of model runs we should apply in order to provide a good estimate
+of which are the relevant parameters for a given model.
+One way of proceeding is by sistematically increasing the number $N$ of
+model runs and applying one of the techniques outlined on the previous 
+subsections. If the analyses indicate similar results for consecutive
+experiments, we can presume that increasing the sample size will not
+yield major changes to the results.
+
+Both PRCC and eFAST analyses present us with a list of the parameters 
+that have most influence in the model output. By comparing the resulting 
+lists from two experiments, we can decide to stop increasing $N$ when
+the lists are sufficiently similar. Our problem then is to determine
+how similar are two vectors of ranks. In principle, we could
+apply any distance function to those vectors. However, consider that
+3 analyses indicated that the order of the most influential parameters is:
+\begin{center}
+\begin{tabular}[h!]{c c c c c c c c}
+		\hline
+		H1 &=& 1& 2& 3& 4& 5& 6\\
+		H2 &=& 1& 2& 3& 6& 4& 5\\
+		H3 &=& 2& 3& 1& 4& 5& 6\\
+		\hline
+\end{tabular}
+\end{center}
+By using standard distances (like Spearman's rho or Kendall's tau),
+we will see the same difference between H1 and H2 and between H1 and H3.
+On the other hand, in the context of determining the most influential
+parameters, we would be inclined to see H1 and H2 as more similar than
+any of them to H3, as the first two preserve the ordering of the three
+first parameters.
+
+Iman and Conover proposed a correlation coefficient for this problem
+called Top-Down Correlation Coefficient \cite{ImanConover87}, which is
+based on Savage Scores. This coefficient, know as TDCC, 
+was extensively used for sensitivity analyses \cite{Marino08}. 
+Another measure of concordance proposed more recently is the Symmetrized
+Blest Measure of Association (SBMA) \cite{Genest03}.
+Recent research suggests that estimates for SBMA 
+produce a smaller standard error than TDCC without the assumption that 
+there is no correlation between the variables \cite{Maturi10}.
+Thus, we propose using SBMA as a measure of concordance between analyses
+from different sample sizes. Defining the ranks from the first sample as
+$R_i$ and the ranks for the second sample as $S_i$, the estimator for the
+SBMA is:
+\begin{equation}
+		\xi_n = - \frac{4n+5}{n-1}+\frac{6}{n^3-n} %
+		\sum _{i=1}^n R_iS_i \left( 4- \frac{R_i+S_i}{n+1} \right)
+		\label{eqSBMA}
+\end{equation}
+
+We will apply SBMA for the example on section \ref{Leslie}. When comparing
+ranks for PRCC analysis, it should be understood that we are comparing the
+ranks of the absolute values.

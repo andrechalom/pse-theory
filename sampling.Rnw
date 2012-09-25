@@ -52,7 +52,7 @@ Chain Monte Carlo (MCMC), which is also used on similar analyses \cite{MacKay03}
 methods consists in generating a sequence of points $\{\bu{x}^{(t)}\}$ from
 the parameter space whose distribution {\em converges} to the joint
 probability distribution $\bu{D}(\bu{x})$, and in which each sample $\bu{x}^{(t)}$
-is chosen based on the previous $\bu{x}^{(t-1)}$. MCMC methods perform better
+is chosen based on the previous $\bu{x}^{(t-1)}$. MCMC methods may perform better
 than LHS methods for estimating the distribution of the model responses,
 however, they require a substantially larger number of model runs.
 
@@ -106,7 +106,7 @@ Latin if and only if there is exactly one sample in each row and each column.
 A Latin Hypercube is simply the generalization of the Latin
 Square to an arbitrary number of dimensions $m$. 
 From these definitions, it is clear that the number of samples is fixed as $N$
-We will show how to estimate the optimal $N$ in section \ref{TDCC}, but for
+We will show how to estimate the optimal $N$ in section \ref{SBMA}, but for
 now it is 
 relevant to note that $N$ does not depend on the number of parameters considered.
 
@@ -233,83 +233,6 @@ dimension $l$, what would be the error in the correlation if they were switched.
 The pair that corresponds to the greater error reduction is then switched, and
 the procedure is repeated iteratevely until the error is acceptably small.
 
-Here, we also consider how to treat a constrained parameter space, as described
-in section \ref{ps} (the case in which $a_1+a_2 <180^o$). Clearly, this
-parameter space is not square, in the sense that, if we define the ranges of
-the variables $a_1$ and $a_2$ independently as $(0,180)$, not all combinations
-of parameters will be meaningful. What can be done in this case is to create
-a new parameter $\hat{a_1}$, defined as
-\begin{equation}
-	\hat{a_1} = \frac{a_1}{180-a_2}
-	\label{hata1}
-\end{equation}
-
-This new parameter varies between 0 and 1, and all combinations of 
-$\hat{a_1}, a_2$ are points from our parameter space. Now, care must be 
-exercised after applying such transformations in order to preserve the marginal
-distributions from the original variables, as exemplified on figure 
-\ref{fig:Trans}.
-
-\setkeys{Gin}{width=1.0\textwidth}
-\begin{figure}[htbp]
-	\begin{center}
-<<Trans, height=3.5>>=
-par(mfrow=c(1,2), xaxs='i', yaxs='i', cex=1, mar=c(4,4.2,2,1))
-N <- 15
-a1 <- rep(qunif((1:N)/N , 0, 180),N)
-a2 <- rep(qunif((1:N)/N , 0, 180),each=N)
-# a1 de 0 a 180, a2 de 0 a 180, equispacados
-plot(c(180,0),c(0,180), xlab=expression(a[1]), ylab=expression(a[2]), type='l', xlim=c(0,180), ylim=c(0,180))
-mtext('a',adj=0, cex=1.5)
-p1 <- a1[a1+a2<179] # rounding errors
-p2 <- a2[a1+a2<179]
-points(p1,p2, pch=4, cex=0.4)
-
-# a2 de 0 a 180, \hat a1 de 0 a 1
-# \hat a1 = f(a1, a2) = a1 / (180-a2)
-plot(0,0, xlab=expression(hat(a)[1]), ylab=expression(a[2]), type='n', xlim=c(0,1), ylim=c(0,180))
-p1 <- p1 / (180-p2)
-points(p1,p2, pch=4, cex=0.4)
-mtext('b',adj=0, cex=1.5)
-@
-	\end{center}
-	\caption{a. The constrained parameter space considered, 
-	with the line representing $a_1+a_2=180$. The symbols represent 
-	a uniform sample taken from the space. b. The transformed parameter 
-	space $\hat{a_1}, a_2$ (see eq. \ref{hata1}), showing the same sampled
-	points.}
-	\label{fig:Trans}
-\end{figure}
-\setkeys{Gin}{width=0.8\textwidth}
-
-\begin{verbatim}
-TODO
-a1 + b*a2 < X
-a1 - b*a2 < X
-a1 * a2 < X -> escala exp
-a1 / a2 < X -> escala log
-cacar envelopes, EcoSim macroecologia
-J Biogeogr
-\end{verbatim}
-
-\begin{figure}[htbp]
-	\begin{center}
-<<TDi>>=
-x<- rnorm(1000); y<- rnorm(1000);
-
-a <-1; K <-0.1;
-par(mfrow=c(2,2))
-plot(x[ x+a*y < K], y [ x+a*y < K], main="x+ay < K", xlab="", ylab="")
-plot(x[ x * y < K], y [ x * y < K], main="xy < K", xlab="", ylab="")
-plot(x[ x * y > K], y [ x * y > K], main="xy > K", xlab="", ylab="")
-plot(x[ x / y < K], y [ x / y < K], main="x/y < K", xlab="", ylab="")
-@
-	\end{center}
-	\caption{Four samples of constraints on the parameter space,
-	and the general shape imposed by those constraints.}
-	\label{fig:TDi}
-\end{figure}
-
 \subsection{Stochastic models}
 When dealing with stochastic models, like several relevant individual based 
 models (IBM), the questions presented become complicated by the fact that 
@@ -357,8 +280,9 @@ equal to zero, or equal to the ascribed values.
 We refer to this increase in the number of sample points as a sampling
 refinement, and as it is done on demand after examining the already 
 generated outputs, we refer to it as an adaptative sampling refinement.
-This technique can be applied while estimating Iman and Conover's TDCC,
-which will be used to determine the optimum $N$ size (section \ref{TDCC}).
+This technique can be applied while estimating the Symmetrized Blest
+Measure of Association (SBMA)
+which will be used to determine the optimum $N$ size (section \ref{SBMA}).
 
 Our construction will start by defining a new sequence of values $\gamma_i$
 for every parameter dimension, with 
