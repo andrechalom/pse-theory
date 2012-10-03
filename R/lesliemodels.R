@@ -177,7 +177,7 @@ dfast8 <- fast99 (model = DepModel, factors = factors, n = 8*66, q = q, q.arg = 
 tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500"), Independent=c(s1,s2,s3,s4,s5), Dependent=c(ds1,ds2,ds3,ds4,ds5))
 #tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528", "528-1056"), rbind(fs1, fs2, fs3, fs4), rbind(dfs1, dfs2, dfs3, dfs4)))
 tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528"), rbind(fs1, fs2, fs3), rbind(dfs1, dfs2, dfs3)))
-names(tabfast) <- c("Size", "Di, independent", "Dt, independent", "Di, dependent", "Dt, dependent");
+colnames(tabfast) <-c("Size ($N_s$)", "Indep. $D_i$", "Indep. $D_t$", "Dep. $D_i$", "Dep. $D_t$")
 save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, tabprcc, tabfast, file="leslie.Rdata")
 
 # Modelando res como funcao das variaveis mais importantes:
