@@ -2,6 +2,8 @@
 \usepackage[margin=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
 \setlength{\topmargin}{0cm}
 
 % Create friendly environments for theorems, propositions, &c.

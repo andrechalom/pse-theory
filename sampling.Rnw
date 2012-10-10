@@ -312,3 +312,88 @@ properties:
 			bounded by the following expression:
 			$ \rho^2_{z_iz_j} \leq \rho^2_{x_ix_j} + \rho^2_{\gamma_i\gamma_j} $
 \end{itemize}
+
+\subsection{Measuring the concordance with increasing sample size}
+\label{SBMA}
+We will now turn our attention to the problem of determining the optimal
+number of model runs we should apply in order to provide a good estimate
+of which are the relevant parameters for a given model.
+One way of proceeding is by sistematically increasing the number $N$ of
+model runs and applying any of the sensitivity analysis techniques, which
+will be discussed on the following section. If the analyses indicate 
+similar results for consecutive experiments, we can presume that 
+increasing the sample size will not yield major changes to the results.
+
+All of the sensitivity analyses present us with a list of the parameters 
+that have most influence in the model output. By comparing the resulting 
+lists from two experiments, we can decide to stop increasing $N$ when
+the lists are sufficiently similar. Our problem then is to determine
+how similar are two vectors of ranks. In principle, we could
+apply any distance function to those vectors. However, consider that
+3 analyses indicated that the order of the most influential parameters is:
+\begin{center}
+\begin{tabular}[h!]{c c c c c c c c}
+		\hline
+		H1 &=& 1& 2& 3& 4& 5& 6\\
+		H2 &=& 1& 2& 3& 6& 4& 5\\
+		H3 &=& 2& 3& 1& 4& 5& 6\\
+		\hline
+\end{tabular}
+\end{center}
+By using standard distances (like Spearman's rho or Kendall's tau),
+we will see the same difference between H1 and H2 and between H1 and H3.
+On the other hand, in the context of determining the most influential
+parameters, we would be inclined to see H1 and H2 as more similar than
+any of them to H3, as the first two preserve the ordering of the three
+first parameters.
+
+Iman and Conover proposed a correlation coefficient for this problem
+called Top-Down Correlation Coefficient \cite{ImanConover87}, which is
+based on Savage Scores. This coefficient, know as TDCC, 
+was extensively used for sensitivity analyses \cite{Marino08}. 
+Another measure of concordance proposed more recently is the Symmetrized
+Blest Measure of Association (SBMA) \cite{Genest03}.
+Recent research suggests that estimates for SBMA 
+produce a smaller standard error than TDCC without the assumption that 
+there is no correlation between the variables \cite{Maturi10}.
+Thus, we propose using SBMA as a measure of concordance between analyses
+from different sample sizes. Defining the ranks from the first sample as
+$R_i$ and the ranks for the second sample as $S_i$, the estimator for the
+SBMA is:
+\begin{equation}
+		\xi_n = - \frac{4n+5}{n-1}+\frac{6}{n^3-n} %
+		\sum _{i=1}^n R_iS_i \left( 4- \frac{R_i+S_i}{n+1} \right)
+		\label{eqSBMA}
+\end{equation}
+
+For the techniques that may output negative values, for instance negative
+correlations, the SBMA must be applied on the absolute values. Otherwise,
+the parameters which present strong negative effects will be ranked very low,
+and will not be taken into account by the SBMA.
+
+We will apply SBMA for the PRCC and eFAST techniques (both of which are
+discussed on section \ref{QuantAnal})
+on the example on section \ref{Leslie}. 
+
+\begin{shaded}
+		\textbf{Box 1: Parameter space sampling}
+
+In order to adequately explore the parameter space of a model, the following
+steps should be taken:
+\begin{itemize}
+		\item The parameters of interest must be identified, in a way
+				that all combinations of parameter values are meaningful. 
+		\item The range and distribution of each parameter should be
+				estimated.
+		\item The model to be analysed must be formulated as a function of
+				all the parameters.
+		\item A Latin Hypercube should be generated based on the parameter
+				distributions.
+		\item The correlations between parameters, when present,
+				must be taken into account.
+		\item The model must be evaluated at each combination of
+				parameter values. If the model is stochastic, it should
+				be evaluated repeatedly at each combination.
+\end{itemize}
+\end{shaded}
+

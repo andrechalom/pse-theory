@@ -1,6 +1,6 @@
 \SweaveOpts{fig=T,echo=F}
 \section{Quantitative output analysis}\label{QuantAnal}
-\subsection{Uncertainty analysis}
+\subsection{Uncertainty analysis}\label{UA}
 The first question we would like to answer, in the context of quantitative 
 analysis, is what is the probability distribution of the response variable $y$
 given that we know the join probabilities of the input parameters $\bu{x}$ 
@@ -158,7 +158,7 @@ indicator of monotonic interactions between $y$ and $x_i$, and is subject
 to significance testing as described in \cite{Marino08}. This measure will 
 perform better with increasing $N$.
 
-\subsubsection{Trends in central location}
+\subsubsection{Trends in central location}\label{Kruskal}
 Even if the relation between $y$ and $x_i$ is non monotonic, it may be 
 important and well-defined. The case in which $y \sim x_i^2$, $x_i \in (-1,1)$
 is a common example. This relation may be difficult to visualize, and sometimes
@@ -252,59 +252,20 @@ which do
 not play any role on the model output, as many numeric approximations are
 involved. 
 
-\subsection{Measuring the concordance with increasing sample size}
-\label{SBMA}
-We will now turn our attention to the problem of determining the optimal
-number of model runs we should apply in order to provide a good estimate
-of which are the relevant parameters for a given model.
-One way of proceeding is by sistematically increasing the number $N$ of
-model runs and applying one of the techniques outlined on the previous 
-subsections. If the analyses indicate similar results for consecutive
-experiments, we can presume that increasing the sample size will not
-yield major changes to the results.
+\begin{shaded}
+		\textbf{Box 2: Uncertainty and sensitivity}
 
-Both PRCC and eFAST analyses present us with a list of the parameters 
-that have most influence in the model output. By comparing the resulting 
-lists from two experiments, we can decide to stop increasing $N$ when
-the lists are sufficiently similar. Our problem then is to determine
-how similar are two vectors of ranks. In principle, we could
-apply any distance function to those vectors. However, consider that
-3 analyses indicated that the order of the most influential parameters is:
-\begin{center}
-\begin{tabular}[h!]{c c c c c c c c}
-		\hline
-		H1 &=& 1& 2& 3& 4& 5& 6\\
-		H2 &=& 1& 2& 3& 6& 4& 5\\
-		H3 &=& 2& 3& 1& 4& 5& 6\\
-		\hline
-\end{tabular}
-\end{center}
-By using standard distances (like Spearman's rho or Kendall's tau),
-we will see the same difference between H1 and H2 and between H1 and H3.
-On the other hand, in the context of determining the most influential
-parameters, we would be inclined to see H1 and H2 as more similar than
-any of them to H3, as the first two preserve the ordering of the three
-first parameters.
-
-Iman and Conover proposed a correlation coefficient for this problem
-called Top-Down Correlation Coefficient \cite{ImanConover87}, which is
-based on Savage Scores. This coefficient, know as TDCC, 
-was extensively used for sensitivity analyses \cite{Marino08}. 
-Another measure of concordance proposed more recently is the Symmetrized
-Blest Measure of Association (SBMA) \cite{Genest03}.
-Recent research suggests that estimates for SBMA 
-produce a smaller standard error than TDCC without the assumption that 
-there is no correlation between the variables \cite{Maturi10}.
-Thus, we propose using SBMA as a measure of concordance between analyses
-from different sample sizes. Defining the ranks from the first sample as
-$R_i$ and the ranks for the second sample as $S_i$, the estimator for the
-SBMA is:
-\begin{equation}
-		\xi_n = - \frac{4n+5}{n-1}+\frac{6}{n^3-n} %
-		\sum _{i=1}^n R_iS_i \left( 4- \frac{R_i+S_i}{n+1} \right)
-		\label{eqSBMA}
-\end{equation}
-
-We will apply SBMA for the example on section \ref{Leslie}. When comparing
-ranks for PRCC analysis, it should be understood that we are comparing the
-ranks of the absolute values.
+		The following questions should be addressed in uncertainty
+		and sensitivy analyses (between parentheses are the section numbers
+		which detail each step):
+		\begin{itemize}
+				\item What is the range and distribution of model responses (\ref{UA})?
+\item The ecdf plot of model responses suggests any theoretical distribution (\ref{UA})?
+\item The scatterplots between each variable and the model response suggest
+		any relationship (\ref{UA})?
+\item Is there any linear or monotonic relation between the model 
+		parameters (\ref{linear} and \ref{PRCC})?
+\item Is there any trend in central location or dispersion of the response (\ref{Kruskal} and \ref{FAST})?
+\item The output from the analyses is coherent between different sample sizes (\ref{SBMA})?
+\end{itemize}
+\end{shaded}

@@ -45,6 +45,10 @@ samples, and analyse the qualitative or quantitative differences in the
 model output. Section \ref{Sampling} will present the sampling techniques,
 with empashis on the Latin Hypercube method, while section 
 \ref{QuantAnal} will deal with quantitative analyses.
+We should emphasize that the analyses tools are not coupled with the sampling
+techniques used: one can, in principle, use the sampling techniques described
+and other analyses tools, or apply the analyses described here to a more
+general class of sampling methods.
 We also present an example of the sampling and analysis used in section \ref{Leslie}.
 Then, we briefly review some relevant research papers which
 have used such techniques in the exploration of ecological models in section
@@ -182,7 +186,7 @@ We
 will return to questions related to correlations in parameter
 spaces in section \ref{ext}.
 
-\subsection{Problems in parameter space exploration}\label{PSE}
+\subsection{Applications of parameter space exploration}\label{PSE}
 Next, we turn our attention to the kind of problems we might want to address
 with the exploration of the parameter space. First, the simplest case is asking
 ``is there a region of my parameter space where condition X holds?'' This 
@@ -206,6 +210,12 @@ variation of each individual parameter, which is the topic of sensitivity
 analysis \cite{Helton03, Helton05}. We will present the techniques and results
 from both uncertainty and sensitivity analysis in section \ref{QuantAnal}.
 
+Also, the model which we wish to analyse can be any function of the input parameters.
+In particular, there are three classes of models that can be used. First,
+the model may be a complex mathematical function (for example, $Y$ is defined
+by a differential equation). Second, the model may be a simulation model, like
+an IBM. Third, the model may be the result of fitting a statistical model.
+
 All these problems may be formulated in a general way, defining some response 
 from the model $\bu{Y}$ as a function of the input parameter vector $\bu{x}$:
 
@@ -228,6 +238,8 @@ Taken together, all the distributions $D_i$ form the {\em joint probability
 distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
 account not only the individual distribution of each parameter, but also
 all the correlation terms between them. 
+
+
 
 \begin{figure}[htpb]
 	\begin{center}
