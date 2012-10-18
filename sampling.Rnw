@@ -220,7 +220,7 @@ restrictions on the number of samples that must be chosen or are too
 computationally intensive. 
 
 In order to obtain the samples with prescribed correlation terms, we define 
-as $C_{i_j}$ the 
+as $C_{i,j}$ the 
 desired $m \times m$ correlation matrix between the variables $x_i$ and $x_j$,
 and denote by $C_{i,j}^*$ the current correlation between $x_i$ and $x_j$.
 
