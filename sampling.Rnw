@@ -6,9 +6,10 @@ we will present some of them, along with their limitations, to justify our
 choice for the Latin Hypercube Sampling, which we will describe in section
 \ref{LHS}.
 
-One way of exploring the parameter space is to choose a number of possible 
-values for each parameter, and run the model for every combination of those 
-values. This is called full parameter space exploration, as done 
+One way of exploring the parameter space is by discretizing every distribution
+and running the model for every
+possible combination of values for all parameters. 
+This is called full parameter space exploration, as done 
 in \cite{Turchin97}, and altough it 
 possesses many advantages, it may become very costly in terms of computer time. 
 In addition, the number of possible combinations increases exponentially with 
@@ -34,7 +35,8 @@ combined number of parameters. This sampling scheme is called random
 sampling, or Monte Carlo sampling,
 and has been applied to many biological models \cite{Letcher96}.
 One important feature of the Monte Carlo sampling is that its accuracy
-does not depend on the number of dimensions of the problem \cite{MacKay03}.
+does not depend on the number of dimensions of the problem,
+as shown in \cite{MacKay03}.
 
 Stratified sampling strategies, which are a special case of Monte 
 Carlo sampling, consist in strategies for chosing these random samples while,
@@ -52,9 +54,10 @@ Chain Monte Carlo (MCMC), which is also used on similar analyses \cite{MacKay03}
 methods consists in generating a sequence of points $\{\bu{x}^{(t)}\}$ from
 the parameter space whose distribution {\em converges} to the joint
 probability distribution $\bu{D}(\bu{x})$, and in which each sample $\bu{x}^{(t)}$
-is chosen based on the previous $\bu{x}^{(t-1)}$. MCMC methods may perform better
+is chosen based on the previous $\bu{x}^{(t-1)}$. MCMC methods perform better
 than LHS methods for estimating the distribution of the model responses,
-however, they require a substantially larger number of model runs.
+however, they require a number of model runs which is orders of magnitude higher
+than LHS requirements.
 
 \begin{figure}[htbp]
 	\begin{center}
@@ -163,7 +166,8 @@ text(qnorm(0.9), 0.1, expression(x[3]))
 @
 	\end{center}
 	\caption{Sample normal probability distribution, with 5 samples 
-	collected and shuffled. Note that the first sample correspond to the 
+	collected from regions with same probability and shuffled. 
+	Note that the first sample correspond to the 
 	second interval, the second sample correspond to the fourth interval,
 	and so on.}
 	\label{fig:Samples}
@@ -185,8 +189,7 @@ It should be noted that, in the mathematical literature, it is usual to refer
 to a somewhat different object as a Latin Square: this would be a square whose 
 sides are divided in $N$ intervals, and is filled with $N$ different symbols, 
 such that for each row and column there is exactly one occurrence of each 
-symbol. The figure \ref{fig:glassLS} shows an example of one ``full'' Latin 
-Square.
+symbol, as represented in figure \ref{fig:glassLS}.
 
 \begin{figure}[htpb]
 	\begin{center}
@@ -202,7 +205,8 @@ Square.
 As described above, the LH sampling generates an uniform distribution of samples 
 in each parametric dimension. However, there is no guarantee that the correlation 
 between two or more parameters will be zero, and the classical algorithm
-from McKay \cite{McKay79} usually produces correlations as high as 0.3 between
+from McKay \cite{McKay79}, described in the previous section,
+usually produces correlations as high as 0.3 between
 pairs of factors, which can difficult or even compromise further analyses. In this
 section, we will present one algorithm designed to take into
 account the correlation between the parameter variables \cite{Huntington98}, using
@@ -215,9 +219,10 @@ using orthogonal designs. These methods, however, either impose severe
 restrictions on the number of samples that must be chosen or are too
 computationally intensive. 
 
-In order to obtain the samples with prescribed correlation terms, we define the 
-desired $m \times m$ correlation matrix between the variables, in which 
-$C_{i,j}^*$ stands for the correlation between $x_i$ and $x_j$.
+In order to obtain the samples with prescribed correlation terms, we define 
+as $C_{i_j}$ the 
+desired $m \times m$ correlation matrix between the variables $x_i$ and $x_j$,
+and denote by $C_{i,j}^*$ the current correlation between $x_i$ and $x_j$.
 
 The next step is done iteratively for each parameter dimension, starting with the second one. Suppose that the method has already been applied to $i=1,2,....,l-1$, 
 and we will apply it to $i=l$. The square sum of the errors in the correlations 
@@ -231,7 +236,7 @@ between $x_l$ and the anterior parameters is given by
 Afterwards, we calculate, for each pair of values sampled from the parameter 
 dimension $l$, what would be the error in the correlation if they were switched.
 The pair that corresponds to the greater error reduction is then switched, and
-the procedure is repeated iteratevely until the error is acceptably small.
+the procedure is repeated iteratively until the error is acceptably small.
 
 \subsection{Stochastic models}
 When dealing with stochastic models, like several relevant individual based 
@@ -321,7 +326,7 @@ of which are the relevant parameters for a given model.
 One way of proceeding is by sistematically increasing the number $N$ of
 model runs and applying any of the sensitivity analysis techniques, which
 will be discussed on the following section. If the analyses indicate 
-similar results for consecutive experiments, we can presume that 
+similar results for consecutive runs, we can presume that 
 increasing the sample size will not yield major changes to the results.
 
 All of the sensitivity analyses present us with a list of the parameters 

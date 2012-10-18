@@ -27,7 +27,7 @@ leads to inaccuracies on the estimation of confidence intervals.
 
 The next reasonable step is to construct and interpret scatterplots relating
 the result to each input parameter. These scatterplots may aid in the visual
-identification of patterns, and altough they cannot be used to ``prove'' 
+identification of patterns, and altough they cannot be used to prove 
 any relationship between the model response and input, they may direct the
 research effort to the correct analyses. There are extensive reviews of the
 use of scatterplots to identify the important factors and emerging patterns
@@ -72,7 +72,9 @@ every model should be analysed by a combination of techniques, preferably
 one for each category outlined here.
 
 \subsubsection{Linear relation}\label{linear}
-The most straightforward relationship between $y$ and $x_i$ is the linear, 
+Under the hypothesis of independence between the central location and
+dispersion of the model responses, 
+the most straightforward relationship between $y$ and $x_i$ is the linear, 
 represented by $y \sim x_i$. This is case if, every time $x_i$ is increased, 
 $y$ increases by aproximately the same ammount.
 The Pearson correlation coefficient is the commonly used measure to test for
@@ -212,11 +214,11 @@ segments(c(-1,-0.333,0.333),ymean,c(-0.333,0.333,1),ymean, lwd=3)
 Other than the central tendency of the results, their dispersal may be 
 dependent on the input parameters. A classical approach which may be used
 to test whether the dispersal of the output is related to any input
-parameter is to divide the distribution of $x_i$ must be divided 
+parameter is to divide the distribution of $x_i$ 
 into a number $N_{test}$ of disjoint intervals and group the model response
 $y$ with respect to these intervals, as done on the Kruskal-Wallis test.
 In this case, the ANOVA F statistic can be used to test for equality 
-between the of $y$ conditional to each class \cite{Kleijnen99}.
+between the $y$ conditional to each class \cite{Kleijnen99}.
 
 A similar approach, which we will use, is to employ the eFAST indices
 \cite{Saltelli99, Saltelli04},

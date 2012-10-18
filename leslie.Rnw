@@ -1,5 +1,5 @@
 \SweaveOpts{fig=T,echo=F}
-\section{Sensitivity of a density-dependent population matrix model}\label{Leslie}
+\section{Case study: a density-dependent population matrix model}\label{Leslie}
 \subsection{Model description}
 In this section, we demonstrate the uses and advantages of the methods
 outlined in the previous sections by performing sensitivity analyses
@@ -313,8 +313,9 @@ the
 survival for adult plants, and the terms associated with competition between seedlings, 
 respectively.
 
-\subsection{Discussion}
-Discutir! Incuir comparacao com os indices de elasticidade
+% TODO TODO TODO
+%\subsection{Discussion}
+%Discutir! Incuir comparacao com os indices de elasticidade
 
 \subsection{Conclusions}
 

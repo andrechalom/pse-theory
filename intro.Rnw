@@ -14,7 +14,10 @@ as well as linking multiple levels of complexity in a system.
 
 On the other hand, more realistic models employ a vast selection of input
 parameters, from temperature and rainfall to metabolic and encounter rates,
-which may be difficult to accurately measure. While variations in some of those
+which may be difficult to accurately measure. Moreover, one may be interested
+in estimating how much predictions for a model fitted in one place or to one species
+may be extrapolated to different places or species.
+While variations in some of those
 parameters will have negligible impact on the model output, other parameters
 may profoundly impact the validity of a model's predictions, and it may be
 impossible to determine {\em a priori} which are the most important parameters.
@@ -27,8 +30,9 @@ model runs.
 
 The disciplines of uncertainty and sensivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
-developed in the 1980 and 1990 decades by researchers such as Saltelli, 
-Helton, Iman, Conover, Sobol' and McKay. 
+developed in the 1980 and 1990 decades \cite{McKay79, Saltelli04, Florian92,
+Helton03, Helton05, Archer97, Huntington98, Ye98, Kleijnen99, Smith02, 
+ImanConover82, ImanConover87, Morris91, Saltelli99}.
 More recently, these analyses
 have been 
 successfully applied to biological models, in order to explore the possible 
@@ -93,14 +97,14 @@ polynomials, such as:
 		\label{logtheta}
 \end{equation}
 Where $\theta_0$ can be calculated from $\theta_1$ and $\theta_2$. This
-more complicated formula has several numerical advantages over the previous,
+more complicated equation has several numerical advantages over the previous,
 as the parameters $\theta_1$ and $\theta_2$ can be estimated with much more
 accuracy, and will not be correlated (as is the case with $\alpha$ and
 $\beta$, as well as $r$ and $K$). However, these parameters are hard to
 interpret in biological
 terms. 
 
-These different formulas illustrate the existence of {\em interpretable}
+These different equations illustrate the existence of {\em interpretable}
 (Eq. \ref{logrk}), {\em defining}, or algebraic (Eq. \ref{logalphabeta})
 and {\em computing} (Eq. \ref{logtheta}) parameters. Most of the times,
 it would be preferable to estimate the values that best fit some data by
@@ -239,7 +243,12 @@ distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
 account not only the individual distribution of each parameter, but also
 all the correlation terms between them. 
 
-
+In very simple models, it may be possible to analitically deduce the behaviour
+of the model response taken at each point of the joint distribution of parameters.
+In the general case, however, this is impossible, and a way of investigating the
+model is to choose some points from the joint distribution and analysing the 
+model at each point. Section \ref{Sampling} will present some strategies for
+choosing these points.
 
 \begin{figure}[htpb]
 	\begin{center}
@@ -257,7 +266,7 @@ curve(dunif,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Proportion o
 mtext('d', line=-1)
 @
 	\end{center}
-	\caption{Four different possible origins from $D_i$. Pannel ``a'' shows 
+	\caption{Four different possibilities for chosing the distributions $D_i$. Pannel ``a'' shows 
 	the exponential distribution of life expectancy, which can be deduced
 	from theory \cite{Cole54}. Pannel ``b'' shows a gamma distribution,
 	which can be used to model the number of parasites per host, but has
