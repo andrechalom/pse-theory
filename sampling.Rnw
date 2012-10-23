@@ -193,7 +193,7 @@ symbol, as represented in figure \ref{fig:glassLS}.
 
 \begin{figure}[htpb]
 	\begin{center}
-		\includegraphics[width=200 pt]{fig/glassLS.png}
+		\includegraphics[width=200 pt]{glassLS.png}
 	\end{center}
 	\caption{A stained glass window at the Caius College, Cambridge, 
 	showing a full Latin Square. Notice how there is only one occurence 
