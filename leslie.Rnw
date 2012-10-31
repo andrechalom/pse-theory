@@ -255,9 +255,9 @@ follow the new parameters $a$ and $z$, which are strongly negatively correlated 
 		\begin{center}
 <<PRCC>>=
 par(mfrow=c(2,1), cex=1, cex.axis=0.7, mar=c(3,2,1.5,1))
-plot(iprcc); abline(h=0, lty=3)
+nodeplot(iprcc$PRCC); abline(h=0, lty=3)
 mtext('(a)', at=1)
-plot(dprcc); abline(h=0, lty=3)
+nodeplot(dprcc$PRCC); abline(h=0, lty=3)
 mtext('(b)', at=1)
 @
 		\end{center}

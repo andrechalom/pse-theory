@@ -9,6 +9,64 @@ myplot <- function(x, ylim = c(0, 1), ...) {
 		    legend("topleft", c("main effect", "interactions"), fill = bar.col)
 		  }
 }
+
+# Para PRCC
+
+nodeplot <- function(x, xlim = NULL, ylim = NULL, labels = TRUE,
+					                      col = par("col"), pch = 21, bg = "white",
+										                       add = FALSE, at = NULL, ...) {
+		  n <- nrow(x)
+  if (is.null(xlim)) {
+		      xlim <- c(1, n)
+    }
+    if (is.null(ylim)) {
+			    ylim <- c(min(x), max(x))
+	  }
+    if (is.null(at)) {
+			    at <- 1 : n
+	  }
+	  if (add) {
+			      par(new = TRUE)
+	    }
+
+	  # axes
+	  
+	  plot(0, xlim = xlim, ylim = ylim, axes = FALSE,
+		          xlab = "", ylab = "", type = "n", ...)
+	    if (class(labels) == "logical") {
+				    if (labels) {
+							      axis(side = 1, at = at, labels = rownames(x))
+		    } else {
+					      axis(side = 1, at = at, labels = FALSE, tick = FALSE)
+			    }
+		  } else if (class(labels) == "character") {
+				      axis(side = 1, at = at, labels = labels)
+		    }
+	    axis(side = 2)
+		  box()
+
+		  # bias
+
+		  if ("bias" %in% colnames(x)) {
+				      xx <- x[["original"]] - x[["bias"]]
+		    } else {
+					    xx <- x[["original"]]
+			  }
+		    
+		    # confidence intervals
+
+		    if (("min. c.i." %in% colnames(x)) & "max. c.i." %in% colnames(x)) {
+					    for (i in 1 : n) {
+								      lines(c(at[i], at[i]), c(x[["min. c.i."]][i], x[["max. c.i."]][i]),
+											            col = col)
+			    }
+			  }
+
+		    # points
+
+		    points(at, xx, col = col, pch = pch, bg = bg)
+}
+
 ########################CORCORR
 
 # Uso: Para forcar correlacao = 0
