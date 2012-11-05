@@ -30,36 +30,36 @@ Testing (eFAST).
         \begin{block}{Introduction}
           \begin{itemize}
 		  \item Density dependence occurs when the growth rate of a population is regulated by the population density.
-          \item Density dependence is credited as being responsible for the low density of many tree species, and consequently for the high species diversity \cite{Janzen70, Connel71}.
+          \item Density dependence is credited as being responsible for the low density of many tree species, and consequently for the high species diversity \cite{Connel71, Janzen70}.
           \item {\em Euterpe edulis} (palmito ju\c cara) is an over-exploited species, commercially exploited for its edible heart of palm \cite{Pollak95}.
           \end{itemize}
         \end{block}
     \vfill
         \begin{block}{Mathematical model}
           \begin{itemize}
-          \item The density independent growth of the population is modeled by a Lefkovitch matrix with seven size classes:
+          \item The density independent growth of the population is modeled by a deterministic Lefkovitch matrix with seven size classes:
 \begin{equation}
 A = \left[
 \begin{array} {ccccccc}
-s_1 \cdot \overline{g_1} &   0 &   0 &   0 &   0 &   0 & F_7 \\
-s_1 \cdot g_1 & s_2 \cdot \overline{g_2} &   0 &   0 &   0 &   0 &   0 \\
-0 & s_2 \cdot g_2 & s_3 \cdot \overline{g_3} &   0 &   0 &   0 &   0 \\
-0 &   0 & s_3 \cdot g_3 & s_4 \cdot \overline{g_4} &   0 &   0 &   0 \\
-0 &   0 &   0 & s_4 \cdot g_4 & s_5 \cdot \overline{g_5} &   0 &   0 \\
-0 &   0 &   0 &   0 & s_5 \cdot g_5 & s_6 \cdot \overline{g_6} &   0 \\
-0 &   0 &   0 &   0 &   0 & s_6 \cdot g_6 & s_7 
+s_1  \overline{g_1} &   0 &   0 &   0 &   0 &   0 & F_7 \\
+s_1  g_1 & s_2  \overline{g_2} &   0 &   0 &   0 &   0 &   0 \\
+0 & s_2  g_2 & s_3  \overline{g_3} &   0 &   0 &   0 &   0 \\
+0 &   0 & s_3  g_3 & s_4  \overline{g_4} &   0 &   0 &   0 \\
+0 &   0 &   0 & s_4  g_4 & s_5  \overline{g_5} &   0 &   0 \\
+0 &   0 &   0 &   0 & s_5  g_5 & s_6  \overline{g_6} &   0 \\
+0 &   0 &   0 &   0 &   0 & s_6  g_6 & s_7 
 \end{array}
 \right]
 \label{LefMatrixReparam}
 \end{equation}
-	   	  \item $s_i$ and $g_i$ are the probabilities of survival and growth into the next class, and $F_i$ is the number of offspring per tree, for each class. $\overline{g_i} = 1-g_i$.
+	   	  $s_i$ and $g_i$ are the probabilities of survival and growth into the next class, and $F_i$ is the number of offspring per tree, for each class. $\overline{g_i} = 1-g_i$.
 		  \item The density dependent model uses the same matrix, but replaces $g_1$ by:
 \begin{equation}
 g_1 = \frac{ g_m }{1+ a N_1} \exp \left(- \frac{z}{\rho} N_7 \right)
 \label{G_1}
 \end{equation}
-		  \item $N_1$ and $N_7$: number of seedlings and adults; $g_m$ and $a$: maximum growth rate and the strength of reduction in $g_1$; $z$ and $\rho$: crown area and plot size.
-          \item All data on the species was extracted from \cite{SilvaMatos99}.
+		  $N_1$ and $N_7$: number of seedlings and adults; $g_m$ and $a$: maximum growth rate and the strength of reduction in $g_1$; $z$ and $\rho$: crown area and plot size.
+          \item Data on the species was extracted from a three-year investigation conducted by \cite{SilvaMatos99} and used to estimate probability distributions for each parameter.
           \end{itemize}
         \end{block}
 		\begin{block}{Analyses}

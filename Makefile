@@ -7,7 +7,6 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex abstract.tex intro.tex s
 	-bibtex ${PROJ}
 	-pdflatex ${PROJ}
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
-	evince ${PROJ}.pdf 2>&1 > /dev/null &
 
 poster: poster.pdf
 
