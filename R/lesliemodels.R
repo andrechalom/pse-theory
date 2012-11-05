@@ -29,22 +29,23 @@ gmmean <- 0.486/(0.486+mean(dados$VALUE[dados$TO==1 & dados$FROM==1]))
 factors <- c("s1","F7","g1","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7");
 N <- 20
 q <- rep("qtnorm", length(factors))
+r <- rep("rtnorm", length(factors))
 q.arg <- list(
-			 list(mean=sobrevmeans[1], sd=sobrevsds[1], lower=0, upper=1),
-			 list(mean=fertilitymean, sd=fertilitysd, lower=0, upper=500),
-			 list(mean=realgrowthmeans[1], sd=realgrowthsds[1], lower=0, upper=1),
-			 list(mean=sobrevmeans[2], sd=sobrevsds[2], lower=0, upper=1),
-			 list(mean=realgrowthmeans[2], sd=realgrowthsds[2], lower=0, upper=1),
-			 list(mean=sobrevmeans[3], sd=sobrevsds[3], lower=0, upper=1),
-			 list(mean=realgrowthmeans[3], sd=realgrowthsds[3], lower=0, upper=1),
-			 list(mean=sobrevmeans[4], sd=sobrevsds[4], lower=0, upper=1),
-			 list(mean=realgrowthmeans[4], sd=realgrowthsds[4], lower=0, upper=1),
-			 list(mean=sobrevmeans[5], sd=sobrevsds[5], lower=0, upper=1),
-			 list(mean=realgrowthmeans[5], sd=realgrowthsds[5], lower=0, upper=1),
-			 list(mean=sobrevmeans[6], sd=sobrevsds[6], lower=0, upper=1),
-			 list(mean=realgrowthmeans[6], sd=realgrowthsds[6], lower=0, upper=1),
-			 list(mean=sobrevmeans[7], sd=sobrevsds[7], lower=0, upper=1)
-			 )
+			  list(mean=sobrevmeans[1], sd=sobrevsds[1], lower=0, upper=1),
+			  list(mean=fertilitymean, sd=fertilitysd, lower=0, upper=500),
+			  list(mean=realgrowthmeans[1], sd=realgrowthsds[1], lower=0, upper=1),
+			  list(mean=sobrevmeans[2], sd=sobrevsds[2], lower=0, upper=1),
+			  list(mean=realgrowthmeans[2], sd=realgrowthsds[2], lower=0, upper=1),
+			  list(mean=sobrevmeans[3], sd=sobrevsds[3], lower=0, upper=1),
+			  list(mean=realgrowthmeans[3], sd=realgrowthsds[3], lower=0, upper=1),
+			  list(mean=sobrevmeans[4], sd=sobrevsds[4], lower=0, upper=1),
+			  list(mean=realgrowthmeans[4], sd=realgrowthsds[4], lower=0, upper=1),
+			  list(mean=sobrevmeans[5], sd=sobrevsds[5], lower=0, upper=1),
+			  list(mean=realgrowthmeans[5], sd=realgrowthsds[5], lower=0, upper=1),
+			  list(mean=sobrevmeans[6], sd=sobrevsds[6], lower=0, upper=1),
+			  list(mean=realgrowthmeans[6], sd=realgrowthsds[6], lower=0, upper=1),
+			  list(mean=sobrevmeans[7], sd=sobrevsds[7], lower=0, upper=1)
+			  )   
 # Gera a matriz de Leslie
 # Calcula o autovalor dominante
 LeslieIndep <- function (s1, F7, g1, s2, g2, s3, g3, s4, g4, s5, g5, s6, g6, s7) {
@@ -93,6 +94,41 @@ fast8 <- fast99 (model = IndepModel, factors = factors, n = 8*66, q = q, q.arg =
 #fast16 <- fast99 (model = IndepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
 #(fs4 <- sbma(fast8, fast16))
 
+genX <- function (factors, n, r, q.arg) {
+	p <- length(factors)
+	X <- as.data.frame(matrix(nrow = n, ncol = p))
+	colnames(X) <- factors
+	for (i in 1:p) {
+			X[,i] <- do.call(r[i], c(n, q.arg[[i]]))
+	}
+	return(X)
+}
+
+sobolplot <- function(x) {
+		bar.col <- c("white", "orange")
+		r <- as.matrix(t(cbind(x$S$original, x$T$original-x$S$original)))
+		names(r) <- names(x$X)
+		barplot(r, col=bar.col, beside=FALSE)
+		legend("topleft", c("main effect", "interactions"), fill=bar.col)
+}
+sobolplot(sobol1)
+
+mysobol <- function (model, factors, n, r, q.arg) sobol2007(model, genX(factors, n, r, q.arg), genX(factors, n, r, q.arg), nboot=1000)
+
+sobol1 <- mysobol(IndepModel, factors, 200, r, q.arg)
+sobol2 <- mysobol(IndepModel, factors, 2*200, r, q.arg)
+(ss1<-sbma(sobol1, sobol2))
+sobol3 <- mysobol(IndepModel, factors, 4*200, r, q.arg)
+(ss2<-sbma(sobol2, sobol3))
+sobol4 <- mysobol(IndepModel, factors, 8*200, r, q.arg)
+(ss3<-sbma(sobol3, sobol4))
+sobol5 <- mysobol(IndepModel, factors, 4*8*200, r, q.arg)
+(ss4<-sbma(sobol4, sobol5))
+sobol6 <- mysobol(IndepModel, factors, 4*4*8*200, r, q.arg)
+(ss5<-sbma(sobol5, sobol6))
+sobol7 <- mysobol(IndepModel, factors, 2*4*4*8*200, r, q.arg)
+(ss6<-sbma(sobol6, sobol7))
+plot(sobol7)
 
 #################### PARTE 2: DEPENDENTE DE DENSIDADE
 factors <- c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z");
@@ -178,7 +214,7 @@ tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500
 #tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528", "528-1056"), rbind(fs1, fs2, fs3, fs4), rbind(dfs1, dfs2, dfs3, dfs4)))
 tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528"), rbind(fs1, fs2, fs3), rbind(dfs1, dfs2, dfs3)))
 colnames(tabfast) <-c("Size ($N_s$)", "Indep. $D_i$", "Indep. $D_t$", "Dep. $D_i$", "Dep. $D_t$")
-save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, tabprcc, tabfast, file="leslie.Rdata")
+save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, dfast4, tabprcc, tabfast, file="leslie.Rdata")
 
 # Modelando res como funcao das variaveis mais importantes:
 # library(bbmle)

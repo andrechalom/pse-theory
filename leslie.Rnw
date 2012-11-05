@@ -162,7 +162,7 @@ for non-linear effects of the parameters, in particular $s_1$ and $F_7$.
 <<ECDF>>=
 par(mfrow=c(2,1), cex=0.8, mar=c(3,2,1.5,1))
 plot(ecdf(LHS5), do.points=FALSE, main='')
-mtext('(a)', at=0.95)
+mtext('(a)', at=0.99)
 plot(ecdf(dLHS5), do.points=FALSE, main='', xlim=c(-1000, 20000))
 mtext('(b)', at=-500)
 @
@@ -255,9 +255,9 @@ follow the new parameters $a$ and $z$, which are strongly negatively correlated 
 		\begin{center}
 <<PRCC>>=
 par(mfrow=c(2,1), cex=1, cex.axis=0.7, mar=c(3,2,1.5,1))
-nodeplot(iprcc$PRCC); abline(h=0, lty=3)
+nodeplot(iprcc$PRCC, bg="orange"); abline(h=0, lty=3)
 mtext('(a)', at=1)
-nodeplot(dprcc$PRCC); abline(h=0, lty=3)
+nodeplot(dprcc$PRCC, bg="orange"); abline(h=0, lty=3)
 mtext('(b)', at=1)
 @
 		\end{center}

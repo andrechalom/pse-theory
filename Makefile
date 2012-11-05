@@ -9,7 +9,10 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex abstract.tex intro.tex s
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 	evince ${PROJ}.pdf 2>&1 > /dev/null &
 
-poster.pdf: poster.tex chalom.bib Makefile 
+poster: poster.pdf
+
+poster.pdf: poster.tex chalom.bib Makefile pse.pdf beamerthemeDreuw.sty
+	make all
 	-pdflatex poster
 	-bibtex poster
 	-pdflatex poster
