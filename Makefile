@@ -17,6 +17,9 @@ poster.pdf: poster.tex chalom.bib Makefile pse.pdf beamerthemeDreuw.sty
 	-pdflatex poster
 	-pdflatex poster
 
+poster.tex: poster.Rnw
+	./mkcap.sh poster
+
 leslie.tex: leslie.Rnw R/Independent.Rdata R/Dependent.Rdata R/pse.R
 	./mkcap.sh leslie
 
