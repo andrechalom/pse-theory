@@ -105,7 +105,7 @@ g_1 = \frac{ g_m }{1+ a N_1} \exp \left(- \frac{z}{\rho} N_7 \right)
 		\begin{center}
 		\includegraphics[width=0.56\textwidth]{leslie-PRCC}
 		\end{center}
-		\caption{Partial Rank Correlation Coefficients for the density independent (a) and density dependent (b) models. \textbf{Fecundity is the most important parameter in both models. While growth rates are important for the density independent model, survival rates and density dependence parameters are important for the density dependent model.}}
+		\caption{Partial Rank Correlation Coefficients, indicating the correlation between each parameter and the model response, for the density independent (a) and density dependent (b) models. \textbf{Fecundity is the most important parameter in both models. While growth rates are important for the density independent model, survival rates and density dependence parameters are important for the density dependent model.}}
 		\end{figure}
         \end{block}
 		\vfill
@@ -114,7 +114,7 @@ g_1 = \frac{ g_m }{1+ a N_1} \exp \left(- \frac{z}{\rho} N_7 \right)
 		\begin{center}
 		\includegraphics[width=0.56\textwidth]{leslie-sobol}
 		\end{center}
-		\caption{Sobol indices for the density independent (a) and density dependent (b) models. The bars represent the first and total order estimates for the sensitivity of each parameter in the model output. \textbf{The second model is much more influenced by nonlinear interactions between terms.}}
+		\caption{Sobol indices for the density independent (a) and density dependent (b) models. The bars represent the first and total order estimates for the magnitude of the sensitivity of each parameter in the model output. \textbf{The second model is much more influenced by nonlinear interactions between terms.}}
 		\end{figure}
         \end{block}
       \end{column}
