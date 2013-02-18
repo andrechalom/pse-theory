@@ -1,0 +1,185 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+
+\SweaveOpts{fig=F,echo=T}
+
+\begin{document}
+\setkeys{Gin}{width=0.8\textwidth}
+
+\title{Análise de sensibilidade: um breve tutorial em R}
+\author{André Chalom}
+\maketitle
+
+Este documento é um breve tutorial prático sobre o uso de ferramentas 
+de análise de sensibilidade em modelos ecológicos. Para uma revisão mais
+profunda da teoria por trás, veja nosso trabalho em 
+http://arxiv.org/abs/1210.6278
+
+Nós presumimos que você tem familiaridade com o ambiente R e com o seu
+modelo de interesse. Vamos ilustrar o procedimento com um modelo simples
+de crescimento populacional.
+
+Você deve ter instalado o ambiente R (estamos usando a versão 2.15.2),
+com alguma interface ou editor de texto de sua escolha, o
+pacote ``sensitivity'' e ter o conjunto de funções dos arquivos
+``pse.R'' e ``corcorr.c'', disponíveis em http://www.lage.ib.usp.br/
+
+\section{Parâmetros de entrada}
+Antes de mais nada, você precisa determinar quais são os parâmetros de 
+entrada do seu modelo. Liste quais são os parâmetros que você deseja
+estudar, qual é a forma da distribuição de probabilidades da qual serão
+extraídos os valores e quais são os argumentos dessas distribuições.
+
+Nosso modelo será um modelo de crescimento populacional logístico.
+Vamos supor que uma população tem uma taxa de crescimento intrínseco $r$,
+uma capacidade de suporte $K$ e tem uma população inicial $X_0$. A cada
+passo de tempo, a população vai crescer ou diminuir seguindo a expressão
+
+\begin{equation}
+		X_{t+1} = X_t + r X_t \left(1-X_t/K \right)
+\end{equation}
+
+Vamos estudar o efeito desses três parâmetros, $r$, $K$ e $X_0$, na 
+população final. Após uma consulta à nossa base de dados, decidimos que,
+para nosso sistema de estudo,
+os parâmetros $r$ e $K$ seguem uma distribuição aproximadamente normal,
+com média e desvio padrão conhecidos, mas não temos como determinar
+a população inicial com precisão, então vamos utilizar uma distribuição 
+uniforme com valores ``razoáveis''. Com isso, construímos a seguinte tabela:
+
+		\begin{center}
+		\begin{tabular}{l l l}
+				\hline
+				Parâmetro & Distribuição & Argumentos\\
+				\hline
+				$r$ & normal & $\mu = 2$, $\sigma=0.05$ \\
+				$K$ & normal & $\mu = 40$, $\sigma=1$ \\
+				$X_0$ & uniforme & $\min = 1$, $\max=50$ \\
+				\hline
+		\end{tabular}
+		\end{center}
+
+Com isso, montamos três objetos em R que serão usados pelas rotinas
+de análise de sensibilidade, um contendo os nomes dos parâmetros, um
+contendo o nome da distribuição usada e um terceiro sendo uma
+{\em lista de listas} com os argumentos de cada distribuições usadas:
+
+<<params>>=
+factors <- c("r", "K", "X0")
+q <- c("qnorm", "qnorm", "qunif")
+q.arg <- list( list(mean=2, sd=0.05), list(mean=40, sd=1), 
+			   list(min=1, max=50) )
+@
+
+\begin{shaded}
+Uma preocupação importante é saber se, dentro dos limites estabelecidos,
+{\em todas as combinações} de valores fazem sentido. Veja os exemplos abaixo:
+
+\textbf{Exemplo 1:}
+
+Temos um modelo de distribuição de abundâncias de espécies, com dois parâmetros.
+$N$ é o número total de indivíduos em uma comunidade e $E$ é o número total de 
+espécies. Podemos rodar o modelo com $N=100$ e $E=50$ ou $N=15$ e $E=3$, portanto
+não há nada de errado com esses valores. Mas a combinação $N=15$ e $E=50$ não 
+faz sentido, pois ela significa que existem menos do que um indivíduo para cada 
+espécie! Uma solução é rodar o modelo com os seguintes parâmetros: $N$ é o número 
+total de indivíduos e $\hat{e}$ é o número médio de indivíduos por espécie.
+Com isso, $\hat{e} * N = E$, e todas as combinações de $N$ e $\hat{e}$ fazem
+sentido.
+
+\textbf{Exemplo 2:}
+
+Temos um modelo de crescimento populacional estruturado, e estimamos 
+independentemente dois parâmetros: $S$, a probabilidade de que uma determinada 
+planta sobreviva e permaneça na mesma classe de tamanho, e $G$, a probabilidade
+de que uma planta cresça para a próxima classe. Podemos rodar o modelo com $S=0.2$ e
+$G=0.7$, ou com $S=0.8$ e $G=0.1$. No entanto, se tentamos rodar o modelo com
+$S=0.8$ e $G=0.7$, chegamos a conclusão que, para cada planta original, vamos ter
+0.8 plantas na mesma classe de tamanho e mais 0.7 na próxima, dando um total de
+1.5 plantas! O problema é que a soma de $S$ e $G$ tem que ser menor do que 1.
+Um jeito de resolver isso é medir $\hat{s}$, a probabilidade da planta 
+{\em sobreviver}, em qualquer classe de tamanho, e $\hat{g}$, a probabilidade de que
+uma planta que sobreviveu cresça. Assim, $G = \hat{s}*\hat{g}$ e 
+$S = \hat{s} * (1-\hat{g})$.
+
+
+\end{shaded}
+
+\section{Seu modelo}
+O modelo que você deseja analisar deve ser formulado como uma função de R
+que recebe um {\em data.frame} cujas colunas representam os parâmetros que
+serão analisados, e em cada linha uma combinação de valores para os parâmetros.
+A função deve retornar um vetor com o mesmo número de linhas, contendo o 
+resultado do modelo para cada combinação de valores passada.
+
+Se o seu modelo já está escrito em R, e aceita uma única combinação de valores,
+é fácil escrever um ``wrapper'' usando a função \textbf{mapply} para o modelo.
+Veja no exemplo abaixo, a função oneRun recebe três números, correspondendo
+a $X_0$, $r$ e $K$, e devolve um único número representando a população final.
+A função modelRun encapsula essa função, de forma que ela recebe um data.frame
+contendo todas as combinações de parâmetros e devolve o resultado como um vector.
+
+<<model>>=
+oneRun <- function (Xo, r, K) {
+    X <- Xo
+    for (i in 0:100) {
+       X <- X+r*X*(1-X/K)
+    }   
+    return (X) 
+}
+modelRun <- function (dados) {
+	return(mapply(oneRun, dados[,1], dados[,2], dados[,3]))
+}
+@
+
+Se o seu modelo está escrito em uma linguagem externa como C ou Fortran,
+é possível fazer uma interface com o R compilando o seu modelo como uma biblioteca
+compartilhada e fazendo o carregamento dinâmico dessa biblioteca. Veja o 
+excelente texto sobre ``Calling C and Fortran from R'' em 
+http://users.stat.umn.edu/~geyer/rc/
+
+\section{Análises de incerteza e sensibilidade}
+Para gerar um hipercubo com o seu modelo, use a função \textbf{LHS}, que aceita os
+seguintes argumentos: {\em model}, a função que representa seu modelo; 
+{\em factors}, o nome dos seus parâmetros; {\em N}, o número de combinações;
+{\em q}, as distribuições de probabilidade a usar; e {\em q.arg}, uma lista com
+os argumentos para as distribuições de probalidade. 
+
+<<LHS>>=
+source("pse.R")
+myLHS <- LHS(modelRun, factors, 100, q, q.arg)
+@
+
+A partir desse objeto retornado pela função \textbf{LHS}, é possível fazer quatro
+coisas principais: uma análise de incerteza, usando a função \textbf{ecdf}, 
+espalhagramas da correlação entre cada parâmetro e o resultado usando a função
+\textbf{corPlot}, análise de correlação parcial de rank usando a função \textbf{pcc}
+e comparação de concordância entre diferentes tamanhos de hipercubo usando
+a função \textbf{sbma}. Cada uma vai ser exemplificada abaixo:
+
+<<ecdf, plot=T>>=
+plot(ecdf(myLHS))
+@
+
+\end{document}
