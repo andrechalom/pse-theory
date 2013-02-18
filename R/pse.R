@@ -106,7 +106,7 @@ nodeplot <- function(x, xlim = NULL, ylim = NULL, labels = TRUE,
 # Para aproximar de uma matriz de correlacao dada:
 # newvars <- LHScorcorr(vars,COR)
 
-# system("R CMD SHLIB corcorr.c")
+system("R CMD SHLIB corcorr.c")
 
 # NAO MEXA nos parametros l e it
 LHScorcorr <- function (vars, COR = matrix(0,dim(vars)[2],dim(vars)[2]), l = 2, eps = 0.0005, it = 1, echo=FALSE, maxIt = 2*sqrt(dim(vars)[1])) {
@@ -168,7 +168,10 @@ oneCorPlot <- function(res, var, name, log, first, ...) {
 				abline((lm(res~var)))
 		mtext(paste("Cor:",format(cor(var,res), digits=2), sig(res~var)))
 }
-corPlot <- function (vars, res, log="", ...) {
+corPlot <- function (vars, res=NULL, log="", ...) {
+
+		if (class(vars)=="LHS") return(corPlot(vars@data, vars@res, log=log, ...))
+
 		nl <- floor(sqrt(length(vars)))
 		nc <- ceiling(length(vars)/nl)
 		opar <- par(mfrow=c(nl,nc), pch='.', ...)
@@ -270,6 +273,7 @@ setClass("LHS", representation=representation(
 											  prcc = "list")
 )
 
+results <- function(LHS) { return (LHS@res) }
 setMethod(
 		  f="pcc",
 		  signature("LHS"),

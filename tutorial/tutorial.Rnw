@@ -1,5 +1,5 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage[margin=1in]{geometry}
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{amsmath}
@@ -26,6 +26,10 @@
 
 \begin{document}
 \setkeys{Gin}{width=0.8\textwidth}
+
+<<seed, echo=F>>=
+set.seed(42)
+@
 
 \title{Análise de sensibilidade: um breve tutorial em R}
 \author{André Chalom}
@@ -136,12 +140,15 @@ resultado do modelo para cada combinação de valores passada.
 Se o seu modelo já está escrito em R, e aceita uma única combinação de valores,
 é fácil escrever um ``wrapper'' usando a função \textbf{mapply} para o modelo.
 Veja no exemplo abaixo, a função oneRun recebe três números, correspondendo
-a $X_0$, $r$ e $K$, e devolve um único número representando a população final.
+a $r$, $K$ e $X_0$, e devolve um único número representando a população final.
 A função modelRun encapsula essa função, de forma que ela recebe um data.frame
 contendo todas as combinações de parâmetros e devolve o resultado como um vector.
 
+\textbf{CUIDADO} para que a ordem na qual os parâmetros foram definidos seja a
+mesma ordem na entrada da função.
+
 <<model>>=
-oneRun <- function (Xo, r, K) {
+oneRun <- function (r, K, Xo) {
     X <- Xo
     for (i in 0:100) {
        X <- X+r*X*(1-X/K)
@@ -168,8 +175,11 @@ os argumentos para as distribuições de probalidade.
 
 <<LHS>>=
 source("pse.R")
-myLHS <- LHS(modelRun, factors, 100, q, q.arg)
+meuLHS <- LHS(modelRun, factors, 500, q, q.arg)
 @
+
+Para acessar o valor dos parâmetros usados use a forma meuLHS@data, e para
+o resultado, use meuLHS@res.
 
 A partir desse objeto retornado pela função \textbf{LHS}, é possível fazer quatro
 coisas principais: uma análise de incerteza, usando a função \textbf{ecdf}, 
@@ -178,8 +188,30 @@ espalhagramas da correlação entre cada parâmetro e o resultado usando a funç
 e comparação de concordância entre diferentes tamanhos de hipercubo usando
 a função \textbf{sbma}. Cada uma vai ser exemplificada abaixo:
 
-<<ecdf, plot=T>>=
-plot(ecdf(myLHS))
+\cleardoublepage
+
+<<ecdf, fig=T>>=
+plot(ecdf(meuLHS))
 @
+
+\cleardoublepage
+<<corplot, fig=T>>=
+corPlot(meuLHS)
+@
+
+\cleardoublepage
+<<prcc, fig=T>>=
+plot(pcc(meuLHS))
+abline(h=0, lty=2)
+@
+
+Para verificar se o tamanho do hipercubo é suficiente, calculamos
+<<sbma>>=
+novoLHS <- LHS(modelRun, factors, 600, q, q.arg)
+meuSbma <- sbma(meuLHS, novoLHS)
+@
+
+O valor de {\em meuSbma} nesse exemplo foi \Sexpr{meuSbma}, onde -1 indica 
+discordância total e 1 indica concordância total entre os resultados.
 
 \end{document}
