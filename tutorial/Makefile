@@ -8,6 +8,8 @@ ${PROJ}.pdf: tutorial.tex Makefile
 	-pdflatex ${PROJ}
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 
+zip: tutorial.pdf pse.R corcorr.c
+	zip -r tutorial.zip tutorial.pdf pse.R corcorr.c
 
 tutorial.tex: tutorial.Rnw
 	R CMD Sweave tutorial.Rnw
