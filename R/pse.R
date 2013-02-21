@@ -1,3 +1,8 @@
+# EDIÇÃO FEV/2013
+# Remoção de funções acessórias para facilitar o entendimento do script
+# Retornar a svn 841 para funções antigas
+
+
 library(sensitivity)
 # Para sobol2007
 genX <- function (factors, n, r, q.arg) {
@@ -9,7 +14,9 @@ genX <- function (factors, n, r, q.arg) {
 	}
 	return(X)
 }
+
 mysobol <- function (model, factors, n, r, q.arg) sobol2007(model, genX(factors, n, r, q.arg), genX(factors, n, r, q.arg), nboot=1000)
+
 myplot <- function(x, ylim = c(0, 1), ...) {
 		bar.col <- c("white","orange")
 		if(class(x)=="fast99") {
@@ -40,7 +47,7 @@ myplot <- function(x, ylim = c(0, 1), ...) {
 		legend("topright", c("main effect", "interactions"), fill = bar.col)
 }
 
-# Para PRCC
+# Para poder plotar PRCC com mais liberdade (cor, titulos, etc)
 
 nodeplot <- function(x, xlim = NULL, ylim = NULL, labels = TRUE,
 					 col = par("col"), pch = 21, bg = "white",

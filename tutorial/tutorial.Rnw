@@ -190,16 +190,31 @@ a função \textbf{sbma}. Cada uma vai ser exemplificada abaixo:
 
 \cleardoublepage
 
+A distribuição cumulativa de probabilidade empírica (ECDF em inglês) dá uma idéia
+da distribuição dos resultados do modelo, no caso a população final. Com esse gráfico
+vemos que, se nossos parâmetros representam uma população real, o tamanho em
+equilíbrio dessa população está com alta probabilidade entre 35 e 45.
 <<ecdf, fig=T>>=
 plot(ecdf(meuLHS))
 @
 
 \cleardoublepage
+
+Aqui, vemos um espalhagrama do resultado em função de cada parâmetro. Como todos
+os parâmetros estão sendo variados ao mesmo tempo, os espalhagramas ficam com essa
+cara de aleatórios, {\em mesmo} que o modelo seja determinístico.
+
+Você sabe porque o comportamento fica esquisito aumentando o valor de $r$? Procure
+na Wikipedia sobre o ``Logistic Map''!
 <<corplot, fig=T>>=
 corPlot(meuLHS)
 @
 
 \cleardoublepage
+
+A análise de correlação parcial mostra quais são os parâmetros que estão afetando
+mais fortemente o resultado, para mais (correlação positiva) ou para menos
+(correlação negativa).
 <<prcc, fig=T>>=
 plot(pcc(meuLHS))
 abline(h=0, lty=2)
@@ -214,4 +229,24 @@ meuSbma <- sbma(meuLHS, novoLHS)
 O valor de {\em meuSbma} nesse exemplo foi \Sexpr{meuSbma}, onde -1 indica 
 discordância total e 1 indica concordância total entre os resultados.
 
+
+% \cleardoublepage
+
+% \section{Análise de Sobol}
+% 
+% Outra análise de sensibilidade que não é baseada no hipercubo latino é
+% a análise dos índices de Sobol, que é baseada em Monte Carlo. Para
+% usar essa análise, vamos definir um vetor com as funções de geração
+% de números aleatórios baseada nas mesmas distribuições que usamos na sessão 
+% passada (ou seja, se usamos \textbf{qnorm} vamos usar \textbf{rnorm}, etc).
+% 
+% Após isso, executamos a análise com as funções \textbf{mysobol} e \textbf{myplot},
+% que são baseadas no pacote sensitivity mas são mais amigáveis.
+% 
+% <<sobol>>=
+% r <- c("rnorm", "rnorm", "runif")
+% meuSobol <- mysobol(modelRun, factors, 50000, r, q.arg)
+% myplot(meuSobol)
+% @
+% 
 \end{document}
