@@ -211,3 +211,46 @@ save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, dfast4, sobol6, dsobol,  tabprcc,
 # 
 # AICtab(M0, M1, M2, M3, M4, M5, M6)
 # 
+
+# Dependent variables of ñ: ratio between juveniles and adults:
+LeslieDep <- function (s1, F7, s2, g2, s3, g3, s4, g4, s5, g5, s6, g6, s7, gm, a, z) {
+		Np <- c(100,rep(1, 6))
+		epsilon = 10e-4
+		exit = FALSE
+		nIter <- 0 
+		while (exit == FALSE) {
+				nIter <- nIter + 1
+				g1 <- densdep(gm, a, Np[1], z, Np[7])
+	L <- matrix(
+			c(s1*(1-g1),   0,   0,   0,   0,   0, F7,
+			  s1*g1, s2*(1-g2),   0,   0,   0,   0,   0,
+		        0, s2*g2, s3*(1-g3),   0,   0,   0,   0,
+			    0,   0, s3*g3, s4*(1-g4),   0,   0,   0,
+			    0,   0,   0, s4*g4, s5*(1-g5),   0,   0,
+			    0,   0,   0,   0, s5*g5, s6*(1-g6),   0,
+			    0,   0,   0,   0,   0, s6*g6, s7), nrow=7, ncol=7, byrow=TRUE)
+				newp <- L %*% Np
+				if (sqrt (sum(newp-Np)^2) < epsilon | nIter == 500000 ) exit = TRUE
+				Np <- newp
+		}
+	result <- Np[1]/Np[7];
+	return (result);
+}
+DepModel <- function (x) {
+	return(mapply(LeslieDep, x[,1], x[,2],x[,3],x[,4],x[,5],x[,6],x[,7],x[,8], x[,9], x[,10], x[,11], x[,12], x[,13], x[,14], x[,15], x[,16]))
+}
+
+dLHS05 <- LHS(DepModel,factors, 50, q, q.arg)
+dLHS1 <- LHS(DepModel,factors, 100, q, q.arg)
+ds1<-sbma(dLHS05, dLHS1)
+dLHS2 <- LHS(DepModel,factors, 200, q, q.arg)
+ds2<-sbma(dLHS1, dLHS2)
+dLHS3 <- LHS(DepModel,factors, 300, q, q.arg)
+ds3<-sbma(dLHS2, dLHS3)
+dLHS4 <- LHS(DepModel,factors, 400, q, q.arg)
+ds4<-sbma(dLHS3, dLHS4)
+dLHS5 <- LHS(DepModel,factors, 500, q, q.arg)
+ds5<-sbma(dLHS4, dLHS5)
+
+plot(ecdf(dLHS5))
+plot(pcc(dLHS5))
