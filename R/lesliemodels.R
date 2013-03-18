@@ -254,3 +254,42 @@ ds5<-sbma(dLHS4, dLHS5)
 
 plot(ecdf(dLHS5))
 plot(pcc(dLHS5))
+
+
+#### Partial correlations:
+source("caswell.r")
+SRC <-src(dLHS5@data, dLHS5@res)
+par(mfrow=c(2,1), mar=c(3,3,1,2))
+plot(SRC, main="")
+abline(h=0, lty=2)
+barplot(dNdtheta, names=c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z"));
+abline(h=0, lty=2)
+
+# TODOOOOOOO
+estim.pcc <- function(data, i = 1:nrow(data)) {  
+		  d <- data[i, ]
+  p <- ncol(d) - 1
+    pcc <- numeric(p)
+    for (j in 1:p) {
+			    Xtildej.lab <- paste(colnames(d)[c(-1, -j-1)], collapse = "+")
+	    lm.Y <- lm(formula(paste(colnames(d)[1], "~", Xtildej.lab)), data = d)
+		    lm.Xj <- lm(formula(paste(colnames(d)[j+1], "~", Xtildej.lab)), data = d)
+		    pcc[j] <- cor(d[1] - fitted(lm.Y), d[j+1] - fitted(lm.Xj))
+			  }
+	  pcc
+}
+
+
+pcc <- function(X, y, rank = FALSE, nboot = 0, conf = 0.95) {
+		  data <- cbind(Y = y, X)
+
+  if (rank) {
+		      for (i in 1:ncol(data)) {
+					        data[,i] <- rank(data[,i])
+      }
+    }
+    
+    if (nboot == 0) {
+			    pcc <- data.frame(original = estim.pcc(data))
+	    rownames(pcc) <- colnames(X)
+
