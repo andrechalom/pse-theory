@@ -3,49 +3,31 @@ source("pse.R")
 ### Modelo numerico: crescimento logistico simples
 # O modelo tem 4 parametros: r, K, populacao inicial e tempo final
 # Vamos estudar qual a influencia de cada um deles
-modelRun <- function (Xo, r, K, Time) {
-	X <- Xo
-	for (i in 0:Time) {
-		X <- r*X[length(X)]*(1-X[length(X)]/K)
+oneRun <- function (r, K, Xo) {
+		Time<-5;
+	X <- array();
+	X[1] <- Xo; #### VAI SER SOBRESCRITO!
+	for (i in 1:Time) {
+		X[i] <- X[length(X)] + r*X[length(X)]*(1-X[length(X)]/K)
 	}
-	return (X)
+	return (X[length(X)])
+}
+modelRun <- function (dados) {
+		mapply(oneRun, dados[,1], dados[,2], dados[,3])
 }
 ### Descrevendo o espaco de parametros e gerando o hipercubo
 # Definicao do numero total de amostras:
 N <- 100
-# r eh uniformemente distribuido entre 0 e 2
-# os outros parametros seguem logica semelhante
-r <- LHSsample(N, "r", qunif, 0.25, 2)
-k <- LHSsample(N, "k", qunif, 10, 50)
-x <- LHSsample(N, "x", qunif, 1, 10)
-# O tempo final eh distribuido com forma normal de media = 100 e sd = 20
-Time <- LHSsample(N, "T", qnorm, 100, 40)
-apply((cbind(r,k,Time,x)), 2, mean)
-apply((cbind(r,k,Time,x)), 2, sd)
-# Correlacao entre as variaveis geradas. Veja que ela nao eh nec. 0
-M <- cor(cbind(r,k,Time,x))
-M
-max(abs(M[M!=1]))
-# Correcao das variaveis para apresentarem correlacao 0
-#  newvars <- LHScorcorr (cbind(r,k,Time,x))
-# Correcao das variaveis para r e k terem correlacao negativa
-MyCor <- matrix(c(   1,-0.1,   -0.2,   -0.3,
-		  0.1,   1,   -0.4,   -0.5,
-		     0.2,   0.3,   1,   0,
-		     0.4,   0.5,   0,   1),4,4)
-newvars <- LHScorcorr (cbind(r,k,Time,x), MyCor)
-print(MyCor);
-print(cor(newvars))
+factors <- c("r", "K", "X0")
+res.names <- paste("Time",1:9)
+q <- c("qnorm", "qnorm", "qunif")
+q.arg <- list( list(mean=2, sd=0.05), list(mean=40, sd=1),
+				list(min=1, max=50) )
 
-# Uso a notacao [1:N] para manter os atributos - **TODO** refazer pra ficar menos pentelho
-k[1:N] <- newvars[,2]
-Time[1:N] <- newvars[,3]
-x[1:N] <- newvars[,4]
-M <- cor(cbind(r,k,Time,x))
-M
-max(abs(M[M!=1]))
+oneRun(1.2, 12, 5)
+meuLHS <- LHS(modelRun, factors, 100, q, q.arg, res.names)
+matplot(t(get.results(meuLHS)), type='l')
+plotecdf(meuLHS)
 
-### Rodando o modelo para os diferentes parametros
-# O objeto res contem a saida do modelo, no nosso caso, a populacao final
-res <- mapply(modelRun, x, r, k, Time)
-
+p <- sensitivity::pcc(as.data.frame(meuLHS@data), as.vector(meuLHS@res), nboot=50)
+plot(p)
