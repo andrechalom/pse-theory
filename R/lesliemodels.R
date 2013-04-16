@@ -27,7 +27,6 @@ gmmean <- 0.486/(0.486+mean(dados$VALUE[dados$TO==1 & dados$FROM==1]))
 
 ################# PARTE 1: Independente de Densidade
 factors <- c("s1","F7","g1","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7");
-N <- 20
 q <- rep("qtnorm", length(factors))
 r <- rep("rtnorm", length(factors))
 q.arg <- list(
@@ -79,33 +78,37 @@ s4<-sbma(LHS3, LHS4)
 LHS5 <- LHS(IndepModel, factors, 500, q, q.arg)
 s5<-sbma(LHS4, LHS5)
 
+corPlot(LHS1)
+plotecdf(LHS1)
+
 # Partial rank correlation coefficients
-iprcc <- pcc(LHS5);order(- abs(iprcc$PRCC$original)) -> O;iprcc$X <- iprcc$X[,O];iprcc$PRCC <- iprcc$PRCC[O,]
-plot(iprcc); abline(h=0, lty=2)
+plotprcc(LHS1)
+#iprcc <- pcc(LHS5);order(- abs(iprcc$PRCC$original)) -> O;iprcc$X <- iprcc$X[,O];iprcc$PRCC <- iprcc$PRCC[O,]
+#plot(iprcc); abline(h=0, lty=2)
 
 # Analise eFAST
-fast1 <- fast99 (model = IndepModel, factors = factors, n = 1*66, q = q, q.arg = q.arg)
-fast2 <- fast99 (model = IndepModel, factors = factors, n = 2*66, q = q, q.arg = q.arg)
-(fs1 <- sbma(fast1, fast2))
-fast4 <- fast99 (model = IndepModel, factors = factors, n = 4*66, q = q, q.arg = q.arg)
-(fs2 <- sbma(fast2, fast4))
-fast8 <- fast99 (model = IndepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
-(fs3 <- sbma(fast4, fast8))
-#fast16 <- fast99 (model = IndepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
-#(fs4 <- sbma(fast8, fast16))
-
-sobol1 <- mysobol(IndepModel, factors, 200, r, q.arg)
-sobol2 <- mysobol(IndepModel, factors, 2*200, r, q.arg)
-(ss1<-sbma(sobol1, sobol2))
-sobol3 <- mysobol(IndepModel, factors, 4*200, r, q.arg)
-(ss2<-sbma(sobol2, sobol3))
-sobol4 <- mysobol(IndepModel, factors, 8*200, r, q.arg)
-(ss3<-sbma(sobol3, sobol4))
-sobol5 <- mysobol(IndepModel, factors, 4*8*200, r, q.arg)
-(ss4<-sbma(sobol4, sobol5))
-sobol6 <- mysobol(IndepModel, factors, 4*4*8*200, r, q.arg)
-(ss5<-sbma(sobol5, sobol6))
-
+# fast1 <- fast99 (model = IndepModel, factors = factors, n = 1*66, q = q, q.arg = q.arg)
+# fast2 <- fast99 (model = IndepModel, factors = factors, n = 2*66, q = q, q.arg = q.arg)
+# (fs1 <- sbma(fast1, fast2))
+# fast4 <- fast99 (model = IndepModel, factors = factors, n = 4*66, q = q, q.arg = q.arg)
+# (fs2 <- sbma(fast2, fast4))
+# fast8 <- fast99 (model = IndepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
+# (fs3 <- sbma(fast4, fast8))
+# fast16 <- fast99 (model = IndepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
+# (fs4 <- sbma(fast8, fast16))
+# 
+# sobol1 <- mysobol(IndepModel, factors, 200, r, q.arg)
+# sobol2 <- mysobol(IndepModel, factors, 2*200, r, q.arg)
+# (ss1<-sbma(sobol1, sobol2))
+# sobol3 <- mysobol(IndepModel, factors, 4*200, r, q.arg)
+# (ss2<-sbma(sobol2, sobol3))
+# sobol4 <- mysobol(IndepModel, factors, 8*200, r, q.arg)
+# (ss3<-sbma(sobol3, sobol4))
+# sobol5 <- mysobol(IndepModel, factors, 4*8*200, r, q.arg)
+# (ss4<-sbma(sobol4, sobol5))
+# sobol6 <- mysobol(IndepModel, factors, 4*4*8*200, r, q.arg)
+# (ss5<-sbma(sobol5, sobol6))
+# 
 #################### PARTE 2: DEPENDENTE DE DENSIDADE
 factors <- c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z");
 N <- 20
@@ -155,8 +158,8 @@ LeslieDep <- function (s1, F7, s2, g2, s3, g3, s4, g4, s5, g5, s6, g6, s7, gm, a
 				if (sqrt (sum(newp-Np)^2) < epsilon | nIter == 500000 ) exit = TRUE
 				Np <- newp
 		}
-	result <- sum(Np)
-	return (result);
+		#     result <- sum(Np)
+	return (Np);
 }
 DepModel <- function (x) {
 	return(mapply(LeslieDep, x[,1], x[,2],x[,3],x[,4],x[,5],x[,6],x[,7],x[,8], x[,9], x[,10], x[,11], x[,12], x[,13], x[,14], x[,15], x[,16]))
@@ -174,28 +177,37 @@ ds4<-sbma(dLHS3, dLHS4)
 dLHS5 <- LHS(DepModel,factors, 500, q, q.arg)
 ds5<-sbma(dLHS4, dLHS5)
 
+myLHS <- target.sbma(0.8, DepModel, factors, 100, 100, q, q.arg)
+
+corPlot(dLHS1, index.data=2)
+corPlot(dLHS1, index.res=7)
+
+plotecdf(dLHS1)
+plotecdf(dLHS1, stack=T, index.res=2:7)
+
 # Partial rank correlation coefficients
-dprcc <- pcc(dLHS5); order(- abs(dprcc$PRCC$original)) -> O; dprcc$X <- dprcc$X[,O]; dprcc$PRCC <- dprcc$PRCC[O,]
-plot(dprcc); abline(h=0, lty=2)
+plotprcc(dLHS1)
+# dprcc <- pcc(dLHS5); order(- abs(dprcc$PRCC$original)) -> O; dprcc$X <- dprcc$X[,O]; dprcc$PRCC <- dprcc$PRCC[O,]
+# plot(dprcc); abline(h=0, lty=2)
 
-dfast1 <- fast99 (model = DepModel, factors = factors, n = 1*66, q = q, q.arg = q.arg)
-dfast2 <- fast99 (model = DepModel, factors = factors, n = 2*66, q = q, q.arg = q.arg)
-(dfs1 <- sbma(dfast1, dfast2))
-dfast4 <- fast99 (model = DepModel, factors = factors, n = 4*66, q = q, q.arg = q.arg)
-(dfs2 <- sbma(dfast2, dfast4))
-dfast8 <- fast99 (model = DepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
-(dfs3 <- sbma(dfast4, dfast8))
-#dfast16 <- fast99 (model = DepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
-#(dfs4 <- sbma(dfast8, dfast16))
-
-dsobol <- mysobol(DepModel, factors, 4*8*200, r, q.arg)
-
-tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500"), Independent=c(s1,s2,s3,s4,s5), Dependent=c(ds1,ds2,ds3,ds4,ds5))
+# dfast1 <- fast99 (model = DepModel, factors = factors, n = 1*66, q = q, q.arg = q.arg)
+# dfast2 <- fast99 (model = DepModel, factors = factors, n = 2*66, q = q, q.arg = q.arg)
+# (dfs1 <- sbma(dfast1, dfast2))
+# dfast4 <- fast99 (model = DepModel, factors = factors, n = 4*66, q = q, q.arg = q.arg)
+# (dfs2 <- sbma(dfast2, dfast4))
+# dfast8 <- fast99 (model = DepModel, factors = factors, n = 8*66, q = q, q.arg = q.arg)
+# (dfs3 <- sbma(dfast4, dfast8))
+# dfast16 <- fast99 (model = DepModel, factors = factors, n = 16*66, q = q, q.arg = q.arg)
+# (dfs4 <- sbma(dfast8, dfast16))
+# 
+# dsobol <- mysobol(DepModel, factors, 4*8*200, r, q.arg)
+# 
+# tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500"), Independent=c(s1,s2,s3,s4,s5), Dependent=c(ds1,ds2,ds3,ds4,ds5))
 #tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528", "528-1056"), rbind(fs1, fs2, fs3, fs4), rbind(dfs1, dfs2, dfs3, dfs4)))
-tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528"), rbind(fs1, fs2, fs3), rbind(dfs1, dfs2, dfs3)))
-colnames(tabfast) <-c("Size ($N_s$)", "Indep. $D_i$", "Indep. $D_t$", "Dep. $D_i$", "Dep. $D_t$")
+# tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528"), rbind(fs1, fs2, fs3), rbind(dfs1, dfs2, dfs3)))
+# colnames(tabfast) <-c("Size ($N_s$)", "Indep. $D_i$", "Indep. $D_t$", "Dep. $D_i$", "Dep. $D_t$")
 # load("leslie.Rdata")
-save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, dfast4, sobol6, dsobol,  tabprcc, tabfast, file="leslie.Rdata")
+# save(LHS5, dLHS5, iprcc, dprcc, fast8, dfast8, dfast4, sobol6, dsobol,  tabprcc, tabfast, file="leslie.Rdata")
 
 # Modelando res como funcao das variaveis mais importantes:
 # library(bbmle)

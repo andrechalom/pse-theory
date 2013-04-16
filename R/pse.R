@@ -50,15 +50,21 @@ LHScorcorr <- function (vars, COR = matrix(0,dim(vars)[2],dim(vars)[2]), l = 2, 
 }
 ###################################
 ### Plots e analises
-oneCorPlot <- function(res, var, name, log, ...) {
+oneCorPlot <- function(res, var, name, log, add.lm, ...) {
 		par (mar=c(4,4,2,0.5))
 		plot(var,res, xlab=name[1], log=log, ylab= name[2], ...)
-		l <- lm(res~var)
-		if (!is.na(coefficients(l)[2])) 
-				abline((lm(res~var)))
+		if (add.lm) {
+			l <- lm(res~var)
+			if (!is.na(coefficients(l)[2])) 
+					abline((lm(res~var)))
+		}
 }
-corPlot <- function (vars, res=NULL, log="", ...) {
-		if (class(vars)=="LHS") return(corPlot(vars@data, vars@res, log=log, ...))
+corPlot <- function (vars, res=NULL, index.data=NULL, index.res=NULL,log="", add.lm=TRUE, ...) {
+		if (class(vars)=="LHS") {
+				if (is.null(index.data)) index.data <- 1:dim(vars@data)[2]
+				if (is.null(index.res)) index.res <- 1:dim(vars@res)[2]
+				return(corPlot(vars@data[index.data], vars@res[index.res], log=log, add.lm=add.lm, ...))
+		}
 		res <- as.data.frame(res)
 		if (is.null(dim(vars))) {nplots <-1} else {nplots <- dim(vars)[2]}
 		if (is.null(dim(res))) {nplots <-nplots*1} else {nplots <- nplots* dim(res)[2]}
@@ -71,7 +77,7 @@ corPlot <- function (vars, res=NULL, log="", ...) {
 		index.var <- 1
 		index.res <- 1
 		for (i in 1:nl) for (j in 1:nc) {
-				oneCorPlot(res[,index.res],vars[, index.var], c(names(vars)[index.var],names(res)[index.res]), log, ...)
+				oneCorPlot(res[,index.res],vars[, index.var], c(names(vars)[index.var],names(res)[index.res]), log, add.lm, ...)
 				index.res <- index.res +1
 				if (index.res > dim(res)[2]) {index.res <- 1; index.var <- index.var + 1}
 				if (index.var > dim(vars)[2]) return();
@@ -80,7 +86,7 @@ corPlot <- function (vars, res=NULL, log="", ...) {
 
 #                       Nodeplot: anti-boxplot
 #                         Gilles Pujol 2006
-#   Editado Chalom 2013
+#   Editado Chalom 2013 para bugfix na versao 1.6-1, aguardando updates
 
 plot.pcc <- function(x, ylim = c(-1,1), main=(if ("PCC" %in% names(x)) "PCC" else "PRCC"), ...) {  
 		if ("PCC" %in% names(x)) {
@@ -148,13 +154,11 @@ nodeplot <- function(x, xlim = NULL, ylim = NULL, labels = TRUE,
 }
 
 sbma <- function (sample1, sample2, absolute=TRUE) {
-		if(class(sample1) == "fast99") 
-				return(data.frame(Di=sbma(sample1$D1, sample2$D1), Dt=sbma(sample1$Dt, sample2$Dt)))
-		if(class(sample1) == "soboljansen") 
-				return(data.frame(S=sbma(sample1$S$original, sample2$S$original), T=sbma(sample1$T$original, sample2$T$original)))
 		if(class(sample1) == "LHS") {
-				x1 <- sample1@prcc$PRCC$original; 
-				x2 <- sample2@prcc$PRCC$original;
+				sb <- array();
+				for (i in 1:dim(sample1@res)[2])
+						sb[i] <- sbma(sample1@prcc[[i]]$PRCC$original, sample2@prcc[[i]]$PRCC$original);
+				return (sb);
 		}
 		else {x1 <- sample1; x2<-sample2;}
 		if (absolute) {x1 <- abs(x1); x2 <- abs(x2);}
@@ -188,15 +192,14 @@ setMethod(
 		  }
 		  )
 
-plotecdf <- function (LHS, ...) {
-		nres <- dim(LHS@res)[2]
-		nl <- floor(sqrt(nres))
-		nc <- ceiling(nres/nl)
-		opar <- par(mfrow=c(nl,nc), pch='.', ...)
-				min <- min(LHS@res)
-				max <- max(LHS@res)
-	for(i in 1:nres) 
-			plot(ecdf(LHS@res[,i]), xlim=c(min, max), main='', xlab=LHS@res.names[i])
+plotecdf <- function (LHS, stack=FALSE, index.res =1:dim(LHS@res)[2], col=index.res, ...) {
+		require(Hmisc)
+		require(ks)
+		if (stack) {
+			dat <- vec(LHS@res[,index.res])
+			g <- rep(index.res, each=dim(LHS@res)[1])
+			Ecdf(dat, group=g, col=col)
+		} else Ecdf(LHS@res[,index.res])
 }
 
 plotprcc <- function (LHS, bg ='orange', ...) {
@@ -222,6 +225,7 @@ LHS <- function (model, factors, N, q, q.arg, res.names=NULL, COR=matrix(0, leng
 		res <- as.data.frame(res);
 		if(!is.null(res.names))
 			colnames(res) <- res.names
+		else res.names <- paste("V", 1:dim(res)[2], sep="")
 		# Calculates the PRCC for each response variable
 		f <- function(r) sensitivity::pcc(L, r, nboot=nboot, rank=T)
 		prcc <- apply(res, 2, f);
@@ -229,3 +233,20 @@ LHS <- function (model, factors, N, q, q.arg, res.names=NULL, COR=matrix(0, leng
 		X <- new(Class="LHS", N=N, data=L,factors=factors, q=q, q.arg=q.arg, COR=COR, eps=eps, model=model, res=res, prcc=prcc, res.names=res.names);
 		return(X);
 }
+
+target.sbma <- function(target, model, factors, init, inc, q, q.arg, res.names=NULL, COR=matrix(0, length(factors), length(factors)), eps=0.0005) {
+		#initial LHS
+		N = init
+		print("INFO: initial run...")
+		oldL <- LHS(model, factors, N, q, q.arg, res.names, COR, eps, nboot=0)
+		while (TRUE) {
+				N = N + inc
+				print(paste("INFO: LHS with N =", N));
+				newL <- LHS(model, factors, N, q, q.arg, res.names, COR, eps, nboot=0)
+				s <- min(sbma(newL, oldL))
+				print(paste("sbma of ", round(s,3)," (target ",target,")", sep=""))
+				if (s >= target) return (newL);
+				oldL <- newL;
+		}
+}
+						
