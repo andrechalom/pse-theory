@@ -96,8 +96,6 @@ plot.pcc <- function(x, ylim = c(-1,1), main=(if ("PCC" %in% names(x)) "PCC" els
 		}  
 }
 
-
-
 nodeplot <- function(x, xlim = NULL, ylim = NULL, labels = TRUE,
                      col = par("col"), pch = 21, bg = "white",
                      add = FALSE, at = NULL, ...) {
@@ -202,14 +200,15 @@ plotecdf <- function (LHS, stack=FALSE, index.res =1:dim(LHS@res)[2], col=index.
 		} else Ecdf(LHS@res[,index.res])
 }
 
-plotprcc <- function (LHS, bg ='orange', ...) {
-		nres <- dim(LHS@res)[2]
+plotprcc <- function (LHS, bg ='orange', index.res = 1:dim(LHS@res)[2], ...) {
+		nres <- length(index.res)
 		nl <- floor(sqrt(nres))
 		nc <- ceiling(nres/nl)
 		opar <- par(mfrow=c(nl,nc), ...)
+		on.exit(par(opar))
 	for(i in 1:nres) 
 	{
-			plot.pcc(LHS@prcc[[i]], bg=bg, main=LHS@res.names[[i]])
+			plot.pcc(LHS@prcc[[index.res[i]]], bg=bg, main=LHS@res.names[[index.res[i]]])
 			abline(h=0, lty=2)
 	}
 }
@@ -234,7 +233,7 @@ LHS <- function (model, factors, N, q, q.arg, res.names=NULL, COR=matrix(0, leng
 		return(X);
 }
 
-target.sbma <- function(target, model, factors, init, inc, q, q.arg, res.names=NULL, COR=matrix(0, length(factors), length(factors)), eps=0.0005) {
+target.sbma <- function(target, model, factors,  q, q.arg, res.names=NULL, COR=matrix(0, length(factors), length(factors)), eps=0.0005,init=length(factors)+2, inc=100, FUN=min) {
 		#initial LHS
 		N = init
 		print("INFO: initial run...")
@@ -243,7 +242,7 @@ target.sbma <- function(target, model, factors, init, inc, q, q.arg, res.names=N
 				N = N + inc
 				print(paste("INFO: LHS with N =", N));
 				newL <- LHS(model, factors, N, q, q.arg, res.names, COR, eps, nboot=0)
-				s <- min(sbma(newL, oldL))
+				s <- FUN(sbma(newL, oldL))
 				print(paste("sbma of ", round(s,3)," (target ",target,")", sep=""))
 				if (s >= target) return (newL);
 				oldL <- newL;

@@ -26,15 +26,16 @@ q.arg <- list( list(mean=1.5, sd=0.5), list(mean=80, sd=15),
 				list(min=1, max=50) )
 oneRun(1.2, 12, 5)
 
-meuLHS <- LHS(modelRun, factors, 200, q, q.arg, res.names, nboot=50)
+meuLHS <- LHS(modelRun, factors, 50, q, q.arg, res.names, nboot=50)
 
 matplot(t(get.results(meuLHS)), type='l')
 corPlot(meuLHS)
 corPlot(meuLHS, index.res=c(1,3,5), add.lm=FALSE)
 plotecdf(meuLHS)
 plotecdf(meuLHS, stack=TRUE)
-plotprcc(meuLHS)
+plotprcc(meuLHS, index.res=c(1,3,5))
 
 novoLHS <- LHS(modelRun, factors, 400, q, q.arg, res.names, nboot=50)
-meuLHS <- LHS(modelRun, factors, 600, q, q.arg, res.names, nboot=50)
 sbma(meuLHS, novoLHS)
+
+targetLHS <- target.sbma (1, modelRun, factors, q, q.arg, res.names) 
