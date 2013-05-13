@@ -190,6 +190,20 @@ plotprcc(dLHS1)
 # dprcc <- pcc(dLHS5); order(- abs(dprcc$PRCC$original)) -> O; dprcc$X <- dprcc$X[,O]; dprcc$PRCC <- dprcc$PRCC[O,]
 # plot(dprcc); abline(h=0, lty=2)
 
+#### PCA dos resultados
+# normalizando os dados pelas medias
+# m <- apply(get.results(dLHS1), 2, mean)
+# n <- outer(rep(1, nrow(get.results(dLHS1))), m)
+# r <- get.results(dLHS1)/n
+fit <- princomp(get.results(dLHS1), cor=TRUE)
+summary(fit) # print variance accounted for
+loadings(fit) # pc loadings
+plot(fit,type="lines") # scree plot
+fit$scores[,1] # the principal component
+p <- pcc(get.data(dLHS1), fit$scores[,1], rank=T)
+plot(p)
+
+COMOFAS PRA INTERPRETAR ISSO???
 # dfast1 <- fast99 (model = DepModel, factors = factors, n = 1*66, q = q, q.arg = q.arg)
 # dfast2 <- fast99 (model = DepModel, factors = factors, n = 2*66, q = q, q.arg = q.arg)
 # (dfs1 <- sbma(dfast1, dfast2))
