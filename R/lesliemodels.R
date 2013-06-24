@@ -158,8 +158,8 @@ LeslieDep <- function (s1, F7, s2, g2, s3, g3, s4, g4, s5, g5, s6, g6, s7, gm, a
 				if (sqrt (sum(newp-Np)^2) < epsilon | nIter == 500000 ) exit = TRUE
 				Np <- newp
 		}
-		#     result <- sum(Np)
-	return (Np);
+		     result <- sum(Np)
+	#return (Np);
 }
 DepModel <- function (x) {
 	return(mapply(LeslieDep, x[,1], x[,2],x[,3],x[,4],x[,5],x[,6],x[,7],x[,8], x[,9], x[,10], x[,11], x[,12], x[,13], x[,14], x[,15], x[,16]))
@@ -187,6 +187,8 @@ plotecdf(dLHS1, stack=T, index.res=2:7)
 
 # Partial rank correlation coefficients
 plotprcc(dLHS1)
+
+plotelast(dLHS5)
 # dprcc <- pcc(dLHS5); order(- abs(dprcc$PRCC$original)) -> O; dprcc$X <- dprcc$X[,O]; dprcc$PRCC <- dprcc$PRCC[O,]
 # plot(dprcc); abline(h=0, lty=2)
 

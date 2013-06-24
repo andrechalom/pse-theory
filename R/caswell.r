@@ -49,7 +49,7 @@ dndtheta <- ginv(I-A.n-K%*%dvecAdnt) %*% K %*% dvecAdtheta
 #elasticidade
 elas <- n.1 %*% dndtheta %*% Mtheta
 dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
-# barplot(dNdtheta, names=c("b", "cea", "cel", "cpa", "mua", "mu1"))
+barplot(dNdtheta, names=c("b", "cea", "cel", "cpa", "mua", "mu1"))
 
 ####### E. EDULIS  ###################
 ####### PARAMETROS ###################
@@ -145,4 +145,4 @@ dNdtheta <- ct %*% dndtheta
 #elasticidade
 elas <- n.1 %*% dndtheta %*% Mtheta
 dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
-# barplot(dNdtheta, names=c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z"));
+barplot(dNdtheta, names=c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z"));
