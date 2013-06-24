@@ -1,0 +1,202 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+
+
+\usepackage{Sweave}
+\begin{document}
+\setkeys{Gin}{width=0.8\textwidth}
+
+\begin{center}
+  {\Large Alguns resultados interessantes da sensibilidade de modelo
+  n\~ao linear do crescimento populacional de {\em Tribolium}}
+
+\end{center}
+
+Embora a teoria para calcular sensibilidades e elasticidades de modelos matriciais
+lineares remonte ao final d\'ecada de 70, uma teoria para o estudo consistente
+de \'indices de sensibilidade para modelos n\~ao lineares (por exemplo, nos quais
+taxas de transi\c c\~ao dependem da densidade ou frequ\^encia de alguma classe)
+s\'o foi formalizada por Hal Caswell em uma s\'erie de trabalhos publicados entre 2008
+e 2010.
+
+Assim, a sensibilidade de modelos matriciais gerais em ecologia de popula\c c\~oes
+vem sendo feita por uma abordagem anal\'itica, que, em linhas gerais, consiste em
+linearizar a matriz de transi\c c\~ao pr\'oxima ao ponto de equil\'ibrio e aplicar
+regras do c\'alculo matricial para extrair resultados anal\'iticos sobre a 
+sensibilidade da matriz linearizada aos par\^ametros.
+
+A sensibilidade do resultado $y$ de um modelo a um par\^ametro $x$ \'e dada pela derivada
+$\frac{dy}{dx}$, e representa o efeito aditivo que uma pequena pequena perturba\c c\~ao 
+em $x$ exerce no resultado $y$. J\'a a elasticidade de $y$ em rela\c c\~ao a $x$ \'e dada por
+$\frac{x}{y}\frac{dy}{dx}$, e representa o efeito proporcial dessa pequena perturba\c c\~ao.
+
+Um exemplo muito utilizado pelo Caswell para ilustrar sensibilidade em modelos com 
+denso-dependencia \'e o modelo para o crescimento populacional do besouro {\em Tribolium}.
+
+A matriz de transi\c c\~ao desse modelo \'e:
+
+\begin{equation}
+	\mathbf{A}[\mathbf{\theta},\mathbf{n}]  = \left[
+		\begin{array} {ccccccc}
+			0 &   0 &   b \exp(-c_{el}n_1-c_{ea}n_3) \\
+			1 - \mu_l & 0 & 0 \\
+			0 & \exp(-c_{pa}n_3) & 1-\mu_a 
+		\end{array}
+		\right]
+		\label{LefMatrix}
+\end{equation}
+
+Aqui, $\mathbf{n}(t)$ \'e o vetor que representa a popula\c c\~ao de besouros dividida em
+tr\^es fases de vida, larva, pupa e adulto e $\mathbf{\theta}$ \'e o vetor de par\^ametros.
+
+Os termos n\~ao nulos dessa matriz, lendo da esquerda para a direita e de cima para baixo, s\~ao:
+\begin{itemize}
+	\item Fecundidade dos adultos, dada pelo tamanho da ninhada $b$ vezes um termo de redu\c c\~ao
+		devido a canibalismo dos ovos por adultos (a uma taxa $c_{ea}$) e por larvas (a uma taxa $c_{el}$);
+	\item Matura\c c\~ao das larvas, reduzida pela mortalidade natural das larvas $\mu_l$;
+	\item Eclos\~ao das pupas, reduzida pelo canibalismo por adultos a uma taxa $c_{pa}$ - a mortalidade
+		natural das pupas \'e efetivamente zero;
+	\item Perman\^encia na classe adulta, menos a mortalidade natural dos adultos $\mu_a$.
+\end{itemize}
+
+Os par\^ametros estimados pelo paper original (por Constantino, 1997) s\~ao:
+
+\begin{Schunk}
+\begin{Sinput}
+> b = 6.598
+> cea = 1.155e-2
+> cel = 1.209e-2
+> cpa = 4.7e-3
+> mua = 7.729e-3
+> mul = 2.055e-1
+\end{Sinput}
+\end{Schunk}
+
+
+O paper original se importa com o equivalente metab\'olico dos besouros nas diferentes fases de vida,
+que \'e dado pela express\~ao $N_m(t) = \mathbf{c}^T\mathbf{n}(t)$, onde $\mathbf{c}^T = ( 9, 1,  4.5)
+\mu l CO_2h^{-1}$. 
+Assim, em todos os c\'alculos abaixo, vamos nos focar em $N_m(t)$, que \'e uma quantidade escalar.
+
+Com estes par\^ametros, o modelo converge para um ponto fixo est\'avel no qual $N_m(t) = 1952$.
+
+A an\'alise de elasticidade anal\'itica, seguindo Caswell 
+(e replicando a figura apresentada no trabalho de 2008), segue na figura \ref{analitico}:
+
+\begin{figure}[h!]
+\includegraphics{tribolium-caswell}
+	\caption{An\'alise de elasticidade anal\'itica para o modelo de
+	crescimento de besouros do g\^enero {\em Tribolium}. As barras
+	representam a elasticidade do equivalente metab\'olico da 
+	popula\c c\~ao aos par\^ametros.}
+	\label{analitico}
+\end{figure}
+
+Um aumento na fecundidade dos besouros causa uma altera\c c\~ao 
+positiva no valor de $N_m(t)$. Todos os outros par\^ametros levam
+a elasticidades negativas, com $c_{ea}$ tendo o maior impacto.
+
+Usando uma abordagem estoc\'astica de explora\c c\~ao de espa\c co
+de par\^ametros com o hipercubo latino, podemos recalcular essas
+elasticidades sorteando valores de uma matriz normal centrada na
+estimativa original e com baixa dispers\~ao. O resultado, apresentado
+na figura \ref{LHSpeq}, mostra que h\'a uma boa correspond\^encia entre os
+m\'etodos.
+
+\begin{figure}
+\includegraphics{tribolium-LHSpeq}
+	\caption{An\'alise de elasticidade estoc\'astica para o modelo de
+	crescimento de besouros do g\^enero {\em Tribolium} assumindo
+	pequenos erros de medida. As barras
+	representam a elasticidade do equivalente metab\'olico da 
+	popula\c c\~ao aos par\^ametros.}
+	\label{LHSpeq}
+\end{figure}
+
+No entanto, o m\'etodo desenvolvido por Caswell se limita a uma 
+vizinhan\c ca muito pr\'oxima ao ponto correspondente aos 
+par\^ametros estimados. Caso o erro na estimativa seja suficientemente
+grande para que a aproxima\c c\~ao linear da matriz de transi\c c\~ao
+se torne inv\'alida, outros m\'etodos se fazem necess\'arios para
+estudar a sensibilidade do modelo. 
+O qu\~ao ``grande'' esse erro
+deve ser depende fortemente do modelo utilizado.
+Uma possibilidade anal\'itica para
+resolver seria a inclus\~ao de derivadas de segunda ordem nos c\'alculos,
+ou ordens maiores, o que levaria a um crescimento muito r\'apido
+na complexidade das contas realizadas.
+
+A abordagem estoc\'astica para estimar a sensibilidade dos par\^ametros
+tem a vantagem de ser feita da mesma forma, n\~ao importando o tamanho
+da incerteza nos par\^ametros. Realizando a mesma an\'alise, mas agora com
+uma distribui\c c\~ao uniforme dos par\^ametros, 
+encontramos um cen\'ario de n\~ao-linearidade. A figura \ref{corPlot}
+mostra os gr\'aficos de dispers\~ao, mostrando uma forte resposta
+n\~ao linear ao par\^ametro $c_{ea}$ e poss\'iveis intera\c c\~oes 
+entre os par\^ametros. Para esta an\'alise, foram exclu\'idas as
+simula\c c\~oes na qual a popula\c c\~ao n\~ao convergiu para um
+ponto fixo ap\'os 2000 itera\c c\~oes.
+
+\begin{figure}
+\includegraphics{tribolium-corPlot}
+	\caption{Diagramas de dispers\~ao do equivalente metab\'olico
+	do besouro {\em Tribolium} em rela\c c\~ao a mudan\c cas
+	de larga magnitude nos par\^ametros de entrada do modelo}
+	\label{corPlot}
+\end{figure}
+
+Ao fazer uma compara\c c\~ao sobre a elasticidade de modelos usando
+a abordagem estoc\'astica, \'e preciso lembrar que a elasticidade
+dos par\^ametro n\~ao pode ser calculada a partir da 
+f\'ormula $\frac{x}{y}\frac{dy}{dx}$. Em primeiro lugar, a estimativa
+da derivada precisa ser realizada numericamente, e em segundo lugar, 
+a fra\c c\~ao $\frac{x}{y}$ n\~ao faz sentido se n\~ao h\'a um ponto
+privilegiado ao redor do qual a an\'alise est\'a sendo feita. Portanto,
+definimos como elasticidade de $y$ em rela\c c\~ao a $x$ o produto
+$\frac{<x>}{<y>}s_{yx}$, em que o sinal de $<>$ representa 
+a m\'edia e $s_{yx}$ \'e o coeficiente linear da regress\~ao parcial
+de $y$ em fun\c c\~ao de $x$.
+
+O resultado dessa an\'alise de elasticidade, sem restringir os par\^ametros
+a uma pequena regi\~ao no entorno da medida obtida, podem ser visualizados
+na figura \ref{LHSlge}. Embora n\~ao haja nenhum par\^ametro cuja elasticidade
+troca de sinal, todos apresentam uma diferen\c ca acentuada. A maior
+diferen\c ca \'e dada na elasticidade do par\^ametro $\mu_l$, que 
+sofre um aumento de 2113\%. 
+
+Dada essa mudan\c ca importante nos valores, conv\'em lembrar que a
+contradi\c c\~ao entre a an\'alise anal\'itica e a estoc\'astica
+n\~ao significa que um dos m\'etodos est\'a mais correto do que outro, mas
+sim que eles representam respostas a diferentes quest\~oes.
+
+\begin{figure}
+\includegraphics{tribolium-LHSlge}
+	\caption{An\'alise de elasticidade estoc\'astica para o modelo de
+	crescimento de besouros do g\^enero {\em Tribolium} para par\^ametros
+	distribu\'idos uniformemente. As barras
+	representam a elasticidade do equivalente metab\'olico da 
+	popula\c c\~ao aos par\^ametros.}
+	\label{LHSlge}
+\end{figure}
+
+\end{document}
