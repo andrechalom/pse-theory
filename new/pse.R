@@ -250,7 +250,6 @@ target.sbma <- function(target, model, factors,  q, q.arg, res.names=NULL, COR=m
 }
 						
 # Sensitivity and elasticity (Caswell)
-### WORK IN PROGRESS: adaptar as funcoes para multiplas respostas
 estim.slr <- function(data, i = 1:nrow(data)) {  
   d <- data[i, ]
   p <- ncol(d) - 1
@@ -267,18 +266,11 @@ estim.slr <- function(data, i = 1:nrow(data)) {
 }
 
 slr <- function (LHS, nboot = 0, conf=0.95) {
+	data <- cbind(Y=get.results(LHS), get.data(LHS))
 	if (nboot == 0) {
-		slr <- list()
-		for(i in 1:dim(get.results(LHS))[2]) {
-			data <- cbind(Y = get.results(LHS)[i], get.data(LHS))
-			slr[[i]] <- estim.slr(data)
-		}
-		slr <- as.data.frame(slr)
+		slr <- data.frame(original = estim.slr(data))
 		rownames(slr) <- colnames(get.data(LHS))
-		colnames(slr) <- colnames(get.results(LHS))
 	} else {
-		data <- cbind(Y=get.results(LHS), get.data(LHS))
-		## NAO funciona para mais de uma variavel resposta
 		boot.slr <- boot(data, estim.slr, R = nboot)
 		slr <- bootstats(boot.slr, conf, "basic")
 		rownames(slr) <- colnames(get.data(LHS))
@@ -300,5 +292,5 @@ plotelast <- function (LHS) {
 	s <- slr(LHS)
 	f <- apply (get.data(LHS), 2, mean, na.rm=T)
 	m <- apply(get.results(LHS),2, mean, na.rm=T)
-	barplot(s$slr * f / m, ylim=c(-1,1))
+	barplot(s$slr$original * f / m, ylim=c(-1,1))
 }

@@ -1,0 +1,314 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+
+\SweaveOpts{fig=T,echo=F}
+\begin{document}
+\setkeys{Gin}{width=0.8\textwidth}
+
+Modelo de cadeia de Markov:
+
+P | 0
+- - -
+m | 1
+
+Uma coluna de P (P.j) eh uma realizacao de uma multinomial.
+
+Pensando em um modelo babaca:
+
+J -> A -> gera offspring e morre
+
+0 F
+M 0
+
+M eh realizacao de uma binomial, F eh realizacao de uma poison (talvez nbinom?)
+
+CASO 1: temos um unico censo
+
+Se temos uma medida para M, dada por s sucessos em t tentativas, a funcao de verossimilhanca de M eh:
+L(M = p | s, t) = K p^s (1-p)^(n-y) <-- eh ESTA a funcao cujos quantis devem ser usados para gerar a PSE
+Onde K eh ajustado de forma que \int L = 1
+
+Supondo t = 10, s = 6; \hat p = 0.6 para M e \hat F = 2,
+A = 0   2
+	0.6 0
+
+lambda = 1.095
+
+
+CASO 2: varios censos. Se NAO ha heterogeneidade nenhuma, M eh uma binomial com s = s1 + s2, t = t1+t2
+
+CASO 3: temos dados de uma serie temporal
+Caswell, pag 152, Dennis 95 & 97
+
+CASO XYZ: variabilidade demografica, variabilidade temporal???
+DESENVOLVER???????
+
+\begin{center}
+	{\Large Transforma\c c\~oes de par\^ametros}
+
+\end{center}
+
+No estudo de muitos modelos, se faz necess\'aria a transforma\c c\~ao
+de par\^ametros, entre os par\^ametros medidos fisicamente ou de
+interpreta\c c\~ao biol\'ogica, e par\^ametros comput\'aveis adequados
+a aplica\c c\~ao do hipercubo latino. 
+
+Sensibilidade de x: S_x = dx/dy
+Se x = ab e eu tenho a sensibilidade de a e b, 
+S_x = d(ab)/dy = da/dy * b + db/dy * a = b S_a + a S_b
+
+Elasticidade de x: E_x = y / x dx/dy = y/x S_x 
+Se x = ab,
+E_x = y/ab d(ab)/dy = y * (S_a/a + S_b/b)
+
+PRCC de x_i em rela\c c\~ao a y, dados x_1... x_n:
+r_x_i = cov ( x_i, y) / sqrt( var(x_i)var(y) )
+P_x_i = cov ( x_i - \hat x_i, y - \hat y ) / sqrt( var(x_i - \hat x_i)var(y - \hat y) )
+
+Como o PRCC de x_i \'e uma medida da influ\^encia monot\^onica de x_i ap\'os
+descontar os efeitos de todos os x_j, j \neq i, \'e muito importante atentar
+para exatamente quais efeitos est\~ao sendo descontados ao realizar a 
+transorma\c c\~ao inversa dos par\^ametros. **** OU SEJA...... ****
+
+O NUMERO DE PARAMETROS DEVE SE MANTER???
+
+COMO TRABALHAR A RELACAO ENTRE OS PARAMETROS???
+
+
+<<params, fig=FALSE, echo=TRUE>>=
+sigmatilde = 0.98
+sigma2 = 0.95
+gamma = 1/15
+ff = 0.25
+@
+
+<<load, fig=FALSE, echo=FALSE>>=
+library(sensitivity)
+library(MASS)
+source("pse.R")
+library(msm)
+factors <- c("sigmatilde", "sigma2", "gamma", "f");
+f <-c (sigmatilde, sigma2, gamma, ff)
+q <- rep("qtnorm", length(factors))
+commonsd <- 1e-3
+q.arg <- list(
+			  list(mean=sigmatilde, sd=commonsd, lower=0, upper=1),
+			  list(mean=sigma2, sd=commonsd, lower=0, upper=1),
+			  list(mean=gamma, sd=commonsd, lower=0, upper=1),
+			  list(mean=ff, sd=commonsd, lower=0, upper=1))
+LeslieDep <- function (sigmatilde, sigma2, gamma, f) {
+	Np <- c(0.10, 0.11) # near equilibrium
+	epsilon = 10e-8
+	exit = FALSE
+	nIter <- 0 
+	while (exit == FALSE) {
+		nIter <- nIter + 1
+		sigma1 <- sigmatilde * exp( - Np[1] - Np[2])
+		L <- matrix(
+					c(sigma1*(1-gamma), f,
+					  sigma1*gamma, sigma2), nrow=2, ncol=2, byrow=TRUE)
+		newp <- L %*% Np
+		if (nIter == 500000) return (c(NA, NA)) # exit
+		if (sqrt (sum(newp-Np)^2) < epsilon ) return (Np) #exit
+		Np <- newp
+	}
+## nunca chega aqui	return(Np)
+}
+TheModel <- function (x) {
+	return(mapply(LeslieDep, x[,1], x[,2],x[,3],x[,4]))
+}
+myLHS <- LHS(TheModel, factors, 1000, q, q.arg, nboot=100)
+@
+
+At\'e aqui, tudo funciona! Plano: estudar o caso 
+A = [ a f
+      b sigma2 ]
+
+Com a distribuicao de a e b seguindo a de sigma1(1-gamma) e sigma1gamma.
+O QUE ACONTECE???
+
+O paper original se importa com o equivalente metab\'olico dos besouros nas diferentes fases de vida,
+que \'e dado pela express\~ao $N_m(t) = \mathbf{c}^T\mathbf{n}(t)$, onde $\mathbf{c}^T = ( 9, 1,  4.5)
+\mu l CO_2h^{-1}$. 
+Assim, em todos os c\'alculos abaixo, vamos nos focar em $N_m(t)$, que \'e uma quantidade escalar.
+
+Com estes par\^ametros, o modelo converge para um ponto fixo est\'avel no qual $N_m(t) = 1952$.
+
+A an\'alise de elasticidade anal\'itica, seguindo Caswell 
+(e replicando a figura apresentada no trabalho de 2008), segue na figura \ref{analitico}:
+
+\begin{figure}[h!]
+<<caswell, fig=TRUE>>=
+theta <- c(b, cea, cel, cpa, mua, mul)
+ct <- matrix(c(9, 1, 4.5), ncol=3) # metabolic rates
+########### POP EM EQUILIBRIO #####
+n<- matrix(c(22.6, 18, 385.2), nrow=3) ## equilibrium n
+############ MATRIZ A ########
+xp <- exp(-cel*n[1]-cea*n[3])
+A.n <- matrix(c(0,0, b*xp, 1-mul, 0, 0, 0, exp(-cpa*n[3]), 1-mua), nrow=3, byrow=T)
+############ AUXILIARES
+n.1 <- diag(as.vector(1/n))
+Mtheta <- diag(as.vector(theta))
+I <- diag(3)
+K <- kronecker(t(n), I)
+############ DERIVADAS
+dvecAdnt <- matrix(c(
+					 0,0,0, 
+					 0,0,0, 
+					 0,0,0, 
+					 0,0,0, 
+					 0,0,0, 
+					 0,0,-cpa*exp(-cpa*n[3]), 
+					 -b*cel*xp,0, -b*cea*xp,
+					 0,0,0, 
+					 0,0,0), nrow=9, byrow=T)
+dvecAdtheta <- matrix(c(
+				     0,0,0,0,0,0,
+				     0,0,0,0,0,-1,
+				     0,0,0,0,0,0,
+				     0,0,0,0,0,0,
+				     0,0,0,0,0,0,
+				     0,0,0,-n[3]*exp(-cpa*n[3]),0,0,
+				     xp,-b*n[3]*xp,-b*n[1]*xp,0,0,0,
+				     0,0,0,0,0,0,
+				     0,0,0,0,-1,0), nrow=9, byrow=T)
+#sensibilidade
+dndtheta <- ginv(I-A.n-K%*%dvecAdnt) %*% K %*% dvecAdtheta
+#elasticidade
+elas <- n.1 %*% dndtheta %*% Mtheta
+dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
+barplot(dNdtheta, names=c("b", "cea", "cel", "cpa", "mua", "mul"), ylim=c(-1,1))
+@
+	\caption{An\'alise de elasticidade anal\'itica para o modelo de
+	crescimento de besouros do g\^enero {\em Tribolium}. As barras
+	representam a elasticidade do equivalente metab\'olico da 
+	popula\c c\~ao aos par\^ametros.}
+	\label{analitico}
+\end{figure}
+
+Um aumento na fecundidade dos besouros causa uma altera\c c\~ao 
+positiva no valor de $N_m(t)$. Todos os outros par\^ametros levam
+a elasticidades negativas, com $c_{ea}$ tendo o maior impacto.
+
+Usando uma abordagem estoc\'astica de explora\c c\~ao de espa\c co
+de par\^ametros com o hipercubo latino, podemos recalcular essas
+elasticidades sorteando valores de uma matriz normal centrada na
+estimativa original e com baixa dispers\~ao. O resultado, apresentado
+na figura \ref{LHSpeq}, mostra que h\'a uma boa correspond\^encia entre os
+m\'etodos.
+
+\begin{figure}
+<<LHSpeq>>=
+plotelast(LHSpeq)
+@
+	\caption{An\'alise de elasticidade estoc\'astica para o modelo de
+	crescimento de besouros do g\^enero {\em Tribolium} assumindo
+	pequenos erros de medida. As barras
+	representam a elasticidade do equivalente metab\'olico da 
+	popula\c c\~ao aos par\^ametros.}
+	\label{LHSpeq}
+\end{figure}
+
+No entanto, o m\'etodo desenvolvido por Caswell se limita a uma 
+vizinhan\c ca muito pr\'oxima ao ponto correspondente aos 
+par\^ametros estimados. Caso o erro na estimativa seja suficientemente
+grande para que a aproxima\c c\~ao linear da matriz de transi\c c\~ao
+se torne inv\'alida, outros m\'etodos se fazem necess\'arios para
+estudar a sensibilidade do modelo. 
+O qu\~ao ``grande'' esse erro
+deve ser depende fortemente do modelo utilizado.
+Uma possibilidade anal\'itica para
+resolver seria a inclus\~ao de derivadas de segunda ordem nos c\'alculos,
+ou ordens maiores, o que levaria a um crescimento muito r\'apido
+na complexidade das contas realizadas.
+
+A abordagem estoc\'astica para estimar a sensibilidade dos par\^ametros
+tem a vantagem de ser feita da mesma forma, n\~ao importando o tamanho
+da incerteza nos par\^ametros. Realizando a mesma an\'alise, mas agora com
+uma distribui\c c\~ao uniforme dos par\^ametros, 
+encontramos um cen\'ario de n\~ao-linearidade. A figura \ref{corPlot}
+mostra os gr\'aficos de dispers\~ao, mostrando uma forte resposta
+n\~ao linear ao par\^ametro $c_{ea}$ e poss\'iveis intera\c c\~oes 
+entre os par\^ametros. Para esta an\'alise, foram exclu\'idas as
+simula\c c\~oes na qual a popula\c c\~ao n\~ao convergiu para um
+ponto fixo ap\'os 2000 itera\c c\~oes.
+
+\begin{figure}
+<<corPlot, echo=FALSE>>=
+q <- rep("qunif", length(factors))
+q.arg <- list(
+			  list(min=2, max=12),
+			  list(min=0, max=1),
+			  list(min=0, max=1),
+			  list(min=0, max=1),
+			  list(min=0, max=1),
+			  list(min=0, max=1))
+# LHSlge <- LHS(TheModel, factors, 800, q, q.arg, nboot=100)
+# save(LHSlge, file="Triboliumlge.Rdata")
+load("Triboliumlge.Rdata")
+corPlot(LHSlge) ->ign
+mud.elas <- round(100*(elast(LHSlge)-elast(LHSpeq))/elast(LHSpeq))
+@
+	\caption{Diagramas de dispers\~ao do equivalente metab\'olico
+	do besouro {\em Tribolium} em rela\c c\~ao a mudan\c cas
+	de larga magnitude nos par\^ametros de entrada do modelo}
+	\label{corPlot}
+\end{figure}
+
+Ao fazer uma compara\c c\~ao sobre a elasticidade de modelos usando
+a abordagem estoc\'astica, \'e preciso lembrar que a elasticidade
+dos par\^ametro n\~ao pode ser calculada a partir da 
+f\'ormula $\frac{x}{y}\frac{dy}{dx}$. Em primeiro lugar, a estimativa
+da derivada precisa ser realizada numericamente, e em segundo lugar, 
+a fra\c c\~ao $\frac{x}{y}$ n\~ao faz sentido se n\~ao h\'a um ponto
+privilegiado ao redor do qual a an\'alise est\'a sendo feita. Portanto,
+definimos como elasticidade de $y$ em rela\c c\~ao a $x$ o produto
+$\frac{<x>}{<y>}s_{yx}$, em que o sinal de $<>$ representa 
+a m\'edia e $s_{yx}$ \'e o coeficiente linear da regress\~ao parcial
+de $y$ em fun\c c\~ao de $x$.
+
+O resultado dessa an\'alise de elasticidade, sem restringir os par\^ametros
+a uma pequena regi\~ao no entorno da medida obtida, podem ser visualizados
+na figura \ref{LHSlge}. Embora n\~ao haja nenhum par\^ametro cuja elasticidade
+troca de sinal, todos apresentam uma diferen\c ca acentuada. A maior
+diferen\c ca \'e dada na elasticidade do par\^ametro $\mu_l$, que 
+sofre um aumento de \Sexpr{mud.elas[6]}\%. 
+
+Dada essa mudan\c ca importante nos valores, conv\'em lembrar que a
+contradi\c c\~ao entre a an\'alise anal\'itica e a estoc\'astica
+n\~ao significa que um dos m\'etodos est\'a mais correto do que outro, mas
+sim que eles representam respostas a diferentes quest\~oes.
+
+\begin{figure}
+<<LHSlge>>=
+plotelast(LHSlge)
+@
+	\caption{An\'alise de elasticidade estoc\'astica para o modelo de
+	crescimento de besouros do g\^enero {\em Tribolium} para par\^ametros
+	distribu\'idos uniformemente. As barras
+	representam a elasticidade do equivalente metab\'olico da 
+	popula\c c\~ao aos par\^ametros.}
+	\label{LHSlge}
+\end{figure}
+
+\end{document}
