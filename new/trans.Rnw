@@ -54,6 +54,13 @@ A = 0   2
 
 lambda = 1.095
 
+O resultado "classico" fornece elast de M = 0.15, elast de F = 0.5
+
+O resultado por verossimilhanca forcene elast de M=0.522 e F = 0.501
+
+Por outro lado, se os dados de M vem de uma binom com 600 sucessos em 1000 tentativas, elast M = 0.335
+
+
 
 CASO 2: varios censos. Se NAO ha heterogeneidade nenhuma, M eh uma binomial com s = s1 + s2, t = t1+t2
 
