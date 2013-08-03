@@ -11,11 +11,18 @@ dldF = v[2]*w[1] / v%*%w
 elasF = 2 / lambda * dldM
 
 #Likelihood-based sensitivities: gerando a distribuicao para M
-Mh = function (p) dbinom(6000, 10000, p) / dbinom(6000, 10000, 0.6)
+Mh = function (p) dbinom(60, 100, p) / dbinom(60, 100, 0.6)
 
-Ph = function (p) 3.65*dpois(2, p)
+Ph = function (p) dpois(2, p)
 
-# Vou gerar N samplesi "tentativos" dessa distribuicao:
+#### E AQUI ESTAH A TRETA QUE EU NAO ENTENDO: a media de uma poison com lambda=2 eh 3
+### COMOFAS?????
+mult = integrate(Ph,0,Inf)$value
+P = function (p) Ph(p)/mult
+mp = function (p) p*P(p)
+integrate(mp,0,Inf)
+
+# Vou gerar samples "tentativos" dessa distribuicao:
 n = 1000000
 dis = data.frame(M=NA, P=NA)
 for (i in 1:n) {
@@ -45,8 +52,9 @@ cor(dis$M, dis$P)
 # Analise de incerteza sobre lambda
 getlambda = function (m, p) eigen( matrix(c(0, p, m, 0), ncol=2, byrow=TRUE) )$values[1]
 getlambda = Vectorize(getlambda)
-
 dis <- cbind(dis, lambda = getlambda(dis$M, dis$P))
+# instabilidades numericas...
+dis$lambda[dis$lambda<0] <- - dis$lambda[dis$lambda<0]
 
 plot(ecdf(dis$lambda))
 
@@ -57,9 +65,37 @@ corPlot(dis[,c(1,2)], dis[,3])
 plot(pcc(dis[,c(1,2)], dis[,3], rank=TRUE))
 
 sl<-estim.slr(dis[,c(3,1,2)])
-  f <- apply (dis[,c(1,2)], 2, mean, na.rm=T)
-  m <- mean(dis[,3])
-  sl * f / m
+f <- apply (dis[,c(1,2)], 2, mean, na.rm=T)
+m <- mean(dis[,3])
+sl * f / m
+
+# Elasticidades perto de 0.5, ambas. tou #boladaum
+# Agora vamos brincar de Metropolis!
+
+# Ponto inicial:
+x = data.frame(M=0.6, P=2)
+atual <- as.numeric(x[1,])
+# jumping distribution
+Q <- function (x) rnorm (2, as.numeric(x), c(0.02,0.5))
+# probability distribution
+f <- function (x) dbinom(60, 100, as.numeric(x[1])) * dpois(2, as.numeric(x[2]))
+#
+#Iteration
+#
+for (i in 1:50000) {
+	novo <- Q(atual)
+	alfa <- f(novo)/f(atual)
+	if (is.nan(alfa)) alfa = 0
+	if (alfa >= 1 || runif(1,0,1) < alfa) { #aceite
+		x[nrow(x)+1,] <-  novo
+		atual <- novo
+	} else {
+		x[nrow(x)+1,] <- atual
+	}
+}
+
+dis <- x
+
 
 # Verossimilhanca para gerar as	distribuicoes:
 # primeiro censo, s=10, total=30
