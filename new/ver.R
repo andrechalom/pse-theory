@@ -12,15 +12,16 @@ elasF = 2 / lambda * dldM
 
 #Likelihood-based sensitivities: gerando a distribuicao para M
 Mh = function (p) dbinom(60, 100, p) / dbinom(60, 100, 0.6)
-
 Ph = function (p) dpois(2, p)
-
 #### E AQUI ESTAH A TRETA QUE EU NAO ENTENDO: a media de uma poison com lambda=2 eh 3
 ### COMOFAS?????
 mult = integrate(Ph,0,Inf)$value
 P = function (p) Ph(p)/mult
 mp = function (p) p*P(p)
 integrate(mp,0,Inf)
+# Ou, em geral, a media de uma amostra gerada com a distribuicao de verossimilhanca de
+# dpois(N, p) eh N + 1. Isso tah certo? Isso faz sentido? Vou conseguir dormir de noite agora??
+# APESAR da MLE ser precisamente N.
 
 # Vou gerar samples "tentativos" dessa distribuicao:
 n = 1000000
