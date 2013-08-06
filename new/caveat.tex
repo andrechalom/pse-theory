@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+\begin{document}
+\begin{center}
+	{\Large Nota de alerta sobre uso de m\'edias}
+\end{center}
+
+Ap\'os finalizar a an\'alise de incerteza de um modelo, pode parecer
+tentador utilizar a m\'edia dos resultados do modelo como uma medida
+da tend\^encia central dos resultados. No entanto, isso pode levar
+a um resultado equivocado, e devemos usar sempre o m\'aximo
+(ou os m\'aximos) da densidade dos resultados para representar os
+pontos mais prov\'aveis da sua distribui\c c\~ao.
+
+Como exemplo, considere o modelo simples
+
+\begin{equation}
+	y = x
+\end{equation}
+
+Onde o par\^ametro $x$ \'e estimado, a partir da realiza\c c\~ao de um
+processo Poisson, como tendo o valor $\hat x$. Para estudar a incerteza
+do resultado do modelo $y$, vamos utilizar a fun\c c\~ao de verossimilhan\c ca
+de $x$, normalizada de forma a representar uma probabilidade. Lembremos que
+a fun\c c\~ao de verossimilhan\c ca de uma distribui\c c\~ao Poisson
+\'e:
+
+\begin{equation}
+	L \left( \lambda | \hat x \right) = C \lambda^{\hat x} \mathrm{e}^{-\lambda}
+\end{equation}
+
+Onde $C$ \'e uma constante multiplicativa que deve ser ajustada de forma
+que a integral de $L(\lambda | \hat x)$ seja igual a 1:
+
+\begin {eqnarray*}
+\int_0^\infty C \lambda^{\hat x} \mathrm{e}^{-\lambda} & = & 1 \\
+C & = & \left( \int_0^\infty  \lambda^{\hat x} \mathrm{e}^{-\lambda} \right)^{-1} \\
+C & = & \Gamma(\hat x +1)^{-1}
+\end{eqnarray*}
+
+O m\'aximo da fun\c c\~ao $L(\lambda | \hat x)$, descrita acima, ocorre em $\lambda = \hat x$.
+Logo, o valor de $\hat x$ deve ser usado como estimador pontual do valor mais prov\'avel
+do par\^ametro $x$. Da mesma forma, intervalos de confian\c ca para o par\^ametro $x$ devem
+ser constru\'idos ao redor de $\hat x$.
+
+Ap\'os tomar amostras desta distribui\c c\~ao, construimos a distribui\c c\~ao
+de resultados:
+\begin{equation}
+	D(y) = C y^{\hat x} \mathrm{e}^{-y}
+\end{equation}
+
+Cuja m\'edia \'e dada por
+
+\begin{eqnarray*}
+	<D(y)> & = & \int_0^\infty y C y^{\hat x} \mathrm{e}^{-y} dy \\
+	       & = & \int_0^\infty C y^{\hat x+1} \mathrm{e}^{-y} dy \\
+		   & = & \Gamma(\hat x +2) C\\
+	       & = & \frac{\Gamma(\hat x +2)}{\Gamma(\hat x + 1)} \\
+		   & = & \hat x + 1
+\end{eqnarray*}
+
+Note ent\~ao que, se escolhemos representar a distribui\c c\~ao dos resultados pela sua m\'edia,
+vamos estar usando $\hat x + 1$, enquanto que o valor mais prov\'avel para $y$ \'e $\hat x$, o mesmo
+que para o par\^ametro $x$. Da mesma forma, ao construir intervalos de confian\c ca para o resultado
+$y$, estes devem ser feitos ao redor de $\hat x$, e n\~ao ao redor da m\'edia $\hat x + 1$. 
+
+Durante a an\'alise de matrizes de Lefkovitch com denso-depend\^encia para
+{\em E. edulis}, a popula\c c\~ao final m\'edia \'e de cerca de 17.000 \'arvores (uma estimativa
+muito alavancada por uma pequena parcela de simula\c c\~oes com popula\c c\~ao final na casa dos 30 a 40 mil).
+J\'a a densidade m\'axima \'e atingida pr\'oxima a 5.000 \'arvores.
+
+\end{document}

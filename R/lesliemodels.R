@@ -109,6 +109,14 @@ plotprcc(LHS1)
 # sobol6 <- mysobol(IndepModel, factors, 4*4*8*200, r, q.arg)
 # (ss5<-sbma(sobol5, sobol6))
 # 
+
+density((get.results(LHS2)[,1])) -> d
+# Lambda medio:
+(mean(d$x) -> mean.d)
+# Lambda mais provavel:
+(d$x[which(d$y==max(d$y))] -> prob.d)
+(prob.d-mean.d)/prob.d*100
+
 #################### PARTE 2: DEPENDENTE DE DENSIDADE
 factors <- c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z");
 N <- 20
