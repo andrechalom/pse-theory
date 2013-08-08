@@ -76,6 +76,67 @@ Caswell, pag 152, Dennis 95 & 97
 CASO XYZ: variabilidade demografica, variabilidade temporal???
 DESENVOLVER???????
 
+\section{Verossimilhanca para time-series}
+A partir da equa\c c\~ao \mathbf{n} (t+1) = \mathbf{An} (t), adicionamos um termo de erro estoc\'astico
+em que \mathbf{D}(t) = diag(d_i) \'e uma normal multivariada de m\'edia \mathbf{0} e matriz de covariancia \mathbf{\Sigma}:
+\mathbf{n} (t+1) = exp(\mathbf{D})\mathbf{An} (t); temos dados de \mathbf{n}_0 at\'e \mathbf{n}_T
+
+Defina como \mathbf{m}(t) = \log (\mathbf{n}(t)) e \mathbf{h}(\mathbf{m}(t)) por 
+h_i (\mathbf{m}(t)) \def \log( \mathbf{a_{i.}n}(t) )
+
+Ent\~ao
+-2logL (\mathbf{p}, \mathbf{\Sigma}) = K + T \log | \Sigma | + \sum_{t=1}^T (\mathbf{m}(t)-\mathbf{h}(\mathbf{m}(t)))^t
+\Sigma^{-1}(\mathbf{m}(t)-\mathbf{h}(\mathbf{m}(t)))
+
+\mathbf{p} = (P_1, G_1, P_2, G_2, P_3, F)
+\Sigma = \left[
+\begin {array}{ccc}
+	var(x_1) & cov(x_1, x2)   & cov(x_1, x3)   \\
+	cov(x_1, x_2) & var(x_2) & cov(x_2, x_3)   \\
+	cov(x_1, x_3   & cov(x_2, x_3) & var(x_3) 
+\end{array} \right]
+
+Dados vindos do paper de Kaplan \& Caswell-Chen (1997)
+time, stage, density
+0, 1, 5.32
+0, 2, 24.84
+0, 3, 115.50
+1, 1, 0.33
+1, 2, 18.16
+1, 3, 167.16
+2, 1, 2.41
+2, 2, 17.14
+2, 3, 159.25
+3, 1, 2.06
+3, 2, 3.25
+3, 3, 112.87
+4, 1, 1.70
+4, 2, 2.08
+4, 3, 132.62
+5, 1, 3.16
+5, 2, 11.23
+5, 3, 149.62
+
+Modelo matricial:
+
+A= \left[
+\begin {array}{ccc}
+	P_1 & 0   & F   \\
+	G_1 & P_2 & 0   \\
+	0   & G_2 & P_3 
+\end{array} \right]
+
+Valores estimados pelo m\'etodo de formas quadr\'aticas como
+A= \left[
+\begin {array}{ccc}
+	0 & 0      & 0.0143   \\
+	1 & 0.4611 & 0   \\
+	0 & 0.5389 & 0.9664 
+\end{array} \right]
+Tendo \hat \lambda = 0.9815
+
+
+
 \begin{center}
 	{\Large Transforma\c c\~oes de par\^ametros}
 

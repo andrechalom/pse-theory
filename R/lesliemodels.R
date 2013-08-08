@@ -46,7 +46,7 @@ plotsobrev()
 
 ####### Escolha de modelos
 library(bbmle)
-source("#plot-profmle.r")
+source("plot-profmle.r")
 # Fecundidade: todos os anos igual:
 binomNLL<- function(a){
 		lambda=exp(a)
