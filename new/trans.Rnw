@@ -25,6 +25,12 @@
 \begin{document}
 \setkeys{Gin}{width=0.8\textwidth}
 
+Euterpe: o numero de arvores estimado nos 100 plots de 5x5 foi multiplicado por 40 para chegar a estimativa de "por hectare"
+
+Diferenca entre "o modelo eh estocastico, pq HA variacao" e 
+"o modelo eh deterministico, acreditamos que o valor correto do parametro 'existe', 
+mas a estimativa que fazemos leva em conta as incertezas e variabilidades associadas a coleta desse dado"
+
 Modelo de cadeia de Markov:
 
 P | 0

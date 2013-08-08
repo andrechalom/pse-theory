@@ -4,26 +4,203 @@ library(msm) # Para a funcao qtnorm
 # Entradas da matriz:
 # Vindos de Silva Matos, Freckleton & Watkinson 1999
 dados <- read.csv("leslie.csv", header=TRUE)
+dados$HECTARE = dados$HECTARE/40
 stasis <- dados[dados$TO == dados$FROM & dados$FROM != 7,]
 growth <- dados[dados$TO == (dados$FROM +1),]
 # Taxa de fecundidade
+fertility<- dados$VALUE[dados$TO==1 & dados$FROM==7]
 fertilitymean <- mean(dados$VALUE[dados$TO==1 & dados$FROM==7]) 
 fertilitysd <- sd(dados$VALUE[dados$TO==1 & dados$FROM==7])
 # Calculamos as taxas de sobrevivencia:
-sobrev <- data.frame(stasis$FROM, stasis$TO, stasis$YEAR, stasis$VALUE+growth$VALUE)
-colnames(sobrev) <- c("FROM", "TO", "YEAR", "VALUE")
-sobrevmeans<-diag(tapply(sobrev$VALUE, INDEX=list(sobrev$TO, sobrev$FROM), FUN=mean))
-sobrevsds<-diag(tapply(sobrev$VALUE, INDEX=list(sobrev$TO, sobrev$FROM), FUN=sd))
-# A media reportada para p77 eh considerada "alta demais" pelos autores. Correcao arbitraria
-sobrevmeans[7] <- mean(dados$VALUE[dados$TO==7 & dados$FROM==7])-0.015 
-sobrevsds[7] <- sd(dados$VALUE[dados$TO==7 & dados$FROM==7])
+sobrev <- data.frame(stasis$FROM, stasis$TO, stasis$YEAR, stasis$VALUE+growth$VALUE, stasis$HECTARE)
+colnames(sobrev) <- c("FROM", "TO", "YEAR", "VALUE", "HECTARE")
 # Taxa de crescimento real:
-realgrowth <- data.frame(stasis$FROM, stasis$TO, stasis$YEAR, (sobrev$VALUE-stasis$VALUE)/sobrev$VALUE)
-colnames(realgrowth) <- c("FROM", "TO", "YEAR", "VALUE")
+realgrowth <- data.frame(stasis$FROM, stasis$TO, stasis$YEAR, (sobrev$VALUE-stasis$VALUE)/sobrev$VALUE, stasis$HECTARE)
+colnames(realgrowth) <- c("FROM", "TO", "YEAR", "VALUE", "HECTARE")
 realgrowthmeans<-diag(tapply(realgrowth$VALUE, INDEX=list(realgrowth$TO, realgrowth$FROM), FUN=mean))
 realgrowthsds<-diag(tapply(realgrowth$VALUE, INDEX=list(realgrowth$TO, realgrowth$FROM), FUN=sd))
+# Adicionando de volta a sobrevivencia da classe 7...
+sobrev <- rbind(sobrev, dados[dados$TO == 7 & dados$FROM == 7,])
+sobrevmeans<-diag(tapply(sobrev$VALUE, INDEX=list(sobrev$TO, sobrev$FROM), FUN=mean))
+sobrevsds<-diag(tapply(sobrev$VALUE, INDEX=list(sobrev$TO, sobrev$FROM), FUN=sd))
+# N. total de arvores marcadas:
+arvores <- tapply(sobrev$HECTARE, INDEX=list(sobrev$TO), FUN=sum)
 # Media de gm retirada do paper, sd chutado (impossivel reconstruir)
 gmmean <- 0.486/(0.486+mean(dados$VALUE[dados$TO==1 & dados$FROM==1])) 
+
+# Analise grafica dos parametros
+plotgrowth <- function() {
+plot(1:6,realgrowthmeans, pch=10, ylim=c(0, 0.5), cex=sqrt(arvores)/4)
+arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans+realgrowthsds, length=0.15, angle=90)
+arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans-realgrowthsds, length=0.15, angle=90)
+}
+plotgrowth()
+
+plotsobrev <- function() {
+plot(1:7,sobrevmeans, pch=10, ylim=c(0.6, 1.0), cex=sqrt(arvores)/4)
+arrows(1:7, sobrevmeans, 1:7, sobrevmeans+sobrevsds, length=0.15, angle=90)
+arrows(1:7, sobrevmeans, 1:7, sobrevmeans-sobrevsds, length=0.15, angle=90)
+}
+plotsobrev()
+
+####### Escolha de modelos
+library(bbmle)
+# Fecundidade: todos os anos igual:
+binomNLL<- function(a){
+		lambda=exp(a)
+	-sum(dpois(fertility,lambda=lambda, log=TRUE))
+}
+F1 <- mle2(binomNLL, start=list(a=1.34)) # Dah uma probabilidade ~0.79
+
+binomNLL<- function(a, b, C){
+		lambda=exp(a*c(1,0,0)+b*c(0,1,0)+C*c(0,0,1))
+	-sum(dpois(fertility,lambda=lambda, log=TRUE))
+}
+F2 <- mle2(binomNLL, start=list(a=1.34, b=4, C=3)) # Dah uma probabilidade ~0.79
+
+AICtab(F1, F2)
+
+## Modelo 1: TODAS as taxas de sobrevivencia sao iguais
+binomNLL<- function(a){
+		prob.det=exp(a)/(1 +exp(a))
+	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
+}
+M1 <- mle2(binomNLL, start=list(a=1.34)) # Dah uma probabilidade ~0.79
+p <- exp(coef(M1))/(1+exp(coef(M1)))
+plotsobrev()
+abline(h = p, lty=3, col='red')
+
+binomNLL<- function(a){
+		prob.det=exp(a)/(1 +exp(a))
+	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
+}
+G1 <- mle2(binomNLL, start=list(a=-0.80)) # Dah uma probabilidade ~0.79
+p <- exp(coef(G1))/(1+exp(coef(G1)))
+plotgrowth()
+abline(h = p, lty=3, col='red')
+
+# Modelo 2: Sobrevivencia cresce com a classe
+binomNLL<- function(a, b){
+		prob.det=exp(a+b*sobrev$TO)/(1 +exp(a+b*sobrev$TO))
+	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
+}
+M2 <- mle2(binomNLL, start=list(a=0.62, b=0.62)) 
+p1<- coef(M2)[1]
+p2<- coef(M2)[2]
+plotsobrev()
+curve(exp(p1+p2*x)/(1+exp(p1+p2*x)), to=7, add=T, lty=3, col='red')
+
+binomNLL<- function(a, b){
+		prob.det=exp(a+b*realgrowth$TO)/(1 +exp(a+b*realgrowth$TO))
+	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
+}
+G2 <- mle2(binomNLL, start=list(a=0.62, b=0.62)) 
+p1<- coef(G2)[1]
+p2<- coef(G2)[2]
+plotgrowth()
+curve(exp(p1+p2*x)/(1+exp(p1+p2*x)), to=7, add=T, lty=3, col='red')
+
+# Modelo 3: saplings tem sobrevivencia diferenciada
+binomNLL<- function(a, b){
+		p = a+b*(sobrev$TO==1)
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
+}
+M3 <- mle2(binomNLL, start=list(a=2.21, b=-0.96)) 
+p1<- coef(M3)[1]
+p2<- coef(M3)[2]
+plotsobrev()
+segments(c(0.5, 1.5),
+		 c(exp(p1+p2)/(1+exp(p1+p2)), exp(p1)/(1+exp(p1))),
+		 c(1.5, 7.5),
+		   lty=3, col='red')
+
+binomNLL<- function(a, b){
+		p = a+b*(realgrowth$TO==1)
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
+}
+G3 <- mle2(binomNLL, start=list(a=2.21, b=-0.96)) 
+p1<- coef(G3)[1]
+p2<- coef(G3)[2]
+plotgrowth()
+segments(c(0.5, 1.5),
+		 c(exp(p1+p2)/(1+exp(p1+p2)), exp(p1)/(1+exp(p1))),
+		 c(1.5, 7.5),
+		   lty=3, col='red')
+
+# Modelo 4: Sobrev diferenciada por ano
+binomNLL<- function(a, b, c){
+		p = a*(sobrev$YEAR==1991)+b*(sobrev$YEAR==1992)+c*(sobrev$YEAR==1993)
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
+}
+M4 <- mle2(binomNLL, start=list(a=1.17, b=1, c=1.76))
+p1<- coef(M4)[1]
+p2<- coef(M4)[2]
+p3<- coef(M4)[3]
+plotsobrev()
+segments(rep(0.5, 3),
+		 c(exp(p1)/(1+exp(p1)), exp(p2)/(1+exp(p2)), exp(p3)/(1+exp(p3))),
+		 rep(7.5, 3),
+		   lty=3, col=c('red', 'green', 'blue'))
+
+binomNLL<- function(a, b, c){
+		p = a*(realgrowth$YEAR==1991)+b*(realgrowth$YEAR==1992)+c*(realgrowth$YEAR==1993)
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
+}
+G4 <- mle2(binomNLL, start=list(a=1.17, b=1, c=1.76))
+p1<- coef(G4)[1]
+p2<- coef(G4)[2]
+p3<- coef(G4)[3]
+plotgrowth()
+segments(rep(0.5, 3),
+		 c(exp(p1)/(1+exp(p1)), exp(p2)/(1+exp(p2)), exp(p3)/(1+exp(p3))),
+		 rep(7.5, 3),
+		   lty=3, col=c('red', 'green', 'blue'))
+
+# Modelo 5: Sobrev diferenciada por ano E classe
+binomNLL<- function(a, b, c, d){
+		p = a*(sobrev$YEAR==1991)+b*(sobrev$YEAR==1992)+c*(sobrev$YEAR==1993)+d*sobrev$TO
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
+}
+M5 <- mle2(binomNLL, start=list(a=0.44, b=0.26, c=1, d=0.64)) # Dah uma probabilidade ~0.79
+p1<- coef(M5)[1]
+p2<- coef(M5)[2]
+p3<- coef(M5)[3]
+p4<- coef(M5)[4]
+plotsobrev()
+curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
+curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
+curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
+
+binomNLL<- function(a, b, c, d){
+		p = a*(realgrowth$YEAR==1991)+b*(realgrowth$YEAR==1992)+c*(realgrowth$YEAR==1993)+d*realgrowth$TO
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
+}
+G5 <- mle2(binomNLL, start=list(a=0.44, b=0.26, c=1, d=0.64)) # Dah uma probabilidade ~0.79
+p1<- coef(G5)[1]
+p2<- coef(G5)[2]
+p3<- coef(G5)[3]
+p4<- coef(G5)[4]
+plotgrowth()
+curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
+curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
+curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
+
+# Modelo I GIVE UP:
+binomNLL<- function(a, b, c, d, e, f){
+		p = a*(realgrowth$TO==1)+b*(realgrowth$TO==2)+c*(realgrowth$TO==3)+d*(realgrowth$TO==4)+e*(realgrowth$TO==5)+f*(realgrowth$TO==6)
+		prob.det=exp(p)/(1 +exp(p))
+	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
+}
+G6 <- mle2(binomNLL, start=list(a=2.21, b=-0.96, c=1, d=1, e=1, f=1)) 
+
+AICtab(M1, M2, M3, M4, M5, weights=TRUE)
+AICtab(G1, G2, G3, G4, G5, G6, weights=TRUE)
 
 ################# PARTE 1: Independente de Densidade
 factors <- c("s1","F7","g1","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7");
