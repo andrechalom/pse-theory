@@ -30,14 +30,15 @@ gmmean <- 0.486/(0.486+mean(dados$VALUE[dados$TO==1 & dados$FROM==1]))
 
 # Analise grafica dos parametros
 plotgrowth <- function() {
-plot(1:6,realgrowthmeans, pch=10, ylim=c(0, 0.5), cex=sqrt(arvores)/4)
+plot(realgrowth$VALUE~realgrowth$FROM, pch=10, ylim=c(0, 0.5), cex=sqrt(realgrowth$HECTARE)/3, col=rep(c('red','green', 'blue'), each=6))
 arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans+realgrowthsds, length=0.15, angle=90)
 arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans-realgrowthsds, length=0.15, angle=90)
 }
 plotgrowth()
 
 plotsobrev <- function() {
-plot(1:7,sobrevmeans, pch=10, ylim=c(0.6, 1.0), cex=sqrt(arvores)/4)
+	sobrev<-sobrev[order(sobrev$YEAR),]
+plot(sobrev$VALUE~sobrev$FROM, pch=10, ylim=c(0.6, 1.0), cex=sqrt(sobrev$HECTARE)/4, col=rep(c('red','green','blue'), each=7))
 arrows(1:7, sobrevmeans, 1:7, sobrevmeans+sobrevsds, length=0.15, angle=90)
 arrows(1:7, sobrevmeans, 1:7, sobrevmeans-sobrevsds, length=0.15, angle=90)
 }
@@ -45,18 +46,36 @@ plotsobrev()
 
 ####### Escolha de modelos
 library(bbmle)
+source("#plot-profmle.r")
 # Fecundidade: todos os anos igual:
 binomNLL<- function(a){
 		lambda=exp(a)
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
 F1 <- mle2(binomNLL, start=list(a=1.34)) # Dah uma probabilidade ~0.79
+#plot.profmle(profile(F1))
 
+# Fecundidade com 3 params
 binomNLL<- function(a, b, C){
 		lambda=exp(a*c(1,0,0)+b*c(0,1,0)+C*c(0,0,1))
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
 F2 <- mle2(binomNLL, start=list(a=1.34, b=4, C=3)) # Dah uma probabilidade ~0.79
+#plot.profmle(profile(F2))
+
+# Fecundidade eh dada por uma poisson
+# O parametro da poisson eh dado por uma normal:
+binomNLL<- function(mu, sigma){
+		lambda=exp(a*c(1,0,0)+b*c(0,1,0)+C*c(0,0,1))
+	-sum(dpois(fertility,lambda=lambda, log=TRUE))
+}
+F2 <- mle2(binomNLL, start=list(a=1.34, b=4, C=3)) # Dah uma probabilidade ~0.79
+
+a1<-coef(F2)[1]
+a2<-coef(F2)[2]
+a3<-coef(F2)[3]
+lambda=exp(a1*c(1,0,0)+a2*c(0,1,0)+a3*c(0,0,1))
+-sum(dpois(fertility,lambda=lambda, log=TRUE))
 
 AICtab(F1, F2)
 
@@ -66,6 +85,7 @@ binomNLL<- function(a){
 	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
 }
 M1 <- mle2(binomNLL, start=list(a=1.34)) # Dah uma probabilidade ~0.79
+#plot.profmle(profile(M1))
 p <- exp(coef(M1))/(1+exp(coef(M1)))
 plotsobrev()
 abline(h = p, lty=3, col='red')
@@ -75,6 +95,7 @@ binomNLL<- function(a){
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
 }
 G1 <- mle2(binomNLL, start=list(a=-0.80)) # Dah uma probabilidade ~0.79
+#plot.profmle(profile(G1))
 p <- exp(coef(G1))/(1+exp(coef(G1)))
 plotgrowth()
 abline(h = p, lty=3, col='red')
@@ -85,6 +106,7 @@ binomNLL<- function(a, b){
 	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
 }
 M2 <- mle2(binomNLL, start=list(a=0.62, b=0.62)) 
+#plot.profmle(profile(M2))
 p1<- coef(M2)[1]
 p2<- coef(M2)[2]
 plotsobrev()
@@ -95,6 +117,7 @@ binomNLL<- function(a, b){
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
 }
 G2 <- mle2(binomNLL, start=list(a=0.62, b=0.62)) 
+#plot.profmle(profile(G2))
 p1<- coef(G2)[1]
 p2<- coef(G2)[2]
 plotgrowth()
@@ -107,6 +130,7 @@ binomNLL<- function(a, b){
 	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
 }
 M3 <- mle2(binomNLL, start=list(a=2.21, b=-0.96)) 
+#plot.profmle(profile(M3))
 p1<- coef(M3)[1]
 p2<- coef(M3)[2]
 plotsobrev()
@@ -121,6 +145,7 @@ binomNLL<- function(a, b){
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
 }
 G3 <- mle2(binomNLL, start=list(a=2.21, b=-0.96)) 
+#plot.profmle(profile(G3))
 p1<- coef(G3)[1]
 p2<- coef(G3)[2]
 plotgrowth()
@@ -136,6 +161,7 @@ binomNLL<- function(a, b, c){
 	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
 }
 M4 <- mle2(binomNLL, start=list(a=1.17, b=1, c=1.76))
+#plot.profmle(profile(M4))
 p1<- coef(M4)[1]
 p2<- coef(M4)[2]
 p3<- coef(M4)[3]
@@ -151,6 +177,7 @@ binomNLL<- function(a, b, c){
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
 }
 G4 <- mle2(binomNLL, start=list(a=1.17, b=1, c=1.76))
+#plot.profmle(profile(G4))
 p1<- coef(G4)[1]
 p2<- coef(G4)[2]
 p3<- coef(G4)[3]
@@ -167,6 +194,7 @@ binomNLL<- function(a, b, c, d){
 	-sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=prob.det, log=TRUE))
 }
 M5 <- mle2(binomNLL, start=list(a=0.44, b=0.26, c=1, d=0.64)) # Dah uma probabilidade ~0.79
+#plot.profmle(profile(M5))
 p1<- coef(M5)[1]
 p2<- coef(M5)[2]
 p3<- coef(M5)[3]
@@ -175,6 +203,10 @@ plotsobrev()
 curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
 curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
 curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
+# Salvando para a posteridade
+meanp<- mean(c(p1,p2,p3))
+sdp<- sd(c(p1,p2,p3))
+classp <- p4
 
 binomNLL<- function(a, b, c, d){
 		p = a*(realgrowth$YEAR==1991)+b*(realgrowth$YEAR==1992)+c*(realgrowth$YEAR==1993)+d*realgrowth$TO
@@ -182,6 +214,7 @@ binomNLL<- function(a, b, c, d){
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
 }
 G5 <- mle2(binomNLL, start=list(a=0.44, b=0.26, c=1, d=0.64)) # Dah uma probabilidade ~0.79
+#plot.profmle(profile(G5))
 p1<- coef(G5)[1]
 p2<- coef(G5)[2]
 p3<- coef(G5)[3]
@@ -198,9 +231,11 @@ binomNLL<- function(a, b, c, d, e, f){
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
 }
 G6 <- mle2(binomNLL, start=list(a=2.21, b=-0.96, c=1, d=1, e=1, f=1)) 
+#plot.profmle(profile(G6))
 
 AICtab(M1, M2, M3, M4, M5, weights=TRUE)
 AICtab(G1, G2, G3, G4, G5, G6, weights=TRUE)
+
 
 ################# PARTE 1: Independente de Densidade
 factors <- c("s1","F7","g1","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7");
