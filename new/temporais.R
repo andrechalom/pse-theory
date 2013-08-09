@@ -1,9 +1,14 @@
 library(MASS)
 library(bbmle)
+library(optimx)
 source("plot-profmle.r")
 temp <- read.csv("temporais.csv", sep=",", header=TRUE)
 n <- function(t) temp[temp$time==t,3]
 m <- function (t) log(n(t))
+
+logistic <- function (p) exp(p)/(1+exp(p))
+logit <- function (p) log(p) - log(1-p)
+
 nLL = function(v1=1, v2=1, v3=1, c12=0.7, c13=0, c23=0, p1=-50, g1=2, p2=0, g2=0, p3=2, f=-10) {
 	p1 <- exp(p1)/(1+exp(p1))
 	p2 <- exp(p2)/(1+exp(p2))
@@ -17,10 +22,22 @@ nLL = function(v1=1, v2=1, v3=1, c12=0.7, c13=0, c23=0, p1=-50, g1=2, p2=0, g2=0
 	c13 <- -1 + 2 * exp(c13) / (1+exp(c13))
 	hm <- function (t) log(c(p1*n(t)[1]+f*n(t)[3], g1*n(t)[1]+p2*n(t)[2], g2*n(t)[2] + p3*n(t)[3]))
 	Sigma = matrix(c(v1, c12, c13, c12, v2, c23, c13, c23, v3), nrow=3)
-	if (sum(is.nan((Sigma))) > 0) return (Inf)
+	print(Sigma)
+#	if (sum(is.nan((Sigma))) > 0) return (Inf)
 	total = 0
 	for (i in 1:5) total = total + (m(i) - hm(i)) %*% ginv(Sigma) %*% (m(i) - hm(i))
 	5*log(det(Sigma)) + total
 }
 
-model <- mle2(nLL)
+model <- mle2(nLL, optimizer="optimx",
+			  start=list(g1=-2),
+			  	   fixed=list(v1=1,v2=1,v3=1,
+							  c12=0,c13=0,c23=0,
+							  p1=-100,
+							  f=-4.5272684,
+							  g2=-2.942297,
+							  p2=1.019581,
+							  p3=200
+							  ))
+model
+#plot.profmle(profile(model))
