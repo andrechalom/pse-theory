@@ -5,14 +5,15 @@ library(mvtnorm)
 #source("plot-profmle.r")
 #source("temporais-simula.R")
 temp <- read.csv("temporais.csv", sep=",", header=TRUE)
+temp <- temp[temp$time<2,]
 n <- function(t) temp[temp$time==t,3]
 m <- function (t) log(n(t))
 
 logistic <- function (p) exp(p)/(1+exp(p))
 logit <- function (p) log(p) - log(1-p)
 
-# nao foram: p1 p2 g1 f v1 v2 c12 c13
-nLL = function(p1=4, p2=4, p3=5.27, g1=-1, g2=-2.48, f=-6, v1=-1, v2=-2, v3=-5.28, c12=0, c13=-0.014, c23=-6.18) {
+# nao foram: p1 p2 p3 g1 g2 v1 v2 v3 c12 c13 c23
+nLL = function(p1=4.023, p2=5.077, p3=6.935, g1=7.001, g2=-4.558, f=-6.228, v1=-5, v2=-4, v3=-5, c12=-1.786641, c13=1.73, c23=0.000358) {
 	p1 <- exp(p1)/(1+exp(p1))
 	p2 <- exp(p2)/(1+exp(p2))
 	p3 <- exp(p3)/(1+exp(p3))
@@ -25,13 +26,10 @@ nLL = function(p1=4, p2=4, p3=5.27, g1=-1, g2=-2.48, f=-6, v1=-1, v2=-2, v3=-5.2
 	c13 <- -1+2*logistic(c13)
 	hm <- function (t) log(c(p1*(1-g1)*n(t)[1]+f*n(t)[3], p1*g1*n(t)[1]+p2*(1-g2)*n(t)[2], p2*g2*n(t)[2] + p3*n(t)[3]))
 	Sigma = matrix(c(v1*v1, c12*v1*v2, c13*v1*v3, c12*v1*v2, v2*v2, c23*v2*v3, c13*v1*v3, c23*v2*v3, v3*v3), nrow=3)
-	if(is.nan(log(det(Sigma))) | is.na(log(det(Sigma)))) return (0);
-	total = 0
-	for (i in 1:max(temp$time)) total = total + (m(i) - hm(i)) %*% ginv(Sigma) %*% (m(i) - hm(i))
-	print(as.numeric(max(temp$time)*log(det(Sigma)) + total))
-	print(dmvnorm(x=m(1), mean=hm(1), sigma=Sigma))
+	if(is.nan(log(det(Sigma))) | is.na(log(det(Sigma)))) return (999999);
+	return(-dmvnorm(x=m(1), mean=hm(1), sigma=Sigma, log=TRUE))
 }
-
+model <- mle2(nLL, fixed=list( v1=-5, v2=-2, v3=-5,c23=0.000358))
 # model <- mle2(nLL, optimizer="optimx")
 #               start=list(p1=logit(0.3), g1=logit(0.3), f=log(1.5), g2=logit(0.4), p2=logit(0.4), p3=logit(0.6),
 #                          v1=0),
@@ -64,7 +62,7 @@ g2 = vnLL(g2=sq)
 plot(logistic(sq), g2, type='l', main="g2")
 lg2=min(g2)
 g2=sq[which(g2==min(g2))]
-sq = seq(-8,-4, by=inc)
+sq = seq(-9,-5, by=inc)
 f = vnLL(f=sq)
 plot(exp(sq), f, type='l', main="f")
 lf = min(f)
@@ -100,8 +98,8 @@ print(data.frame(par=c("p1", "p2", "p3", "g1", "g2", "f", "v1", "v2", "v3", "c12
 
 
 # Simulando a populacao
-p1=logistic(2.67); g1=logistic(-2.67); p2=logistic(3.41); g2=logistic(-3.42); p3=logistic(3.79); f=exp(-7.93);
-m <- matrix( c(p1, 0, f, g1, p2, 0, 0, g2, p3), nrow=3, byrow=T)
+p1=logistic(4.02); g1=logistic(7); p2=logistic(5.07); g2=logistic(-4.55); p3=logistic(6.93); f=exp(-6.22);
+m <- matrix( c(p1*(1-g1), 0, f, p1*g1, p2*(1-g2), 0, 0, p2*g2, p3), nrow=3, byrow=T)
 n0 = temp[temp$time==0,3]
 simul <- data.frame(time=c(0,0,0), stage=c(1,2,3), density=n0)
 for (i in 1:5) {
