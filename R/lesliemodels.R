@@ -34,7 +34,7 @@ plot(realgrowth$VALUE~realgrowth$FROM, pch=10, ylim=c(0, 0.5), cex=sqrt(realgrow
 arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans+realgrowthsds, length=0.15, angle=90)
 arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans-realgrowthsds, length=0.15, angle=90)
 }
-plotgrowth()
+#plotgrowth()
 
 plotsobrev <- function() {
 	sobrev<-sobrev[order(sobrev$YEAR),]
@@ -42,7 +42,7 @@ plot(sobrev$VALUE~sobrev$FROM, pch=10, ylim=c(0.6, 1.0), cex=sqrt(sobrev$HECTARE
 arrows(1:7, sobrevmeans, 1:7, sobrevmeans+sobrevsds, length=0.15, angle=90)
 arrows(1:7, sobrevmeans, 1:7, sobrevmeans-sobrevsds, length=0.15, angle=90)
 }
-plotsobrev()
+#plotsobrev()
 
 ####### Escolha de modelos
 library(bbmle)
@@ -52,32 +52,23 @@ binomNLL<- function(a){
 		lambda=exp(a)
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
-F1 <- mle2(binomNLL, start=list(a=1.34)) # Dah uma probabilidade ~0.79
+F1 <- mle2(binomNLL, start=list(a=1.34)) 
 #plot.profmle(profile(F1))
-
-# Fecundidade com 3 params
+# Fecundidade com 3 params: ano bom, medio e ruim
 binomNLL<- function(a, b, C){
 		lambda=exp(a*c(1,0,0)+b*c(0,1,0)+C*c(0,0,1))
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
-F2 <- mle2(binomNLL, start=list(a=1.34, b=4, C=3)) # Dah uma probabilidade ~0.79
+F2 <- mle2(binomNLL, start=list(a=1.34, b=4, C=3))
 #plot.profmle(profile(F2))
-
 # Fecundidade eh dada por uma poisson
-# O parametro da poisson eh dado por uma normal:
-binomNLL<- function(mu, sigma){
-		lambda=exp(a*c(1,0,0)+b*c(0,1,0)+C*c(0,0,1))
+# O parametro da poisson eh dado por uma regressao linear
+binomNLL<- function(a, b){
+		lambda=exp(a+b*c(0,1,2))
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
-F2 <- mle2(binomNLL, start=list(a=1.34, b=4, C=3)) # Dah uma probabilidade ~0.79
-
-a1<-coef(F2)[1]
-a2<-coef(F2)[2]
-a3<-coef(F2)[3]
-lambda=exp(a1*c(1,0,0)+a2*c(0,1,0)+a3*c(0,0,1))
--sum(dpois(fertility,lambda=lambda, log=TRUE))
-
-AICtab(F1, F2)
+F3 <- mle2(binomNLL, start=list(a=1.34, b=4)) 
+AICtab(F1, F2, F3, weights=TRUE)
 
 ## Modelo 1: TODAS as taxas de sobrevivencia sao iguais
 binomNLL<- function(a){
@@ -204,8 +195,7 @@ curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
 curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
 curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
 # Salvando para a posteridade
-meanp<- mean(c(p1,p2,p3))
-sdp<- sd(c(p1,p2,p3))
+M5ano <- mle2(function (mu=0.58, sigma=0.32) -sum(dnorm(c(p1,p2,p3), mean=mu, sd=sigma, log=TRUE)))
 classp <- p4
 
 binomNLL<- function(a, b, c, d){
@@ -236,6 +226,9 @@ G6 <- mle2(binomNLL, start=list(a=2.21, b=-0.96, c=1, d=1, e=1, f=1))
 AICtab(M1, M2, M3, M4, M5, weights=TRUE)
 AICtab(G1, G2, G3, G4, G5, G6, weights=TRUE)
 
+# Retomando o modelo M5:
+sobrev( class ) ~ binom ( n; p ), onde logit(p) = class * classp + N( meanp, sdp )
+COMO TRABALHAR AAAAHHHHH???????????? SOCOOOOOOORRO
 
 ################# PARTE 1: Independente de Densidade
 factors <- c("s1","F7","g1","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7");
@@ -328,6 +321,55 @@ density((get.results(LHS2)[,1])) -> d
 # Lambda mais provavel:
 (d$x[which(d$y==max(d$y))] -> prob.d)
 (prob.d-mean.d)/prob.d*100
+
+####  MODELO MAIS SIMPLES (F1, G1, M1)
+factors <- c("f","s","g");
+LeslieIndep <- function (f, s, g) {
+	L <- matrix(
+			c(s*(1-g),   0,   0,   0,   0,   0, f,
+			  s*g, s*(1-g),   0,   0,   0,   0,   0,
+		        0, s*g, s*(1-g),   0,   0,   0,   0,
+			    0,   0, s*g, s*(1-g),   0,   0,   0,
+			    0,   0,   0, s*g, s*(1-g),   0,   0,
+			    0,   0,   0,   0, s*g, s*(1-g),   0,
+			    0,   0,   0,   0,   0, s*g, s), nrow=7, ncol=7, byrow=TRUE)
+	result <- Mod(eigen(L)$values[1])
+	return (result);
+}
+# Para realizar a analise FAST, eh necessario escrever um "wrapper"
+# que realiza mapply
+IndepModel <- function (x) {
+		return(mapply(LeslieIndep, x[,1], x[,2],x[,3]))
+}
+# Brincando de Metropolis
+# ponto inicial
+x =data.frame(f=4.5, s=1.34, g=-0.80)
+atual <- as.numeric(x[1,])
+# jumping distribution
+Q <- function (x) rnorm (3, as.numeric(x), c(0.1,0.1,0.1))
+# Probability distribution
+f <- function (x) 
+
+# Roda o modelo e faz as analises:
+LHS05 <- LHS(IndepModel, factors, 50, q, q.arg)
+LHS1 <- LHS(IndepModel, factors, 100, q, q.arg)
+s1<-sbma(LHS05, LHS1)
+LHS2 <- LHS(IndepModel, factors, 200, q, q.arg)
+s2<-sbma(LHS1, LHS2)
+LHS3 <- LHS(IndepModel, factors, 300, q, q.arg)
+s3<-sbma(LHS2, LHS3)
+LHS4 <- LHS(IndepModel, factors, 400, q, q.arg)
+s4<-sbma(LHS3, LHS4)
+LHS5 <- LHS(IndepModel, factors, 500, q, q.arg)
+s5<-sbma(LHS4, LHS5)
+
+corPlot(LHS1)
+plotecdf(LHS1)
+
+# Partial rank correlation coefficients
+plotprcc(LHS1)
+
+
 
 #################### PARTE 2: DEPENDENTE DE DENSIDADE
 factors <- c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z");
