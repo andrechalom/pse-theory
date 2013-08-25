@@ -1,0 +1,81 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed, color}
+\usepackage[utf8]{inputenc}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+
+\begin{document}
+
+\begin{center}
+  {\Large Abordagem integrativa para análises de sensibilidade}
+\end{center}
+
+
+"In an ideal world, all data would come from well-designed experiments and would be sufficient to simultaneously estimate all parameters using rigorous statistical procedures. The world is not ideal. One must often combine estimates from different experiments, or supplement high-quality data (...) with uncertain data, or even assumptions (...). Think carefully about whether your conclusions may be artifacts of your assumptions or calculations, and document those assumptions and calculations so that your reader can ask the same question, and then carry on."
+
+
+Durante o desenvolvimento e a análise de modelos matemáticos, é comum separar a estimativa dos parâmetros
+da análise de incerteza do modelo. Os dois passos são feitos em seções diferentes dos artigos, discutidos
+em capítulos diferentes dos livros, e frequentemente realizados por equipes diferentes. Em estudos que 
+empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
+de parâmetros considerada ótima durante as estimativas de parâmetros, e a análise de incerteza é apresentada
+como um procedimento separado e posterior à análise do resultado ``principal''. Em alguns casos, 
+não existe sequer a concordância entre a abordagem estatística usada em ambos os passos (***citações***).
+
+Essa falta de compasso entre 
+
+Essa divisão se baseia na noção de que a análise de incerteza de um modelo é um procedimento separado
+e posterior à análise do resultado 
+
+Em muitos casos,
+a análise de incerteza é apresentada em uma seção menor ou um apêndice, baseados em 
+
+
+Passei um tempão nesse mês pensando em qual deveria ser a forma da distribuição estatística que usamos pra sortear as probabilidades (limitadas entre 0 e 1) na PSE de modelos matriciais. Acho que estou chegando em algum lugar :)
+
+Primeiro, as possibilidades mais "óbvias":
+- Betas são limitadas entre 0 e 1, mas são MUITO esquisitas.
+- Normais tem boas propriedades estatísticas, mas não são limitadas entre 0 e 1 - não dá pra deixar a probabilidade de sobrevivência ser -0.05!
+- Normais truncadas são limitadas e tem propriedades "bonitinhas"... mas são uma escolha bastante artificial!! (era o que eu estava usando até agora)
+
+Lendo o Caswell, me dei conta de que existe uma escolha razoavelmente óbvia: usar a função de verossimilhança (sempre normalizada para a integral dar 1).
+
+No caso mais simples, temos p.ex. um parâmetro que mede a sobrevivência de uma dada classe de idade ou tamanho. Medindo em um único censo quantos indivíduos sobreviveram (s sucessos) dentro da população (t total), temos um modelo binomial ~ b(t;p), podemos perfilhar a verossimilhança para cada valor de p (que tem o máximo em s/t, e fica mais "fina" quanto maior a amostra). Quando temos mais de um censo, o modelo estatístico usado pode levar em conta (A) nenhuma heterogeneidade ambiental nem demográfica, portanto temos um modelo binomial, (B) heterogeidade ambiental, (C) heterogeneidade demográfica ou (D) ambas. Ainda não tenho certeza de quais seriam os modelos específicos para B, C ou D - working on that!, mas acho que podemos usar seleção de modelos para ter um "protocolo" mais rigoroso de PSE.
+
+MAS a principal vantagem dessa abordagem é que ela mata outro coelho na mesma cajadada. Vc lembra que, no modelo do E. edulis, nós transformamos a matriz que tinha termos de "stasis" e "growth" que tinha uma cara:
+
+| S1 0  F  |
+| G1 S2 0  |
+| 0  G2 S3 |
+
+Para uma matriz no qual os termos estavam decompostos em "survival" e "growth", com uma cara:
+| s1*(¬g1)  0         F  |
+| s1*g1     s2*(¬g2)  0  |
+| 0         s2*g2     s3 |
+
+Isso foi razoavelmente fácil de fazer porque uma árvore só tem 2 "escolhas" a fazer: sobreviver ou não, e crescer ou não. Mas quando o número de opções diferentes em uma mesma coluna vai crescendo, vai ficando cada vez mais complicado fazer uma reparametrização desse modelo que faça algum sentido biológico. Isso porque, na verdade, cada coluna está determinada por uma distribuição multinomial. Bem, se conseguirmos descrever essa multinomial, podemos perfilha-la para obter um conjunto de combinações de parâmetros compatíveis com as constraints como "S1+G1 <1", com a qual podemos fazer as análises de sensibilidade.
+
+Trabalhar com a multinomial me parece pouco compatível com o LHS, que necessita que cada parâmetro venha de uma distribuição independente, mas acredito que podemos fazer isso usando um algoritmo de Monte Carlo simples, já que "rodar" um modelo matricial é só achar o autovalor de uma matriz, podemos rodar um milhão de runs do modelo para fazer a PSE - e continuamos usando o LHS pra trabalhar com modelos mais pesados como IBM, já que o pequeno número de amostras é fundamental nesses casos.
+
+Espero que tenha ficado claro! Ainda está um bocado tentativo e com um tanto de "brainstorming", conversamos melhor quando vc voltar pra SP.
+
+Grande abraço!
+
+Ainda nesse assunto: porque usar uma abordagem estocástica baseada em verossimilhança para fazer a análise de sensibilidade de modelos matriciais, se já existe uma abordagem analítica (Caswell etc)?
+1. Para modelos simples com muitos dados bons, as abordagens devem convergir. No entanto, para modelos complicados por heterogeidade demográfica, tenho a impressão de que as abordagens já vão divergir.
+2. A abordagem analítica é local (portanto, responde ao que acontece com perturbações infinitesimais) e depende das funções serem "suaves" na vizinhança, a estocástica é global e não tem essa limitação.
+3. O princípio de verossimilhança afirma que toda a informação contida nas amostras coletadas está contida na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela amostra - enquanto a abordagem analítica frequentemente "joga fora" informação, e em alguns casos pode dar a impressão de gerar respostas com mais informação do que ela realmente tem.
+
+
+
+dividir o ciclo de produção nas seguintes fases:
+\begin{enumerate}
+	\item 
+
+
+\end{document}

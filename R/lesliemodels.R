@@ -35,7 +35,6 @@ arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans+realgrowthsds, length=0.15, an
 arrows(1:6, realgrowthmeans, 1:6, realgrowthmeans-realgrowthsds, length=0.15, angle=90)
 }
 #plotgrowth()
-
 plotsobrev <- function() {
 	sobrev<-sobrev[order(sobrev$YEAR),]
 plot(sobrev$VALUE~sobrev$FROM, pch=10, ylim=c(0.6, 1.0), cex=sqrt(sobrev$HECTARE)/4, col=rep(c('red','green','blue'), each=7))
@@ -43,7 +42,6 @@ arrows(1:7, sobrevmeans, 1:7, sobrevmeans+sobrevsds, length=0.15, angle=90)
 arrows(1:7, sobrevmeans, 1:7, sobrevmeans-sobrevsds, length=0.15, angle=90)
 }
 #plotsobrev()
-
 ####### Escolha de modelos
 library(bbmle)
 source("plot-profmle.r")
@@ -322,9 +320,15 @@ density((get.results(LHS2)[,1])) -> d
 (d$x[which(d$y==max(d$y))] -> prob.d)
 (prob.d-mean.d)/prob.d*100
 
+###################################################################
+###################################################################
+##### SENSIBILIDADE BASEADA EM MODELOS DE VEROSSIMILHANCA
 ####  MODELO MAIS SIMPLES (F1, G1, M1)
 factors <- c("f","s","g");
 LeslieIndep <- function (f, s, g) {
+	f = exp(f)
+	s = exp(s)/(1+exp(s))
+	g = exp(g)/(1+exp(g))
 	L <- matrix(
 			c(s*(1-g),   0,   0,   0,   0,   0, f,
 			  s*g, s*(1-g),   0,   0,   0,   0,   0,
@@ -346,11 +350,53 @@ IndepModel <- function (x) {
 x =data.frame(f=4.5, s=1.34, g=-0.80)
 atual <- as.numeric(x[1,])
 # jumping distribution
-Q <- function (x) rnorm (3, as.numeric(x), c(0.1,0.1,0.1))
+Q <- function (x) rnorm (3, as.numeric(x), c(0.05,0.05,0.05))
 # Probability distribution
-f <- function (x) 
+f <- function (x) {
+	f = exp(x[1])
+	s = exp(x[2])/(1+exp(x[2]))
+	g = exp(x[3])/(1+exp(x[3]))
+	return(
+	sum(dpois(fertility,lambda=f, log=TRUE))
+	+sum(dbinom(round(sobrev$VALUE*sobrev$HECTARE),size=round(sobrev$HECTARE),prob=s, log=TRUE))
+	+sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=g, log=TRUE))
+	)
+}
+#
+#Iteration
+#
+for (i in 1:50000) {
+	novo <- Q(atual)
+	alfa <- exp(f(novo)-f(atual))
+	if (is.nan(alfa)) alfa = 0
+	if (alfa >= 1 || runif(1,0,1) < alfa) { #aceite
+		x[nrow(x)+1,] <-  novo
+		atual <- novo
+	} else {
+		x[nrow(x)+1,] <- atual
+	}
+}
+dis <- cbind(x, lambda=IndepModel(x))
+plot(ecdf(dis$lambda))
 
-# Roda o modelo e faz as analises:
+trans <- data.frame(
+				f= exp(dis$f), 
+				s = exp(dis$s)/(1+exp(dis$s)),
+				g = exp(dis$g)/(1+exp(dis$g)),
+				lambda = dis$lambda)
+
+corPlot(trans[,c(1,2,3)], trans[,4])
+plot(pcc(trans[,c(1,2,3)], trans[,4], rank=TRUE))
+
+sl<-estim.slr(trans[,c(4,1,2,3)])
+f <- apply (trans[,c(1,2,3)], 2, mean, na.rm=T)
+m <- mean(trans[,4])
+sl * f / m
+
+# Densidades são compativeis com as originais"
+plot(density(dis$f))
+I <- IndepModel(dis)
+
 LHS05 <- LHS(IndepModel, factors, 50, q, q.arg)
 LHS1 <- LHS(IndepModel, factors, 100, q, q.arg)
 s1<-sbma(LHS05, LHS1)
