@@ -2,6 +2,9 @@ integr:
 	./mkcap.sh integr
 	pdflatex integr
 
+caveat:
+	pdflatex new/caveat
+
 
 PROJ=pse
 
