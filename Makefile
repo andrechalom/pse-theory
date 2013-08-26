@@ -1,3 +1,8 @@
+integr:
+	./mkcap.sh integr
+	pdflatex integr
+
+
 PROJ=pse
 
 all: ${PROJ}.pdf
