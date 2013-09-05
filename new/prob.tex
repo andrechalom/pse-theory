@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\begin{document}
+\section{Nota sobre a natureza das probabilidades}
+Para poder discorrer sobre a estimação de incertezas e a atribuição de probabilidades a diferentes resultados de um modelo,
+é necessário examinar com atenção o que entendemos sobre probabilidade.
+
+A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
+e Pierre Fermat desenvolveram métodos para resolver problemas envolvendo combinações de resultados em jogos de dados e outros
+jogos de azar. 
+Essa origem, juntamente com a facilidade e a universalidade de problemas envolvendo jogos de azar, explicam porque tantos textos
+introdutórios sobre estatística empregam exemplos envolvendo rolar dados e tirar cartas de baralhos. Embora a simplicidade
+destes exemplos ajude a transmitir os conceitos de probabilidade com facilidade, isso causa muitas vezes a sensação de que
+as regras da probabilidade servem apenas para os casos simples, e que estas não se aplicam, ou não se adequam totalmente aos 
+problemas de natureza complexa com os quais a biologia e a ecologia têm de enfrentar. De fato, é muito difícil justificar que
+questões como ``qual a chance de que uma população de jararaca-ilhoa entre em extinção nos próximos dez anos?'' sejam embasadas
+nas mesmas idéias que ``qual a chance de uma moeda jogada para cima dar coroa?''. É mais natural tratar a primeira pergunta como
+um questionamento sobre o nosso conhecimento atual dos processos biológicos e da condição de vida dos indivíduos dessa espécie
+do que um questionamento sobre um processo físico simples que pode ser repetido um grande número de vezes. 
+
+Porém, mesmo textos escritos por estatísticos empregam frequentemente definições conflitantes sobre probabilidades: às vezes,
+elas são usadas para representar algo pessoal e subjetivo, como um nível de confiança; outras vezes são apresentadas como a
+razão entre diferentes contagens. Vamos delinear aqui algumas das principais interpretações possíveis, juntamente com
+algumas críticas a todas elas.
+
+books.google.com.br/books?id=es0AAAAAcAAJ preface, x
+
+
+
+\section{O papel da incerteza no método científico}
+John Venn, no prefácio do seu estudo de 1866, escreve:
+
+``The science of Probability occupies at present a somewhat anomalous position. It is impossible, I think, not to observe
+in it some of the marks and consequent disadvantages of a {\em sectional} study. By a small body of ardent students it
+has been cultivated with great assiduity, and the results they have obtained will always be reckoned among the most 
+extraordinary products of mathematical genius. But by the general body of thinking men its principles seem to be regarded
+with indifference or suspicion. Such persons may admire the ingenuity displayed, and be struck with the profoundity
+of many of the calculatins, but there seems to them, if I may so express it, an {\em unreality} about the whole treatment
+of the subject. To many persons the mention of Probability suggests little else than the notion of a set of rules, very
+ingenious and profound rules no doubt, with which mathematicians amuse themselves by setting and solving puzzles.''
+
+No século e meio que se passou desde esta publicação, a aplicação da estatística se tornou uma obrigatoriedade no meio científico.
+Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não mencione alguma propriedade
+estatística a respeito das amostras coletadas. Por muitos anos, a estatística vigente nas análises biológicas teve uma
+forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo 
+No entanto, existe uma ampla crítica à forma como essa estatística é
+utilizada nas ciências biológicas e na área de medicina \cite{Ioannidis05}.
+Muito da crítica decorre da interpretação
+simplista assumida por muitos cientistas a respeito do valor {\em p} reportado sobre um problema, mas as suas raízes devem
+ser traçadas mais profundamente em uma falta de consciência dos cientistas sobre as interpretações a respeito da natureza
+das probabilidades que são pressupostas por uma escola de pensamento, mas raramente examinadas profundamente. 
+De outro lado, análises recentes sugerem que o tamanho dos efeitos em várias áreas da ecologia são tão pequenos que estes
+dificilmente serão corretamente detectados pelos procedimentos tradicionais \cite{Jennions03}. Em áreas como a ecologia do
+comportamento, o poder dos testes estatísticos é muito pequeno, e esse problema é acentuado quando são utilizados métodos
+(como o método de Bonferroni) para corrigir o valor {\em p} reportado.
+
+Novamente, citamos John Venn:
+``Students of Philosophy in general have thence conceived a prejudice against Probability, which has for the most part
+deterred them from examining it. As soon as a subject comes to be considered `mathematical' its claims seem generally,
+by the mass of readers, to be either on the one hand scouted or at least courteously rejected, or on the other hand
+to be blindly accepted with all their assumed consequences. Of impartial and liberal criticism it obtains little or nothing.''
+
+
+``There comes a time in the life of a scientist when he must convince himself
+either that his subject is so robust from a statistical point of view that
+the finer points of statistical inference are irrelevant, or that the precise
+mode of inference he adopts is satisfactory. Most will be able to settle for
+the former, and they are perhaps fortunate in being able to conserve their
+intellectual energy for their main interests; but some will be forced, by the
+paucity of their data or the complexity of their inferencies, to examine
+the finer points of their own arguments, and in so doing they are likely
+to become lost in the quicksands of the debate on statistical inference.''
+(A.W.F. Edwards, Likelihood)
+
+\end{document}

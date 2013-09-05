@@ -66,7 +66,6 @@ binomNLL<- function(a, b){
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
 F3 <- mle2(binomNLL, start=list(a=1.34, b=4)) 
-AICtab(F1, F2, F3, weights=TRUE)
 
 ## Modelo 1: TODAS as taxas de sobrevivencia sao iguais
 binomNLL<- function(a){
@@ -221,8 +220,12 @@ binomNLL<- function(a, b, c, d, e, f){
 G6 <- mle2(binomNLL, start=list(a=2.21, b=-0.96, c=1, d=1, e=1, f=1)) 
 #plot.profmle(profile(G6))
 
+AICtab(F1, F2, F3, weights=TRUE)
 AICtab(M1, M2, M3, M4, M5, weights=TRUE)
 AICtab(G1, G2, G3, G4, G5, G6, weights=TRUE)
+
+# Melhor modelo "separado", df=2+4+2=8
+logLik(F3)+logLik(M5)+logLik(G3)
 
 # Retomando o modelo M5:
 sobrev( class ) ~ binom ( n; p ), onde logit(p) = class * classp + N( meanp, sdp )
