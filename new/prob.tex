@@ -1,6 +1,7 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[margin=1.2in]{geometry}
 \usepackage{graphicx}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{framed, color}
 \definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
@@ -8,7 +9,21 @@
 
 % Create friendly environments for theorems, propositions, &c.
 \begin{document}
-\section{Nota sobre a natureza das probabilidades}
+\title{Sobre probabilidade e inferência}
+\maketitle
+
+``There comes a time in the life of a scientist when he must convince himself
+either that his subject is so robust from a statistical point of view that
+the finer points of statistical inference are irrelevant, or that the precise
+mode of inference he adopts is satisfactory. Most will be able to settle for
+the former, and they are perhaps fortunate in being able to conserve their
+intellectual energy for their main interests; but some will be forced, by the
+paucity of their data or the complexity of their inferencies, to examine
+the finer points of their own arguments, and in so doing they are likely
+to become lost in the quicksands of the debate on statistical inference.''
+(A.W.F. Edwards, Likelihood)
+
+\section{Conceitos históricos sobre a natureza das probabilidades}
 Para poder discorrer sobre a estimação de incertezas e a atribuição de probabilidades a diferentes resultados de um modelo,
 é necessário examinar com atenção o que entendemos sobre probabilidade.
 
@@ -27,14 +42,113 @@ do que um questionamento sobre um processo físico simples que pode ser repetido
 
 Porém, mesmo textos escritos por estatísticos empregam frequentemente definições conflitantes sobre probabilidades: às vezes,
 elas são usadas para representar algo pessoal e subjetivo, como um nível de confiança; outras vezes são apresentadas como a
-razão entre diferentes contagens. Vamos delinear aqui algumas das principais interpretações possíveis, juntamente com
-algumas críticas a todas elas.
+razão entre diferentes contagens.
 
-books.google.com.br/books?id=es0AAAAAcAAJ preface, x
+A primeira tentativa de definir formalmente o conceito de probabilidade vem em 1814,
+com o trabalho de Pierre Simon de Laplace:
 
+``La théorie des hasards consiste à réduire tous les évènemens du même genre, à un certain nombre de cas également
+possibles, c'est-à-dire tels que nous soyons également indécis sue leur existence, et à determiner le nombre de cas
+favorables à l'évènement dont on cherche la probabilité. Le rapport de ce nombre à celui de tous les cas possibles,
+est la mesure de cette probabilité'' \cite{Laplace1814}
 
+(``A teoria da probabilidade consiste em reduzir todos os eventos de um mesmo tipo a um certo número de casos igualmente
+possíveis, isso é, tal que sejamos igualmente indecisos sobre a sua ocorrência, e a determinar o número de casos
+favoráveis ao evento ao qual buscamos a probabilidade. A razão deste número para o número de todos os casos possíveis
+é a medida desta probabilidade'')
 
-\section{O papel da incerteza no método científico}
+Para Laplace, todos os eventos que presenciamos seriam resultados de leis físicas
+imutáveis, e uma inteligência superior, dotada do conhecimento do estado do universo em um dado instante, poderia prever
+todos os eventos futuros sem qualquer incerteza. No entanto, nosso conhecimento limitado, tanto do estado do universo
+quanto das leis que o regem, faz com que não possamos fazer previsões para um grande número de sistemas. O estudo das 
+probabilidades se coloca, então, como um apoio ao nosso poder de realizar previsões sobre o universo, 
+enquanto não possuímos o conhecimento das leis e estados necessária para realizar previsões certeiras. 
+
+Uma dificuldade com essa definição de Laplace é que a demarcação de ``eventos igualmente prováveis'' deve ser feita
+com base em argumentos que não partam da idéia de probabilidade; caso contrário, podemos incorrer em raciocínios
+circulares. Por exemplo, se uma moeda tem 2 lados perfeitamente simétricos, e a lançamos de forma a não privilegiar um dos lados,
+podemos dizer que o número de eventos totais é dois, e o número de eventos favoráveis a tirar coroa é um. Não há qualquer motivo
+para supor que um dos lados seja mais propenso a cair para cima que o outro, visto a moeda ser perfeitamente simétrica; logo,
+a probabilidade de tirar coroa em um lançamento é de $\frac{1}{2}$. Aqui, o ato de atribuir iguais chances aos dois
+lados da moeda vem de um argumento físico de simetria. Isso é dizer que, para Laplace,
+a ciência da probabilidade deve se basear em leis físicas do mundo natural, e não no nosso estado presente de conhecimento 
+sobre o mundo. Esta interpretação faz com que as leis da probabilidade, estritamente, só possam ser aplicadas para 
+sistemas simples, sobre os quais temos um alto conhecimento e controle. Laplace, no entanto, não parece ter levado essa 
+definição à suas últimas consequências, já que ele discute no tratado citado acima problemas referentes a fazer inferências 
+sobre testemunhos judiciais, nos 
+quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivocado, com outra probabilidade. No entanto, 
+nenhuma explicação convincente é dada sobre como medir essas probabilidades.
+
+Uma visão alternativa é dada por Augustus de Morgan, conhecido principalmente por suas leis em lógica proposicional, 
+no seu tratado Formal Logic, de 1847. Para de Morgan, a única certeza que podemos ter é a de nossa própria existência. 
+Este conhecimento
+não é passível de ser refutado. No entanto, qualquer outra proposição feita deve ser acompanhada por 
+um {\em grau de conhecimento} subjetivo:
+
+``It will be found that, frame what circunstances we may, we cannot invent a case of purely objective probability.
+I put ten white balls and ten black ones into an urn, and lock the door of the room. I may feel well assured that,
+when I unlock the room again, and draw a ball, I am justified in saying it is an even chance that it will be a white one.
+If all the metaphysicians who ever wrote on probability were to witness the trial, they would, each in his own sense and 
+manner, hold me right in my assertion. But how many things there are to be taken for granted! Do my eyes still distinguish
+colours as before? Some persons never do, and eyes alter with age. Has the black paint melted, and blackened the white balls?
+Has any one else possessed a key of the room, or got in at the window, and changed the balls? We may be {\em very sure},
+as those words are commonly used, that none of these things have happened, and it may turn out (and I have no doubt will do so,
+if the reader try the circumstances) that the ten white and ten black balls will be found, as distinguishable as ever, and
+unchanged. But for all that, there is much to be assumed in reckoning upon such a result, which is not so objective (in the
+sense in which I used the word) as the knowledge of what the balls were when they were put into the urn.'' \cite{deMorgan1847}
+
+(``Chegaremos à conclusão de que, mesmo enquadrando as circustâncias que quisermos, não podemos inventar nenhum caso onde a 
+probabilidade é puramente objetiva. [Suponha que] eu coloque dez bolas brancas e dez bolas pretas em uma urna, e tranque a porta
+da sala. Posso me sentir seguro de que, quando eu destrancar a sala, estarei justificado em dizer que há uma chance igual de 
+tirar uma bola branca ou preta. Se todos os estudantes de metafísica que já escreveram sobre probabilidades fossem testemunhas
+desse experimento, cada um deles, à sua maneira, concordar com minha afirmação. Mas quantas coisas estamos tomando como 
+garantidas! Será que meus olhos ainda distinguem as cores como antes? Algumas pessoas nunca as distinguem, e os olhos se 
+alteram com a idade. Será que a tinta preta derreteu, e escureceu as bolas brancas? Será que alguém mais tinha uma chave da sala,
+ou entrou pela janela, e trocou as bolas? Podemos estar {\em muito seguros}, como se diz comumente, de que nada disso aconteceu,
+e pode ser que ocorra (como eu não duvido que será o caso, se o leitor tentar o experimento) que as dez bolas brancas e as 
+dez bolas pretas vão estar, bem distinguíveis como antes, e inalteradas. Mas até chegar nisso, precisamos presumir um grande
+número de fatos, que não tem o caráter objetivo (no sentido em que eu usei a palavra) que tem o conhecimento de como as bolas
+eram quando eu as coloquei na urna'').
+
+A teoria de probabilidades segundo de Morgan, portanto, lida com graus de conhecimento subjetivos. Assim, ao perguntar para
+uma pessoa comum qual é a chance de que um lançamento de moeda resulte em cara, essa pessoa pode responder $\frac{1}{2}$, e 
+esta é a medida de probabilidade correta, dada a informação que ele possui sobre o problema. Uma outra pessoa, que sabe
+que esta moeda é viciada, ou que é capaz de jogar a moeda de forma a privilegiar um resultado, pode dar outra resposta
+completamente diferente, e ainda assim estará correta. Para de Morgan, o passo essencial na construção de uma probabilidade
+consiste em {\em medir} o grau de certeza que temos em uma proposição. *** TALVEZ ELABORAR AQUI? ***
+
+A próxima crítica à visão de Laplace vem de John Venn, em seu trabalho de 1866. *** DEFINICAO ***
+
+Há um problema claro com essa visão, que é o fato de que não temos acesso a infinitas experiências para determinar o valor
+de uma dada probabilidade. Mesmo quando temos acesso a um grande conjunto de dados para estimar o valor de uma determinada
+probabilidade, esse conjunto pode ser suficientemente heterogêneo para que nossa conclusão se torne incorreta. Como escreve Venn,
+
+``At the present time the average duration of life in England may be, say, forty years; but a century ago it was decidedly less;
+several centuries ago it was presumably very much less (...). Let us assume that the regularity is fixed and permanent. It is
+making a hypothesis which may not be altogether consistent with fact, but which is forced upon us for the purpose of securing
+precision of statement and definition.''\cite{Venn1866}
+
+*** CASO PATOLOGICO de inverter o resultado ***
+Embora a definição de experimento possa ser facilmente reformulada para excluir esses casos visivelmente patológicos, a análise
+deles demonstra que a definição de probabilidade dada pelo paradigma frequentista não pode ser aplicada para {\em todo e qualquer}
+problema envolvendo a determinação de uma probabilidade.
+
+**** Discutir Venn e os frequentistas ****
+%The Logic of Chance:
+%http://archive.org/stream/logicofchance029416mbp#page/n39/mode/2up página 41
+
+%http://en.wikipedia.org/wiki/Probability_interpretations
+**** Discutir a "resposta" dos Bayesianos para o paradigma frequentista ****
+
+**** Lindley's paradox? ****
+%http://en.wikipedia.org/wiki/Jeffreys%E2%80%93Lindley_paradox
+
+%Livro do Edwards
+**** Discutir o livro do Edwards e verossimilhança ****
+
+\section{O papel da incerteza na produção do conhecimento científico}
+**** discutir a visão de Popper ****
+
 John Venn, no prefácio do seu estudo de 1866, escreve:
 
 ``The science of Probability occupies at present a somewhat anomalous position. It is impossible, I think, not to observe
@@ -45,11 +159,12 @@ with indifference or suspicion. Such persons may admire the ingenuity displayed,
 of many of the calculatins, but there seems to them, if I may so express it, an {\em unreality} about the whole treatment
 of the subject. To many persons the mention of Probability suggests little else than the notion of a set of rules, very
 ingenious and profound rules no doubt, with which mathematicians amuse themselves by setting and solving puzzles.''
+\cite{Venn1866}
 
 No século e meio que se passou desde esta publicação, a aplicação da estatística se tornou uma obrigatoriedade no meio científico.
 Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não mencione alguma propriedade
 estatística a respeito das amostras coletadas. Por muitos anos, a estatística vigente nas análises biológicas teve uma
-forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo 
+forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo requeridos para publicações. 
 No entanto, existe uma ampla crítica à forma como essa estatística é
 utilizada nas ciências biológicas e na área de medicina \cite{Ioannidis05}.
 Muito da crítica decorre da interpretação
@@ -62,21 +177,15 @@ comportamento, o poder dos testes estatísticos é muito pequeno, e esse problem
 (como o método de Bonferroni) para corrigir o valor {\em p} reportado.
 
 Novamente, citamos John Venn:
+
 ``Students of Philosophy in general have thence conceived a prejudice against Probability, which has for the most part
 deterred them from examining it. As soon as a subject comes to be considered `mathematical' its claims seem generally,
 by the mass of readers, to be either on the one hand scouted or at least courteously rejected, or on the other hand
 to be blindly accepted with all their assumed consequences. Of impartial and liberal criticism it obtains little or nothing.''
+\cite{Venn1866}
 
 
-``There comes a time in the life of a scientist when he must convince himself
-either that his subject is so robust from a statistical point of view that
-the finer points of statistical inference are irrelevant, or that the precise
-mode of inference he adopts is satisfactory. Most will be able to settle for
-the former, and they are perhaps fortunate in being able to conserve their
-intellectual energy for their main interests; but some will be forced, by the
-paucity of their data or the complexity of their inferencies, to examine
-the finer points of their own arguments, and in so doing they are likely
-to become lost in the quicksands of the debate on statistical inference.''
-(A.W.F. Edwards, Likelihood)
+\bibliographystyle{plain}
+\bibliography{chalom}
 
 \end{document}
