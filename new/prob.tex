@@ -72,7 +72,8 @@ para supor que um dos lados seja mais propenso a cair para cima que o outro, vis
 a probabilidade de tirar coroa em um lançamento é de $\frac{1}{2}$. Aqui, o ato de atribuir iguais chances aos dois
 lados da moeda vem de um argumento físico de simetria. Isso é dizer que, para Laplace,
 a ciência da probabilidade deve se basear em leis físicas do mundo natural, e não no nosso estado presente de conhecimento 
-sobre o mundo. Esta interpretação faz com que as leis da probabilidade, estritamente, só possam ser aplicadas para 
+sobre o mundo. A probabilidade é, desta forma, algo que existe objetivamente.
+Esta interpretação faz com que as leis da probabilidade, estritamente, só possam ser aplicadas para 
 sistemas simples, sobre os quais temos um alto conhecimento e controle. Laplace, no entanto, não parece ter levado essa 
 definição à suas últimas consequências, já que ele discute no tratado citado acima problemas referentes a fazer inferências 
 sobre testemunhos judiciais, nos 
@@ -115,12 +116,50 @@ uma pessoa comum qual é a chance de que um lançamento de moeda resulte em cara
 esta é a medida de probabilidade correta, dada a informação que ele possui sobre o problema. Uma outra pessoa, que sabe
 que esta moeda é viciada, ou que é capaz de jogar a moeda de forma a privilegiar um resultado, pode dar outra resposta
 completamente diferente, e ainda assim estará correta. Para de Morgan, o passo essencial na construção de uma probabilidade
-consiste em {\em medir} o grau de certeza que temos em uma proposição. *** TALVEZ ELABORAR AQUI? ***
+consiste em {\em medir} o grau de certeza que temos em uma proposição. Algumas proposições são fáceis de medir, como
+``dois mais dois são quatro'', ``um lançamento de uma moeda justa vai dar coroa'', e ``dois mais dois são cinco'', aos quais
+podemos atribuir facilmente as probabilidades de 1, $\frac{1}{2}$ e 0. Essas medidas, juntamente com o senso de que
+algum evento é mais ou menos provável que outro, podem ser usados para construir uma escala subjetiva de probabilidades.
+Como essa visão sobre probabilidades parte exclusivamente do conhecimento que temos, e não de uma realidade objetiva,
+a probabilidade que queremos determinar não é algo que exista à parte no mundo; ela existe somente enquanto descrição
+de um processo mental.
 
-A próxima crítica à visão de Laplace vem de John Venn, em seu trabalho de 1866. *** DEFINICAO ***
+A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destaca John Venn, em seu trabalho de 
+1866, para quem a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
+série infinita de experimentos. 
+
+``I consider that [the term probability] presupposes a series;
+whithn the indefinitely numerous ... ****** terminar
+pag162 / 199 no doc online
+*** DEFINICAO
+
+Venn também critica a visão subjetivista de de Morgan, sob
+o argumento de que uma avaliação individual está sujeita a
+um enorme número de fontes de erro:
+
+``Our conviction generally rests upon a sort of chaotic basis
+composed of an infinite number of inferences and analogies
+of every description, and there moreover distorted by our
+state of feeling at the time, dimmed by the degree of our
+recollection of them afterwards, and probably received
+from time to time with varying force according to the way in
+which they happen to combine in our consciousness at the 
+moment.''\cite{Venn1866}
+
+*** RESPOSTA A VENN
 
 Há um problema claro com essa visão, que é o fato de que não temos acesso a infinitas experiências para determinar o valor
-de uma dada probabilidade. Mesmo quando temos acesso a um grande conjunto de dados para estimar o valor de uma determinada
+de uma dada probabilidade. A probabilidade de um dado evento poderia ser definida como o limite da razão entre o número de eventos
+favoráveis sobre o número de experimentos realizados, com o número de experimentos realizados indo para o infinito. Com 
+$n_x$ sendo o número de eventos favoráveis e $n_t$ sendo o número de experimentos realizados:
+
+\begin{equation}
+	P(x) = \lim_{n_t \rightarrow \infty} \frac{n_x}{n_t} 
+\end{equation}
+
+No entanto, só temos acesso aos primeiros termos dessa série, e não podemos tirar conclusões sobre o limite de uma série apenas
+observando os primeiros elementos. Observar o início de uma série sequer garante que o limite descrito acima exista.
+Mesmo quando temos acesso a um grande conjunto de dados para estimar o valor de uma determinada
 probabilidade, esse conjunto pode ser suficientemente heterogêneo para que nossa conclusão se torne incorreta. Como escreve Venn,
 
 ``At the present time the average duration of life in England may be, say, forty years; but a century ago it was decidedly less;
@@ -128,7 +167,19 @@ several centuries ago it was presumably very much less (...). Let us assume that
 making a hypothesis which may not be altogether consistent with fact, but which is forced upon us for the purpose of securing
 precision of statement and definition.''\cite{Venn1866}
 
-*** CASO PATOLOGICO de inverter o resultado ***
+Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo idealizado no qual fosse
+possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
+a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema interessante, essa objetividade
+apenas se concretiza se concretiza apenas dentro da idealização de um dado modelo, para o qual temos que presumir uma certa
+regularidade. 
+
+Um experimento simples pode demonstrar um caso no qual a probabilidade, como definida acima, não converge para nenhum valor.
+No primento experimento, jogue um dado regular e conte o número 6 como um sucesso e todos os outros como falha. Então, para
+cada experimento posterior, verifique a frequência de sucessos obtidos até o momento. Se ela for menor do que 0.3, passe a 
+considerar o número 6 como falha e todos os outros como sucesso. Se ela for maior do que 0.7, passe a considerar o número
+6 como sucesso e os outros como falha. A série resultante desse experimento não converge: ela irá com alta probabilidade oscilar
+entre os valores de 0.3 e 0.7.
+
 Embora a definição de experimento possa ser facilmente reformulada para excluir esses casos visivelmente patológicos, a análise
 deles demonstra que a definição de probabilidade dada pelo paradigma frequentista não pode ser aplicada para {\em todo e qualquer}
 problema envolvendo a determinação de uma probabilidade.
@@ -145,6 +196,10 @@ problema envolvendo a determinação de uma probabilidade.
 
 %Livro do Edwards
 **** Discutir o livro do Edwards e verossimilhança ****
+
+
+Reference class
+% http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
 \section{O papel da incerteza na produção do conhecimento científico}
 **** discutir a visão de Popper ****
