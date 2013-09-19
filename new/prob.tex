@@ -24,9 +24,50 @@ to become lost in the quicksands of the debate on statistical inference.''
 (A.W.F. Edwards, Likelihood)
 
 \section{Conceitos históricos sobre a natureza das probabilidades}
-Para poder discorrer sobre a estimação de incertezas e a atribuição de probabilidades a diferentes resultados de um modelo,
-é necessário examinar com atenção o que entendemos sobre probabilidade.
+John Venn, no prefácio do seu estudo de 1866, escreve:
 
+``The science of Probability occupies at present a somewhat anomalous position. It is impossible, I think, not to observe
+in it some of the marks and consequent disadvantages of a {\em sectional} study. By a small body of ardent students it
+has been cultivated with great assiduity, and the results they have obtained will always be reckoned among the most 
+extraordinary products of mathematical genius. But by the general body of thinking men its principles seem to be regarded
+with indifference or suspicion. Such persons may admire the ingenuity displayed, and be struck with the profoundity
+of many of the calculatins, but there seems to them, if I may so express it, an {\em unreality} about the whole treatment
+of the subject. To many persons the mention of Probability suggests little else than the notion of a set of rules, very
+ingenious and profound rules no doubt, with which mathematicians amuse themselves by setting and solving puzzles.''
+\cite{Venn1866}
+
+No século e meio que se passou desde esta publicação, a aplicação da estatística se tornou uma obrigatoriedade no meio científico.
+Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não 
+mencione alguma propriedade
+estatística a respeito das amostras coletadas. Por muitos anos, a estatística vigente nas análises biológicas teve uma
+forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo requeridos para publicações. 
+No entanto, existe uma ampla crítica à forma como essa estatística é
+utilizada nas ciências biológicas e na área de medicina \cite{Ioannidis05}.
+Muito da crítica decorre da interpretação
+simplista assumida por muitos cientistas a respeito do valor {\em p} reportado sobre um problema, mas as suas raízes devem
+ser traçadas mais profundamente em uma falta de consciência dos cientistas sobre as interpretações a respeito da natureza
+das probabilidades que são pressupostas por uma escola de pensamento, mas raramente examinadas profundamente. 
+De outro lado, análises recentes sugerem que o tamanho dos efeitos em várias áreas da ecologia são tão pequenos que estes
+dificilmente serão corretamente detectados pelos procedimentos tradicionais \cite{Jennions03}. Em áreas como a ecologia do
+comportamento, o poder dos testes estatísticos é muito pequeno, e esse problema é acentuado quando são utilizados métodos
+(como o método de Bonferroni) para corrigir o valor {\em p} reportado.
+
+Novamente, citamos John Venn:
+
+``Students of Philosophy in general have thence conceived a prejudice against Probability, which has for the most part
+deterred them from examining it. As soon as a subject comes to be considered `mathematical' its claims seem generally,
+by the mass of readers, to be either on the one hand scouted or at least courteously rejected, or on the other hand
+to be blindly accepted with all their assumed consequences. Of impartial and liberal criticism it obtains little or nothing.''
+\cite{Venn1866}
+
+Embora o debate sobre a natureza da probabilidade tenha sido fervorosamente promovido por matemáticos e estatísticos,
+este não alcança, muitas vezes, o cientista que faz uso do ferramental da probabilidade para resolver um problema particular.
+Para poder discorrer sobre a estimação de incertezas e a atribuição de probabilidades a diferentes resultados de um modelo,
+é necessário examinar com atenção o que entendemos sobre probabilidade. O conceito por trás da palavra probabilidade vai
+embasar não apenas o que entendemos pela palavra probabilidade, mas também traz um significado para os conceitos de
+incerteza, inferência e simulação, que serão de importância para a discussão a seguir.
+
+\subsection{Interpretação clássica}
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
 e Pierre Fermat desenvolveram métodos para resolver problemas envolvendo combinações de resultados em jogos de dados e outros
 jogos de azar. 
@@ -77,9 +118,13 @@ Esta interpretação faz com que as leis da probabilidade, estritamente, só pos
 sistemas simples, sobre os quais temos um alto conhecimento e controle. Laplace, no entanto, não parece ter levado essa 
 definição à suas últimas consequências, já que ele discute no tratado citado acima problemas referentes a fazer inferências 
 sobre testemunhos judiciais, nos 
-quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivocado, com outra probabilidade. No entanto, 
-nenhuma explicação convincente é dada sobre como medir essas probabilidades.
+quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivocado, com outra probabilidade. 
+Presumindo que as probabilidades estão corretas, o método usado por Laplace é conhecido como ``método das probabilidades
+inversas'', e tem uma alta importância na história da estatística.
+No entanto, 
+nenhuma explicação convincente é dada sobre como medir essas probabilidades dentro do paradigma clássico.
 
+\subsection{Interpretação subjetivista}
 Uma visão alternativa é dada por Augustus de Morgan, conhecido principalmente por suas leis em lógica proposicional, 
 no seu tratado Formal Logic, de 1847. Para de Morgan, a única certeza que podemos ter é a de nossa própria existência. 
 Este conhecimento
@@ -124,14 +169,33 @@ Como essa visão sobre probabilidades parte exclusivamente do conhecimento que t
 a probabilidade que queremos determinar não é algo que exista à parte no mundo; ela existe somente enquanto descrição
 de um processo mental.
 
+Um empecilho ao uso dessa interpretação de probabilidades se dá quando percebemos que, quanto mais complexo é o 
+problema que queremos resolver, mais imperfeita se torna nossa sensação de conseguir ordenar a probabilidade referente
+a diferentes resultados de um experimento. É fácil apreender que, se eu jogar duas moedas para cima, a chance de que ambas 
+resultem em cara é menor do que a chance de que um único lançamento resulte em cara. É consideravelmente mais difícil encaixar
+nessa ordenação a frase ``ao escolher uma letra aleatória da obra completa de Shakespeare, ela será E ou A''.
+
+A visão subjetiva de probabilidades permite que frases cotidianas, como ``é provável que chova hoje'' ou ``existe uma grande
+chance de encontrarmos o José hoje'', sejam tratadas com as mesmas ferramentas matemáticas que os jogos de azar. Mas
+embora essa interpretação seja de grande utilidade por permitir a generalização do conceito de probabilidade para problemas
+mais gerais do que os sistemas físicos simples contemplados pela interpretação clássica, ela não garante que o valor encontrado
+para a probabilidade de um evento seja coerente para diversas pessoas. Uma visão subjetivista de probabilidade pode ser
+perfeitamente adequada para embasar uma decisão pessoal, mas falhar enquanto uma ferramenta de avanço da ciência, que deve
+ser objetiva e independente das opiniões de cada cientista individualmente.
+
+\subsection{Interpretação frequentista}
 A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destaca John Venn, em seu trabalho de 
 1866, para quem a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
-série infinita de experimentos. 
+série infinita de experimentos:
 
-``I consider that [the term probability] presupposes a series;
-whithn the indefinitely numerous ... ****** terminar
-pag162 / 199 no doc online
-*** DEFINICAO
+``We may define the probability or chance (the terms are here regarded as synonymous) of the event happening in that
+particular way as the numerical fraction which represents the proportion between the two different classes in the long run (...).
+This assumes that the series are of indefinite extent, and of the kind which we have described as possessing a fixed type.
+If this be not the case, but the series be supposed terminable, or regularly or irregularly fluctuating, (...) the series ceases
+to be a subject of science. What we have to do under these circumstances, is to substitute a series of the right kind for
+the inappropriate one presented by nature, choosing it, of course, with as little deflection as possible from the observed facts.
+This is nothing more than has to be done, and invariably is done, whenever natural objects are made subjects of strict science.''
+\cite{Venn1866}
 
 Venn também critica a visão subjetivista de de Morgan, sob
 o argumento de que uma avaliação individual está sujeita a
@@ -146,9 +210,11 @@ from time to time with varying force according to the way in
 which they happen to combine in our consciousness at the 
 moment.''\cite{Venn1866}
 
-*** RESPOSTA A VENN
+Embora essa crítica seja contundente e pertinente, ela não aponta um problema exclusivo da interpretação subjetiva, como
+discutiremos abaixo.
 
-Há um problema claro com essa visão, que é o fato de que não temos acesso a infinitas experiências para determinar o valor
+Há um problema claro com a visão dita frequentista, advogada por Venn, que é o fato de que não temos 
+acesso a infinitas experiências para determinar o valor
 de uma dada probabilidade. A probabilidade de um dado evento poderia ser definida como o limite da razão entre o número de eventos
 favoráveis sobre o número de experimentos realizados, com o número de experimentos realizados indo para o infinito. Com 
 $n_x$ sendo o número de eventos favoráveis e $n_t$ sendo o número de experimentos realizados:
@@ -169,76 +235,97 @@ precision of statement and definition.''\cite{Venn1866}
 
 Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo idealizado no qual fosse
 possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
-a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema interessante, essa objetividade
-apenas se concretiza se concretiza apenas dentro da idealização de um dado modelo, para o qual temos que presumir uma certa
-regularidade. 
+a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema real, essa objetividade
+apenas se concretiza dentro da idealização de um dado modelo, para o qual temos que presumir uma certa regularidade. Desta
+forma, a crítica de Venn sobre a interpretação subjetiva também deve ser aplicada à interpretação frequentista, particularmente
+à escolha do modelo idealizado que formulamos para calcular uma probabilidade.
 
-Um experimento simples pode demonstrar um caso no qual a probabilidade, como definida acima, não converge para nenhum valor.
-No primento experimento, jogue um dado regular e conte o número 6 como um sucesso e todos os outros como falha. Então, para
-cada experimento posterior, verifique a frequência de sucessos obtidos até o momento. Se ela for menor do que 0.3, passe a 
-considerar o número 6 como falha e todos os outros como sucesso. Se ela for maior do que 0.7, passe a considerar o número
-6 como sucesso e os outros como falha. A série resultante desse experimento não converge: ela irá com alta probabilidade oscilar
-entre os valores de 0.3 e 0.7.
+\subsection{Diferentes abordagens para testes de hipóteses}
 
-Embora a definição de experimento possa ser facilmente reformulada para excluir esses casos visivelmente patológicos, a análise
-deles demonstra que a definição de probabilidade dada pelo paradigma frequentista não pode ser aplicada para {\em todo e qualquer}
-problema envolvendo a determinação de uma probabilidade.
+*** Discutir optional stopping ***
+%http://en.wikipedia.org/wiki/Foundations_of_statistics
+\subsection{Probabilidade Bayesiana moderna}
+Embora uma grande parcela da comunidade científica tenha adotado uma visão frequentista durante a primeira metade do século XX,
+tomando algum dos lados do debate entre Fisher e Neyman-Pearson, muitos autores continuaram seguindo a interpretação 
+subjetivista da probabilidade, mais ou menos semelhante à advogada por de Morgan. Entre eles, Frank P. Ramsey, 
+Bruno de Finetti e Leonard J. Savage
+podem ser apontados como os principais responsáveis por um interesse continuado na interpretação subjetiva, que, próximo à
+década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
+A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
+Laplace, que formulou a metodologia das probabilidades inversas. A nomenclatura é possivelmente confusa, já que o teorema 
+de Bayes é um resultado geral em probabilidade, aceito por todas as escolas de interpretação; no entanto a metodologia usada
+por Laplace é aceita pela escola subjetivista e completamente rejeitada pela frequentista. 
 
-**** Discutir Venn e os frequentistas ****
-%The Logic of Chance:
-%http://archive.org/stream/logicofchance029416mbp#page/n39/mode/2up página 41
+A proposição da escola Bayesiana foi acompanhada de um debate intenso, nos quais os argumentos eram não raramente personalizados.
+Ronald Fisher foi um árduo crítico
+de Laplace, escrevendo que ``We can know nothing of the probability of hypotheses or hypothetical quantities''\cite{Fisher1921},
+e ``The theory of inverse probability is founded upon an error, and must be wholly rejected''\cite{Fisher1925}, ao mesmo tempo
+em que propunha uma metodologia de estimação fiducial, ou seja, presumindo uma base fixa de comparação. O método fiducial foi
+fundamentalmente abandonado nos anos seguintes, e é chamado por Savage de ``a bold attempt to make the Bayesian omelet without
+breaking the Bayesian eggs''\cite{Savage60}. 
 
-%http://en.wikipedia.org/wiki/Probability_interpretations
-**** Discutir a "resposta" dos Bayesianos para o paradigma frequentista ****
+Com a axiomatização e formulação moderna da interpretação subjetivista, fortemente baseada no conceito econômico de utilidade,
+essa escola de pensamento vem ganhando maior aceitação nos meios científicos. Savage escreve sobre essa formulação moderna:
 
-**** Lindley's paradox? ****
-%http://en.wikipedia.org/wiki/Jeffreys%E2%80%93Lindley_paradox
+``Personal probability can be regarded as part of a certain theory of coherent preference in the face of uncertainty. This
+preference theory is normative; its goal is to help us make better decisions by exposing to us possible incoherences in our
+attitudes toward real and hypothetical alternatives.''\cite{Savage67}
 
-%Livro do Edwards
-**** Discutir o livro do Edwards e verossimilhança ****
+Essa exposição é reminiscente das palavras de de Morgan:
 
+``I throw away objective probability altogether, and consider the word as meaning the state of the mind with respect to an 
+assertion (...). `It is more probable than improbable' means in this chaper 'I believe that it will happen more than I 
+believe that it will not happen. Or rather `I {\em ought} to believe, \&c.', for it may happen that the state of mind which {\em
+is}, is not the state of mind which should be. 
+D'Alembert believed that it was {\em two} to {\em one} that the first head which the throw of a halfpenny was to give would occur
+before the third throw; a juster view of the mode of applying the theory would have taught him it was {\em three} to {\em one}.
+But he {\em believed} it, and thought he could show reason for his belief: to him the probability {\em was} two to one. But 
+I shall say, for all that, that the probability {\em is} three to one; meaning that in the universal opinion of those who
+examine the subject, the state of mind to which a person {\em ought} to be able to bring himself is to look three times
+as confidently upon the arrival as upon the non-arrival.''\cite{deMorgan1847}
+
+Dadas algumas condições sobre a construção da
+probabilidade subjetiva de um ator racional, pode ser demonstrado que as chances físicas de um evento são iguais 
+às probabilidades subjetivas às quais ele deve chegar;
+alguns autores discordam sobre quais são as condições razoáveis para tomar como axioma. Anscombe e Aumann, por exemplo,
+escrevem sobre um problema compondo processos do tipo roleta (nas quais as chances físicas de cada resultado são conhecidas) 
+com processos do tipo corridas de cavalo (nas quais a chance física é desconhecida) que:
+
+``In this case the subjective probability of any outcome is equal to the [physical] chance associated with that outcome.
+Since the two are equal, it does not matter much which word or symbol we use. The
+chance refers to the phenomenon, the probability refers to your attitude
+towards the phenomenon, and they are in perfect agreement''\cite{Anscombe63}
+
+Um fator importante é a maior percepção moderna
+de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
+Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
+order on the subjective elements of the deciding person.''\cite{Savage60}.	
+
+*** ESTUDAR JAYNES ***
+
+\subsection{O problema da classe de referência}
 
 Reference class
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
+\subsection{Lógica probabilística}
+
+Carnap
+%http://en.wikipedia.org/wiki/Probability_interpretations
+%http://stephanhartmann.org/HHL10_Zabell.pdf
+\subsection{A escolha da verossimilhança}
+%Livro do Edwards
+**** Discutir o livro do Edwards e verossimilhança ****
+
+
 \section{O papel da incerteza na produção do conhecimento científico}
+%http://en.wikipedia.org/wiki/Bayesian_probability#Personal_probabilities_and_objective_methods_for_constructing_priors
 **** discutir a visão de Popper ****
 
-John Venn, no prefácio do seu estudo de 1866, escreve:
+*** positivismo lógico VERSUS falsificacionismo?? ***
+***Lakatos? Kuhn? ????? ****
 
-``The science of Probability occupies at present a somewhat anomalous position. It is impossible, I think, not to observe
-in it some of the marks and consequent disadvantages of a {\em sectional} study. By a small body of ardent students it
-has been cultivated with great assiduity, and the results they have obtained will always be reckoned among the most 
-extraordinary products of mathematical genius. But by the general body of thinking men its principles seem to be regarded
-with indifference or suspicion. Such persons may admire the ingenuity displayed, and be struck with the profoundity
-of many of the calculatins, but there seems to them, if I may so express it, an {\em unreality} about the whole treatment
-of the subject. To many persons the mention of Probability suggests little else than the notion of a set of rules, very
-ingenious and profound rules no doubt, with which mathematicians amuse themselves by setting and solving puzzles.''
-\cite{Venn1866}
-
-No século e meio que se passou desde esta publicação, a aplicação da estatística se tornou uma obrigatoriedade no meio científico.
-Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não mencione alguma propriedade
-estatística a respeito das amostras coletadas. Por muitos anos, a estatística vigente nas análises biológicas teve uma
-forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo requeridos para publicações. 
-No entanto, existe uma ampla crítica à forma como essa estatística é
-utilizada nas ciências biológicas e na área de medicina \cite{Ioannidis05}.
-Muito da crítica decorre da interpretação
-simplista assumida por muitos cientistas a respeito do valor {\em p} reportado sobre um problema, mas as suas raízes devem
-ser traçadas mais profundamente em uma falta de consciência dos cientistas sobre as interpretações a respeito da natureza
-das probabilidades que são pressupostas por uma escola de pensamento, mas raramente examinadas profundamente. 
-De outro lado, análises recentes sugerem que o tamanho dos efeitos em várias áreas da ecologia são tão pequenos que estes
-dificilmente serão corretamente detectados pelos procedimentos tradicionais \cite{Jennions03}. Em áreas como a ecologia do
-comportamento, o poder dos testes estatísticos é muito pequeno, e esse problema é acentuado quando são utilizados métodos
-(como o método de Bonferroni) para corrigir o valor {\em p} reportado.
-
-Novamente, citamos John Venn:
-
-``Students of Philosophy in general have thence conceived a prejudice against Probability, which has for the most part
-deterred them from examining it. As soon as a subject comes to be considered `mathematical' its claims seem generally,
-by the mass of readers, to be either on the one hand scouted or at least courteously rejected, or on the other hand
-to be blindly accepted with all their assumed consequences. Of impartial and liberal criticism it obtains little or nothing.''
-\cite{Venn1866}
-
+*** Paper do Savage sobre induction ***
 
 \bibliographystyle{plain}
 \bibliography{chalom}
