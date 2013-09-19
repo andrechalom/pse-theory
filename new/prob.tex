@@ -50,7 +50,9 @@ das probabilidades que são pressupostas por uma escola de pensamento, mas raram
 De outro lado, análises recentes sugerem que o tamanho dos efeitos em várias áreas da ecologia são tão pequenos que estes
 dificilmente serão corretamente detectados pelos procedimentos tradicionais \cite{Jennions03}. Em áreas como a ecologia do
 comportamento, o poder dos testes estatísticos é muito pequeno, e esse problema é acentuado quando são utilizados métodos
-(como o método de Bonferroni) para corrigir o valor {\em p} reportado.
+(como o método de Bonferroni) para corrigir o valor {\em p} reportado. A solução para esses problemas pode não estar ligada
+a desenvolver novos métodos ou procedimentos estatísticos, mas na análise crítica e racional dos pressupostos por trás
+dos testes frequentemente utilizados.
 
 Novamente, citamos John Venn:
 
@@ -143,18 +145,18 @@ if the reader try the circumstances) that the ten white and ten black balls will
 unchanged. But for all that, there is much to be assumed in reckoning upon such a result, which is not so objective (in the
 sense in which I used the word) as the knowledge of what the balls were when they were put into the urn.'' \cite{deMorgan1847}
 
-(``Chegaremos à conclusão de que, mesmo enquadrando as circustâncias que quisermos, não podemos inventar nenhum caso onde a 
-probabilidade é puramente objetiva. [Suponha que] eu coloque dez bolas brancas e dez bolas pretas em uma urna, e tranque a porta
-da sala. Posso me sentir seguro de que, quando eu destrancar a sala, estarei justificado em dizer que há uma chance igual de 
-tirar uma bola branca ou preta. Se todos os estudantes de metafísica que já escreveram sobre probabilidades fossem testemunhas
-desse experimento, cada um deles, à sua maneira, concordar com minha afirmação. Mas quantas coisas estamos tomando como 
-garantidas! Será que meus olhos ainda distinguem as cores como antes? Algumas pessoas nunca as distinguem, e os olhos se 
-alteram com a idade. Será que a tinta preta derreteu, e escureceu as bolas brancas? Será que alguém mais tinha uma chave da sala,
-ou entrou pela janela, e trocou as bolas? Podemos estar {\em muito seguros}, como se diz comumente, de que nada disso aconteceu,
-e pode ser que ocorra (como eu não duvido que será o caso, se o leitor tentar o experimento) que as dez bolas brancas e as 
-dez bolas pretas vão estar, bem distinguíveis como antes, e inalteradas. Mas até chegar nisso, precisamos presumir um grande
-número de fatos, que não tem o caráter objetivo (no sentido em que eu usei a palavra) que tem o conhecimento de como as bolas
-eram quando eu as coloquei na urna'').
+%(``Chegaremos à conclusão de que, mesmo enquadrando as circustâncias que quisermos, não podemos inventar nenhum caso onde a 
+%probabilidade é puramente objetiva. [Suponha que] eu coloque dez bolas brancas e dez bolas pretas em uma urna, e tranque a porta
+%da sala. Posso me sentir seguro de que, quando eu destrancar a sala, estarei justificado em dizer que há uma chance igual de 
+%tirar uma bola branca ou preta. Se todos os estudantes de metafísica que já escreveram sobre probabilidades fossem testemunhas
+%desse experimento, cada um deles, à sua maneira, concordar com minha afirmação. Mas quantas coisas estamos tomando como 
+%garantidas! Será que meus olhos ainda distinguem as cores como antes? Algumas pessoas nunca as distinguem, e os olhos se 
+%alteram com a idade. Será que a tinta preta derreteu, e escureceu as bolas brancas? Será que alguém mais tinha uma chave da sala,
+%ou entrou pela janela, e trocou as bolas? Podemos estar {\em muito seguros}, como se diz comumente, de que nada disso aconteceu,
+%e pode ser que ocorra (como eu não duvido que será o caso, se o leitor tentar o experimento) que as dez bolas brancas e as 
+%dez bolas pretas vão estar, bem distinguíveis como antes, e inalteradas. Mas até chegar nisso, precisamos presumir um grande
+%número de fatos, que não tem o caráter objetivo (no sentido em que eu usei a palavra) que tem o conhecimento de como as bolas
+%eram quando eu as coloquei na urna'').
 
 A teoria de probabilidades segundo de Morgan, portanto, lida com graus de conhecimento subjetivos. Assim, ao perguntar para
 uma pessoa comum qual é a chance de que um lançamento de moeda resulte em cara, essa pessoa pode responder $\frac{1}{2}$, e 
@@ -244,6 +246,12 @@ forma, a crítica de Venn sobre a interpretação subjetiva também deve ser apl
 
 *** Discutir optional stopping ***
 %http://en.wikipedia.org/wiki/Foundations_of_statistics
+\subsection{Lógica probabilística}
+
+
+Carnap
+%http://en.wikipedia.org/wiki/Probability_interpretations
+%http://stephanhartmann.org/HHL10_Zabell.pdf
 \subsection{Probabilidade Bayesiana moderna}
 Embora uma grande parcela da comunidade científica tenha adotado uma visão frequentista durante a primeira metade do século XX,
 tomando algum dos lados do debate entre Fisher e Neyman-Pearson, muitos autores continuaram seguindo a interpretação 
@@ -251,8 +259,12 @@ subjetivista da probabilidade, mais ou menos semelhante à advogada por de Morga
 Bruno de Finetti e Leonard J. Savage
 podem ser apontados como os principais responsáveis por um interesse continuado na interpretação subjetiva, que, próximo à
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
+Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
+uma chance justa em uma aposta; ambas levam logicamente aos axiomas padrão da probabilidade.
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
-Laplace, que formulou a metodologia das probabilidades inversas. A nomenclatura é possivelmente confusa, já que o teorema 
+Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
+e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade \cite{Aldrich08,
+Zabell09}. A nomenclatura é possivelmente confusa, já que o teorema 
 de Bayes é um resultado geral em probabilidade, aceito por todas as escolas de interpretação; no entanto a metodologia usada
 por Laplace é aceita pela escola subjetivista e completamente rejeitada pela frequentista. 
 
@@ -308,11 +320,6 @@ order on the subjective elements of the deciding person.''\cite{Savage60}.
 Reference class
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
-\subsection{Lógica probabilística}
-
-Carnap
-%http://en.wikipedia.org/wiki/Probability_interpretations
-%http://stephanhartmann.org/HHL10_Zabell.pdf
 \subsection{A escolha da verossimilhança}
 %Livro do Edwards
 **** Discutir o livro do Edwards e verossimilhança ****
