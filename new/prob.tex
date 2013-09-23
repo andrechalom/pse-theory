@@ -1,5 +1,5 @@
 \documentclass[12pt,a4paper]{article}
-\usepackage[margin=1.2in]{geometry}
+\usepackage[margin=1.4in]{geometry}
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -10,8 +10,13 @@
 % Create friendly environments for theorems, propositions, &c.
 \begin{document}
 \title{Sobre probabilidade e inferência}
+\author{Andre Chalom}
 \maketitle
+\tableofcontents
+\cleardoublepage
 
+\null
+\vfill
 ``There comes a time in the life of a scientist when he must convince himself
 either that his subject is so robust from a statistical point of view that
 the finer points of statistical inference are irrelevant, or that the precise
@@ -22,6 +27,8 @@ paucity of their data or the complexity of their inferencies, to examine
 the finer points of their own arguments, and in so doing they are likely
 to become lost in the quicksands of the debate on statistical inference.''
 (A.W.F. Edwards, Likelihood)
+
+\cleardoublepage
 
 \section{Conceitos históricos sobre a natureza das probabilidades}
 
@@ -146,19 +153,6 @@ if the reader try the circumstances) that the ten white and ten black balls will
 unchanged. But for all that, there is much to be assumed in reckoning upon such a result, which is not so objective (in the
 sense in which I used the word) as the knowledge of what the balls were when they were put into the urn.'' \cite{deMorgan1847}
 
-%(``Chegaremos à conclusão de que, mesmo enquadrando as circustâncias que quisermos, não podemos inventar nenhum caso onde a 
-%probabilidade é puramente objetiva. [Suponha que] eu coloque dez bolas brancas e dez bolas pretas em uma urna, e tranque a porta
-%da sala. Posso me sentir seguro de que, quando eu destrancar a sala, estarei justificado em dizer que há uma chance igual de 
-%tirar uma bola branca ou preta. Se todos os estudantes de metafísica que já escreveram sobre probabilidades fossem testemunhas
-%desse experimento, cada um deles, à sua maneira, concordar com minha afirmação. Mas quantas coisas estamos tomando como 
-%garantidas! Será que meus olhos ainda distinguem as cores como antes? Algumas pessoas nunca as distinguem, e os olhos se 
-%alteram com a idade. Será que a tinta preta derreteu, e escureceu as bolas brancas? Será que alguém mais tinha uma chave da sala,
-%ou entrou pela janela, e trocou as bolas? Podemos estar {\em muito seguros}, como se diz comumente, de que nada disso aconteceu,
-%e pode ser que ocorra (como eu não duvido que será o caso, se o leitor tentar o experimento) que as dez bolas brancas e as 
-%dez bolas pretas vão estar, bem distinguíveis como antes, e inalteradas. Mas até chegar nisso, precisamos presumir um grande
-%número de fatos, que não tem o caráter objetivo (no sentido em que eu usei a palavra) que tem o conhecimento de como as bolas
-%eram quando eu as coloquei na urna'').
-
 A teoria de probabilidades segundo de Morgan, portanto, lida com graus de conhecimento subjetivos. Assim, ao perguntar para
 uma pessoa comum qual é a chance de que um lançamento de moeda resulte em cara, essa pessoa pode responder $\frac{1}{2}$, e 
 esta é a medida de probabilidade correta, dada a informação que ele possui sobre o problema. Uma outra pessoa, que sabe
@@ -266,9 +260,12 @@ uma rolagem resulte em 5 {\em na população} pode ser visto como um parâmetro 
 população infinita, portanto trata-se de um número fixo, embora a princípio desconhecido; 
 já a proporção de lançamentos realizados que resulta em 5 {\em em uma dada amostra} é um estimador desse parâmetro,
 amostra, e portanto seu valor está sujeito à variações conforme repetimos o experimento diversas vezes.
+A população idealizada corresponde a um {\em modelo} da realidade, descrito por uma função matemática.
+Assim, Fisher explicita o fato de que a inferência estatística, em sua visão, depende da construção de um modelo matemático
+abstrato.
 
-Em seu trabalho de 1922, 
-Fisher divide a tarefa da estatística em 3 classes de problemas: problemas de especificação, ou seja, a determinação da função
+Em seu trabalho de 1922, Fisher divide a tarefa da inferência estatística em 3 classes de 
+problemas: problemas de especificação, ou seja, a determinação da função
 matemática que define a população; problemas de estimação, ou seja, o cálculo de estatísticas sobre a amostra que estimem 
 corretamente os parâmetros populacionais; e problemas de distribuição, ou seja, estimações realizadas sobre a distribuição
 das estatísticas calculadas sobre a amostra. Fisher sugere brevemente que o problema de especificação é um interesse menor,
@@ -280,7 +277,11 @@ For empirical as the specification of the hypothetical population may be, this e
 we can apply a rigorous and objective test of the adequacy with which the proposed population represents the whole of
 the available facts.''\cite{Fisher1922}
 
-Fisher descreve ainda as seguintes propriedades que um estimador deve possuir. Embora as suas definições tenham sido
+Presumindo uma escolha adequada de modelo, ou seja,	de função matemática que descreva as propriedades da população,
+a tarefa da inferência estatística se concentra em estudar o pequeno número de parâmetros desse modelo que a descrevem
+completamente. Esse estudo corresponde aos problemas de estimação e distribuição.
+
+Fisher descreve ainda as seguintes propriedades desejáveis para um estimador. Embora as suas definições tenham sido
 melhor formalizadas posteriormente, as idéias presentes ainda são de grande valia:
 \begin{enumerate}
 	\item Consistência: ``when applied to the whole population the derived statistic should be equal to the parameter''
@@ -289,6 +290,32 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 \end{enumerate}
 
 \subsection{Diferentes abordagens para testes de hipóteses}
+
+A estrutura mental desenvolvida por Fisher durante a década de 1920 vai levar também a um procedimento conhecido como teste de 
+hipóteses, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
+durante a década de 1930. Em um terminologia que vai influenciar muito do pensamento em inferência estatística do século XX,
+Fisher usa as expressões {\em modelo estatístico} como uma função que descreve a população de interesse, sendo definida 
+por um conjunto de parâmetros; e {\em hipótese} como uma afirmação a respeito do valor desses parâmetros. O modelo contém, 
+assim, todas as suposições sobre o problema a respeito das quais os dados não irão discriminar.
+
+*** descrever um exemplo ***
+Lenhard pag 10
+
+*** posicao de Neyman-Pearson ***
+
+Fisher critica duramente o procedimento de Neyman-Pearson por uma série de motivos, entre os quais o engessamento do procedimento,
+que levaria a uma aceitação ou rejeição de hipóteses acriticamente:
+``It is a fallacy (...) to conclude from a test of significance that the null hypothesis is thereby established (...).
+In an acceptance procedure, on the other hand, acceptance is irreversible, whether the evidence for it was strong or weak.
+It is the result of applying mechanically rules laid down in advance; no {\em thought} is given to the particular case,
+and the tester's state of mind, or his capacity for {\em learning}, is inoperant.
+By contrast, the conclusions drawn by a scientific worker from a test of significance are {\em provisional}, and involve
+an intelligent attempt to {\em understand} the experimental situation.''\cite{Fisher1955}
+
+É curioso que um autor que tenha atacado tão intensamente os conceitos de probabilidade subjetiva seja também tão crítico de 
+uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
+de teste de hipóteses. 
+
 Lenhard06
 *** Descrever o teste de hipoteses segundo Fisher, e a controversia com Neyman-Pearson ***
 
@@ -310,10 +337,12 @@ Para Ramsey e Savage, a probabilidade surge como um sistema de preferência raci
 uma chance justa em uma aposta; ambas levam logicamente aos axiomas padrão da probabilidade.
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
 Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
-e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade \cite{Aldrich08,
-Zabell09}. A nomenclatura é possivelmente confusa, já que o teorema 
-de Bayes é um resultado geral em probabilidade, aceito por todas as escolas de interpretação; no entanto a metodologia usada
-por Laplace é aceita pela escola subjetivista e completamente rejeitada pela frequentista. 
+e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade\cite{Zabell09}.
+Fisher, por exemplo, considera o argumento com o qual Bayes estabelece uma {\em priori} uniforme como um comentário
+a respeito do problema específico que Bayes estava estudando, enquanto a escola Bayesiana verá esse argumento
+como aplicável a outras classes de problemas\cite{Aldrich08}. Assim, o resultado conhecido como Teorema de Bayes é aceito
+por todas as escolas de interpretação, enquanto que o argumento de Laplace 
+é aceito pela escola subjetivista e completamente rejeitado pela frequentista. 
 
 A proposição da escola Bayesiana foi acompanhada de um debate intenso, nos quais os argumentos eram não raramente personalizados.
 Ronald Fisher foi um árduo crítico
@@ -345,8 +374,8 @@ as confidently upon the arrival as upon the non-arrival.''\cite{deMorgan1847}
 
 Dadas algumas condições sobre a construção da
 probabilidade subjetiva de um ator racional, pode ser demonstrado que as chances físicas de um evento são iguais 
-às probabilidades subjetivas às quais ele deve chegar;
-alguns autores discordam sobre quais são as condições razoáveis para tomar como axioma. Anscombe e Aumann, por exemplo,
+às probabilidades subjetivas às quais ele deve chegar; embora
+alguns autores discordem sobre quais são as condições razoáveis para tomar como axioma. Anscombe e Aumann, por exemplo,
 escrevem sobre um problema compondo processos do tipo roleta (nas quais as chances físicas de cada resultado são conhecidas) 
 com processos do tipo corridas de cavalo (nas quais a chance física é desconhecida) que:
 
@@ -360,7 +389,12 @@ de que a escola frequentista, ao ser obrigada a escolher um modelo mental de ref
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
 order on the subjective elements of the deciding person.''\cite{Savage60}.	
 
+\subsection{O paradigma da inferência Bayesiana}
 *** ESTUDAR JAYNES ***
+
+\subsection{Probabilidade e propensão}
+
+	** Popper sobre probabilidades **
 
 \subsection{O problema da classe de referência}
 
@@ -369,6 +403,16 @@ Em seu trabalho de 1922, Fisher escreve:
 statistical treatment of a problem of application. The postulate of randomness thus resolves itself into the 
 question, `Of what population is this a random sample?' which must frequently be asked by every practical
 statistician''\cite{Fisher1922}
+
+Fisher volta a essa questão em 1955, ao contrastar seu método de teste de hipóteses com o procedimento de Neyman-Pearson:
+``The root of the difficulty of carrying over the idea from the field of acceptance procedures to that of tests of significance
+is that, where acceptance procedures are appropriate, the source of supply has an objective reality, and the population
+of lots, or one or more, which could be successively chosen for examination is uniquely defined; whereas if we possess a unique
+sample in Student's sense on which significance tests are to be performed, there is always, as Venn (1876) in particular has
+shown, a multiplicity of populations to each of which we can legitimately regard our sample as belonging; so that the phrase
+`repeated sampleing from the same population' does not enable us to determine which population is to be used to define the
+probability level, for no one of them has objective reality, all being products of the statistican's imagination.''
+\cite{Fisher1955}
 
 Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
@@ -381,11 +425,15 @@ Fisher 22, pag 16
 
 \section{O papel da incerteza na produção do conhecimento científico}
 %http://en.wikipedia.org/wiki/Bayesian_probability#Personal_probabilities_and_objective_methods_for_constructing_priors
+
+** O papel de Carnap e Karl Pearson entre os positivistas lógicos; críticas a visão subjetiva E a população infinita de Fisher **
+(Lenhard06 e Zabell09)
+
 **** discutir a visão de Popper ****
 
-*** positivismo lógico VERSUS falsificacionismo?? ***
+*** positivismo lógico VERSUS falsificacionismo?? Lakatos? ***
 
-***Lakatos? Kuhn? ????? ****
+*** Kuhn e o papel do subjetivismo na ciência ****
 
 *** Hume sobre inducao. Paper do Savage sobre induction ***
 
