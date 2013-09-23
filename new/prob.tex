@@ -24,6 +24,7 @@ to become lost in the quicksands of the debate on statistical inference.''
 (A.W.F. Edwards, Likelihood)
 
 \section{Conceitos históricos sobre a natureza das probabilidades}
+
 John Venn, no prefácio do seu estudo de 1866, escreve:
 
 ``The science of Probability occupies at present a somewhat anomalous position. It is impossible, I think, not to observe
@@ -175,15 +176,18 @@ Um empecilho ao uso dessa interpretação de probabilidades se dá quando perceb
 problema que queremos resolver, mais imperfeita se torna nossa sensação de conseguir ordenar a probabilidade referente
 a diferentes resultados de um experimento. É fácil apreender que, se eu jogar duas moedas para cima, a chance de que ambas 
 resultem em cara é menor do que a chance de que um único lançamento resulte em cara. É consideravelmente mais difícil encaixar
-nessa ordenação a frase ``ao escolher uma letra aleatória da obra completa de Shakespeare, ela será E ou A''.
+nessa ordenação a frase ``ao escolher uma letra aleatória da obra completa de Shakespeare, ela será E ou A''; mas esse caso
+é passível de uma análise exaustiva. No entanto, questões como ``qual a probabilidade de que o signo de uma pessoa afete
+suas características, como sociabilidade ou perseverança?'', embora perfeitamente válidas para a visão de de Morgan, apresentam
+grande dificuldade em ser respondidas nesse paradigma.
 
-A visão subjetiva de probabilidades permite que frases cotidianas, como ``é provável que chova hoje'' ou ``existe uma grande
-chance de encontrarmos o José hoje'', sejam tratadas com as mesmas ferramentas matemáticas que os jogos de azar. Mas
+A visão subjetiva de probabilidades permite ainda que frases cotidianas, como ``é provável que chova hoje'' ou ``existe uma grande
+chance de encontrarmos o José hoje'', sejam tratadas pelo mesmo ponto de vista que os jogos de azar. Mas
 embora essa interpretação seja de grande utilidade por permitir a generalização do conceito de probabilidade para problemas
 mais gerais do que os sistemas físicos simples contemplados pela interpretação clássica, ela não garante que o valor encontrado
-para a probabilidade de um evento seja coerente para diversas pessoas. Uma visão subjetivista de probabilidade pode ser
-perfeitamente adequada para embasar uma decisão pessoal, mas falhar enquanto uma ferramenta de avanço da ciência, que deve
-ser objetiva e independente das opiniões de cada cientista individualmente.
+para a probabilidade de um evento seja coerente para diversas pessoas. Isso irá embasar a crítica de que uma visão subjetivista 
+de probabilidade pode ser perfeitamente adequada para embasar uma decisão pessoal, mas falhar enquanto uma ferramenta de 
+avanço da ciência, entendida como um corpo teórico objetivo e independente das opiniões de cada cientista individualmente.
 
 \subsection{Interpretação frequentista}
 A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destaca John Venn, em seu trabalho de 
@@ -213,7 +217,7 @@ which they happen to combine in our consciousness at the
 moment.''\cite{Venn1866}
 
 Embora essa crítica seja contundente e pertinente, ela não aponta um problema exclusivo da interpretação subjetiva, como
-discutiremos abaixo.
+discutiremos abaixo, e será respondida por subjetivistas modernos.
 
 Há um problema claro com a visão dita frequentista, advogada por Venn, que é o fato de que não temos 
 acesso a infinitas experiências para determinar o valor
@@ -242,14 +246,57 @@ apenas se concretiza dentro da idealização de um dado modelo, para o qual temo
 forma, a crítica de Venn sobre a interpretação subjetiva também deve ser aplicada à interpretação frequentista, particularmente
 à escolha do modelo idealizado que formulamos para calcular uma probabilidade.
 
+\subsection{A formalização da inferência}
+
+A escola frequentista será de grande influência para a formulação da teoria de testes de hipóteses de R. A. Fisher, que se
+lança no começo da década de 1920 sobre o problema de formalizar a inferência estatística, ou seja, o processo de
+extrair conclusões a partir de dados obtidos por um experimento. Baseando-se nos trabalhos de Karl Pearson e William Sealy Gosset
+(conhecido por seu pseudônimo Student), Fisher realiza um passo fundamental dessa formalização
+diferenciando os conceitos de população e amostra:
+
+``It is customary to apply the same name, {\em mean}, {\em standard deviation}, {\em correlation coefficient}, etc., both 
+to the true value which we should like to know, but can only estimate, and to the particular value at which we happen 
+to arrive by our methods of estimation.''\cite{Fisher1922}
+
+Nesta perspectiva, precisamos diferenciar uma {\em população}, hipoteticamente infinita, na qual os objetos se dividam em duas
+classes de acordo com uma característica de interesse, de uma {\em amostra} finita, que será nossa base para tirar conclusões.
+Por exemplo, examinando o lançamento de um dado, a população de interesse se constitui numa sequência infinita de rolagens
+de dado, na qual distinguimos uma característica, como o fato da rolagem resultar no número 5. O valor da probabilidade de que
+uma rolagem resulte em 5 {\em na população} pode ser visto como um parâmetro da distribuição teórica de resultados para essa
+população infinita, portanto trata-se de um número fixo, embora a princípio desconhecido; 
+já a proporção de lançamentos realizados que resulta em 5 {\em em uma dada amostra} é um estimador desse parâmetro,
+amostra, e portanto seu valor está sujeito à variações conforme repetimos o experimento diversas vezes.
+
+Em seu trabalho de 1922, 
+Fisher divide a tarefa da estatística em 3 classes de problemas: problemas de especificação, ou seja, a determinação da função
+matemática que define a população; problemas de estimação, ou seja, o cálculo de estatísticas sobre a amostra que estimem 
+corretamente os parâmetros populacionais; e problemas de distribuição, ou seja, estimações realizadas sobre a distribuição
+das estatísticas calculadas sobre a amostra. Fisher sugere brevemente que o problema de especificação é um interesse menor,
+se concentrando nos problemas de estimação e distribuição. Sobre especificação, ele escreve:
+
+``We may know by experience what forms are likely to be suitable, and the adequacy of our choice may be
+tested {\em a posteriori} [by an objective criterion of goodness of fit].
+For empirical as the specification of the hypothetical population may be, this empiricism is cleared of its dangers if
+we can apply a rigorous and objective test of the adequacy with which the proposed population represents the whole of
+the available facts.''\cite{Fisher1922}
+
+Fisher descreve ainda as seguintes propriedades que um estimador deve possuir. Embora as suas definições tenham sido
+melhor formalizadas posteriormente, as idéias presentes ainda são de grande valia:
+\begin{enumerate}
+	\item Consistência: ``when applied to the whole population the derived statistic should be equal to the parameter''
+	\item Eficiência: ``that statistic is to be chosen which has the least probable error''
+	\item Suficiência: ``the statistic chosen should summarise the whole of the relevant information supplied by the sample''
+\end{enumerate}
+
 \subsection{Diferentes abordagens para testes de hipóteses}
+Lenhard06
+*** Descrever o teste de hipoteses segundo Fisher, e a controversia com Neyman-Pearson ***
 
 *** Discutir optional stopping ***
 %http://en.wikipedia.org/wiki/Foundations_of_statistics
 \subsection{Lógica probabilística}
 
-
-Carnap
+*** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
 \subsection{Probabilidade Bayesiana moderna}
@@ -317,10 +364,17 @@ order on the subjective elements of the deciding person.''\cite{Savage60}.
 
 \subsection{O problema da classe de referência}
 
-Reference class
+Em seu trabalho de 1922, Fisher escreve:
+``The framing by means of a model is located at the beginning of the
+statistical treatment of a problem of application. The postulate of randomness thus resolves itself into the 
+question, `Of what population is this a random sample?' which must frequently be asked by every practical
+statistician''\cite{Fisher1922}
+
+Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
 \subsection{A escolha da verossimilhança}
+Fisher 22, pag 16
 %Livro do Edwards
 **** Discutir o livro do Edwards e verossimilhança ****
 
@@ -330,9 +384,12 @@ Reference class
 **** discutir a visão de Popper ****
 
 *** positivismo lógico VERSUS falsificacionismo?? ***
+
 ***Lakatos? Kuhn? ????? ****
 
-*** Paper do Savage sobre induction ***
+*** Hume sobre inducao. Paper do Savage sobre induction ***
+
+*** Simberloff e testes de hipoteses ***
 
 \bibliographystyle{plain}
 \bibliography{chalom}
