@@ -27,8 +27,23 @@ paucity of their data or the complexity of their inferencies, to examine
 the finer points of their own arguments, and in so doing they are likely
 to become lost in the quicksands of the debate on statistical inference.''
 (A.W.F. Edwards, Likelihood)
+\vfill
 
 \cleardoublepage
+\section{Glossário de termos?}
+Estatística
+
+Parâmetro
+
+Modelo
+
+Hipótese
+
+Priori e posteriori
+
+Suficiência
+
+Estimador
 
 \section{Conceitos históricos sobre a natureza das probabilidades}
 
@@ -51,6 +66,7 @@ estatística a respeito das amostras coletadas. Por muitos anos, a estatística 
 forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo requeridos para publicações. 
 No entanto, existe uma ampla crítica à forma como essa estatística é
 utilizada nas ciências biológicas e na área de medicina \cite{Ioannidis05}.
+
 Muito da crítica decorre da interpretação
 simplista assumida por muitos cientistas a respeito do valor {\em p} reportado sobre um problema, mas as suas raízes devem
 ser traçadas mais profundamente em uma falta de consciência dos cientistas sobre as interpretações a respeito da natureza
@@ -81,6 +97,7 @@ incerteza, inferência e simulação, que serão de importância para a discuss�
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
 e Pierre Fermat desenvolveram métodos para resolver problemas envolvendo combinações de resultados em jogos de dados e outros
 jogos de azar. 
+
 Essa origem, juntamente com a facilidade e a universalidade de problemas envolvendo jogos de azar, explicam porque tantos textos
 introdutórios sobre estatística empregam exemplos envolvendo rolar dados e tirar cartas de baralhos. Embora a simplicidade
 destes exemplos ajude a transmitir os conceitos de probabilidade com facilidade, isso causa muitas vezes a sensação de que
@@ -210,9 +227,6 @@ from time to time with varying force according to the way in
 which they happen to combine in our consciousness at the 
 moment.''\cite{Venn1866}
 
-Embora essa crítica seja contundente e pertinente, ela não aponta um problema exclusivo da interpretação subjetiva, como
-discutiremos abaixo, e será respondida por subjetivistas modernos.
-
 Há um problema claro com a visão dita frequentista, advogada por Venn, que é o fato de que não temos 
 acesso a infinitas experiências para determinar o valor
 de uma dada probabilidade. A probabilidade de um dado evento poderia ser definida como o limite da razão entre o número de eventos
@@ -236,9 +250,7 @@ precision of statement and definition.''\cite{Venn1866}
 Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo idealizado no qual fosse
 possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
 a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema real, essa objetividade
-apenas se concretiza dentro da idealização de um dado modelo, para o qual temos que presumir uma certa regularidade. Desta
-forma, a crítica de Venn sobre a interpretação subjetiva também deve ser aplicada à interpretação frequentista, particularmente
-à escolha do modelo idealizado que formulamos para calcular uma probabilidade.
+apenas se concretiza dentro da idealização de um dado modelo, para o qual temos que presumir uma certa regularidade. 
 
 \subsection{A formalização da inferência}
 
@@ -292,19 +304,38 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 \subsection{Diferentes abordagens para testes de hipóteses}
 
 A estrutura mental desenvolvida por Fisher durante a década de 1920 vai levar também a um procedimento conhecido como teste de 
-hipóteses, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
+significância, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
 durante a década de 1930. Em um terminologia que vai influenciar muito do pensamento em inferência estatística do século XX,
 Fisher usa as expressões {\em modelo estatístico} como uma função que descreve a população de interesse, sendo definida 
 por um conjunto de parâmetros; e {\em hipótese} como uma afirmação a respeito do valor desses parâmetros. O modelo contém, 
-assim, todas as suposições sobre o problema a respeito das quais os dados não irão discriminar.
+assim, todas as suposições sobre o problema a respeito das quais os dados não irão discriminar, enquanto a hipótese
+contém a afirmação que será julgada pela aplicação do teste. Dada uma hipótese, é possível
+calcular a distribuição que uma certa estatística teria, se um mesmo experimento fosse repetido infinitas vezes.
 
-*** descrever um exemplo ***
-Lenhard pag 10
+O procedimento de teste de significância, segundo Fisher, requer a escolha de um modelo apropriado e a especificação de uma 
+hipótese (conhecida como hipótese nula) para a qual a é possível calcular a distribuição da estatística de interesse. 
+Após realizar um experimento, a estatística calculada sobre a amostra é comparada com a distribuição teórica sob a hipótese nula,
+e é calculada a probabilidade do desvio entre a estatística calculada e a sua esperança ser {\em tão grande ou maior} do que o
+encontrado. 
 
-*** posicao de Neyman-Pearson ***
+Em um exemplo simples, queremos saber se uma moeda é justa ou não lançando-a 20 vezes. É improvável que o número de caras seja
+exatamente 10, mesmo para uma moeda justa. Como o resultado de cada lançamento é
+admite duas	respostas (cara ou coroa), e a probabilidade de cada lançamento é suposta constante e independente, o modelo escolhido
+deve ser uma binomial. A hipótese nula é a de que a probabilidade da binomial é de 0.5. Nesse caso, podemos calcular a 
+distribuição esperada do número de caras, e veremos que em 82\% dos experimentos realizados, a diferença entre o valor esperado
+de dez caras e o resultado obtido será de 1 ou mais; em 26\%, de 3 ou mais; e em 4\%, de 5 ou mais. Ao examinar o resultado 
+de um experimento, podemos então {\em rejeitar} a hipótese nula, ou seja, entendemos que a moeda não é justa, ou {\em deixar
+de rejeitá-la}, ou seja, não encontramos evidência suficiente de que esta hipótese está errada.
+
+Neyman e Pearson fazem uma crítica ao método descrito por Fisher, visto por eles como incompleto, e estabelecem uma metodologia
+para escolha entre duas hipóteses concorrentes: a nula e a alternativa. 
+
+*** Lenhard pag 10
+*** Neyman pag 3
 
 Fisher critica duramente o procedimento de Neyman-Pearson por uma série de motivos, entre os quais o engessamento do procedimento,
 que levaria a uma aceitação ou rejeição de hipóteses acriticamente:
+
 ``It is a fallacy (...) to conclude from a test of significance that the null hypothesis is thereby established (...).
 In an acceptance procedure, on the other hand, acceptance is irreversible, whether the evidence for it was strong or weak.
 It is the result of applying mechanically rules laid down in advance; no {\em thought} is given to the particular case,
@@ -315,9 +346,6 @@ an intelligent attempt to {\em understand} the experimental situation.''\cite{Fi
 É curioso que um autor que tenha atacado tão intensamente os conceitos de probabilidade subjetiva seja também tão crítico de 
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
-
-Lenhard06
-*** Descrever o teste de hipoteses segundo Fisher, e a controversia com Neyman-Pearson ***
 
 *** Discutir optional stopping ***
 %http://en.wikipedia.org/wiki/Foundations_of_statistics
@@ -399,12 +427,14 @@ order on the subjective elements of the deciding person.''\cite{Savage60}.
 \subsection{O problema da classe de referência}
 
 Em seu trabalho de 1922, Fisher escreve:
+
 ``The framing by means of a model is located at the beginning of the
 statistical treatment of a problem of application. The postulate of randomness thus resolves itself into the 
 question, `Of what population is this a random sample?' which must frequently be asked by every practical
 statistician''\cite{Fisher1922}
 
 Fisher volta a essa questão em 1955, ao contrastar seu método de teste de hipóteses com o procedimento de Neyman-Pearson:
+
 ``The root of the difficulty of carrying over the idea from the field of acceptance procedures to that of tests of significance
 is that, where acceptance procedures are appropriate, the source of supply has an objective reality, and the population
 of lots, or one or more, which could be successively chosen for examination is uniquely defined; whereas if we possess a unique
