@@ -79,6 +79,15 @@ Para poder discorrer sobre a estimação de incertezas e a atribuição de proba
 embasar não apenas o que entendemos pela palavra probabilidade, mas também traz um significado para os conceitos de
 incerteza, inferência e simulação, que serão de importância para a discussão a seguir.
 
+Esse texto é resultado de uma investigação breve sobre a história dos conceitos de probabilidade, inferência, e incerteza,
+e sua relação mais geral com visões alternativas de ciência. Ele foi motivado por uma percepção de que a vasta maioria dos
+textos introdutórios em estatística se foca em uma escola de pensamento, alinhada com as visões do autor, sem uma análise crítica
+aprofundada das suas relações complexas com as demais. A separação da estatística entre as escolas frequentista e bayesiana,
+muito repetida em textos introdutórios, esconde uma riqueza de detalhes, envolvendo contradições importantes dentro de cada
+escola, convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
+não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
+única base de inferência.
+
 \subsection{Interpretação clássica}
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
 e Pierre Fermat desenvolveram métodos para resolver problemas envolvendo combinações de resultados em jogos de dados e outros
@@ -240,9 +249,11 @@ apenas se concretiza dentro da idealização de um dado modelo, para o qual temo
 
 Em sua monografia Likelihood, de 1972, A.W.F. Edwards, escreve:
 
-``Though the notion of a random choice is not devoid of philosofical difficulties, I have a fairly clear idea of 
-...
-Edwards P 20
+``Though the notion of a random choice is not devoid of philosofical difficulties, I have a fairly clear idea of what I mean
+by `drawing a card at random'. That the population may exist only in the mind, an abstraction possibibly infinite in extent,
+raises no more (and no less) alarm than the infinite straight line of Euclid. I am only prepared to use probability to describe
+a situation if there is an analogy between the situation and the concept of random choice from a defined population.''
+\cite{Edwards72}
 
 \subsection{A formalização da inferência}
 
@@ -294,9 +305,7 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 	\item Suficiência: ``the statistic chosen should summarise the whole of the relevant information supplied by the sample''
 \end{enumerate}
 
-%Ao estimar a média de uma amostra composta por variáveis independentes e identicamente distribuídas, ${x_1, ..., x_n}$, 
-%podemos utilizar duas estatísticas diferentes: o estimador $A(x) = x_1$
-%O primeiro critério estabelece, por exemplo, que para estimar a média de uma amostra composta por
+********* Definir verossimilhança ****************************
 
 \subsection{Diferentes abordagens para testes de hipóteses}
 
@@ -325,7 +334,8 @@ de um experimento, podemos então {\em rejeitar} a hipótese nula, ou seja, ente
 de rejeitá-la}, ou seja, não encontramos evidência suficiente de que esta hipótese está errada.
 
 Neyman e Pearson fazem uma crítica ao método descrito por Fisher, visto por eles como incompleto, e estabelecem uma metodologia
-para escolha entre duas hipóteses concorrentes: a nula e a alternativa.	Um procedimento de teste de significância
+para escolha entre diversas hipóteses concorrentes, muitas vezes sumarizadas em duas: a nula e a alternativa.
+Um procedimento de teste de significância
 no qual uma única hipótese sobre o valor de um parâmetro é privilegiada em detrimento de todo o espectro de outras respostas
 possíveis é falho. Como o valor de parâmetros é uma variável contínua, Neyman e Pearson argumentam (numa linha muito semelhante
 à usada por argumentos Bayesianos):
@@ -334,8 +344,20 @@ possíveis é falho. Como o valor de parâmetros é uma variável contínua, Ney
 inclined to think that as far as a particular hypothesis is concerned, no test based upon the theory of probability can by
 itself provide any valuable evidence of the truth or falsehood of that hypothesis.''\cite{Neyman1933}
 
+(reformular *****
+Enquanto isso é verdade a respeito de probabilidades, o mesmo não se verifica com verossimilhanças. Esse é um dos motivos
+pelos quais a verossimilhança é sempre instrumental em comparar hipóteses alternativas.
+)
+
+Neyman e Pearson propõe um procedimento formal para delimitar quando devemos aceitar e quando devemos rejeitar a hipótese
+nula em favor de uma hipótese alternativa, dividindo o resultado desse processo em quatro classes: podemos aceitar uma hipótese
+verdadeira ou falsa, ou podemos rejeitar uma hipótese verdadeira ou falsa. O ato de rejeitar a hipótese nula verdadeira
+é conhecido como erro de tipo I, e o ato de aceitar uma hipótese nula falsa é conhecido como erro de tipo II. O conceito do 
+erro de tipo I encontra paralelo na teoria de Fisher, enquanto o erro de tipo II é ausente, e será contestado por Fisher em
+diversas bases.
+
 *** Lenhard pag 10
-*** Neyman pag 3
+*** Neyman pag 11, simple hypothess
 
 Fisher critica duramente o procedimento de Neyman-Pearson por uma série de motivos, entre os quais o engessamento do procedimento,
 que levaria a uma aceitação ou rejeição de hipóteses acriticamente:
@@ -350,6 +372,20 @@ an intelligent attempt to {\em understand} the experimental situation.''\cite{Fi
 É curioso que um autor que tenha atacado tão intensamente os conceitos de probabilidade subjetiva seja também tão crítico de 
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
+
+Outros autores separam o caso da hipótese estatística dita simples da hipótese composta por diversos valores possíveis para um
+parâmetro, usando como critério o fato de que uma hipótese estatística deve consequencias bem definidas.
+Por exemplo, Edwards afirma que (********* desenvolver melhor esse ponto *********)
+
+``The class of hypotheses we call `statistical' is not necessarily closed with respect to the logical operations of
+alternation (`or') and negation (`not'). For a hypothesis resulting from either of these operations is likely to be composite,
+and composite hypotheses do not have well-defined statistical consequences, because the probabilities of occurrence of the
+component simple hypotheses are undefined. For example, if {\em p} is the parameter of a binomial model, about which inferences
+are to be made from some particular binomial results, `$p = \frac{1}{2}$' is a statistical hypothesis, because its 
+consequences are well-defined in probability terms, but its negation, `$p \neq \frac{1}{2}$', is not a statistical hypothesis,
+its consequences beign ill-defined.''\cite{Edwards72}
+
+\subsection {Optional stopping?}
 
 *** Discutir optional stopping ***
 %http://en.wikipedia.org/wiki/Foundations_of_statistics
@@ -424,6 +460,8 @@ order on the subjective elements of the deciding person.''\cite{Savage60}.
 \subsection{O paradigma da inferência Bayesiana}
 *** ESTUDAR JAYNES ***
 
+** de Finneti ***
+
 \subsection{Probabilidade e propensão}
 
 	** Popper sobre probabilidades **
@@ -456,6 +494,33 @@ Fisher 22, pag 16
 %Livro do Edwards
 **** Discutir o livro do Edwards e verossimilhança ****
 
+* Verossimilhança por Fisher e seu papel na estat frequentista
+
+* Papel da ver. na estat bayesiana
+
+* Data are fixed, pars are random VERSUS pars are fixed, data is random
+
+``The probability model, the set of statistical hypotheses, and the data, form a triplet which is the foundation of
+statistical inference. Of the many outcomes, each with a specified probability given the hypothesis, which could have
+occurredon the basis of the accepted model, one {\em has} occurred - the data. What can they reveal about the hypotheses?''
+\cite{Edwards72}
+
+
+Definições e teoremas de verossimilhança em Edwards, pp 29-3?
+Sufficiency p. 35, RELER URGENTE
+
+``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
+hypotheses.
+(...)
+Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
+represent a statistical distribution in any sense.''\cite{Edwards72}
+
+* Pernerger \& Courvoisier, 2010: likelihood ratios are a more natural way of understanding evidence
+
+\subsection{A abordagem por teoria da informação}
+
+%http://books.google.com.br/books?id=DlP_h4aMhiYC&printsec=frontcover#v=onepage&q&f=false
+Anderson 2008, AIC, Kulback-Liebler
 
 \section{O papel da incerteza na produção do conhecimento científico}
 %http://en.wikipedia.org/wiki/Bayesian_probability#Personal_probabilities_and_objective_methods_for_constructing_priors
@@ -472,6 +537,8 @@ Fisher 22, pag 16
 *** Hume sobre inducao. Paper do Savage sobre induction ***
 
 *** Simberloff e testes de hipoteses ***
+
+Ciência enquanto descrição/compreensão versus tomada de decisão científica. 'Ultimo paragrafo de Fisher55
 
 \bibliographystyle{plain}
 \bibliography{chalom}

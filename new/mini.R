@@ -87,4 +87,7 @@ sl * f / m
 
 ############## 
 # exemplo babaca de "particao de incerteza"
-# y = x1 + x2; x1 ~ N(mu1, s1); x2 ~ N(mu2, s2)
+# y = x1 + x2; presumimos x1 ~ Pois(lambda1); x2 ~ Pois(lambda2), mas não sabemos valores de lambda
+# As perguntas relevantes são:
+# Incerteza: qual é o valor mais verossímil de y? quanta confiança temos nesse valor?
+# Sensibilidade: qual é a contribuição relativa de x1 e x2 para a incerteza de y?
