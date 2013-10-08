@@ -27,7 +27,6 @@ sobrevsds<-diag(tapply(sobrev$VALUE, INDEX=list(sobrev$TO, sobrev$FROM), FUN=sd)
 arvores <- tapply(sobrev$HECTARE, INDEX=list(sobrev$TO), FUN=sum)
 # Media de gm retirada do paper, sd chutado (impossivel reconstruir)
 gmmean <- 0.486/(0.486+mean(dados$VALUE[dados$TO==1 & dados$FROM==1])) 
-
 # Analise grafica dos parametros
 plotgrowth <- function() {
 plot(realgrowth$VALUE~realgrowth$FROM, pch=10, ylim=c(0, 0.5), cex=sqrt(realgrowth$HECTARE)/3, col=rep(c('red','green', 'blue'), each=6))
@@ -66,7 +65,6 @@ binomNLL<- function(a, b){
 	-sum(dpois(fertility,lambda=lambda, log=TRUE))
 }
 F3 <- mle2(binomNLL, start=list(a=1.34, b=4)) 
-
 ## Modelo 1: TODAS as taxas de sobrevivencia sao iguais
 binomNLL<- function(a){
 		prob.det=exp(a)/(1 +exp(a))
@@ -75,9 +73,8 @@ binomNLL<- function(a){
 M1 <- mle2(binomNLL, start=list(a=1.34)) # Dah uma probabilidade ~0.79
 #plot.profmle(profile(M1))
 p <- exp(coef(M1))/(1+exp(coef(M1)))
-plotsobrev()
-abline(h = p, lty=3, col='red')
-
+#plotsobrev()
+#abline(h = p, lty=3, col='red')
 binomNLL<- function(a){
 		prob.det=exp(a)/(1 +exp(a))
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
@@ -85,9 +82,8 @@ binomNLL<- function(a){
 G1 <- mle2(binomNLL, start=list(a=-0.80)) # Dah uma probabilidade ~0.79
 #plot.profmle(profile(G1))
 p <- exp(coef(G1))/(1+exp(coef(G1)))
-plotgrowth()
-abline(h = p, lty=3, col='red')
-
+#plotgrowth()
+#abline(h = p, lty=3, col='red')
 # Modelo 2: Sobrevivencia cresce com a classe
 binomNLL<- function(a, b){
 		prob.det=exp(a+b*sobrev$TO)/(1 +exp(a+b*sobrev$TO))
@@ -97,9 +93,8 @@ M2 <- mle2(binomNLL, start=list(a=0.62, b=0.62))
 #plot.profmle(profile(M2))
 p1<- coef(M2)[1]
 p2<- coef(M2)[2]
-plotsobrev()
-curve(exp(p1+p2*x)/(1+exp(p1+p2*x)), to=7, add=T, lty=3, col='red')
-
+#plotsobrev()
+#curve(exp(p1+p2*x)/(1+exp(p1+p2*x)), to=7, add=T, lty=3, col='red')
 binomNLL<- function(a, b){
 		prob.det=exp(a+b*realgrowth$TO)/(1 +exp(a+b*realgrowth$TO))
 	-sum(dbinom(round(realgrowth$VALUE*realgrowth$HECTARE),size=round(realgrowth$HECTARE),prob=prob.det, log=TRUE))
@@ -108,9 +103,8 @@ G2 <- mle2(binomNLL, start=list(a=0.62, b=0.62))
 #plot.profmle(profile(G2))
 p1<- coef(G2)[1]
 p2<- coef(G2)[2]
-plotgrowth()
-curve(exp(p1+p2*x)/(1+exp(p1+p2*x)), to=7, add=T, lty=3, col='red')
-
+#plotgrowth()
+#curve(exp(p1+p2*x)/(1+exp(p1+p2*x)), to=7, add=T, lty=3, col='red')
 # Modelo 3: saplings tem sobrevivencia diferenciada
 binomNLL<- function(a, b){
 		p = a+b*(sobrev$TO==1)
@@ -121,12 +115,11 @@ M3 <- mle2(binomNLL, start=list(a=2.21, b=-0.96))
 #plot.profmle(profile(M3))
 p1<- coef(M3)[1]
 p2<- coef(M3)[2]
-plotsobrev()
-segments(c(0.5, 1.5),
-		 c(exp(p1+p2)/(1+exp(p1+p2)), exp(p1)/(1+exp(p1))),
-		 c(1.5, 7.5),
-		   lty=3, col='red')
-
+#plotsobrev()
+#segments(c(0.5, 1.5),
+#		 c(exp(p1+p2)/(1+exp(p1+p2)), exp(p1)/(1+exp(p1))),
+#		 c(1.5, 7.5),
+#		   lty=3, col='red')
 binomNLL<- function(a, b){
 		p = a+b*(realgrowth$TO==1)
 		prob.det=exp(p)/(1 +exp(p))
@@ -136,12 +129,11 @@ G3 <- mle2(binomNLL, start=list(a=2.21, b=-0.96))
 #plot.profmle(profile(G3))
 p1<- coef(G3)[1]
 p2<- coef(G3)[2]
-plotgrowth()
-segments(c(0.5, 1.5),
-		 c(exp(p1+p2)/(1+exp(p1+p2)), exp(p1)/(1+exp(p1))),
-		 c(1.5, 7.5),
-		   lty=3, col='red')
-
+#plotgrowth()
+#segments(c(0.5, 1.5),
+#		 c(exp(p1+p2)/(1+exp(p1+p2)), exp(p1)/(1+exp(p1))),
+#		 c(1.5, 7.5),
+#		   lty=3, col='red')
 # Modelo 4: Sobrev diferenciada por ano
 binomNLL<- function(a, b, c){
 		p = a*(sobrev$YEAR==1991)+b*(sobrev$YEAR==1992)+c*(sobrev$YEAR==1993)
@@ -153,12 +145,11 @@ M4 <- mle2(binomNLL, start=list(a=1.17, b=1, c=1.76))
 p1<- coef(M4)[1]
 p2<- coef(M4)[2]
 p3<- coef(M4)[3]
-plotsobrev()
-segments(rep(0.5, 3),
-		 c(exp(p1)/(1+exp(p1)), exp(p2)/(1+exp(p2)), exp(p3)/(1+exp(p3))),
-		 rep(7.5, 3),
-		   lty=3, col=c('red', 'green', 'blue'))
-
+#plotsobrev()
+#segments(rep(0.5, 3),
+#		 c(exp(p1)/(1+exp(p1)), exp(p2)/(1+exp(p2)), exp(p3)/(1+exp(p3))),
+#		 rep(7.5, 3),
+#		   lty=3, col=c('red', 'green', 'blue'))
 binomNLL<- function(a, b, c){
 		p = a*(realgrowth$YEAR==1991)+b*(realgrowth$YEAR==1992)+c*(realgrowth$YEAR==1993)
 		prob.det=exp(p)/(1 +exp(p))
@@ -169,12 +160,11 @@ G4 <- mle2(binomNLL, start=list(a=1.17, b=1, c=1.76))
 p1<- coef(G4)[1]
 p2<- coef(G4)[2]
 p3<- coef(G4)[3]
-plotgrowth()
-segments(rep(0.5, 3),
-		 c(exp(p1)/(1+exp(p1)), exp(p2)/(1+exp(p2)), exp(p3)/(1+exp(p3))),
-		 rep(7.5, 3),
-		   lty=3, col=c('red', 'green', 'blue'))
-
+#plotgrowth()
+#segments(rep(0.5, 3),
+#		 c(exp(p1)/(1+exp(p1)), exp(p2)/(1+exp(p2)), exp(p3)/(1+exp(p3))),
+#		 rep(7.5, 3),
+#		   lty=3, col=c('red', 'green', 'blue'))
 # Modelo 5: Sobrev diferenciada por ano E classe
 binomNLL<- function(a, b, c, d){
 		p = a*(sobrev$YEAR==1991)+b*(sobrev$YEAR==1992)+c*(sobrev$YEAR==1993)+d*sobrev$TO
@@ -187,14 +177,13 @@ p1<- coef(M5)[1]
 p2<- coef(M5)[2]
 p3<- coef(M5)[3]
 p4<- coef(M5)[4]
-plotsobrev()
-curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
-curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
-curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
+#plotsobrev()
+#curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
+#curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
+#curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
 # Salvando para a posteridade
 M5ano <- mle2(function (mu=0.58, sigma=0.32) -sum(dnorm(c(p1,p2,p3), mean=mu, sd=sigma, log=TRUE)))
 classp <- p4
-
 binomNLL<- function(a, b, c, d){
 		p = a*(realgrowth$YEAR==1991)+b*(realgrowth$YEAR==1992)+c*(realgrowth$YEAR==1993)+d*realgrowth$TO
 		prob.det=exp(p)/(1 +exp(p))
@@ -206,11 +195,10 @@ p1<- coef(G5)[1]
 p2<- coef(G5)[2]
 p3<- coef(G5)[3]
 p4<- coef(G5)[4]
-plotgrowth()
-curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
-curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
-curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
-
+#plotgrowth()
+#curve(exp(p1+p4*x)/(1+exp(p1+p4*x)), to=7, add=T, lty=3, col='red')
+#curve(exp(p2+p4*x)/(1+exp(p2+p4*x)), to=7, add=T, lty=3, col='green')
+#curve(exp(p3+p4*x)/(1+exp(p3+p4*x)), to=7, add=T, lty=3, col='blue')
 # Modelo I GIVE UP:
 binomNLL<- function(a, b, c, d, e, f){
 		p = a*(realgrowth$TO==1)+b*(realgrowth$TO==2)+c*(realgrowth$TO==3)+d*(realgrowth$TO==4)+e*(realgrowth$TO==5)+f*(realgrowth$TO==6)
@@ -219,17 +207,14 @@ binomNLL<- function(a, b, c, d, e, f){
 }
 G6 <- mle2(binomNLL, start=list(a=2.21, b=-0.96, c=1, d=1, e=1, f=1)) 
 #plot.profmle(profile(G6))
-
 AICtab(F1, F2, F3, weights=TRUE)
 AICtab(M1, M2, M3, M4, M5, weights=TRUE)
 AICtab(G1, G2, G3, G4, G5, G6, weights=TRUE)
-
 # Melhor modelo "separado", df=2+4+2=8
 logLik(F3)+logLik(M5)+logLik(G3)
-
 # Retomando o modelo M5:
-sobrev( class ) ~ binom ( n; p ), onde logit(p) = class * classp + N( meanp, sdp )
-COMO TRABALHAR AAAAHHHHH???????????? SOCOOOOOOORRO
+#sobrev( class ) ~ binom ( n; p ), onde logit(p) = class * classp + N( meanp, sdp )
+#COMO TRABALHAR AAAAHHHHH???????????? SOCOOOOOOORRO
 
 ################# PARTE 1: Independente de Densidade
 factors <- c("s1","F7","g1","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7");
@@ -343,8 +328,6 @@ LeslieIndep <- function (f, s, g) {
 	result <- Mod(eigen(L)$values[1])
 	return (result);
 }
-# Para realizar a analise FAST, eh necessario escrever um "wrapper"
-# que realiza mapply
 IndepModel <- function (x) {
 		return(mapply(LeslieIndep, x[,1], x[,2],x[,3]))
 }
@@ -381,7 +364,6 @@ for (i in 1:50000) {
 }
 dis <- cbind(x, lambda=IndepModel(x))
 plot(ecdf(dis$lambda))
-
 trans <- data.frame(
 				f= exp(dis$f), 
 				s = exp(dis$s)/(1+exp(dis$s)),
@@ -390,8 +372,28 @@ trans <- data.frame(
 
 corPlot(trans[,c(1,2,3)], trans[,4])
 plot(pcc(trans[,c(1,2,3)], trans[,4], rank=TRUE))
+# Agora, quais sao os melhores modelos para y = f(x)?
+R1 <- lm(lambda~1, data=trans)
+R2 <- lm(lambda~f, data=trans)
+R3 <- lm(lambda~s, data=trans)
+R4 <- lm(lambda~g, data=trans)
+AICtab(R1, R2, R3, R4) # R3 é o melhor modelo
+R5 <- lm(lambda~s+f, data=trans)
+R6 <- lm(lambda~s+g, data=trans)
+AICtab(R3, R5, R6) # R6 é o melhor modelo
+R7 <- lm(lambda~s+g+f, data=trans)
+AICtab(R6, R7)
+R8 <- lm(lambda~s+g+f+s*g, data=trans)
+R9 <- lm(lambda~s+g+f+f*g, data=trans)
+R10 <- lm(lambda~s+g+f+s*f, data=trans)
+Full <- lm(lambda~s+g+f+I(s^2)+I(f^2)+I(g^2)+s*f+s*g+s*f, data=trans)
+SemiFull <- lm(lambda~s+g+f+I(s^2)+I(f^2)+I(g^2)+s*f+s*g+s*f, data=trans)
+AICtab(R7, R8, R9, R10, Full)
+library(leaps)
+leaps<-regsubsets(lambda~s+g+f+I(s^2)+I(f^2)+I(g^2)+s*f+s*g+g*f, data=trans, nbest=3)
+plot(leaps,scale="r2")
 
-sl<-estim.slr(trans[,c(4,1,2,3)])
+ata=mydata,nbest=10)sl<-estim.slr(trans[,c(4,1,2,3)])
 f <- apply (trans[,c(1,2,3)], 2, mean, na.rm=T)
 m <- mean(trans[,4])
 sl * f / m
