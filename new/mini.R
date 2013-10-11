@@ -15,6 +15,7 @@
 #                | -c          \lambda - d |
 # \lambda = 1/2 * (tr(A) + \sqrt(tr^2(A) - 4 det(A)) )
 # queremos saber, dada uma amostra x_i, quais são as sensibilidades de \lambda aos parâmetros \theta_i
+# Para isso, vamos determinar qual é o melhor modelo da forma \hat{\lambda} = a*sigma+b*gamma+c*f que representa \lambda
 
 # Exemplo usando Metropolis
 (N <- c(20, 10, 10))
