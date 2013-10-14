@@ -77,14 +77,22 @@ este não alcança, muitas vezes, o cientista que faz uso do ferramental da prob
 Para poder discorrer sobre a estimação de incertezas e a atribuição de probabilidades a diferentes resultados de um modelo,
 é necessário examinar com atenção o que entendemos sobre probabilidade. O conceito por trás da palavra probabilidade vai
 embasar não apenas o que entendemos pela palavra probabilidade, mas também traz um significado para os conceitos de
-incerteza, inferência e simulação, que serão de importância para a discussão a seguir.
+incerteza, inferência e simulação, que serão de importância para a discussão a seguir. 
+
+A bem da verdade, o debate real existe
+em torno de questões de inferência. Um problema simplesmente de atribuição de probabilidades sobre um experimento mental,
+que seja bem formulado, terá a mesma solução, não importando a afiliação filosófica de quem o resolve. Esse problema pode ser,
+por exemplo, qual a probabilidade de uma moeda justa cair com a cara para cima em pelo menos dois lançamentos de três; qual
+a chance de pelo menos dois alunos em uma classe de trinta fazerem aniversário no mesmo dia; qual a probabilidade de uma única
+observação de uma distribuição normal cair no intervalo de $x$ até $x+dx$. As escolas vão divergir no procedimento adotado para
+conectar essas experiências mentais com problemas vindos de observações reais. 
 
 Esse texto é resultado de uma investigação breve sobre a história dos conceitos de probabilidade, inferência, e incerteza,
 e sua relação mais geral com visões alternativas de ciência. Ele foi motivado por uma percepção de que a vasta maioria dos
 textos introdutórios em estatística se foca em uma escola de pensamento, alinhada com as visões do autor, sem uma análise crítica
 aprofundada das suas relações complexas com as demais. A separação da estatística entre as escolas frequentista e bayesiana,
 muito repetida em textos introdutórios, esconde uma riqueza de detalhes, envolvendo contradições importantes dentro de cada
-escola, convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
+escola e convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
 não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
 única base de inferência.
 
@@ -146,6 +154,9 @@ inversas'', e tem uma alta importância na história da estatística.
 No entanto, 
 nenhuma explicação convincente é dada sobre como medir essas probabilidades dentro do paradigma clássico.
 
+************ TODOOOOOO escrever o que É o argumento da probabilidade inversa *********
+O argumento da probabilidade inversa e Bayes
+
 \subsection{Interpretação subjetivista}
 Uma visão alternativa é dada por Augustus de Morgan, conhecido principalmente por suas leis em lógica proposicional, 
 no seu tratado Formal Logic, de 1847. Para de Morgan, a única certeza que podemos ter é a de nossa própria existência. 
@@ -195,6 +206,8 @@ para a probabilidade de um evento seja coerente para diversas pessoas. Isso irá
 de probabilidade pode ser perfeitamente adequada para embasar uma decisão pessoal, mas falhar enquanto uma ferramenta de 
 avanço da ciência, entendida como um corpo teórico objetivo e independente das opiniões de cada cientista individualmente.
 
+*************** de Morgan leu Laplace? de Morgan leu Bayes? *********************
+
 \subsection{Interpretação frequentista}
 A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destaca John Venn, em seu trabalho de 
 1866, para quem a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
@@ -242,6 +255,7 @@ several centuries ago it was presumably very much less (...). Let us assume that
 making a hypothesis which may not be altogether consistent with fact, but which is forced upon us for the purpose of securing
 precision of statement and definition.''\cite{Venn1866}
 
+*** parágrafo PÉSSIMO, reformular
 Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo idealizado no qual fosse
 possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
 a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema real, essa objetividade
@@ -254,6 +268,14 @@ by `drawing a card at random'. That the population may exist only in the mind, a
 raises no more (and no less) alarm than the infinite straight line of Euclid. I am only prepared to use probability to describe
 a situation if there is an analogy between the situation and the concept of random choice from a defined population.''
 \cite{Edwards72}
+
+************* Critica a probabilidade inversa (ler Boole?). 
+Não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente de uma população de sentenças, algumas
+das quais são verdadeiras. Desta forma, a escolha da definição frequentista de probabilidade implica em abandonar o método
+das probabilidades inversas para comparar o mérito de diferentes hipóteses. Essa percepção vai levar ao desenvolvimento
+da escola de testes de significância e à proposição do conceito de verossimilhança, ambos por R. A.Fisher.
+
+*** trazer para cá as críticas de Fisher?
 
 \subsection{A formalização da inferência}
 
@@ -391,6 +413,8 @@ its consequences beign ill-defined.''\cite{Edwards72}
 %http://en.wikipedia.org/wiki/Foundations_of_statistics
 \subsection{Lógica probabilística}
 
+Retomar de Morgan e Boole, raízes da probabilidade no estudo formal da lógica
+
 *** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
@@ -402,7 +426,8 @@ Bruno de Finetti e Leonard J. Savage
 podem ser apontados como os principais responsáveis por um interesse continuado na interpretação subjetiva, que, próximo à
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
 Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
-uma chance justa em uma aposta; ambas levam logicamente aos axiomas padrão da probabilidade.
+uma chance justa em uma aposta; embora as visões difiram no grau de empiricismo advogado,
+ambas levam logicamente aos axiomas padrão da probabilidade.
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
 Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
 e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade\cite{Zabell09}.
@@ -440,6 +465,7 @@ I shall say, for all that, that the probability {\em is} three to one; meaning t
 examine the subject, the state of mind to which a person {\em ought} to be able to bring himself is to look three times
 as confidently upon the arrival as upon the non-arrival.''\cite{deMorgan1847}
 
+*********** reformulaaaaaaaaaaar ********
 Dadas algumas condições sobre a construção da
 probabilidade subjetiva de um ator racional, pode ser demonstrado que as chances físicas de um evento são iguais 
 às probabilidades subjetivas às quais ele deve chegar; embora
@@ -451,6 +477,13 @@ com processos do tipo corridas de cavalo (nas quais a chance física é desconhe
 Since the two are equal, it does not matter much which word or symbol we use. The
 chance refers to the phenomenon, the probability refers to your attitude
 towards the phenomenon, and they are in perfect agreement''\cite{Anscombe63}
+
+Contraste-se com essa visão a posição advogada por de Finneti:
+``The subjective theory (...) does not contend that the opinions about probabilit are uniquely determined and
+justifiable. Probability does not correspond to a self-proclaimed `rational' belief but to the effective personal
+belief of anyone''\cite{deFinetti51}
+
+**********ler o deFinetti51 ********
 
 Um fator importante é a maior percepção moderna
 de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
@@ -507,7 +540,7 @@ occurredon the basis of the accepted model, one {\em has} occurred - the data. W
 
 
 Definições e teoremas de verossimilhança em Edwards, pp 29-3?
-Sufficiency p. 35, RELER URGENTE
+Sufficiency p. 35
 
 ``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
 hypotheses.
