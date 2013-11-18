@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}
 
-\title{Parameter space exploration with the {\em pse} package}
+\title{Parameter space exploration in R with the {\em pse} package}
 \author{Andr\'e Chalom$^1$ \& Paulo In\'acio Prado$^2$}
 \institute{$^1$ Programa Interunidades de Pós-Graduação em Bioinformática, 
  $^2$ Instituto de Biociências, Universidade de São Paulo, Brasil.}
@@ -20,6 +20,9 @@
 
 		* foco em codigo facilmente paralelizavel e distribuivel *
 
+
+			**** BLA BLA focus on stochastic results
+
     \end{block}
     \vfill
     \begin{columns}[t]
@@ -27,6 +30,8 @@
         \begin{block}{Introduction}
           \begin{itemize}
 			  \item BLA BLA BLA
+			\item bla bla sensibilidade analitica
+			\item abordagem integrativa para calibracao e UA
           \end{itemize}
         \end{block}
     \vfill
@@ -35,12 +40,12 @@
           \item BLA BLA sensitivity
 		  \item BLA BLA bifurcacoes
           \item BLA BLA GLUE
-			\item BLA BLA focus on stochastic results
 
           \end{itemize}
         \end{block}
 		\begin{block}{Performance and scalability}
 		\begin{itemize}
+			\item Support for multiple factors, multiple model responses and multiple model runs at the same point
 		\item BLA BLA cluster
 		\end{itemize}
 		\end{block}
