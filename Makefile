@@ -1,11 +1,3 @@
-integr:
-	./mkcap.sh integr
-	pdflatex integr
-
-caveat:
-	pdflatex new/caveat
-
-
 PROJ=pse
 
 all: ${PROJ}.pdf
@@ -16,41 +8,16 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex abstract.tex intro.tex s
 	-pdflatex ${PROJ}
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 
-poster: poster.pdf
+integr: integr.tex
+	pdflatex integr
 
-poster.pdf: poster.tex chalom.bib Makefile pse.pdf beamerthemeDreuw.sty
-	make all
-	-pdflatex poster
-	-bibtex poster
-	-pdflatex poster
-	-pdflatex poster
+caveat:
+	pdflatex new/caveat
 
-poster.tex: poster.Rnw
-	./mkcap.sh poster
-
-leslie.tex: leslie.Rnw R/Independent.Rdata R/Dependent.Rdata R/pse.R
-	./mkcap.sh leslie
-
-abstract.tex: abstract.Rnw
-	./mkcap.sh abstract
-
-ack.tex: ack.Rnw
-	./mkcap.sh ack
-
-revlit.tex: revlit.Rnw
-	./mkcap.sh revlit
-
-intro.tex: intro.Rnw
-	./mkcap.sh intro
-
-quantanal.tex: quantanal.Rnw
-	./mkcap.sh quantanal
-
-sampling.tex: sampling.Rnw
-	./mkcap.sh sampling
-
-pse.tex: pse.Rnw
-	R CMD Sweave pse.Rnw
+leslie.tex: leslie.Rnw R/Independent.Rdata R/Dependent.Rdata 
 
 clean:
 	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc *.tex
+
+%.tex: %.Rnw
+	R --vanilla <<< "library(utils); Sweave(\"$<\", encoding=\"utf8\")"

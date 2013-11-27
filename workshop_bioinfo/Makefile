@@ -6,8 +6,9 @@ poster.pdf: poster.tex chalom.bib Makefile beamerthemeDreuw.sty
 	pdflatex poster
 	pdflatex poster
 
-poster.tex: poster.Rnw
-	./mkcap.sh poster
+%.tex: %.Rnw
+	R --vanilla <<< "library(utils); Sweave(\"$<\", encoding=\"utf8\")"
 
 clean:
 	rm poster.blg poster.out poster.pdf poster.log poster.nav poster.toc poster.aux poster.snm poster.bbl poster.tex
+
