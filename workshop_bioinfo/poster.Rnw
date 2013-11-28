@@ -46,7 +46,8 @@
 		\begin{block}{Performance and scalability}
 		\begin{itemize}
 			\item Support for multiple factors, multiple model responses and multiple model runs at the same point
-		\item BLA BLA cluster
+		\item Support for uncoupling model simulation and statistical analyses.
+		\item Future support for easy clustering with snow/snowfall MPI-based clusters.
 		\end{itemize}
 		\end{block}
 	\vfill
@@ -59,27 +60,33 @@
         \begin{block}{Roadmap}
 		\begin{figure}
 		\begin{center}
-		%\includegraphics[width=0.5\textwidth]{leslie-ECDF}
+		\includegraphics[width=0.5\textwidth]{roadmap}
 		\end{center}
-		\caption{ }
+		\caption{Features already implemented in the released pse package, version 0.3.0, along with 
+		planned future releases up to version 1.0.0.}
 		\end{figure}
         \end{block}
 		\vfill
-        \begin{block}{PRCC example}
+        \begin{block}{Package example}
 		\begin{figure}
 		\begin{center}
 		%\includegraphics[width=0.56\textwidth]{leslie-PRCC}
 		\end{center}
-		\caption{}
+		\caption{Example of the uncertainty and sensitivity analyses plots and diagnostic plots. 
+		}
 		\end{figure}
         \end{block}
 		\vfill
-        \begin{block}{GLUE example}
+        \begin{block}{Uncoupling simulations}
 		\begin{figure}
 		\begin{center}
-		%\includegraphics[width=0.56\textwidth]{leslie-sobol}
+		\includegraphics[width=0.56\textwidth]{uncoupling}
 		\end{center}
-		\caption{}
+		\caption{The current solution for scalabity consists in uncoupling the model simulation and
+		statistical analyses. While the simulations are run on a high-performance cluster, the 
+		analyses may be carried out on a regular computer.
+		
+		Future bayesian analyses will benefit from easily configurable clustering.}
 		\end{figure}
         \end{block}
       \end{column}
