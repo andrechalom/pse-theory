@@ -1,11 +1,12 @@
 \documentclass[final]{beamer}
 \mode<presentation> {\usetheme{Dreuw}}
-\usepackage{amsmath,amsthm,amssymb,latexsym, graphicx}
+\usepackage{amsmath,amsthm,amssymb,latexsym,graphicx}
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[orientation=portrait,size=a0,scale=1.4,debug]{beamerposter}
+\newcommand{\R}{{\sf \,R\, }} 
 
-\title{Parameter space exploration in R with the {\em pse} package}
+\title{Parameter space exploration in \R with the {\em pse} package}
 \author{Andr\'e Chalom$^1$ \& Paulo In\'acio Prado$^2$}
 \institute{$^1$ Programa Interunidades de Pós-Graduação em Bioinformática, 
  $^2$ Instituto de Biociências, Universidade de São Paulo, Brasil.}
@@ -14,66 +15,95 @@
   \begin{frame}{} 
     \vfill
     \begin{block}{\large Abstract}
-		* bla bla R e codigo aberto *
+		The use of computer models in science is increasing, specially in fields where laboratory
+		experiments are too complex or to costly, like ecology.
 
-		* o pacote pse vai fazer SB, UA, SA e GLUE *
+		Questions of efficient, systematic and error-proof exploration of parameter spaces are
+		are of great importance to better understand, estimate confidences and make use of the 
+		output from these models. 
+		
+		Common questions can be answered by qualitative analyses, traditional quantitative analyses
+		and bayesian approaches.
 
-		* foco em codigo facilmente paralelizavel e distribuivel *
+		The {\em pse} package aims to implement these analyses in a unified and easy to use framework.
 
+		Package {\em pse} is available for download at http://cran.r-project.org/web/packages/pse/
+		both in binary mode and source code.
+		
+		\R is a free software environment for statistical computing and graphics. Packages for \R are built
+		by a large user base and made available for use on the Comprehensive \R Archive Network (CRAN).
 
-			**** BLA BLA focus on stochastic results
+		Free software environments provide a sound foundation to write scientific code, as it permits
+		reproductibilty, independent validation, colaborative writing and accesible learning.
 
     \end{block}
     \vfill
     \begin{columns}[t]
       \begin{column}{.48\linewidth}
-        \begin{block}{Introduction}
+        \begin{block}{Sampling}
           \begin{itemize}
-			  \item BLA BLA BLA
-			\item bla bla sensibilidade analitica
-			\item abordagem integrativa para calibracao e UA
+			  \item Analytical results for sensitivity and uncertainty analyses are available for a small class
+				  of ecological models \cite{Caswell10}.
+			  \item	Sampling-based analyses are generally required. 
+			  \item Traditional analyses are usually done by sampling from a Latin Hypercube.
+			  \item	Most theoretical results and computer tools focus on deterministic models;
+				  US analyses of stochastic models is an open and fresh area of study \cite{Marino08}.
+			\item {\em pse} generates hypercubes with prescribed correlation terms between input
+			  variables \cite{Huntington98}.
+		  \item Symmetrized Blest Measure of Association (SBMA) \cite{Genest03} used for 
+			  determining optimal sample size.
+			  \item The methodology chosen facilitates parallelization.
           \end{itemize}
         \end{block}
     \vfill
-        \begin{block}{Mathematical background}
+        \begin{block}{Analyses}
           \begin{itemize}
-          \item BLA BLA sensitivity
-		  \item BLA BLA bifurcacoes
-          \item BLA BLA GLUE
-
+			  \item Qualitative analyses are carried by Bifurcation Analyse \cite{Tung10}.
+			  \item Traditional quantitative analyses focus on partial rank correlation coefficients
+				  and Sobol' indices \cite{Marino08}.
+			  \item Bayesian analyses focus on GLUE and DREAM methods \cite{Vrugt09}.
+			  \item {\em pse} currently implements traditional quantitative methods. Support for bayesian
+				  methods is being developed.
           \end{itemize}
         \end{block}
-		\begin{block}{Performance and scalability}
-		\begin{itemize}
-			\item Support for multiple factors, multiple model responses and multiple model runs at the same point
-		\item Support for uncoupling model simulation and statistical analyses.
-		\item Future support for easy clustering with snow/snowfall MPI-based clusters.
-		\end{itemize}
-		\end{block}
-	\vfill
-        \begin{block}{Bibliography}
-		\bibliographystyle{abbrv}
-		\scriptsize{\bibliography{chalom}}
-        \end{block}
-      \end{column}
-      \begin{column}{.48\linewidth}
         \begin{block}{Roadmap}
 		\begin{figure}
 		\begin{center}
-		\includegraphics[width=0.5\textwidth]{roadmap}
+		\includegraphics[width=0.8\textwidth]{roadmap}
 		\end{center}
 		\caption{Features already implemented in the released pse package, version 0.3.0, along with 
 		planned future releases up to version 1.0.0.}
 		\end{figure}
         \end{block}
 		\vfill
-        \begin{block}{Package example}
+        \begin{block}{Bibliography}
+		\bibliographystyle{abbrv}
+		\scriptsize{\bibliography{chalom}}
+        \end{block}
+      \end{column}
+      \begin{column}{.48\linewidth}
+		\begin{block}{Performance and scalability}
+		\begin{itemize}
+		\item Support for multiple factors, multiple model responses and multiple model runs at the same point
+		\item Support for uncoupling model simulation and statistical analyses.
+		\item Future support for easy clustering with snow/snowfall MPI-based clusters.
+		\end{itemize}
+		\end{block}
+	\vfill
+        \begin{block}{Output example}
 		\begin{figure}
 		\begin{center}
-		%\includegraphics[width=0.56\textwidth]{leslie-PRCC}
+			\begin{tabular}{c c}
+				\includegraphics[width=0.46\textwidth]{prcc}  &
+				\includegraphics[width=0.46\textwidth]{ecdf} \\
+				\includegraphics[width=0.46\textwidth]{scatter} &
+				\includegraphics[width=0.46\textwidth]{cv} 
+			\end{tabular}
 		\end{center}
-		\caption{Example of the uncertainty and sensitivity analyses plots and diagnostic plots. 
-		}
+		\caption{The {\em pse} package provides functions for uncertainty and sensitivity analyses 
+		and diagnostic plots of stochastic simulations. Shown here are: partial rank correlation coefficients,
+		empirical cumulative distribution function of model results, scatterplots and diagnostic coefficient
+		of variation plots.}
 		\end{figure}
         \end{block}
 		\vfill
