@@ -93,17 +93,36 @@
         \begin{block}{Output example}
 		\begin{figure}
 		\begin{center}
+			% ALL R CODE BELOW THIS LINE
+\setkeys{Gin}{width=0.45\textwidth}
+<<prepare, fig=FALSE, echo=FALSE>>=
+library(pse)
+set.seed(42)
+l <- LHS(model=function(x) {x[,1]+x[,2]*x[,3]+x[,4]*x[,5]/(1+x[,6])+rnorm(1,1,0.3)}, factors=7, N=200, nboot=50, res.names="Model results", repetitions=5)
+@
 			\begin{tabular}{c c}
-				\includegraphics[width=0.46\textwidth]{prcc}  &
-				\includegraphics[width=0.46\textwidth]{ecdf} \\
-				\includegraphics[width=0.46\textwidth]{scatter} &
-				\includegraphics[width=0.46\textwidth]{cv} 
+<<prcc, fig=TRUE, echo=FALSE>>=
+plotprcc(l)
+@
+&
+<<ecdf, fig=TRUE, echo=FALSE>>=
+plotecdf(l)
+@
+\\
+<<scatter, fig=TRUE, echo=FALSE>>=
+corPlot(l)
+@
+&
+<<cv, fig=TRUE, echo=FALSE>>=
+plotcv(l)
+@
 			\end{tabular}
 		\end{center}
 		\caption{The {\em pse} package provides functions for uncertainty and sensitivity analyses 
 		and diagnostic plots of stochastic simulations. Shown here are: partial rank correlation coefficients,
 		empirical cumulative distribution function of model results, scatterplots and diagnostic coefficient
 		of variation plots.}
+		% ALL R CODE ABOVE THIS LINE
 		\end{figure}
         \end{block}
 		\vfill
