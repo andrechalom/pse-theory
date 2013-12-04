@@ -35,7 +35,6 @@
 
 		Free software environments provide a sound foundation to write scientific code, as it permits
 		reproductibilty, independent validation, colaborative writing and accesible learning.
-
     \end{block}
     \vfill
     \begin{columns}[t]
