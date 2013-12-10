@@ -49,6 +49,7 @@
 				  US analyses of stochastic models is an open and fresh area of study \cite{Marino08}.
 			\item {\em pse} generates hypercubes with prescribed correlation terms between input
 			  variables \cite{Huntington98}.
+		  \item The parameters may be sampled from any theoretical or empirical density function.
 		  \item Symmetrized Blest Measure of Association (SBMA) \cite{Genest03} used for 
 			  determining optimal sample size.
 			  \item The methodology chosen facilitates parallelization.
@@ -57,7 +58,7 @@
     \vfill
         \begin{block}{Analyses}
           \begin{itemize}
-			  \item Qualitative analyses are carried by Bifurcation Analyse \cite{Tung10}.
+			  \item Qualitative analyses are carried by Bifurcation Analyses \cite{Tung10}.
 			  \item Traditional quantitative analyses focus on partial rank correlation coefficients
 				  and Sobol' indices \cite{Marino08}.
 			  \item Bayesian analyses focus on GLUE and DREAM methods \cite{Vrugt09}.
