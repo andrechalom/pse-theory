@@ -25,6 +25,8 @@
 \begin{document}
 \setkeys{Gin}{width=0.8\textwidth}
 
+FALAR DE ARISTARCO E DA CIRCUNFERENCIA DA TERRA!!!!!
+
 Euterpe: o numero de arvores estimado nos 100 plots de 5x5 foi multiplicado por 40 para chegar a estimativa de "por hectare"
 
 Diferenca entre "o modelo eh estocastico, pq HA variacao" e 
