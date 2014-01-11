@@ -90,8 +90,9 @@ mul = 2.055e-1
 @
 
 <<load, fig=FALSE, echo=FALSE>>=
-library(sensitivity)
+#library(sensitivity)
 library(MASS)
+library(pse)
 source("pse.R")
 library(msm) # Para a funcao qtnorm
 # Entradas da matriz:
@@ -258,7 +259,7 @@ q.arg <- list(
 # LHSlge <- LHS(TheModel, factors, 800, q, q.arg, nboot=100)
 # save(LHSlge, file="Triboliumlge.Rdata")
 load("Triboliumlge.Rdata")
-corPlot(LHSlge) ->ign
+plotscatter(LHSlge) ->ign
 mud.elas <- round(100*(elast(LHSlge)-elast(LHSpeq))/elast(LHSpeq))
 @
 	\caption{Diagramas de dispers\~ao do equivalente metab\'olico
