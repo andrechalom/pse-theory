@@ -78,7 +78,7 @@ Os termos n\~ao nulos dessa matriz, lendo da esquerda para a direita e de cima p
 	\item Perman\^encia na classe adulta, menos a mortalidade natural dos adultos $\mu_a$.
 \end{itemize}
 
-Os par\^ametros estimados pelo paper original (por Constantino, 1997) s\~ao:
+Os par\^ametros estimados pelo paper original (por Costantino, 1997) s\~ao:
 
 <<params, fig=FALSE, echo=TRUE>>=
 b = 6.598
@@ -96,7 +96,7 @@ library(pse)
 source("pse.R")
 library(msm) # Para a funcao qtnorm
 # Entradas da matriz:
-# Vindos de Costantino et al., 1996
+# Vindos de Costantino et al., 1997
 factors <- c("b", "cea", "cel", "cpa", "mua", "mul");
 f <-c (b, cea, cel, cpa, mua, mul)
 ct <- c(9, 1, 4.5) # metabolic rates
@@ -303,5 +303,50 @@ plotelast(LHSlge)
 	popula\c c\~ao aos par\^ametros.}
 	\label{LHSlge}
 \end{figure}
+
+Vamos prosseguir agora a um estudo integrativo da calibração dos parâmetros do
+modelo e da incerteza dos resultados do modelo, usando a metodologia de Generalized
+Likelihood Uncertainty Estimation (GLUE). Para isso, usaremos os dados de 
+{\em Tribolium} da réplica A do trabalho de Desharnais \& Liu \cite{Desharnais87}.
+
+<<dadosDesharnais>>=
+days <- seq(0, 266, by=14)
+adults <- c(64, 78, 78, 77, 61, 85, 102, 104, 120, 122, 132, 120, 113, 97, 136, 122, 117, 105, 120, 99)
+pupae <- c(35, 4, 109, 28, 77, 71, 36, 136, 35, 76, 28, 252, 5, 236, 20, 176, 7, 189, 12, 226)
+larvae <- c(70, 263, 75, 125, 203, 57, 182, 27, 265, 32, 309, 8, 360, 24, 357, 117, 373, 14, 404, 2)
+trib <- data.frame(adults, pupae, larvae)
+trib.conf <- as.vector(t(trib))
+rownames(trib) <- days
+matplot(trib, type='l')
+# Nova funcao para calcular a serie temporal completa, e nao apenas o eq. metabolico da pop final
+Tribolium <- function(b, cea, cel, cpa, mua, mul, a, p, l, time) {
+		Np <- c(a, p, l) #Pop inicial!
+		myp <- Np
+		for(i in 1:time) {
+				L <- matrix(c(0, 0, abs(b)*exp(-abs(cel)*Np[1] - abs(cea)*Np[3]),
+							1-abs(mul), 0, 0,
+							0, exp(-abs(cpa)*Np[3]), 1-abs(mua)), nrow=3, byrow=TRUE)
+				myp <- L %*% myp
+				Np <- c(Np, myp)
+		}
+#	result <- ct %*% Np;
+	return (Np);
+}
+TheModel <- function (x) {
+	return(mapply(Tribolium, x[,1], x[,2],x[,3],x[,4],x[,5],x[,6], 64, 35, 70, 19))
+}
+### OTIMIZACAO NAO FUNCIONA!!!
+logistic <- function (p) exp(p)/(1+exp(p))
+logit <- function (p) log(p) - log(1-p)
+constrain <- function(x) c(exp(x[1]), logistic(x[2]), logistic(x[3]), logistic(x[4]), logistic(x[5]), logistic(x[6]))
+ssqres <- function (x) sum((Tribolium(x[1], x[2], x[3], x[4], x[5], x[6], 64, 35, 70, 19) - trib.conf)^2)
+cssqres <- function(x) ssqres(constrain(x))
+a <- optim(par=c(log(b), logit(cea), logit(cel), logit(cpa), logit(mua), logit(mul)), fn=cssqres, method="SANN", control=list(maxit=200000))
+a <- optim(a$par, fn=cssqres, method="SANN", control=list(maxit=2000000))
+print(a$par)
+test <- Tribolium(exp(a$par[1]), logistic(a$par[2]), logistic(a$par[3]), logistic(a$par[4]), logistic(a$par[5]), logistic(a$par[6]), 64, 35, 70, 19)
+test <- matrix(test, ncol=3, byrow=T)
+matplot(test)
+@
 
 \end{document}
