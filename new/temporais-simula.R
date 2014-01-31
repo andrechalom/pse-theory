@@ -1,4 +1,5 @@
 ##### Matriz com 3x3: reverter para versao 1066
+set.seed(42)
 library(MASS)
 library(expm)
 logistic <- function (p) exp(p)/(1+exp(p))
@@ -31,6 +32,9 @@ Simula <- function(p1, f, g1, p2) {
 		}
 	return (Np);
 }
+test <- Simula(0.3, 1.451, 0.301, 0.399)
+test <- matrix(test, ncol=2, byrow=T)
+matplot(test)
 
 ### OTIMIZACAO NAO FUNCIONA!!!
 constrain <- function(x) c(logistic(x[1]), exp(x[2]), logistic(x[3]), logistic(x[4]))

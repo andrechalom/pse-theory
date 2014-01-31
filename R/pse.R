@@ -16,14 +16,14 @@ elast <- function (LHS) {
 	s <- pic(LHS)
 	f <- apply (get.data(LHS), 2, mean, na.rm=T)
 	m <- apply(get.results(LHS),2, mean, na.rm=T)
-	return(s$pic$original * f / m)
+	return(s[[1]]$pic$original * f / m)
 }
 
 plotelast <- function (LHS) {
 	s <- pic(LHS)
 	f <- apply (get.data(LHS), 2, mean, na.rm=T)
 	m <- apply(get.results(LHS),2, mean, na.rm=T)
-	barplot(s$pic * f / m, ylim=c(-1,1))
+	barplot((s[[1]]$pic * f / m)[,1], ylim=c(-1,1))
 }
 
 

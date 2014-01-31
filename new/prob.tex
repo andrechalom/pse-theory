@@ -79,13 +79,13 @@ Para poder discorrer sobre a estimação de incertezas e a atribuição de proba
 embasar não apenas o que entendemos pela palavra probabilidade, mas também traz um significado para os conceitos de
 incerteza, inferência e simulação, que serão de importância para a discussão a seguir. 
 
-A bem da verdade, o debate real existe
+Embora o debate surja como uma questão sobre a natureza das probabilidades, vamos encontrar as divergências práticas
 em torno de questões de inferência. Um problema simplesmente de atribuição de probabilidades sobre um experimento mental,
-que seja bem formulado, terá a mesma solução, não importando a afiliação filosófica de quem o resolve. Esse problema pode ser,
-por exemplo, qual a probabilidade de uma moeda justa cair com a cara para cima em pelo menos dois lançamentos de três; qual
-a chance de pelo menos dois alunos em uma classe de trinta fazerem aniversário no mesmo dia; qual a probabilidade de uma única
-observação de uma distribuição normal cair no intervalo de $x$ até $x+dx$. As escolas vão divergir no procedimento adotado para
-conectar essas experiências mentais com problemas vindos de observações reais. 
+que seja bem formulado, poderá ter a mesma solução, não importando a afiliação filosófica de quem o resolve. Esse problema 
+pode ser, por exemplo, qual a probabilidade de uma moeda justa cair com a cara para cima em pelo menos dois lançamentos de 
+três; qual a chance de pelo menos dois alunos em uma classe de trinta fazerem aniversário no mesmo dia; qual a probabilidade 
+de uma única observação de uma distribuição normal cair no intervalo de $x$ até $x+dx$. As escolas vão divergir principalmente
+no procedimento adotado para conectar essas experiências mentais com problemas vindos de observações reais. 
 
 Esse texto é resultado de uma investigação breve sobre a história dos conceitos de probabilidade, inferência, e incerteza,
 e sua relação mais geral com visões alternativas de ciência. Ele foi motivado por uma percepção de que a vasta maioria dos
@@ -95,6 +95,43 @@ muito repetida em textos introdutórios, esconde uma riqueza de detalhes, envolv
 escola e convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
 não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
 única base de inferência.
+
+\subsection{Contra uma teoria axiomática}
+O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey Kolmogorov, matemático
+soviético muito prolífico em diversas áreas da ciência. Os axiomas da probabilidade podem ser escritos como \cite{Morettin09}:
+
+\begin{description}
+	\item[Não-negatividade] A probabilidade de um evento é um número real não-negativo: $P(E) > 0$.
+	\item[Unitariedade] A probabilidade de um evento certo é 1: $P(\Omega) = 1$.
+	\item[Aditividade] A probabilidade de eventos mutuamente exclusivos é aditiva: $P(U \cup V) = P(U)+P(V)$.
+\end{description}
+
+Uma abordagem puramente axiomática para a probabilidade, embora seja útil para resolver problemas matemáticos, resultantes do
+cálculo da probabilidade associada a um experimento mental, é insuficiente do ponto de vista filosófico por não 
+levar a uma conclusão sobre no que {\em consiste} uma probabilidade. A proposição desses axiomas não leva a nenhuma conclusão 
+sobre problemas reais: não há como conectar uma proposição teórica derivada dos axiomas da probabilidade a um problema
+prático sem assumir, em algum momento, um significado para a palavra probabilidade que não está contido nos axiomas. Uma posição
+que pode ser tentadora é presumir que probabilidade assume {\em qualquer} significado coerente com os axiomas: essa posição,
+no entanto, também falha por não restringir o tipo de proposição ao qual probabilidades podem ser associadas (veja a sessão
+\ref{sec:classref}). 
+
+Outro problema da visão axiomática é que, se os axiomas se baseiam em conveniência matemática e não na coerência com o uso 
+real da probabilidade, alguns problemas decorrentes da axiomatização podem passar despercebidos. Considere a troca do axioma
+de aditividade pelo seguinte axioma de aditividade completa (ou $\sigma$-aditividade):
+
+\begin{description}
+	\item[Aditividade completa] Qualquer conjunto contável de eventos mutuamente exclusivos satisfaz:
+
+		$P(E_1 \cup E_2 \cup \cdots) = \sum_{i=1}^\infty P(E_i)$
+\end{description}
+
+Esse axioma é uma generalização natural do axioma de aditividade a conjuntos infinitos (contáveis) de eventos, e é amplamente
+aceito. No entanto, tome um sorteio de um número racional aleatório entre 0 e 1, com distribuição uniforme. É fácil ver que
+a probabilidade de sortear cada número racional individualmente é zero; mas a probabilidade do evento certo é ao mesmo tempo 1, 
+pelo axioma da unitariedade, e 0, pois é a soma de infinitos termos iguais a zero.
+
+Para encontrar uma definição de probabilidade que permita dar um sentido aos axiomas, vamos repassar a opinião de alguns dos 
+grandes pensadores sobre o tema nas próximas sessões.
 
 \subsection{Interpretação clássica}
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
@@ -150,12 +187,14 @@ definição à suas últimas consequências, já que ele discute no tratado cita
 sobre testemunhos judiciais, nos 
 quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivocado, com outra probabilidade. 
 Presumindo que as probabilidades estão corretas, o método usado por Laplace é conhecido como ``método das probabilidades
-inversas'', e tem uma alta importância na história da estatística.
-No entanto, 
+inversas'', e tem uma alta importância na história da estatística.  No entanto, 
 nenhuma explicação convincente é dada sobre como medir essas probabilidades dentro do paradigma clássico.
 
-************ TODOOOOOO escrever o que É o argumento da probabilidade inversa *********
-O argumento da probabilidade inversa e Bayes
+Deve-se notar que o argumento de Laplace espelha o raciocínio desenvolvido pelo rev. Thomas Bayes em seu trabalho publicado
+postumamente em 1763. Esse trabalho não será discutido a fundo aqui, por ser muito convoluto em seus detalhes e notação,
+e não oferecer uma visão clara sobre a natureza das probabilidades.
+Determinar quais os méritos e falhas de Laplace e Bayes, respectivamente, é um problema muito debatido e que será retomado na
+sessão \ref{sec:bayes}.
 
 \subsection{Interpretação subjetivista}
 Uma visão alternativa é dada por Augustus de Morgan, conhecido principalmente por suas leis em lógica proposicional, 
@@ -206,8 +245,6 @@ para a probabilidade de um evento seja coerente para diversas pessoas. Isso irá
 de probabilidade pode ser perfeitamente adequada para embasar uma decisão pessoal, mas falhar enquanto uma ferramenta de 
 avanço da ciência, entendida como um corpo teórico objetivo e independente das opiniões de cada cientista individualmente.
 
-*************** de Morgan leu Laplace? de Morgan leu Bayes? *********************
-
 \subsection{Interpretação frequentista}
 A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destaca John Venn, em seu trabalho de 
 1866, para quem a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
@@ -255,7 +292,6 @@ several centuries ago it was presumably very much less (...). Let us assume that
 making a hypothesis which may not be altogether consistent with fact, but which is forced upon us for the purpose of securing
 precision of statement and definition.''\cite{Venn1866}
 
-*** parágrafo PÉSSIMO, reformular
 Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo idealizado no qual fosse
 possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
 a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema real, essa objetividade
@@ -269,13 +305,10 @@ raises no more (and no less) alarm than the infinite straight line of Euclid. I 
 a situation if there is an analogy between the situation and the concept of random choice from a defined population.''
 \cite{Edwards72}
 
-************* Critica a probabilidade inversa (ler Boole?). 
 Não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente de uma população de sentenças, algumas
 das quais são verdadeiras. Desta forma, a escolha da definição frequentista de probabilidade implica em abandonar o método
 das probabilidades inversas para comparar o mérito de diferentes hipóteses. Essa percepção vai levar ao desenvolvimento
 da escola de testes de significância e à proposição do conceito de verossimilhança, ambos por R. A.Fisher.
-
-*** trazer para cá as críticas de Fisher?
 
 \subsection{A formalização da inferência}
 
@@ -327,7 +360,14 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 	\item Suficiência: ``the statistic chosen should summarise the whole of the relevant information supplied by the sample''
 \end{enumerate}
 
-********* Definir verossimilhança ****************************
+Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma quantidade conhecida como
+verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Fisher define essa quantidade
+como:
+``The likelihood that any parameter (or set of parameters) should have
+any assigned value (or set of values) is proportional to the probability
+that if this were so, the totality of observations should be that observed.''\cite{Fisher1922}
+
+********* Exemplo de verossimilhança?? ****************************
 
 \subsection{Diferentes abordagens para testes de hipóteses}
 
@@ -366,10 +406,8 @@ possíveis é falho. Como o valor de parâmetros é uma variável contínua, Ney
 inclined to think that as far as a particular hypothesis is concerned, no test based upon the theory of probability can by
 itself provide any valuable evidence of the truth or falsehood of that hypothesis.''\cite{Neyman1933}
 
-(reformular *****
 Enquanto isso é verdade a respeito de probabilidades, o mesmo não se verifica com verossimilhanças. Esse é um dos motivos
 pelos quais a verossimilhança é sempre instrumental em comparar hipóteses alternativas.
-)
 
 Neyman e Pearson propõe um procedimento formal para delimitar quando devemos aceitar e quando devemos rejeitar a hipótese
 nula em favor de uma hipótese alternativa, dividindo o resultado desse processo em quatro classes: podemos aceitar uma hipótese
@@ -418,7 +456,7 @@ Retomar de Morgan e Boole, raízes da probabilidade no estudo formal da lógica
 *** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
-\subsection{Probabilidade Bayesiana moderna}
+\subsection{Probabilidade Bayesiana moderna}\label{sec:bayes}
 Embora uma grande parcela da comunidade científica tenha adotado uma visão frequentista durante a primeira metade do século XX,
 tomando algum dos lados do debate entre Fisher e Neyman-Pearson, muitos autores continuaram seguindo a interpretação 
 subjetivista da probabilidade, mais ou menos semelhante à advogada por de Morgan. Entre eles, Frank P. Ramsey, 
@@ -427,7 +465,8 @@ podem ser apontados como os principais responsáveis por um interesse continuado
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
 Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
 uma chance justa em uma aposta; embora as visões difiram no grau de empiricismo advogado,
-ambas levam logicamente aos axiomas padrão da probabilidade.
+ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Note-se que a discordância entre Savage e de Finetti é
+maior em seus primeiros escritos, com seus pensamentos convergindo durante suas vidas}.
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
 Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
 e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade\cite{Zabell09}.
@@ -499,7 +538,14 @@ order on the subjective elements of the deciding person.''\cite{Savage60}.
 
 	** Popper sobre probabilidades **
 
-\subsection{O problema da classe de referência}
+O interesse de Popper em estudar a probabilidade a partir de descrições da física quântica é natural por motivos. O primeiro
+é que há evidências de que a natureza da física quântica é intrinsecamente probabilística \cite{???}, ao contrário de fenômenos
+macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
+O segundo é que o estudo de problemas quânticos leva naturalmente a estruturas matemáticas semelhantes às probabilidades, mas
+com	propriedades distintas, como as quasiprobabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
+axioma de aditividade de Kolmogorov e ter regiões de probabilidade negativa.
+
+\subsection{O problema da classe de referência}\label{sec:classref}
 
 Em seu trabalho de 1922, Fisher escreve:
 
@@ -523,7 +569,7 @@ Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
 \subsection{A escolha da verossimilhança}
-Fisher 22, pag 16
+Fisher 22, pag 16. em diante
 %Livro do Edwards
 **** Discutir o livro do Edwards e verossimilhança ****
 
