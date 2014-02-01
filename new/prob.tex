@@ -96,7 +96,7 @@ escola e convergências nos pensamentos entre escolas diferentes. Essa separaç�
 não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
 única base de inferência.
 
-\subsection{Contra uma teoria axiomática}
+\subsection{Contra uma teoria axiomática}\label{sec:axiomatica}
 O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey Kolmogorov, matemático
 soviético muito prolífico em diversas áreas da ciência. Os axiomas da probabilidade podem ser escritos como \cite{Morettin09}:
 
@@ -126,9 +126,10 @@ de aditividade pelo seguinte axioma de aditividade completa (ou $\sigma$-aditivi
 \end{description}
 
 Esse axioma é uma generalização natural do axioma de aditividade a conjuntos infinitos (contáveis) de eventos, e é amplamente
-aceito. No entanto, tome um sorteio de um número racional aleatório entre 0 e 1, com distribuição uniforme. É fácil ver que
-a probabilidade de sortear cada número racional individualmente é zero; mas a probabilidade do evento certo é ao mesmo tempo 1, 
-pelo axioma da unitariedade, e 0, pois é a soma de infinitos termos iguais a zero.
+aceito. No entanto, tome um sorteio de um número racional aleatório entre 0 e 1, com distribuição uniforme. É fácil ver que,
+já que existem infinitos números racionais em qualquer intervalo intervalo,
+a probabilidade de sortear cada número racional individualmente é zero; logo a probabilidade do evento certo, que é 1, 
+pelo axioma da unitariedade, deve ser também 0, pois é a soma de infinitos termos iguais a zero.
 
 Para encontrar uma definição de probabilidade que permita dar um sentido aos axiomas, vamos repassar a opinião de alguns dos 
 grandes pensadores sobre o tema nas próximas sessões.
@@ -361,13 +362,33 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 \end{enumerate}
 
 Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma quantidade conhecida como
-verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Fisher define essa quantidade
+verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Fisher define essa quantidade,
+cujo uso mais imediato é identificar as hipóteses sobre determinado parâmetro que encontram maior suporte das evidências,
 como:
+
 ``The likelihood that any parameter (or set of parameters) should have
 any assigned value (or set of values) is proportional to the probability
 that if this were so, the totality of observations should be that observed.''\cite{Fisher1922}
 
-********* Exemplo de verossimilhança?? ****************************
+Para melhor compreender essa grandeza, vamos usar um exemplo citado por Laplace \cite{Laplace1814}, que se ocupa da 
+proporção de batismos (usado para representar o número de nascimentos) de meninos e meninas em Paris nos anos 
+de 1745 a 1784. Laplace tem a hipótese, corroborada por dados coletados em diversas outras cidades, de que nascem mais meninos
+do que meninas em uma proporção de $22$ para $21$. Coletando a informação de que houveram $393386$ nascimentos de 
+meninos e $377555$
+nascimentos de meninas no período, e presumindo o modelo binomial para os nascimentos, a verossimilhança da hipótese levantada
+por Laplace é dada pela probabilidade atribuída ao valor $393386$ pelo modelo binomial com tamanho $393386 + 377555 = 770941$
+e probabilidade de sucesso $22/(21+22) \sim 0.511$. Essa probabilidade é um número da ordem de $10^{-5}$. Ao calcular a 
+verossimilhança da hipótese de que não há preponderância de nenhum gênero, ou seja, a probabilidade de sucesso é de $0.5$, 
+encontramos o valor de $10^{-74}$, muitas ordens de grandeza inferior ao anterior. Portanto, os dados indicados por Laplace
+fornecem uma evidência mais forte para a hipótese de que os nascimentos de meninos são mais prováveis na proporção de $22$
+para $21$.
+
+********* Gráficos? Mais contas em um apêndice? ****************************
+
+Laplace não formaliza esse argumento em seu livro, sem dúvida pela dificuldade de realizar as contas indicadas acima sem
+a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia desenvolver esse raciocínio em termos das 
+{\em probabilidades} das hipóteses conflitantes, Fisher nota que as verossimilhanças calculadas acima não se comportam como 
+probabilidades, no sentido de não estarem sujeitas às leis da probabilidade (veja na sessão \ref{sec:axiomatica}).
 
 \subsection{Diferentes abordagens para testes de hipóteses}
 
