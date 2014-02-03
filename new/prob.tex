@@ -26,7 +26,11 @@ intellectual energy for their main interests; but some will be forced, by the
 paucity of their data or the complexity of their inferencies, to examine
 the finer points of their own arguments, and in so doing they are likely
 to become lost in the quicksands of the debate on statistical inference.''
-(A.W.F. Edwards, Likelihood)
+(A.W.F. Edwards, Likelihood, 1972)
+\vfill
+
+"Uncertainty is a personal matter; it is not the uncertainty but your uncertainty."
+(Dennis Lindley, Understanding Uncertainty, 2006)
 \vfill
 
 \cleardoublepage
@@ -383,8 +387,6 @@ encontramos o valor de $10^{-74}$, muitas ordens de grandeza inferior ao anterio
 fornecem uma evidência mais forte para a hipótese de que os nascimentos de meninos são mais prováveis na proporção de $22$
 para $21$.
 
-********* Gráficos? Mais contas em um apêndice? ****************************
-
 Laplace não formaliza esse argumento em seu livro, sem dúvida pela dificuldade de realizar as contas indicadas acima sem
 a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia desenvolver esse raciocínio em termos das 
 {\em probabilidades} das hipóteses conflitantes, Fisher nota que as verossimilhanças calculadas acima não se comportam como 
@@ -456,7 +458,7 @@ de teste de hipóteses.
 
 Outros autores separam o caso da hipótese estatística dita simples da hipótese composta por diversos valores possíveis para um
 parâmetro, usando como critério o fato de que uma hipótese estatística deve consequencias bem definidas.
-Por exemplo, Edwards afirma que (********* desenvolver melhor esse ponto *********)
+Por exemplo, Edwards afirma que:
 
 ``The class of hypotheses we call `statistical' is not necessarily closed with respect to the logical operations of
 alternation (`or') and negation (`not'). For a hypothesis resulting from either of these operations is likely to be composite,
@@ -488,6 +490,7 @@ Para Ramsey e Savage, a probabilidade surge como um sistema de preferência raci
 uma chance justa em uma aposta; embora as visões difiram no grau de empiricismo advogado,
 ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Note-se que a discordância entre Savage e de Finetti é
 maior em seus primeiros escritos, com seus pensamentos convergindo durante suas vidas}.
+
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
 Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
 e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade\cite{Zabell09}.
@@ -505,7 +508,8 @@ em que propunha uma metodologia de estimação fiducial, ou seja, presumindo uma
 fundamentalmente abandonado nos anos seguintes, e é chamado por Savage de ``a bold attempt to make the Bayesian omelet without
 breaking the Bayesian eggs''\cite{Savage60}. 
 
-Com a axiomatização e formulação moderna da interpretação subjetivista, fortemente baseada no conceito econômico de utilidade,
+Com a axiomatização e formulação moderna da interpretação subjetivista, cuja história é intimamente ligada à da teoria
+econômica de utilidade (veja por exemplo \cite{Friedman48}),
 essa escola de pensamento vem ganhando maior aceitação nos meios científicos. Savage escreve sobre essa formulação moderna:
 
 ``Personal probability can be regarded as part of a certain theory of coherent preference in the face of uncertainty. This
@@ -525,8 +529,11 @@ I shall say, for all that, that the probability {\em is} three to one; meaning t
 examine the subject, the state of mind to which a person {\em ought} to be able to bring himself is to look three times
 as confidently upon the arrival as upon the non-arrival.''\cite{deMorgan1847}
 
-*********** reformulaaaaaaaaaaar ********
-Dadas algumas condições sobre a construção da
+Uma crítica da escola frequentista pode ser resumida como: se existirem chances físicas associadas a um evento
+e probabilidades subjetivas, não haveria motivo para supor que ambas serão iguais. Há duas respostas para esse problema 
+entre os proponentes do subjetivismo:
+
+Por um lado, dadas algumas condições sobre a construção da
 probabilidade subjetiva de um ator racional, pode ser demonstrado que as chances físicas de um evento são iguais 
 às probabilidades subjetivas às quais ele deve chegar; embora
 alguns autores discordem sobre quais são as condições razoáveis para tomar como axioma. Anscombe e Aumann, por exemplo,
@@ -538,22 +545,29 @@ Since the two are equal, it does not matter much which word or symbol we use. Th
 chance refers to the phenomenon, the probability refers to your attitude
 towards the phenomenon, and they are in perfect agreement''\cite{Anscombe63}
 
-Contraste-se com essa visão a posição advogada por de Finneti:
-``The subjective theory (...) does not contend that the opinions about probabilit are uniquely determined and
+Contraste-se com essa visão a posição advogada por de Finneti, para quem a probabilidade não precisa ser racionalmente
+justificável:
+
+``The subjective theory (...) does not contend that the opinions about probability are uniquely determined and
 justifiable. Probability does not correspond to a self-proclaimed `rational' belief but to the effective personal
 belief of anyone''\cite{deFinetti51}
 
-**********ler o deFinetti51 ********
+Outra crítica diz respeito ao fato de que, enquanto subjetiva, a probabilidade percebida por um sujeito pode não corresponder
+à probabilidade anunciada por ele. Esse problema é abordado pela teoria de {\em Scoring Rules}, desenvolvida por
+de Finetti e Savage durante a década de 1970 \cite{Lindley82}, cujo
+desenvolvimento mostra métodos para garantir coerência entre ambas. Dennis Lindley expande esses resultados para mostrar que:
+
+``Let a person express his uncertainty about an event E, conditional upon an event F, by a number x and let him be given, 
+as a result, a score which depends on x and the truth or falsity of E when F is true. It is shown that if the scores are 
+additive for different events and if the person chooses admissible values only, then there exists a known transform of the 
+values x to values which are probabilities. In particular, it follows that values x derived by significance tests, confidence 
+intervals or by the rules of fuzzy logic are inadmissible. Only probability is a sensible description of uncertainty.''
+\cite{Lindley82}
 
 Um fator importante é a maior percepção moderna
 de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
 order on the subjective elements of the deciding person.''\cite{Savage60}.	
-
-\subsection{O paradigma da inferência Bayesiana}
-*** ESTUDAR JAYNES ***
-
-** de Finneti ***
 
 \subsection{Probabilidade e propensão}
 
@@ -564,7 +578,14 @@ O interesse de Popper em estudar a probabilidade a partir de descrições da fí
 macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
 O segundo é que o estudo de problemas quânticos leva naturalmente a estruturas matemáticas semelhantes às probabilidades, mas
 com	propriedades distintas, como as quasiprobabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
-axioma de aditividade de Kolmogorov e ter regiões de probabilidade negativa.
+axioma de aditividade de Kolmogorov e ter regiões de probabilidade negativa\cite{Mandel95}.
+
+A visão de Popper é, no entanto, criticada por não prover nenhuma base operacional para o cálculo de probabilidades à partir
+da definição de propensidades. É inconclusivo se a visão de Popper pode ser considerada uma teoria de interpretação
+de probabilidades, pois uma interpretação deve possuir uma determinada estrutura, como cita Peter Milne:
+
+``Interpretations in the literal sense (...) have sufficient intrinsic mathematical structure that one can derive
+the characteristics of probability from them.''\cite{Milne93}
 
 \subsection{O problema da classe de referência}\label{sec:classref}
 
@@ -591,6 +612,9 @@ Reference class problem
 
 \subsection{A escolha da verossimilhança}
 Fisher 22, pag 16. em diante
+
+Lindley's paradox?
+
 %Livro do Edwards
 **** Discutir o livro do Edwards e verossimilhança ****
 
@@ -639,6 +663,12 @@ Anderson 2008, AIC, Kulback-Liebler
 *** Simberloff e testes de hipoteses ***
 
 Ciência enquanto descrição/compreensão versus tomada de decisão científica. 'Ultimo paragrafo de Fisher55
+
+A discussão metodológica na aplicação da estatística às ciências práticas deve estar subordinada a uma discussão
+epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a apresentação de
+métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese em
+bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
+coerentes com uma visão de ciência enquanto descrição/compreensão do mundo natural.
 
 \bibliographystyle{plain}
 \bibliography{chalom}
