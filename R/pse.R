@@ -10,6 +10,106 @@
 library(pse)
 ########################CORCORR
 
+# Para sobol2007
+library(sensitivity)
+genX <- function (factors, n, r, q.arg) {
+	p <- length(factors)
+	X <- as.data.frame(matrix(nrow = n, ncol = p))
+	colnames(X) <- factors
+	for (i in 1:p) {
+			X[,i] <- do.call(r[i], c(n, q.arg[[i]]))
+	}
+	return(X)
+}
+mysobol <- function (model, factors, n, r, q.arg) sobol2007(model, genX(factors, n, r, q.arg), genX(factors, n, r, q.arg), nboot=1000)
+myplot <- function(x, ylim = c(0, 1), ...) {
+		bar.col <- c("white","orange")
+		if(class(x)=="fast99") {
+				if (! is.null(x$y)) {
+						S <- rbind(x$D1 / x$V, 1 - x$Dt / x$V - x$D1 / x$V)
+						colnames(S) <- colnames(x$X)
+						barplot(S, ylim = ylim, col = bar.col)
+				}
+		}
+		if (class(x)=="sobol2007") {
+				S <- rbind(x$S$original, x$T$original - x$S$original)
+				S[S<0] <- 0;
+				colnames(S) <- colnames(x$X)
+				b<-barplot(S, ylim= ylim, col=bar.col)
+				smin <- x$S$"min. c.i."
+				smax <- x$S$"max. c.i."
+				tmin <- x$T$"min. c.i."
+				tmax <- x$T$"max. c.i."
+				for (i in 1:length(colnames(S))) {
+						lower <- min(smin[i], tmin[i])
+						upper <- max(smax[i], tmax[i])
+						arrows(b[i],lower, b[i], upper, angle=90, code=3, length=0.1) #, lty=2)
+						#				lower <- min(max(smin[i], tmin[i]), x$S$original[i])
+						#				upper <- max(min(smax[i], tmax[i]), x$S$original[i])
+						#				segments(b[i],lower, b[i], upper, lwd=2)
+				}
+		}
+		legend("topright", c("main effect", "interactions"), fill = bar.col)
+}
+
+# Para PRCC
+
+nodeplot <- function(x, xlim = NULL, ylim = NULL, labels = TRUE,
+					 col = par("col"), pch = 21, bg = "white",
+					 add = FALSE, at = NULL, ...) {
+		n <- nrow(x)
+		if (is.null(xlim)) {
+				xlim <- c(1, n)
+		}
+		if (is.null(ylim)) {
+				ylim <- c(min(x), max(x))
+		}
+		if (is.null(at)) {
+				at <- 1 : n
+		}
+		if (add) {
+				par(new = TRUE)
+		}
+
+		# axes
+
+		plot(0, xlim = xlim, ylim = ylim, axes = FALSE,
+			 xlab = "", ylab = "", type = "n", ...)
+		if (class(labels) == "logical") {
+				if (labels) {
+						axis(side = 1, at = at, labels = rownames(x))
+				} else {
+						axis(side = 1, at = at, labels = FALSE, tick = FALSE)
+				}
+		} else if (class(labels) == "character") {
+				axis(side = 1, at = at, labels = labels)
+		}
+		axis(side = 2)
+		box()
+
+		# bias
+
+		if ("bias" %in% colnames(x)) {
+				xx <- x[["original"]] - x[["bias"]]
+		} else {
+				xx <- x[["original"]]
+		}
+
+		# confidence intervals
+
+		if (("min. c.i." %in% colnames(x)) & "max. c.i." %in% colnames(x)) {
+				for (i in 1 : n) {
+						lines(c(at[i], at[i]), c(x[["min. c.i."]][i], x[["max. c.i."]][i]),
+							  col = col)
+				}
+		}
+
+		# points
+
+		points(at, xx, col = col, pch = pch, bg = bg)
+}
+
+
 # Sensitivity and elasticity (Caswell)
 ### WORK IN PROGRESS: adaptar as funcoes para multiplas respostas
 elast <- function (LHS) {
@@ -105,26 +205,4 @@ gradPlot <- function(vars, res, ...) {
 				}
 		}
 }
-
-
-
-setMethod(
-		  f="kruskal.test",
-		  signature("LHS"),
-		  definition = function (x, Ncats=10, do.plot=TRUE, ...) {
-				  k <- NA;
-				  df <- Ncats-1;
-				  for (i in 1:length(x@data)) {
-						  cats <- cut(x@data[,i], breaks=quantile(x@data[,i], seq(0,1,1/Ncats)))
-						  k[i]<-(kruskal.test(x@res~cats))$statistic;
-				  }
-				  names(k) <- x@factors;
-				  if(do.plot) {
-						  plot(k, ylim=c(0, max(k)*1.1), xaxt='n')
-						  axis(1, at=1:length(x@data), labels=x@factors)
-						  abline(h=qchisq(0.05, df=df), lty=2)
-				  }
-				  return (k);
-		  }
-		  )
 

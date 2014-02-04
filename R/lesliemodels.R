@@ -1,4 +1,7 @@
+## Saving the leslie.Rdata datafile:
+save("dfast4", "dfast8", "dLHS5", "dprcc", "dsobol", "fast8", "iprcc", "LHS5", "sobol6", "tabfast", "tabprcc", file="leslie.Rdata")
 library(sensitivity)
+library(pse)
 source("pse.R")
 library(msm) # Para a funcao qtnorm
 # Entradas da matriz:
@@ -27,6 +30,7 @@ sobrevsds<-diag(tapply(sobrev$VALUE, INDEX=list(sobrev$TO, sobrev$FROM), FUN=sd)
 arvores <- tapply(sobrev$HECTARE, INDEX=list(sobrev$TO), FUN=sum)
 # Media de gm retirada do paper, sd chutado (impossivel reconstruir)
 gmmean <- 0.486/(0.486+mean(dados$VALUE[dados$TO==1 & dados$FROM==1])) 
+
 # Analise grafica dos parametros
 plotgrowth <- function() {
 plot(realgrowth$VALUE~realgrowth$FROM, pch=10, ylim=c(0, 0.5), cex=sqrt(realgrowth$HECTARE)/3, col=rep(c('red','green', 'blue'), each=6))
@@ -269,13 +273,16 @@ s4<-sbma(LHS3, LHS4)
 LHS5 <- LHS(IndepModel, factors, 500, q, q.arg)
 s5<-sbma(LHS4, LHS5)
 
-corPlot(LHS1)
-plotecdf(LHS1)
+plotscatter(LHS5)
+plotecdf(LHS5)
 
 # Partial rank correlation coefficients
-plotprcc(LHS1)
-#iprcc <- pcc(LHS5);order(- abs(iprcc$PRCC$original)) -> O;iprcc$X <- iprcc$X[,O];iprcc$PRCC <- iprcc$PRCC[O,]
-#plot(iprcc); abline(h=0, lty=2)
+plotprcc(LHS5)
+iprcc <- pcc(get.data(LHS5), get.results(LHS5), rank=T, nboot=100)
+order(- abs(iprcc$PRCC$original)) -> O
+iprcc$X <- iprcc$X[,O]
+iprcc$PRCC <- iprcc$PRCC[O,]
+plot(iprcc); abline(h=0, lty=2)
 
 # Analise eFAST
 # fast1 <- fast99 (model = IndepModel, factors = factors, n = 1*66, q = q, q.arg = q.arg)
@@ -351,7 +358,7 @@ f <- function (x) {
 #
 #Iteration
 #
-for (i in 1:50000) {
+for (i in 1:5000) {
 	novo <- Q(atual)
 	alfa <- exp(f(novo)-f(atual))
 	if (is.nan(alfa)) alfa = 0
@@ -370,7 +377,7 @@ trans <- data.frame(
 				g = exp(dis$g)/(1+exp(dis$g)),
 				lambda = dis$lambda)
 
-corPlot(trans[,c(1,2,3)], trans[,4])
+plotscatter(trans[,c(1,2,3)], trans[,4])
 plot(pcc(trans[,c(1,2,3)], trans[,4], rank=TRUE))
 # Agora, quais sao os melhores modelos para y = f(x)?
 R1 <- lm(lambda~1, data=trans)
@@ -393,7 +400,7 @@ library(leaps)
 leaps<-regsubsets(lambda~s+g+f+I(s^2)+I(f^2)+I(g^2)+s*f+s*g+g*f, data=trans, nbest=3)
 plot(leaps,scale="r2")
 
-ata=mydata,nbest=10)sl<-estim.slr(trans[,c(4,1,2,3)])
+sl<-estim.slr(trans[,c(4,1,2,3)])
 f <- apply (trans[,c(1,2,3)], 2, mean, na.rm=T)
 m <- mean(trans[,4])
 sl * f / m
@@ -401,6 +408,7 @@ sl * f / m
 # Densidades são compativeis com as originais"
 plot(density(dis$f))
 I <- IndepModel(dis)
+plot(density(I))
 
 LHS05 <- LHS(IndepModel, factors, 50, q, q.arg)
 LHS1 <- LHS(IndepModel, factors, 100, q, q.arg)
@@ -478,16 +486,16 @@ DepModel <- function (x) {
 	return(mapply(LeslieDep, x[,1], x[,2],x[,3],x[,4],x[,5],x[,6],x[,7],x[,8], x[,9], x[,10], x[,11], x[,12], x[,13], x[,14], x[,15], x[,16]))
 }
 
-dLHS05 <- LHS(DepModel,factors, 50, q, q.arg)
-dLHS1 <- LHS(DepModel,factors, 100, q, q.arg)
+system.time(dLHS05 <- LHS(DepModel,factors, 50, q, q.arg))
+system.time(dLHS1 <- LHS(DepModel,factors, 100, q, q.arg))
 ds1<-sbma(dLHS05, dLHS1)
-dLHS2 <- LHS(DepModel,factors, 200, q, q.arg)
+system.time(dLHS2 <- LHS(DepModel,factors, 200, q, q.arg))
 ds2<-sbma(dLHS1, dLHS2)
-dLHS3 <- LHS(DepModel,factors, 300, q, q.arg)
+system.time(dLHS3 <- LHS(DepModel,factors, 300, q, q.arg))
 ds3<-sbma(dLHS2, dLHS3)
-dLHS4 <- LHS(DepModel,factors, 400, q, q.arg)
+system.time(dLHS4 <- LHS(DepModel,factors, 400, q, q.arg))
 ds4<-sbma(dLHS3, dLHS4)
-dLHS5 <- LHS(DepModel,factors, 500, q, q.arg)
+system.time(dLHS5 <- LHS(DepModel,factors, 500, q, q.arg))
 ds5<-sbma(dLHS4, dLHS5)
 
 myLHS <- target.sbma(0.8, DepModel, factors, 100, 100, q, q.arg)
@@ -502,7 +510,10 @@ plotecdf(dLHS1, stack=T, index.res=2:7)
 plotprcc(dLHS1)
 
 plotelast(dLHS5)
-# dprcc <- pcc(dLHS5); order(- abs(dprcc$PRCC$original)) -> O; dprcc$X <- dprcc$X[,O]; dprcc$PRCC <- dprcc$PRCC[O,]
+dprcc <- pcc(get.data(dLHS5), get.results(dLHS5), rank=TRUE, nboot=100)
+order(- abs(dprcc$PRCC$original)) -> O
+dprcc$X <- dprcc$X[,O]
+dprcc$PRCC <- dprcc$PRCC[O,]
 # plot(dprcc); abline(h=0, lty=2)
 
 #### PCA dos resultados
@@ -531,7 +542,7 @@ COMOFAS PRA INTERPRETAR ISSO???
 # 
 # dsobol <- mysobol(DepModel, factors, 4*8*200, r, q.arg)
 # 
-# tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500"), Independent=c(s1,s2,s3,s4,s5), Dependent=c(ds1,ds2,ds3,ds4,ds5))
+tabprcc <- data.frame(Size=c("50-100", "100-200", "200-300", "300-400", "400-500"), Independent=c(s1,s2,s3,s4,s5), Dependent=c(ds1,ds2,ds3,ds4,ds5))
 #tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528", "528-1056"), rbind(fs1, fs2, fs3, fs4), rbind(dfs1, dfs2, dfs3, dfs4)))
 # tabfast <- data.frame(cbind(c("66-132", "132-264", "264-528"), rbind(fs1, fs2, fs3), rbind(dfs1, dfs2, dfs3)))
 # colnames(tabfast) <-c("Size ($N_s$)", "Indep. $D_i$", "Indep. $D_t$", "Dep. $D_i$", "Dep. $D_t$")
