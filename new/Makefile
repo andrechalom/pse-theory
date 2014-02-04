@@ -4,3 +4,6 @@ all:
 	pdflatex prob.tex
 	pdflatex prob.tex
 	apvlv prob.pdf
+
+clean:
+	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc 
