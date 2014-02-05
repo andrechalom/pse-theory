@@ -21,12 +21,19 @@ While variations in some of those
 parameters will have negligible impact on the model output, other parameters
 may profoundly impact the validity of a model's predictions, and it may be
 impossible to determine {\em a priori} which are the most important parameters.
-In theory, this could be done by evaluating the model at all possible 
+A {\em na\"ive} approach would consist on the evaluation of the model at all possible 
 combinations of parameters, however this would require a prohibitive number of
 model runs, specially considering that a single run of those models may take
 days to complete. Our challenge then consists in providing the best estimates
 for the importance of the several parameters, requiring the least number of
 model runs.
+
+Some models are either expressed or can be reasonably approximated by analytical
+functions. Such is the case for the matrix population models, for which a wide
+range of analytical tools are available to examine the uncertainty and
+sensitivity of parameters\cite{Caswell89}. In the general case, however, there
+is no possible formulation of the model in a closed equation, so analytical 
+methods are not possible.
 
 The disciplines of uncertainty and sensivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
@@ -46,9 +53,15 @@ prior to using the model in management decisions \cite{Bart95}.
 One approach to the parameter space exploration, which will be described here,
 is to generate samples from the parameter space, run the model with these 
 samples, and analyse the qualitative or quantitative differences in the
-model output. Section \ref{Sampling} will present the sampling techniques,
+model output. In this context, the sampling of the parameter space may 
+be regarded as a bridge between the modeling of the system and the inference
+problem of aquiring information about the whole parameter space, having only
+access to a subset of that information. This inference can be done in the light
+of any of the statistical schools.
+
+Section \ref{Sampling} will present the sampling techniques,
 with empashis on the Latin Hypercube method, while section 
-\ref{QuantAnal} will deal with quantitative analyses.
+\ref{QuantAnal} will present some tools for the quantitative analyses.
 We should emphasize that the analyses tools are not coupled with the sampling
 techniques used: one can, in principle, use the sampling techniques described
 and other analyses tools, or apply the analyses described here to a more
@@ -199,7 +212,8 @@ some pattern of distribution or abundance of species. We also might be
 interested in mapping where are these regions. In complex models, where several 
 different regions might exist where the qualitative results of the models are 
 very different, we may ask how many of these regions are there, as well as map
-the frontiers between them. 
+the frontiers between them. For a detailed discussion of this approach, see
+the PSExplorer software\cite{Tung10}.
 
 Another class of problems arises when the model produces some quantitative 
 response, and we are interessed in determining the dependency of this response 
@@ -216,7 +230,7 @@ from both uncertainty and sensitivity analysis in section \ref{QuantAnal}.
 
 Also, the model which we wish to analyse can be any function of the input parameters.
 In particular, there are three classes of models that can be used. First,
-the model may be a complex mathematical function (for example, $Y$ is defined
+the model may be a complex mathematical function (for example, defined
 by a differential equation). Second, the model may be a simulation model, like
 an IBM. Third, the model may be the result of fitting a statistical model.
 
@@ -236,7 +250,8 @@ response as a single value $y$, without loss of generality.
 
 Each of the input parameters $x_i$ is associated with a probability distribution
 $D_i(x)$, which represent our degree of knowledge about the values that $x_i$ may
-assume (see figure \ref{fig:Di} for examples).
+assume (see figure \ref{fig:Di} for examples); Berger \cite{Berger85} provides
+a more detailed discussion).
 
 Taken together, all the distributions $D_i$ form the {\em joint probability
 distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
