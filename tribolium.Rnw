@@ -66,7 +66,7 @@ mul = 2.055e-1
 #library(sensitivity)
 library(MASS)
 library(pse)
-source("pse.R")
+source("R/pse.R")
 library(msm) # Para a funcao qtnorm
 # Entradas da matriz:
 # Vindos de Costantino et al., 1997
