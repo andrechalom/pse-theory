@@ -51,15 +51,22 @@ the result and some parameter, partial correlation coefficients should
 be used, which
 discount the effect of all other parameters. 
 
-These relations between the result and the parameters may be classified,
-in order of
-increasing complexity, as:
+The classical approach to the sensitivy analysis, based on the frequentist
+school of hypothesis testing, consists in classifying the relations
+between the results and the input parameters, in order of increasing complexity, as:
 
 \begin{itemize}
-		\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
-		\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient,
-		\item Trends in central location, for which the Kruskal-Wallis test may be applied,
-		\item Trends in variability, for which the FAST method and Sobol' indices may be used.
+	\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
+		Is is usual to test the significance of this linear relation by a t-test 
+		\cite{Freedman07}.
+	\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient,
+		also refered to as Partial Rank Correlation Coefficient, or PRCC.
+		This measure is a robust
+		indicator of monotonic interactions between $y$ and $x_i$, and is subject
+		to significance testing as described in \cite{Marino08}.
+	\item Trends in central location, for which the Kruskal-Wallis test may be applied (\cite{Kleijnen99}).
+	\item Trends in variability, for which the FAST method and Sobol' indices may be used in order to partition
+		the model variability (\cite{Archer97, Saltelli99, Saltelli04}).
 \end{itemize}
 
 Subsections \ref{linear} to \ref{FAST} will provide some
@@ -254,20 +261,20 @@ which do
 not play any role on the model output, as many numeric approximations are
 involved. 
 
-\begin{shaded}
-		\textbf{Box 2: Uncertainty and sensitivity}
+\subsection{Bayesian alternatives}
+The Bayesian view of statistics present some alternatives to the 
+techniques outlined in the previous sections. Beven and Binley described
+a procedure for the Bayesian updating of probabilities called GLUE,
+for Generalized Likelihood Uncertainty Estimation\cite{Beven92}. While
+the previously discussed methodologies are appropriate for purely exploratory
+analyses, the GLUE method is suited for problems in which one or more of 
+the parameters of the model require calibration using the object of prediction.
+It is based on the notion that, for a given model response, there is always 
+a set of models that will recreate it. This set is called {\em equifinal}.
 
-		The following questions should be addressed in uncertainty
-		and sensitivy analyses (between parentheses are the section numbers
-		which detail each step):
-		\begin{itemize}
-				\item What is the range and distribution of model responses (\ref{UA})?
-\item The ecdf plot of model responses suggests any theoretical distribution (\ref{UA})?
-\item The scatterplots between each variable and the model response suggest
-		any relationship (\ref{UA})?
-\item Is there any linear or monotonic relation between the model 
-		parameters (\ref{linear} and \ref{PRCC})?
-\item Is there any trend in central location or dispersion of the response (\ref{Kruskal} and \ref{FAST})?
-\item The output from the analyses is coherent between different sample sizes (\ref{SBMA})?
-\end{itemize}
-\end{shaded}
+Despite the widespread use and recognition that the GLUE method has received,
+it is subject to criticisms by not being formally Bayesian, and
+formal Bayesian approaches have been developed\cite{Vrugt09}.
+Another approach, based on the Metropolis algorithm, is provided by 
+Kuczera\cite{Kuczera98}. %TODO
+

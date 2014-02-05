@@ -26,7 +26,7 @@ may give rise to complex and unexpected behaviours.
 Often, algorithms based on individual parameter perturbance are used as a first 
 step in order to discriminate between parameters
 that may have a substantial impact on the output, and parameters that are less
-relevant. 
+relevant (but see \cite{Morris91} for an alternative). 
 
 Another viable option would be to
 chose $N$ random samples from the entire space, in order to analyse both
@@ -40,9 +40,9 @@ as shown in \cite{MacKay03}.
 
 Stratified sampling strategies, which are a special case of Monte 
 Carlo sampling, consist in strategies for chosing these random samples while,
-at the same, making sure that every subdivision (or {\em strata}) of
-the distribution is well represented.
-As shown on \cite{McKay79}, the estimatives of the statistical properties (such
+at the same, making sure that each of the subdivisions (or {\em strata}) of
+the distribution are well represented.
+As shown on \cite{McKay79}, the estimatives of statistical properties (such
 as the mean or the variance) of the model output are better represented by 
 stratified random sampling than by simple random sampling
 (see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
@@ -108,10 +108,8 @@ Latin if and only if there is exactly one sample in each row and each column.
 
 A Latin Hypercube is simply the generalization of the Latin
 Square to an arbitrary number of dimensions $m$. 
-From these definitions, it is clear that the number of samples is fixed as $N$
-We will show how to estimate the optimal $N$ in section \ref{SBMA}, but for
-now it is 
-relevant to note that $N$ does not depend on the number of parameters considered.
+It should be noted, then, that the number of samples $N$ is fixed {\em a priori},
+and does not depend on the number of parameters considered.
 
 We will now construct the Latin Hypercube. Let's fix our attention in one parameter
 dimension $i$ of the parameter space.
@@ -141,7 +139,9 @@ value $p$ in the range $(0,1)$ to the value $x$ such that $P(x_i \leq x) = p$.
 We divide the range $(0,1)$ in $N$ intervals of size $1/N$, and use this quantile
 function to determine the $x$ values as the midpoints of each interval. 
 Summarizing, we take the $N$ points, represented as $x_{i,k}$, $k \in [1,N]$, 
-from the inverse cummulative distribution $F_i^{-1}(x)$ as:
+from the inverse cummulative distribution $F_i^{-1}(x)$ as\footnote{This formula is
+given for simplicity; see \cite{Huntington98} for an alternative with better numerical
+properties}:
 
 \begin{equation}
 	x_{i,k} = F_i^{-1}\left( \frac{k-0.5}{N}\right)
@@ -224,7 +224,8 @@ as $C_{i,j}$ the
 desired $m \times m$ correlation matrix between the variables $x_i$ and $x_j$,
 and denote by $C_{i,j}^*$ the current correlation between $x_i$ and $x_j$.
 
-The next step is done iteratively for each parameter dimension, starting with the second one. Suppose that the method has already been applied to $i=1,2,....,l-1$, 
+The next step is done iteratively for each parameter dimension, starting with 
+the second one. Suppose that the method has already been applied to $i=1,2,....,l-1$, 
 and we will apply it to $i=l$. The square sum of the errors in the correlations 
 between $x_l$ and the anterior parameters is given by
 
@@ -238,7 +239,7 @@ dimension $l$, what would be the error in the correlation if they were switched.
 The pair that corresponds to the greater error reduction is then switched, and
 the procedure is repeated iteratively until the error is acceptably small.
 
-\subsection{Stochastic models}
+\subsection{Stochastic models} %TODO menos handwaving
 When dealing with stochastic models, like several relevant individual based 
 models (IBM), the questions presented become complicated by the fact that 
 running the same model with exactly the same parameters might wield largely 
@@ -246,12 +247,13 @@ different results, both quantitative and qualitatively. In this scenario,
 we must be able to diferentiate the variation in responses due to the variation
 of the parameters with the variation in response due to stochastic effects.
 
-We will proceed first by defining the variation due to the input parameters as
+We will refer to the variation due to the input parameters as
 the epistemic uncertainty. This uncertainty arises from the fact that we do
 now know what are the correct values for a given parameter in a given natural
 system, and is related to the probability distributions $D_i$, presented 
 in section \ref{PSE}. The variation in the behaviour of the model which is
-caused by stochastic effects is called stochastic uncertainty, and is inherent
+caused by stochastic effects, for a fixed set of parameters,
+is called stochastic uncertainty, and is inherent
 to the model. 
 
 It is important to note that the two uncertainty components are impossible
@@ -270,52 +272,6 @@ the following conditions are respected:
 		central value.
 	\item The correct analysis tools should be used (as will be
 		discussed on session \ref{QuantAnal}).
-\end{itemize}
-
-\subsection{Adaptative refinement}
-After generating the $N$ Latin Hypercube samples and running the model with
-the determined parameters, it may become necessary to increase the number
-of samples. In simple Monte Carlo simulations, increasing the number of samples
-can be done easily by generating new random points and running the model with
-them. However, to maintain the desirable properties of the Latin Hypercube,
-care must be taken to (1) keep the marginal distribution of the points equal
-to the parameter original distibution and (2) keep the correlation terms
-equal to zero, or equal to the ascribed values. 
-
-We refer to this increase in the number of sample points as a sampling
-refinement, and as it is done on demand after examining the already 
-generated outputs, we refer to it as an adaptative sampling refinement.
-This technique can be applied while estimating the Symmetrized Blest
-Measure of Association (SBMA)
-which will be used to determine the optimum $N$ size (section \ref{SBMA}).
-
-Our construction will start by defining a new sequence of values $\gamma_i$
-for every parameter dimension, with 
-\begin{eqnarray}
-	\gamma_{i,k} = F_i^{-1}\left( \frac{k-1/6}{N}\right) \\
-	\gamma_{i,2k} = F_i^{-1}\left( \frac{k-5/6}{N}\right)
-	\label{gamma}
-\end{eqnarray}
-
-For every $k \in [1,N]$, and so $\gamma_i$ has $2N$ elements. Following this,
-Huntington \& Lyrintzis' algorithm \cite{Huntington98} is applied on the set of
-$\gamma_i$ in order to minimize the correlation between them.
-The extended Latin Hypercube is formed by concatenating the original $x_i$
-values to the $\gamma_i$ values, and obtaining a cube with $3N$ samples
-defined as $z_i$, of which just $2N$ must be calculated.
-
-The extended Latin Hypercube presents the following desirable 
-properties:
-\begin{itemize}
-		\item The expected sample mean is equal to the distribution mean
-			for each parameter: 
-			$ \left< \bar z_i \right> = \left< D_i \right>$
-		\item The expected sample variance is equal to the distribution 
-			variance for each parameter:
-			$ \left< \bar \sigma(z_i) \right> = \left< \sigma(D_i) \right> $
-		\item The correlation between any two variables is 
-			bounded by the following expression:
-			$ \rho^2_{z_iz_j} \leq \rho^2_{x_ix_j} + \rho^2_{\gamma_i\gamma_j} $
 \end{itemize}
 
 \subsection{Measuring the concordance with increasing sample size}
@@ -376,29 +332,5 @@ correlations, the SBMA must be applied on the absolute values. Otherwise,
 the parameters which present strong negative effects will be ranked very low,
 and will not be taken into account by the SBMA.
 
-We will apply SBMA for the PRCC and eFAST techniques (both of which are
-discussed on section \ref{QuantAnal})
-on the example on section \ref{Leslie}. 
-
-\begin{shaded}
-		\textbf{Box 1: Parameter space sampling}
-
-In order to adequately explore the parameter space of a model, the following
-steps should be taken:
-\begin{itemize}
-		\item The parameters of interest must be identified, in a way
-				that all combinations of parameter values are meaningful. 
-		\item The range and distribution of each parameter should be
-				estimated.
-		\item The model to be analysed must be formulated as a function of
-				all the parameters.
-		\item A Latin Hypercube should be generated based on the parameter
-				distributions.
-		\item The correlations between parameters, when present,
-				must be taken into account.
-		\item The model must be evaluated at each combination of
-				parameter values. If the model is stochastic, it should
-				be evaluated repeatedly at each combination.
-\end{itemize}
-\end{shaded}
-
+We will apply SBMA for the PRCC technique (discussed on section \ref{QuantAnal})
+on the example on section \ref{IBM}. 
