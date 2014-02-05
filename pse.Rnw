@@ -105,25 +105,31 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 
 	  \par
 	  \vspace{1em}
-	  \noindent\textbf{Palavras-chave:} palavra1, palavra2, palavra3
+	  \noindent\textbf{Palavras-chave:} análise de sensibilidade, análise de incerteza, modelagem numérica, verossimilhança
 	  \newpage
 
 \cleardoublepage
 \tableofcontents
 \cleardoublepage
+\pagenumbering{arabic}
+
 
 % CAPITULO 1
+\chapter{Sobre probabilidade e inferência}
+\input prob.tex
 
 % CAPITULO 2
+\selectlanguage{english}
+\chapter{Parameter space exploration: a synthesis}
 \input intro.tex
 \input sampling.tex
 \input quantanal.tex
 \input leslie.tex
-\input revlit.tex
-\input ack.tex
 
 % CAPITULO 3
-
+\selectlanguage{brazilian}
+\chapter{Uma abordagem integrativa para análises de incerteza}
+\input integr.tex
 
 % FIM
 \cleardoublepage

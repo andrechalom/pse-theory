@@ -1,14 +1,4 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[margin=1.2in]{geometry}
-\usepackage[utf8]{inputenc}
-\setlength{\topmargin}{0cm}
-\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
-
-\begin{document}
-\begin{center}
-  {\Large Abordagem integrativa para análises de sensibilidade}
-\end{center}
-
+\section{Descrição}
 O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar os seguintes passos: 
 calibração, verificação, validação, análise de incerteza e análise de sensibilidade. (*definir aqui cada um*)
 Questões relacionadas a verificação não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
@@ -76,4 +66,3 @@ Resumo de aplicação:
 	\item Realize as análises de incerteza e sensibilidade a partir das amostras geradas.
 \end{enumerate}
 
-\end{document}
