@@ -2,7 +2,7 @@
 \setkeys{Gin}{width=0.8\textwidth}
 
 \section{Estudo de caso 2: Modelo 
-  n\~ao linear do crescimento populacional de {\em Tribolium}
+n\~ao linear do crescimento populacional de {\em Tribolium}}
 
 Embora a teoria para calcular sensibilidades e elasticidades de modelos matriciais
 lineares remonte ao final d\'ecada de 70, uma teoria para o estudo consistente
@@ -35,7 +35,7 @@ A matriz de transi\c c\~ao desse modelo \'e:
 			0 & \exp(-c_{pa}n_3) & 1-\mu_a 
 		\end{array}
 		\right]
-		\label{LefMatrix}
+		\label{TribLefMatrix}
 \end{equation}
 
 Aqui, $\mathbf{n}(t)$ \'e o vetor que representa a popula\c c\~ao de besouros dividida em

@@ -141,7 +141,7 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 
 
 % CAPITULO 1
-\chapter{Sobre probabilidade e inferência}
+\chapter{Sobre probabilidade e inferência: WORK IN PROGRESS}
 \input prob.tex
 
 % CAPITULO 2
@@ -151,14 +151,16 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input sampling.tex
 \input quantanal.tex
 \input leslie.tex
+\input twolife.tex
 \input revlit.tex
 
 % CAPITULO 3
 \selectlanguage{brazilian}
-\chapter{Uma abordagem integrativa para análises de incerteza}
+\chapter{Uma abordagem integrativa para análises de incerteza: WORK IN PROGRESS}
 \input integr.tex
 \input caveat.tex
 \input mini.tex
+\input tribolium.tex
 %%% TODO incluir resultados de E. edulis, Tribolium e Heterodera AQUI
 
 % FIM
