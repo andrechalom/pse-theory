@@ -1,5 +1,7 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[margin=1.2in]{geometry}
+\documentclass[twoside,12pt,a4paper]{report}
+\usepackage[english,brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[twoside,margin=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{framed, color}
@@ -23,30 +25,96 @@
 
 \SweaveOpts{fig=T,echo=F}
 \begin{document}
+\selectlanguage{brazilian}
 \setkeys{Gin}{width=0.8\textwidth}
 
-\begin{center}
-  {\Large Parameter space exploration of ecological models}
+% CAPA
+\begin{titlepage}
+	\begin{center}
+		{\LARGE Andre Chalom}
+		\par
+		\vspace{200pt}
+		{\Huge Exploração de espaços de parâmetros de modelos 
+		biológicos sob o paradigma da verossimilhança}
+		\par
+		\vfill
+		\textbf{{\large São Paulo}\\
+		{\large 2014}}
+	\end{center}
+\end{titlepage}
 
-\begin{table}[hbt]{\small
-\begin{tabular}{ll}
-Authors        & Andre Chalom \\
-               & Paulo Inacio Prado \\
-Date           & 03/16/2012 \\
-Affiliation    & Department of Ecology, \\
-	       & University of Sao Paulo 
-\end{tabular} }
-\end{table}
+% A partir daqui páginas sem cabeçalho
+\pagestyle{empty}
+% Faz com que a página seguinte sempre seja ímpar (insere pg em branco)
+\cleardoublepage
+\pagenumbering{roman}
+
+% Página de rosto
+\begin{center}
+	{\LARGE Andre Chalom}
+	\par
+	\vspace{200pt}
+		{\Huge Exploração de espaços de parâmetros de modelos 
+		biológicos sob o paradigma da verossimilhança}
+\end{center}
+\par
+\vspace{90pt}
+\hspace*{175pt}\parbox{7.6cm}{
+{\large Relatório de andamento da dissertação de mestrado apresentada ao
+Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de São Paulo}}
+\par
+\vspace{1em}
+\hspace*{175pt}\parbox{7.6cm}{{\large Orientador: Paulo Inácio de Knegt López de Prado}}
+\par
+\vfill
+\begin{center}
+	\textbf{{\large São Paulo}\\
+	{\large 2014}}
 \end{center}
 
-\mbox{}\vspace{-14mm}\mbox{}
+% Preambulo
+\input preamble.tex
 
-\input abstract.tex
+\begin{center}
+	  \emph{\begin{large}Resumo\end{large}}\label{resumo}
+		  \vspace{2pt}
+	  \end{center}
+	  \noindent
+	  A formulação e o uso de modelos matemáticos complexos têm recebido grande atenção
+	  no estudo da ecologia nos últimos anos. 
+	  Questões relacionadas à exploração de espaços de parâmetros destes modelos - 
+	  executada de forma eficiente, sistemática e à prova de erros - são de grande importância 
+	  para melhor compreender, avaliar a confiabilidade e interpretar o resultado destes modelos.
+	  Neste trabalho, apresentamos uma investigação de métodos existentes para responder as
+	  questões relevantes da área, com ênfase na técnica conhecida como Hipercubo Latino e com foco
+	  na análise quantitativa dos resultados. Ainda, propomos uma metodologia paralela baseada no
+	  paradigma estatístico da verossimilhança, e realizamos a comparação entre resultados
+	  analíticos de incerteza e sensibilidade, e resultados obtidos do Hipercubo e do método baseado
+	  em verossimilhança. 
+
+	  O capítulo 1 introduz uma investigação a respeito dos conceitos históricos sobre a natureza
+	  da probabilidade, e justifica a escolha da verossimilhança como base da inferência estatística.
+
+	  O capítulo 2 (em inglês) traz uma revisão bibliográfica sobre o estado da arte em análises
+	  de incerteza e sensibilidade, apresentando um exemplo de aplicação das técnicas descritas a um
+	  problema de crescimento populacional estruturado.
+
+	  O capítulo 3 propõe uma metodologia baseada na verossimilhança dos dados
+	  como uma abordagem integrativa entre a estimação de parâmetros e a análise de incerteza, apresentando
+	  resultados preliminares.
+
+	  \par
+	  \vspace{1em}
+	  \noindent\textbf{Palavras-chave:} palavra1, palavra2, palavra3
+	  \newpage
 
 \cleardoublepage
 \tableofcontents
 \cleardoublepage
 
+% CAPITULO 1
+
+% CAPITULO 2
 \input intro.tex
 \input sampling.tex
 \input quantanal.tex
@@ -54,8 +122,12 @@ Affiliation    & Department of Ecology, \\
 \input revlit.tex
 \input ack.tex
 
+% CAPITULO 3
+
+
+% FIM
 \cleardoublepage
-\bibliographystyle{plain}
+\bibliographystyle{apalike}
 \bibliography{chalom}
 
 \end{document}

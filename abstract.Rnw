@@ -1,4 +1,4 @@
-\begin{abstract}
+\begin{session}Abstract
 In recent years, we are seeing the formulation and use of 
 elaborate and complex models in ecological studies.
 The questions related to the efficient, systematic and error-proof 
@@ -12,4 +12,4 @@ our findings with results from previously used techniques, known as sensitivity
 and elasticity analyses. We also  
 assess how are the questions related to parameter space analysis being 
 currently addressed in the ecological literature.
-\end{abstract}
+\end{Abstract}

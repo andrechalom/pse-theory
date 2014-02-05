@@ -2,7 +2,7 @@ PROJ=pse
 
 all: ${PROJ}.pdf
 
-${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex abstract.tex intro.tex sampling.tex quantanal.tex ack.tex leslie.tex
+${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex abstract.tex intro.tex sampling.tex quantanal.tex ack.tex leslie.tex preamble.tex
 	-pdflatex ${PROJ}
 	-bibtex ${PROJ}
 	-pdflatex ${PROJ}
@@ -17,7 +17,7 @@ caveat:
 leslie.tex: leslie.Rnw R/Independent.Rdata R/Dependent.Rdata 
 
 clean:
-	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc *.tex
+	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc 
 
 %.tex: %.Rnw
 	R --vanilla <<< "library(utils); Sweave(\"$<\", encoding=\"utf8\")"

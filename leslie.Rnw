@@ -110,7 +110,9 @@ so conservative values were used for the standard deviations.
 
 \subsection{Results}
 <<load, fig=FALSE>>=
-source('R/pse.R')
+library(sensitivity)
+library(pse)
+source("R/pse.R")
 library(xtable)
 load('R/leslie.Rdata')
 @
@@ -118,7 +120,7 @@ First, we have generated Latin Hypercubes consisting of all relevant variables
 for each model. Then, the models were run for each combination of parameters. 
 By using the SBMA measure of concordance (section \ref{SBMA}), we have determined that the sample size
 required for the density independent model is approximately 100, 
-and between 400 and 500 for the density dependent (Table \ref{tabprcc}).
+and between 300 and 500 for the density dependent (Table \ref{tabprcc}).
 
 <<table1, fig=FALSE, results=tex>>=
 print(xtable(tabprcc, caption='Comparison of PRCC analyses by sample size for both models', label='tabprcc'))
@@ -132,11 +134,11 @@ Figure \ref{fig:ecdf} shows these distributions, which suggest that
 the population is viable for the vast majority of parameters values in the 
 parameter space considered. Also, the  
 $\lambda$ calculated from the density-independent model 
-(mean \Sexpr{round(mean(LHS5@res),2)}, standard deviation \Sexpr{round(sd(LHS5@res),2)}), 
+(mean \Sexpr{round(mean(LHS5$res),2)}, standard deviation \Sexpr{round(sd(LHS5$res),2)}), 
 is very close to the value found by Silva Matos (mean $1.24 \pm 0.06$ se). 
 Considering the density-dependent
 model, the median stable population predicted 
-(\Sexpr{round(median(dLHS5@res))}
+(\Sexpr{round(median(dLHS5$res))}
 trees in each $25m^2$ plot), 
 is comparable to, altough higher than, the population  
 actually measured by the study ($1960 \pm 560$ trees per plot, mean and 
@@ -161,9 +163,9 @@ for non-linear effects of the parameters, in particular $s_1$ and $F_7$.
 		\begin{center}
 <<ECDF>>=
 par(mfrow=c(2,1), cex=0.8, mar=c(3,2,1.5,1))
-plot(ecdf(LHS5), do.points=FALSE, main='')
+plotecdf(LHS5)
 mtext('(a)', at=0.99)
-plot(ecdf(dLHS5), do.points=FALSE, main='', xlim=c(-1000, 20000))
+plotecdf(dLHS5)
 mtext('(b)', at=-500)
 @
 		\end{center}
@@ -178,65 +180,45 @@ mtext('(b)', at=-500)
 \begin{figure}[htpb]
 		\begin{center}
 <<iCorr1>>=
-corPlot(LHS5@data[,c(3,5,7,9,11,13)], LHS5@res)
+plotscatter(LHS5$data[,c(3,5,7,9,11,13)], LHS5$res)
 @
 		\end{center}
 		\caption{Scatterplots relating the value of the input parameters
 		of growth to the $\lambda$ calculated
-		the output for the density independent model. Each plot shows the
-		Pearson correlation coefficient and significance level: 
-		`.' p < 0.1
-		`*' p < 0.05
-		`**' p < 0.01
-		`***' p < 0.001}
+		the output for the density independent model.}
 		\label{fig:iCorr1}
 \end{figure}
 \begin{figure}[htpb]
 		\begin{center}
 <<iCorr2>>=
-corPlot(LHS5@data[,-c(3,5,7,9,11,13)], LHS5@res)
+plotscatter(LHS5$data[,-c(3,5,7,9,11,13)], LHS5$res)
 @
 		\end{center}
 		\caption{Scatterplots relating the value of the input parameters
 		of survival and fecundity to the $\lambda$ calculated
-		the output for the density independent model. Each plot shows the
-		Pearson correlation coefficient and significance level: 
-		`.' p < 0.1
-		`*' p < 0.05
-		`**' p < 0.01
-		`***' p < 0.001}
+		the output for the density independent model.}
 		\label{fig:iCorr2}
 \end{figure}
 \begin{figure}[htpb]
 		\begin{center}
 <<dCorr1>>=
-corPlot(dLHS5@data[,c(4,6,8,10,12,14:16)], dLHS5@res, ylim=c(0, 20000))
+plotscatter(dLHS5$data[,c(4,6,8,10,12,14:16)], dLHS5$res, ylim=c(0, 20000))
 @
 		\end{center}
 		\caption{Scatterplots relating the value of the input parameter 
 		of growth and density-dependence to
-		the output for the density dependent model. Each plot shows the
-		Pearson correlation coefficient and significance level: 
-		'.' p < 0.1
-		'*' p < 0.05
-		'**' p < 0.01
-		'***' p < 0.001}
+		the output for the density dependent model.}
 		\label{fig:dCorr1}
 \end{figure}
 \begin{figure}[htpb]
 		\begin{center}
 <<dCorr2>>=
-corPlot(dLHS5@data[,-c(4,6,8,10,12,14:16)], dLHS5@res, ylim=c(0, 20000))
+plotscatter(dLHS5$data[,-c(4,6,8,10,12,14:16)], dLHS5$res, ylim=c(0, 20000))
 @
 		\end{center}
 		\caption{Scatterplots relating the value of each input parameter of
 		survival and fecundity to
-		the output for the density dependent model. Each plot shows the
-		Pearson correlation coefficient and significance level: 
-		'.' p < 0.1
-		'*' p < 0.05
-		'**' p < 0.01
-		'***' p < 0.001}
+		the output for the density dependent model.}
 		\label{fig:dCorr2}
 \end{figure}
 
@@ -328,10 +310,6 @@ between the terms, in particular interactions involving $s_7$, $g_m$ and $a$,
 the
 survival for adult plants, and the terms associated with competition between seedlings, 
 respectively.
-
-% TODO TODO TODO
-%\subsection{Discussion}
-%Discutir! Incuir comparacao com os indices de elasticidade
 
 \subsection{Conclusions}
 
