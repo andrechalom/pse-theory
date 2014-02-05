@@ -1,35 +1,8 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[margin=1.2in]{geometry}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{framed, color}
-\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
-\setlength{\topmargin}{0cm}
-
-% Create friendly environments for theorems, propositions, &c.
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newenvironment{proof}[1][Proof]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{definition}[1][Definition]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{example}[1][Example]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{remark}[1][Remark]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
-
 \SweaveOpts{fig=T,echo=F}
-\begin{document}
 \setkeys{Gin}{width=0.8\textwidth}
 
-\begin{center}
-  {\Large Alguns resultados interessantes da sensibilidade de modelo
-  n\~ao linear do crescimento populacional de {\em Tribolium}}
-
-\end{center}
+\section{Estudo de caso 2: Modelo 
+  n\~ao linear do crescimento populacional de {\em Tribolium}
 
 Embora a teoria para calcular sensibilidades e elasticidades de modelos matriciais
 lineares remonte ao final d\'ecada de 70, uma teoria para o estudo consistente
@@ -137,7 +110,7 @@ TheModel <- function (x) {
 }
 #LHSpeq <- LHS(TheModel, factors, 800, q, q.arg, nboot=100)
 #save(LHSpeq, file="Triboliumpeq.Rdata")
-load("Triboliumpeq.Rdata")
+load("R/Triboliumpeq.Rdata")
 @
 
 O paper original se importa com o equivalente metab\'olico dos besouros nas diferentes fases de vida,
@@ -258,7 +231,7 @@ q.arg <- list(
 			  list(min=0, max=1))
 # LHSlge <- LHS(TheModel, factors, 800, q, q.arg, nboot=100)
 # save(LHSlge, file="Triboliumlge.Rdata")
-load("Triboliumlge.Rdata")
+load("R/Triboliumlge.Rdata")
 plotscatter(LHSlge) ->ign
 mud.elas <- round(100*(elast(LHSlge)-elast(LHSpeq))/elast(LHSpeq))
 @
@@ -341,12 +314,9 @@ logit <- function (p) log(p) - log(1-p)
 constrain <- function(x) c(exp(x[1]), logistic(x[2]), logistic(x[3]), logistic(x[4]), logistic(x[5]), logistic(x[6]))
 ssqres <- function (x) sum((Tribolium(x[1], x[2], x[3], x[4], x[5], x[6], 64, 35, 70, 19) - trib.conf)^2)
 cssqres <- function(x) ssqres(constrain(x))
-a <- optim(par=c(log(b), logit(cea), logit(cel), logit(cpa), logit(mua), logit(mul)), fn=cssqres, method="SANN", control=list(maxit=200000))
-a <- optim(a$par, fn=cssqres, method="SANN", control=list(maxit=2000000))
+a <- optim(par=c(log(b), logit(cea), logit(cel), logit(cpa), logit(mua), logit(mul)), fn=cssqres, method="SANN", control=list(maxit=2000))
 print(a$par)
 test <- Tribolium(exp(a$par[1]), logistic(a$par[2]), logistic(a$par[3]), logistic(a$par[4]), logistic(a$par[5]), logistic(a$par[6]), 64, 35, 70, 19)
 test <- matrix(test, ncol=3, byrow=T)
 matplot(test)
 @
-
-\end{document}
