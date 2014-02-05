@@ -22,7 +22,7 @@
 \newenvironment{remark}[1][Remark]{\begin{trivlist}
 	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 \newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
-
+\newcommand{\R}{{\sf \,R\,}} % padrao para representar o R, segundo algumas listas
 
 % Cabeçalho e rodapé
 % Controlar os cabeçalhos e rodapés
@@ -162,6 +162,10 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input mini.tex
 \input tribolium.tex
 %%% TODO incluir resultados de E. edulis, Tribolium e Heterodera AQUI
+
+\appendix
+\chapter{Sensitivity analyses: a brief tutorial with \R package pse}
+%\input pse_tutorial.tex
 
 % FIM
 \cleardoublepage

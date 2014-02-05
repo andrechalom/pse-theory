@@ -1,46 +1,12 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[margin=1.2in]{geometry}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{url}
-\usepackage{framed, color}
-\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
-\setlength{\topmargin}{0cm}
-% Create friendly environments for theorems, propositions, &c.
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newenvironment{proof}[1][Proof]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{definition}[1][Definition]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{example}[1][Example]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{remark}[1][Remark]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
-\newcommand{\R}{{\sf \,R\,}} % padrao para representar o R, segundo algumas listas
-%\VignetteIndexEntry{Parameter space exploration tutorial}
-
 \SweaveOpts{fig=F,echo=T}
-
-\begin{document}
-\setkeys{Gin}{width=0.8\textwidth}
-
 <<seed, echo=F>>=
 set.seed(17)
 @
-
-\title{Sensitivity analyses: a brief tutorial with \R package pse}
-\author{Chalom, A. \footnote{Theoretical Ecology Lab, LAGE at  Dep. Ecologia, Instituto de Biociências, Universidade de São Paulo,
+\chapter{Sensitivity analyses: a brief tutorial with \R package pse}
+Chalom, A. \footnote{Theoretical Ecology Lab, LAGE at  Dep. Ecologia, Instituto de Biociências, Universidade de São Paulo,
 Rua do Matão travessa 14 n\textordmasculine \ 321, São Paulo, SP, CEP 05508-900, Brazil.}
-\footnote{email: andrechalom@gmail.com} 
-\and
-Mandai, C.Y. \footnotemark[1] \and  Prado, P.I. \footnotemark[1]}
-\date{Version 0.3.1, November 23, 2013} 
-\maketitle
+\footnote{email: andrechalom@gmail.com},
+Mandai, C.Y. \footnotemark[1] and  Prado, P.I. \footnotemark[1]
 
 This document presents a brief practical tutorial about the use of
 sensitivity analyses tools in the study of ecological models. To 
@@ -446,24 +412,3 @@ coupledLHS <- tell(uncoupledLHS, myresults)
 @
 
 Then you may proceed with the analyses using prcc, ecdf, etc.
-
-\cleardoublepage
-
-\begin{thebibliography}{9}
-\bibitem{Chalom12}
-  A. Chalom and P.I.K.L. Prado,
-  \emph{Parameter space exploration of ecological models},
-  arXiv:1210.6278 [q-bio.QM], 2012.
-\bibitem{Geyer}
-  C. Geyer, 
-  \emph{Calling C and Fortran from R},
-  http://users.stat.umn.edu/~geyer/rc/
-\bibitem{Murray02}
-  J.D. Murray,
-  \emph{Mathematical Biology I: An Introduction, vol. 17 of Interdisciplinary Applied Mathematics},
-  Springer, New York, NY, USA,2002.
-\bibitem{May1976} 
-  R.M. May, \emph{Simple mathematical models with very complicated dynamics},
-  Nature 261: 459--466, 1976.  
-\end{thebibliography}
-\end{document}
