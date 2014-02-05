@@ -127,6 +127,10 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 	  como uma abordagem integrativa entre a estimação de parâmetros e a análise de incerteza, apresentando
 	  resultados preliminares.
 
+	  Durante o progresso do presente trabalho, um pacote de funções na linguagem \R foi desenvolvido
+	  para facilitar o uso funcional das ferramentas teóricas expostas acima. Os apêndices deste texto
+	  trazem um tutorial e exemplos de uso deste pacote, disponível livremente na internet.
+
 	  \par
 	  \vspace{1em}
 	  \noindent\textbf{Palavras-chave:} análise de sensibilidade, análise de incerteza, modelagem numérica, verossimilhança
@@ -161,11 +165,13 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input caveat.tex
 \input mini.tex
 \input tribolium.tex
-%%% TODO incluir resultados de E. edulis, Tribolium e Heterodera AQUI
+%%% TODO incluir resultados de E. edulis e Heterodera AQUI
 
 \appendix
 \chapter{Sensitivity analyses: a brief tutorial with \R package pse}
-%\input pse_tutorial.tex
+\input pse_tutorial.tex
+\chapter{Multiple runs of the same parameter combination with \R package pse}
+\input multiple.tex
 
 % FIM
 \cleardoublepage

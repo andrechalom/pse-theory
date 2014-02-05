@@ -1,47 +1,7 @@
-\documentclass[12pt,a4paper]{article}
-\usepackage[margin=1.2in]{geometry}
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{url}
-\usepackage{framed, color}
-\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
-\setlength{\topmargin}{0cm}
-% Create friendly environments for theorems, propositions, &c.
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newenvironment{proof}[1][Proof]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{definition}[1][Definition]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{example}[1][Example]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{remark}[1][Remark]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
-\newcommand{\R}{{\sf \,R\,}} % padrao para representar o R, segundo algumas listas
-%\VignetteIndexEntry{PSE of stochastic models}
-
 \SweaveOpts{fig=F,echo=T}
-
-\begin{document}
-\setkeys{Gin}{width=0.8\textwidth}
-
 <<seed, echo=F>>=
 set.seed(42)
 @
-
-\title{Multiple runs of the same parameter combination with \R package pse}
-\author{Chalom, A. \footnote{Theoretical Ecology Lab, LAGE at  Dep. Ecologia, Instituto de Biociências, Universidade de São Paulo,
-Rua do Matão travessa 14 n\textordmasculine \ 321, São Paulo, SP, CEP 05508-900, Brazil.}
-\footnote{email: andrechalom@gmail.com}
-\and
-  Prado, P.I. \footnotemark[1]
-}
-\date{Version 0.3.1, November 23, 2013} 
-\maketitle
 
 This document presents an extension to the practical tutorial 
 found in the vignette ``pse\_tutorial'' of this package. If you're not
@@ -164,19 +124,3 @@ This can be used to iteratevely add repetitions until the PRCC is stable. In thi
 the PRCC scores show very little change after 6 to 7 repetitions. This procedure can be coupled
 with SMBA evaluations between different hypercube sizes to find an acceptable bound for
 the number of total model evaluations.
-
-\cleardoublepage
-
-\begin{thebibliography}{9}
-\bibitem{Chalom12}
-  A. Chalom and P.I.K.L. Prado,
-  \emph{Parameter space exploration of ecological models},
-  arXiv:1210.6278 [q-bio.QM], 2012.
-\bibitem{Marino08}
-  S. Marino, I.B. Hogue, C.J. Ray and D.E. Kirschner, 
-  \emph{A methodology for performing global 
-    uncertainty and sensivity analysis in systems biology}, 
-  Journal of Theoretical Biology 254: 178--196, 2008.
-\end{thebibliography}
-
-\end{document}

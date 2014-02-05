@@ -1,0 +1,3 @@
+\SweaveOpts{fig=T,echo=F}
+\section{Case study 2: tWoLife, a simple birth-death-movement individual based model}\label{twolife}
+\subsection{Model description}

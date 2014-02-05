@@ -2,7 +2,6 @@
 <<seed, echo=F>>=
 set.seed(17)
 @
-\chapter{Sensitivity analyses: a brief tutorial with \R package pse}
 Chalom, A. \footnote{Theoretical Ecology Lab, LAGE at  Dep. Ecologia, Instituto de Biociências, Universidade de São Paulo,
 Rua do Matão travessa 14 n\textordmasculine \ 321, São Paulo, SP, CEP 05508-900, Brazil.}
 \footnote{email: andrechalom@gmail.com},
