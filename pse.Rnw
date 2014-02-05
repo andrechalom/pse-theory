@@ -125,11 +125,14 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input sampling.tex
 \input quantanal.tex
 \input leslie.tex
+\input revlit.tex
 
 % CAPITULO 3
 \selectlanguage{brazilian}
 \chapter{Uma abordagem integrativa para análises de incerteza}
 \input integr.tex
+\input caveat.tex
+%%% TODO incluir resultados de E. edulis, Tribolium e Heterodera AQUI
 
 % FIM
 \cleardoublepage
