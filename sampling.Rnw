@@ -333,4 +333,4 @@ the parameters which present strong negative effects will be ranked very low,
 and will not be taken into account by the SBMA.
 
 We will apply SBMA for the PRCC technique (discussed on section \ref{QuantAnal})
-on the example on section \ref{IBM}. 
+on the example on section \ref{Leslie}. 

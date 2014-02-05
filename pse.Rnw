@@ -165,7 +165,8 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input caveat.tex
 \input mini.tex
 \input tribolium.tex
-%%% TODO incluir resultados de E. edulis e Heterodera AQUI
+\input leslie2.tex
+%%% TODO incluir resultados de Heterodera AQUI???
 
 \appendix
 \chapter{Sensitivity analyses: a brief tutorial with \R package pse}

@@ -1,60 +1,15 @@
-### Cálculos de índices de sensibilidade analiticamente, pelo
-# método de Caswell (08, 09, 10)
+\section{Estudo de caso 3: um modelo de população estruturada com denso-dependência}
+Nesta sessão, retomamos o modelo para a população de {\em E. edulis} apresentado
+na sessão \ref{Leslie}, para comparar as análises de incerteza e sensibilidade realizadas 
+a partir de resultados analíticos, do Hipercubo Latino e do método baseado em verossimilhança.
 
+<<>>=
 
 library(MASS)
-########### TRIBOLIUM
-########## PARAMETROS ######
-b = 6.598
-cea = 1.155e-2
-cel = 1.209e-2
-cpa = 4.7e-3
-mua = 7.729e-3
-mu1 = 2.055e-1
-theta <- c(b, cea, cel, cpa, mua, mu1)
-ct <- matrix(c(9, 1, 4.5), ncol=3) # metabolic rates
-########### POP EM EQUILIBRIO #####
-n<- matrix(c(22.6, 18, 385.2), nrow=3) ## equilibrium n
-############ MATRIZ A ########
-xp <- exp(-cel*n[1]-cea*n[3])
-A.n <- matrix(c(0,0, b*xp, 1-mu1, 0, 0, 0, exp(-cpa*n[3]), 1-mua), nrow=3, byrow=T)
-############ AUXILIARES
-n.1 <- diag(as.vector(1/n))
-Mtheta <- diag(as.vector(theta))
-I <- diag(3)
-K <- kronecker(t(n), I)
-############ DERIVADAS
-dvecAdnt <- matrix(c(
-					 0,0,0, 
-					 0,0,0, 
-					 0,0,0, 
-					 0,0,0, 
-					 0,0,0, 
-					 0,0,-cpa*exp(-cpa*n[3]), 
-					 -b*cel*xp,0, -b*cea*xp,
-					 0,0,0, 
-					 0,0,0), nrow=9, byrow=T)
-dvecAdtheta <- matrix(c(
-				     0,0,0,0,0,0,
-				     0,0,0,0,0,-1,
-				     0,0,0,0,0,0,
-				     0,0,0,0,0,0,
-				     0,0,0,0,0,0,
-				     0,0,0,-n[3]*exp(-cpa*n[3]),0,0,
-				     xp,-b*n[3]*xp,-b*n[1]*xp,0,0,0,
-				     0,0,0,0,0,0,
-				     0,0,0,0,-1,0), nrow=9, byrow=T)
-#sensibilidade
-dndtheta <- ginv(I-A.n-K%*%dvecAdnt) %*% K %*% dvecAdtheta
-#elasticidade
-elas <- n.1 %*% dndtheta %*% Mtheta
-dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
-barplot(dNdtheta, names=c("b", "cea", "cel", "cpa", "mua", "mu1"))
-
 ####### E. EDULIS  ###################
 ####### PARAMETROS ###################
 ct <- matrix(1, ncol=7, nrow=1) # sem ponderacao, pop total
-dados <- read.csv("leslie.csv", header=TRUE)
+dados <- read.csv("R/leslie.csv", header=TRUE)
 stasis <- dados[dados$TO == dados$FROM & dados$FROM != 7,]
 growth <- dados[dados$TO == (dados$FROM +1),]
 F7 <- mean(dados$VALUE[dados$TO==1 & dados$FROM==7]) 
@@ -146,3 +101,4 @@ dNdtheta <- ct %*% dndtheta
 elas <- n.1 %*% dndtheta %*% Mtheta
 dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
 barplot(dNdtheta, names=c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z"));
+@
