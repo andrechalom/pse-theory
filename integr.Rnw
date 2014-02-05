@@ -66,3 +66,5 @@ Resumo de aplicação:
 	\item Realize as análises de incerteza e sensibilidade a partir das amostras geradas.
 \end{enumerate}
 
+
+(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
