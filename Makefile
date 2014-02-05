@@ -17,7 +17,7 @@ caveat:
 leslie.tex: leslie.Rnw R/Independent.Rdata R/Dependent.Rdata 
 
 clean:
-	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc intro.tex leslie.tex quantanal.tex sampling.tex mini.tex tribolium.tex pse_tutorial.tex mydata.csv multiple.tex twolife.tex
+	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc intro.tex leslie.tex quantanal.tex sampling.tex mini.tex tribolium.tex pse_tutorial.tex mydata.csv multiple.tex twolife.tex integr.tex
 
 %.tex: %.Rnw
 	R --vanilla <<< "library(utils); Sweave(\"$<\", encoding=\"utf8\")"
