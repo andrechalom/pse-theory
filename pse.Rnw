@@ -150,7 +150,7 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 
 % CAPITULO 2
 \selectlanguage{english}
-\chapter{Parameter space exploration: a synthesis}
+\chapter{Parameter space exploration: a synthesis}\label{cap:pse}
 \input intro.tex
 \input sampling.tex
 \input quantanal.tex

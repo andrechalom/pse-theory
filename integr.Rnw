@@ -1,16 +1,31 @@
 \section{Descrição}
-O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar os seguintes passos: 
-calibração, verificação, validação, análise de incerteza e análise de sensibilidade. (*definir aqui cada um*)
-Questões relacionadas a verificação não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
+O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar as seguintes etapas: 
+verificação, validação, calibração, análise de incerteza e análise de sensibilidade.
+
+As duas primeiras etapas
+estão muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
+computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
+reproduzir os fênomenos reais desejados. Outra forma de pensar e V \& V é que a validação se ocupa em determinar
+que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
+resolvendo as equações corretamente \cite{ASC2010}.
+Questões relacionadas a verificação de modelos não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
+
+A calibração consiste em ajustar os parâmetros implementados no código para melhorar a concordância entre o resultado
+obtido pelo modelo e aquele observado em uma determinada situação. A correta calibração de um modelo é considerada
+essencial para que o modelo possa ser considerado para fins preditivos \cite{ASC2010}.
+
+As duas últimas etapas já foram extensamente discutidas no capítulo \ref{cap:pse}, mas é importante frisar que
+calibração e as análises de incerteza e sensibilidade dependem fortemente da realização prévia de verificação e 
+validação do modelo.
 
 Durante o desenvolvimento e a análise de modelos matemáticos em ecologia, é comum separar a calibração por 
 estimativa dos parâmetros (EP)
 da análise de incerteza e sensibilidade (AIS) do modelo. Os dois passos são feitos em seções diferentes dos artigos, discutidos
-em capítulos diferentes dos livros, e frequentemente realizados por equipes diferentes. Em estudos que 
+em capítulos diferentes dos livros \cite{Caswell89}, e frequentemente realizados por equipes diferentes. Em estudos que 
 empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
-de parâmetros considerada ótima durante as estimativas de parâmetros, e a análise de incerteza é apresentada
-como um procedimento separado e posterior à análise do resultado ``principal''. Em alguns casos, 
-não existe sequer a concordância entre a abordagem estatística usada em ambos os passos (***citações***).
+de parâmetros considerada ótima durante as estimativas de parâmetros \cite{SilvaMatos99}, e a análise de incerteza é apresentada
+como um procedimento separado e posterior à análise do resultado ``principal''. Até mesmo a abordagem estatística usada
+em ambos os procedimentos pode ser incoerente.
 
 Outro problema que surge nessa abordagem é o fato de que, muitas vezes, o conjunto de parâmetros usados na calibração do modelo
 tem pouca relação com as entradas individuais da matriz de projeção. Isso ocorre, por exemplo, quando séries temporais
@@ -26,7 +41,7 @@ uma ferramenta analítica, baseada em expansões lineares das funções de inter
 Dependendo do tipo de experimento utilizado para obter estimativas das taxas vitais, diferentes abordagens 
 podem ser utilizadas para encontrar um conjunto de valores que melhor represente o estado de conhecimento
 que temos de uma população, entre abordagens frequentistas, bayesianas ou baseadas em verossimilhança.
-Já a teoria analítica de AIS, devida em grande parte aos trabalhos de Hal Caswell, procede rotineiramente por
+Já a teoria analítica de AIS, devida em grande parte aos trabalhos de Hal Caswell \cite{Caswell89}, procede rotineiramente por
 tomar um modelo já parametrizado da forma ótima, e estudar as derivadas de primeira ordem da resposta de interesse
 em relação a cada um dos parâmetros de entrada. Nessa formulação, a quantidade e a qualidade dos dados de entrada
 para o modelo são ignorados, a menos de suas médias, e medidas de sensibilidade são tomadas exclusivamente sobre
@@ -49,11 +64,20 @@ abordagem pautada pelo princípio da verossimilhança, é capaz de contemplar da
 incerteza descritas acima, gerando como resultado um quadro completo do nosso conhecimento a respeito de 
 um sistema. Embora para sistemas muito simples as abordagens possam convergir, isso não se verifica para problemas
 e sistemas de maior complexidade. As principais vantagens de usar a formulação estocástica são:
+
 \begin{enumerate}
-	\item A abordagem analítica é local (portanto, responde ao que acontece com perturbações infinitesimais) e depende das funções serem "suaves" na vizinhança, a estocástica é global e não tem essa limitação.
-	\item O princípio de verossimilhança afirma que toda a informação contida nas amostras coletadas está contida na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela amostra - enquanto a abordagem analítica frequentemente ``joga fora'' informação, e em alguns casos pode dar a impressão de gerar respostas com mais informação do que ela realmente tem.
+	\item A abordagem analítica é local (portanto, responde ao que acontece com perturbações infinitesimais) 
+		e depende das funções serem "suaves" na vizinhança, a estocástica é global e não tem essa limitação.
+	\item O princípio de verossimilhança afirma que toda a informação contida nas amostras coletadas está contida 
+		na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de 
+		verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela 
+		amostra - enquanto a abordagem analítica pode, alternadamente, desperdiçar informações coletadas ou 
+		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite.
 \end{enumerate}
 
+(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
+
+\section{Aplicação}
 (****** vou explicar o passo a passo detalhadamente, aqui vai um resumão da aplicação *******)
 
 Resumo de aplicação:
@@ -67,4 +91,3 @@ Resumo de aplicação:
 \end{enumerate}
 
 
-(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
