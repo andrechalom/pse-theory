@@ -2,8 +2,8 @@
 O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar as seguintes etapas: 
 verificação, validação, calibração, análise de incerteza e análise de sensibilidade.
 
-As duas primeiras etapas
-estão muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
+As duas primeiras etapas estão historicamente 
+muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
 computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
 reproduzir os fênomenos reais desejados. Outra forma de pensar e V \& V é que a validação se ocupa em determinar
 que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
@@ -15,6 +15,7 @@ obtido pelo modelo e aquele observado em uma determinada situação. A correta c
 essencial para que o modelo possa ser considerado para fins preditivos \cite{ASC2010}.
 
 As duas últimas etapas já foram extensamente discutidas no capítulo \ref{cap:pse}, mas é importante frisar que
+é geralmente aceito que a
 calibração e as análises de incerteza e sensibilidade dependem fortemente da realização prévia de verificação e 
 validação do modelo.
 
@@ -24,8 +25,8 @@ da análise de incerteza e sensibilidade (AIS) do modelo. Os dois passos são fe
 em capítulos diferentes dos livros \cite{Caswell89}, e frequentemente realizados por equipes diferentes. Em estudos que 
 empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
 de parâmetros considerada ótima durante as estimativas de parâmetros \cite{SilvaMatos99}, e a análise de incerteza é apresentada
-como um procedimento separado e posterior à análise do resultado ``principal''. Até mesmo a abordagem estatística usada
-em ambos os procedimentos pode ser incoerente.
+como um procedimento separado e posterior à análise do resultado considerado como principal. 
+Até mesmo a abordagem estatística usada em ambos os procedimentos pode ser incoerente.
 
 Outro problema que surge nessa abordagem é o fato de que, muitas vezes, o conjunto de parâmetros usados na calibração do modelo
 tem pouca relação com as entradas individuais da matriz de projeção. Isso ocorre, por exemplo, quando séries temporais
@@ -52,7 +53,7 @@ respeito à estrutura do modelo matricial, e não ao procedimento completo desde
 a formulação e execução do modelo. Isso pode levar a uma falsa confiança em estudos que apresentem
 uma estrutura matricial estável, portanto de baixas sensibilidades, mas dados tomados com muita incerteza.
 
-Por outro lado, questões de validação dos modelos são frequentemente ignoradas pela literatura da área,
+Por outro lado, questões de validação dos modelos são frequentemente menosprezadas pela literatura da área,
 apesar de estarem intimamente conectadas com as questões relevantes de incerteza. Podemos dividir a incerteza
 de um modelo em três fontes principais: incerteza estrutural, incerteza de parâmetros (ou epistêmica) 
 e incerteza estocástica. Enquanto a maioria das técnicas de AIS se concentram na segunda componente, 

@@ -1,83 +1,126 @@
+\SweaveOpts{fig=T,echo=F}
 \section{Estudo de caso 1: um modelo mínimo}
 
- General ``non-reproducing juveniles and reproductive adults'' model, onde é possível tirar alguns resultados
- analíticos
+Um modelo de população estruturada que pode ser considerado mínimo é o modelo
+com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por Hal Caswell \cite{Caswell08} 
+como um exemplo simples da aplicação da análise de sensibilidade analítica. 
+O modelo é associado à seguinte matriz:
 
 \begin{equation}
  A = \left[
  \begin{array}{ll}
 	 \sigma_1 (1-\gamma) &   f \\
-     \sigma_1 \gamma &sigma2
+     \sigma_1 \gamma & \sigma_2
  \end{array}
  \right]
 \end{equation}
- ASSUMING survival is independent of stage, $\sigma_1 = \sigma_2$.
- For large animals with one offspring per cycle, 
- f is $\sim$ a proportion of adults that generate offspring
- $\sigma \sim binom(\theta_1, n1 = n_2+n_3)$; $f \sim binom(\theta_2, n_2)$; $gamma \sim binom(\theta_3, n_3)$
- IF all variables are independent, and both values for n are fixed, given a single sample ${x_1, x_2, x_3}$
- \begin{equation}
- \mathcal{L} \left( \mathbf{\theta} | \mathbf{x} \right) 
- = \sum_i \log \left( {n_i \choose x_i} \theta_i^{x_i} (1-\theta_i) ^{n_i-x_i} \right)
- \end{equation}
- Por outro lado, o resultado do modelo é $\lambda$, o maior autovalor de A
- obedecendo 
- \begin{equation}
-	 \det \left[ 
-	 \begin{array}{ll} \lambda - \sigma(1-\gamma) & -f \\
-                 -\sigma \gamma &         \lambda - d 
+
+Aqui, $\sigma_1$ é a probabilidade de sobrevivência de juvenis, $\sigma_2$ é a probabilidade de sobrevivência de adultos, 
+$\gamma$ é a probabilidade de maturação, e $f$ é a fertilidade dos adultos. Vamos representar por $\lambda$ o maior
+autovalor dessa matriz.
+
+Vamos primeiramente presumir que a sobrevivência independe do estágio ($\sigma_1=\sigma_2=\sigma$). Também vamos fazer
+a suposição de que é possível marcar inequivocamente quais dos juvenis nasceram no último ciclo, e quais adultos
+passaram pelo processo de maturação no último ciclo, para chegar ao modelo:
+
+\begin{equation}
+ A = \left[
+ \begin{array}{ll}
+	 \sigma (1-\gamma) &   f \\
+     \sigma \gamma & \sigma
+ \end{array}
+ \right]
+\end{equation}
+
+Para animais de tamanho grande, com um filhote por estação reprodutiva, $f$ pode ser aproximado pela proporção de
+adultos que gera prole, $\sigma$ é dado pela proporção de indivíduos que sobrevivem por um ciclo e $\gamma$ pela
+proporção de juvenis que se tornam adultos por ciclo, de forma que os três parâmetros podem ser modelados por
+distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número de tentativas dados, respectivamente, por
+$n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
+
+\begin{align}
+\gamma & \sim binom(\theta_1, n_1) \\
+f      & \sim binom(\theta_2, n_2) \\
+\sigma & \sim binom(\theta_3, n_t = n_1+n_2)
+\end{align}
+
+Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
+a função de log-verossimilhança para $\gamma$ é dada por
+
+\begin{equation}
+\mathcal{L} \left( \theta_1 | x_A \right) 
+= \log \left( {n_1 \choose x_A} \theta_1^{x_A} (1-\theta_1) ^{n_1-x_A} \right)
+\end{equation}
+
+Da mesma forma, a função de log-verossimilhança para $f$ é dada em função do número de juvenis nascidos no último ciclo, $x_J$:
+\begin{equation}
+\mathcal{L} \left( \theta_2 | x_J \right) 
+= \log \left( {n_2 \choose x_J} \theta_2^{x_J} (1-\theta_2) ^{n_2-x_J} \right)
+\end{equation}
+
+Por fim, a função de log-verossimilhança referente a sigma é dada em função do número de indivíduos sobreviventes, $x_S$,
+calculado como o número de indivíduos observado menos $x_J$:
+\begin{equation}
+\mathcal{L} \left( \theta_3 | x_S \right) 
+= \log \left( {n_t \choose x_S} \theta_3^{x_S} (1-\theta_3) ^{n_t-x_S} \right)
+\end{equation}
+
+Com o pressuposto forte de que as três variáveis são independentes, e escrevendo $n_t = n_3$ e 
+$\{x_A, x_J, x_S\} = \{x_1, x_2, x_3\}$
+para facilitar a notação\footnote{Importante frisar: $x_1$ não corresponde aqui ao número de juvenis observados após um ciclo}
+a função de verossimilhança para o vetor de parâmetros $\boldsymbol\theta$ é:
+
+\begin{equation}
+\mathcal{L} \left( \boldsymbol{\theta} | \mathbf{x} \right) 
+= \sum_i \log \left( {n_i \choose x_i} \theta_i^{x_i} (1-\theta_i) ^{n_i-x_i} \right) \label{eqn:loglik}
+\end{equation}
+
+O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo 
+\begin{equation}
+	\det \left[ 
+	\begin{array}{ll} \lambda - \sigma(1-\gamma) & -f \\
+		-\sigma \gamma &         \lambda - d 
 	\end{array}
 	\right]
-		  = \lambda^2 - \lambda tr(A) + det(A) = 0
-	  \end{equation}
-	  \begin{equation}
- \lambda = 1/2 * (tr(A) + \sqrt(tr^2(A) - 4 det(A)) )
- \end{equation}
- queremos saber, dada uma amostra $x_i$, quais são as sensibilidades de $\lambda$ aos parâmetros $\theta_i$
- Para isso, vamos determinar qual é o melhor modelo da forma $\hat{\lambda} = a*sigma+b*gamma+c*f$ que representa $\lambda$
+	= \lambda^2 - \lambda tr(A) + det(A) = 0
+\end{equation}
+\begin{equation}
+	\lambda = \frac{1}{2} \left(tr(A) + \sqrt(tr^2(A) - 4 det(A)) \right)
+\end{equation}
 
- Exemplo usando Metropolis
-<<Case1>>=
+<<load, fig=F>>=
 set.seed(42)
-(N <- c(20, 10, 10))
-(obs <- c(18, 3, 1))
-(sigma <- obs[1]/N[1])
-(f <- obs[2]/N[2])
-(gamma <- obs[3]/N[3])
-(A <- matrix(c(sigma*(1-gamma),f,sigma*gamma,sigma),byrow=T, ncol=2))
+# pop iniciail: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev
+obs <- c(3, 2, 23)
+# NOVA observacao, coerente com as observacoes acima
+new.n <- c(round(obs[3]/n.t*(n[1]-obs[1]))+obs[2],round(obs[3]/n.t*n[2])+obs[1]) 
+sigma <- obs[3]/n.t
+f <- obs[2]/n[2]
+gamma <- obs[1]/n[1]
+A <- matrix(c(sigma*(1-gamma),f,sigma*gamma,sigma),byrow=T, ncol=2)
 tr <- function (A) return(A[1,1]+A[2,2])
-#eigen(A)
-(lambda <- 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A)))))
-#Simulando a pop
-n <- c(0,200)
-adults <- numeric()
-seeds <- numeric()
-for (i in 1:10) {
-	 n<- A%*%n
-	 adults[i] <- n[2]
-	 seeds[i] <- n[1]
-}
-par(mfrow=c(2,1))
-plot(seeds)
-plot(adults)
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+lambda <- A.to.lambda(A)
 # Agora vamos brincar de Metropolis!
 # Ponto inicial:
-x = data.frame(sigma=0.9, f=0.3, gamma=0.1)
+x = data.frame(sigma=sigma, f=f, gamma=gamma)
 atual <- as.numeric(x[1,])
 # jumping distribution
 Q <- function (x) rnorm (3, as.numeric(x), c(0.02,0.02, 0.02))
 # probability distribution
-f <- function (x) dbinom(obs[1], N[1], as.numeric(x[1])) *
-				  dbinom(obs[2], N[2], as.numeric(x[2])) *
-				  dbinom(obs[3], N[3], as.numeric(x[3]))
+Met.f <- function (x) dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
 #
 #Iteration
 #
-for (i in 1:100) {
+for (i in 1:9999) {
 	novo <- Q(atual)
-	alfa <- f(novo)/f(atual)
-	if (is.nan(alfa)) alfa = 0
-	if (alfa >= 1 || runif(1,0,1) < alfa) { #aceite
+	alfa <- Met.f(novo) - Met.f(atual)
+	if (is.nan(alfa)) alfa = -Inf
+	if (alfa >= 0 || runif(1,0,1) < exp(alfa)) { #aceite
 		x[nrow(x)+1,] <-  novo
 		atual <- novo
 	} else {
@@ -86,12 +129,43 @@ for (i in 1:100) {
 }
 dis <- x
 # Analise de incerteza sobre lambda
-getlambda = function (sigma, f, gamma) eigen( matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )$values[1]
+getlambda = function (sigma, f, gamma) A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
 getlambda = Vectorize(getlambda)
 dis <- cbind(dis, lambda = getlambda(dis$sigma, dis$f, dis$gamma))
 # instabilidades numericas...
-dis$lambda[dis$lambda<0] <- - dis$lambda[dis$lambda<0]
+#dis$lambda[dis$lambda<0] <- - dis$lambda[dis$lambda<0]
+@
+
+Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
+populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
+adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver que a melhor estimativa para
+cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
+Neste caso, o valor de $\lambda$ é \Sexpr{lambda}.
+
+\begin{figure}
+<<LikFunc>>=
+curve(dbinom(obs[3], n.t, x))
+curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
+curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
+@
+	\caption{Função de verossimilhança para cada parâmetro do modelo. Preto = $\sigma$, vermelho = $f$ e verde = $\gamma$.}
+	\label{fig:LikFunc}
+\end{figure}
+
+A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
+foram utilizadas para gerar \Sexpr{dim(dis)[1]} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
+de $\lambda$. A distribuição dos valores de $\lambda$ 
+
+e a densidade de respostas do modelo
+foi 
+
+
+ Exemplo usando Metropolis
+<<Case1>>=
 plot(density(dis$lambda))
+d <- density(dis$lambda)
+lambda
+d$x[which(d$y == max(d$y))]
 
 # Analise de sensibilidade sobre lambda
 library(pse)
@@ -99,6 +173,17 @@ library(sensitivity)
 source("R/pse.R")
 plotscatter(dis[,c(1,2,3)], dis[,4])
 
-plot(pcc(dis[,c(1,2,3)], dis[,4], rank=TRUE))
+plot(pcc(dis[,c(1,2,3)], dis[,4], rank=TRUE, nboot=100))
+abline(h=0, lty=3)
 
 @
+
+
+
+
+
+
+
+queremos saber, dada uma amostra $x_i$, quais são as sensibilidades de $\lambda$ aos parâmetros $\theta_i$
+Para isso, vamos determinar qual é o melhor modelo da forma $\hat{\lambda} = a*sigma+b*gamma+c*f$ que representa $\lambda$
+
