@@ -39,9 +39,9 @@ distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número
 $n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
 
 \begin{align}
-\gamma & \sim binom(\theta_1, n_1) \\
-f      & \sim binom(\theta_2, n_2) \\
-\sigma & \sim binom(\theta_3, n_t = n_1+n_2)
+	\gamma & \sim \operatorname{binom}(\theta_1, n_1) \\
+	f      & \sim \operatorname{binom}(\theta_2, n_2) \\
+	\sigma & \sim \operatorname{binom}(\theta_3, n_t = n_1+n_2)
 \end{align}
 
 Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
@@ -58,7 +58,7 @@ Da mesma forma, a função de log-verossimilhança para $f$ é dada em função 
 = \log \left( {n_2 \choose x_J} \theta_2^{x_J} (1-\theta_2) ^{n_2-x_J} \right)
 \end{equation}
 
-Por fim, a função de log-verossimilhança referente a sigma é dada em função do número de indivíduos sobreviventes, $x_S$,
+Por fim, a função de log-verossimilhança referente a $\sigma$ é dada em função do número de indivíduos sobreviventes, $x_S$,
 calculado como o número de indivíduos observado menos $x_J$:
 \begin{equation}
 \mathcal{L} \left( \theta_3 | x_S \right) 
@@ -82,11 +82,11 @@ O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo
 		-\sigma \gamma &         \lambda - d 
 	\end{array}
 	\right]
-	= \lambda^2 - \lambda tr(A) + det(A) = 0
+	= \lambda^2 - \lambda \operatorname{tr}(A) + \operatorname{det}(A) = 0
 \end{equation}
-\begin{equation}
-	\lambda = \frac{1}{2} \left(tr(A) + \sqrt(tr^2(A) - 4 det(A)) \right)
-\end{equation}
+\begin{align}
+	\lambda = \frac{1}{2} \left(\operatorname{tr}(A) + \sqrt{\operatorname{tr}^2(A) - 4 \operatorname{det}(A)} \right)
+\end{align}
 
 <<load, fig=F>>=
 set.seed(42)
@@ -110,28 +110,40 @@ atual <- as.numeric(x[1,])
 # jumping distribution
 Q <- function (x) rnorm (3, as.numeric(x), c(0.02,0.02, 0.02))
 # probability distribution
-Met.f <- function (x) dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+Met.f <- function (x) {
+	t <- try(dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
 				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
-				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE))
+	if (is.nan(t)) return (-Inf)
+	return(t)
+}
 #
 #Iteration
 #
-for (i in 1:9999) {
-	novo <- Q(atual)
-	alfa <- Met.f(novo) - Met.f(atual)
-	if (is.nan(alfa)) alfa = -Inf
-	if (alfa >= 0 || runif(1,0,1) < exp(alfa)) { #aceite
-		x[nrow(x)+1,] <-  novo
-		atual <- novo
-	} else {
-		x[nrow(x)+1,] <- atual
-	}
-}
+#for (i in 1:9999) {
+#	novo <- Q(atual)
+#	alfa <- Met.f(novo) - Met.f(atual)
+#	if (is.nan(alfa)) alfa = -Inf
+#	if (alfa >= 0 || runif(1,0,1) < exp(alfa)) { #aceite
+#		x[nrow(x)+1,] <-  novo
+#		atual <- novo
+#	} else {
+#		x[nrow(x)+1,] <- atual
+#	}
+#}
 dis <- x
+#save(dis, file="R/mini.Rdata")
+load("R/mini.Rdata")
+
+#ALTERNATIVA
+#library(mcmc)
+#atual <- as.numeric(x[1,])
+#m <- metrop(Met.f, atual, 99999, blen=5)
+#dis <- m$batch
 # Analise de incerteza sobre lambda
 getlambda = function (sigma, f, gamma) A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
 getlambda = Vectorize(getlambda)
-dis <- cbind(dis, lambda = getlambda(dis$sigma, dis$f, dis$gamma))
+dis <- cbind(dis, lambda = getlambda(dis[,1], dis[,2], dis[,3]))
 # instabilidades numericas...
 #dis$lambda[dis$lambda<0] <- - dis$lambda[dis$lambda<0]
 @
@@ -140,7 +152,7 @@ Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[
 populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
 adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver que a melhor estimativa para
 cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
-Neste caso, o valor de $\lambda$ é \Sexpr{lambda}.
+Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
 
 \begin{figure}
 <<LikFunc>>=
@@ -162,8 +174,8 @@ foi
 
  Exemplo usando Metropolis
 <<Case1>>=
-plot(density(dis$lambda))
-d <- density(dis$lambda)
+plot(density(dis[,4]))
+d <- density(dis[,4])
 lambda
 d$x[which(d$y == max(d$y))]
 
@@ -173,7 +185,7 @@ library(sensitivity)
 source("R/pse.R")
 plotscatter(dis[,c(1,2,3)], dis[,4])
 
-plot(pcc(dis[,c(1,2,3)], dis[,4], rank=TRUE, nboot=100))
+plot(pcc(dis[,c(1,2,3)], dis[,4], rank=TRUE))
 abline(h=0, lty=3)
 
 @

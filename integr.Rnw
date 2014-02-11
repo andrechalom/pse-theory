@@ -1,4 +1,4 @@
-\section{Descrição}
+\section{Motivação}
 O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar as seguintes etapas: 
 verificação, validação, calibração, análise de incerteza e análise de sensibilidade.
 
@@ -78,6 +78,37 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 
 (********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
 
+\section{Uma função de suporte}
+Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
+fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
+modelo, a partir de um conjunto de dados coletados?''. Sabemos que essa pergunta, se formulada sobre os parâmetros
+de uma distribuição de probabilidade, é respondida através da função de verossimilhança. Também sabemos que
+transformações injetoras sobre parâmetros preservam as propriedades da função de verossimilhança, isso é: 
+se um parâmetro $\theta$ está associado a uma função de verossimilhança $\mathcal{L}(\theta|\bu{x})$ e 
+$\phi = f(\theta)$ é dada por uma função $f(\cdot)$ injetora, a verossimilhança de $\phi$ é dada simplesmente por
+$\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\cite{Edwards72}, sec. 2.5).
+Vamos estender esse resultado para uma função genérica. Nosso argumento se baseia em uma função de um argumento,
+$\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivial.
+
+Considere a função $\Psi (\gamma | \bu{x})$ definida por:
+\begin{equation}
+\Psi ( \gamma | \bu{x} ) = \int_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
+\label{eqn:Psi}
+\end{equation}
+
+Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psi}
+nos diz que o suporte para esse valor de $\gamma$ é a soma do suporte dado aos valores de $\theta$. Vamos mostrar a seguir que
+a função $\Psi$ satisfaz os requerimentos de uma medida de suporte (ver \cite{Edwards72}, sec. 3.2):
+
+\begin{enumerate}[(a)]
+	\item {\em Transitividade}.
+	\item {\em Aditividade}.
+	\item {\em Invariância a transformações dos dados}.
+	\item {\em Invariância a transformações dos parâmetros}.
+	\item {\em Relevância e consistência}.
+	\item {\em Compatibilidade}.
+\end{enumerate}
+
 \section{Aplicação}
 (****** vou explicar o passo a passo detalhadamente, aqui vai um resumão da aplicação *******)
 
@@ -86,9 +117,9 @@ Resumo de aplicação:
 	\item Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de crescimento constante ou descrescente com a classe de tamanho, modelo com 4 ou com 5 classes de tamanho, etc). Escreva a função de verossimilhança $L_i(\bu{\theta}|\bu{x})$ para cada modelo $i \in 1,...,n$.
 	\item Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo. 
 	\item Determine o valor de AIC para cada modelo. 
-	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) para gerar amostras a partir da função de verossimilhança do modelo.
-	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de AIC.
-	\item Realize as análises de incerteza e sensibilidade a partir das amostras geradas.
+	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) para gerar amostras a partir da função de verossimilhança do modelo. A distribuição de resultados $y$ do modelo pode ser vista como a função de verossimilhança de $y$, já que $y=f(x)$ (ver \cite{Edwards72}, sessão 6.5?)
+	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de informação (ver \cite{Edwards72}, teorema 5.4.2?).
+	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
 
 

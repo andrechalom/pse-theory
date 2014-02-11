@@ -5,7 +5,10 @@ tentador utilizar a m\'edia dos resultados do modelo como uma medida
 da tend\^encia central dos resultados. No entanto, isso pode levar
 a um resultado equivocado, e devemos usar sempre o m\'aximo
 (ou os m\'aximos) da densidade dos resultados para representar os
-pontos mais prov\'aveis da sua distribui\c c\~ao.
+pontos mais prov\'aveis da sua distribui\c c\~ao. Convém lembrar
+que a distribuição de valores de $y$ é uma função de verossimilhança,
+não uma distribuição de probabilidades, de forma que média, mediana,
+e outras estatísticas similares não terão significado.
 
 Como exemplo, considere o modelo simples
 
@@ -55,11 +58,6 @@ Cuja m\'edia \'e dada por
 \end{eqnarray*}
 
 Note ent\~ao que, se escolhemos representar a distribui\c c\~ao dos resultados pela sua m\'edia,
-vamos estar usando $\hat x + 1$, enquanto que o valor mais prov\'avel para $y$ \'e $\hat x$, o mesmo
+vamos estar usando $\hat x + 1$, enquanto que o valor mais verossímil para $y$ \'e $\hat x$, o mesmo
 que para o par\^ametro $x$. Da mesma forma, ao construir intervalos de confian\c ca para o resultado
 $y$, estes devem ser feitos ao redor de $\hat x$, e n\~ao ao redor da m\'edia $\hat x + 1$. 
-
-%Durante a an\'alise de matrizes de Lefkovitch com denso-depend\^encia para
-%{\em E. edulis}, a popula\c c\~ao final m\'edia \'e de cerca de 17.000 \'arvores (uma estimativa
-%muito alavancada por uma pequena parcela de simula\c c\~oes com popula\c c\~ao final na casa dos 30 a 40 mil).
-%J\'a a densidade m\'axima \'e atingida pr\'oxima a 5.000 \'arvores.
