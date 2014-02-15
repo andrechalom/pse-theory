@@ -78,7 +78,7 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 
 (********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
 
-\section{Uma função de suporte}
+\section{Uma função de suporte}\label{sec:pseudo}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
 fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
 modelo, a partir de um conjunto de dados coletados?''. Sabemos que essa pergunta, se formulada sobre os parâmetros
@@ -90,24 +90,41 @@ $\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\cite{Ed
 Vamos estender esse resultado para uma função genérica. Nosso argumento se baseia em uma função de um argumento,
 $\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivial.
 
-Considere a função $\Psi (\gamma | \bu{x})$ definida por:
+Vamos construir uma função de pseudoverossimilhança $\Psi (\gamma | \bu{x})$, definida por:
 \begin{equation}
 \Psi ( \gamma | \bu{x} ) = \int_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
 \label{eqn:Psi}
 \end{equation}
 
 Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psi}
-nos diz que o suporte para esse valor de $\gamma$ é a soma do suporte dado aos valores de $\theta$. Vamos mostrar a seguir que
-a função $\Psi$ satisfaz os requerimentos de uma medida de suporte (ver \cite{Edwards72}, sec. 3.2):
+nos diz que o suporte para esse valor de $\gamma$ é a soma do suporte dado aos valores de $\theta$. No entanto, a 
+verossimilhança, ao contrário da probabilidade, não é aditiva, de forma de a função $\Psi$ não é uma função de verossimilhança. 
+Vamos mostrar a seguir que as condições nas quais a função $\Psi$ satisfaz os requerimentos de uma 
+medida de suporte (ver \cite{Edwards72}, sec. 3.2):
 
-\begin{enumerate}[(a)]
+\begin{enumerate}
 	\item {\em Transitividade}.
 	\item {\em Aditividade}.
 	\item {\em Invariância a transformações dos dados}.
-	\item {\em Invariância a transformações dos parâmetros}.
+	\item {\em Invariância a transformações dos parâmetros}. Não se mantém.
 	\item {\em Relevância e consistência}.
 	\item {\em Compatibilidade}.
 \end{enumerate}
+
+O problema de definição de uma pseudoverossimilhança para análise de incerteza em modelos está intimamente ligada à questão
+de hipóteses compostas sob o paradigma da verossimilhança. 
+
+%http://www.tandfonline.com/doi/abs/10.1080/00949657208810001?journalCode=gscs20#.Uv_UEJjTi00
+%http://biomet.oxfordjournals.org/content/62/2/451.short
+
+Statistical Evidence: A Likelihood Paradigm page 8
+%http://books.google.com.br/books?hl=en&lr=&id=oysWLTFaI_gC&oi=fnd&pg=PR11&dq=likelihood+composite+hypothesis&ots=W4nyN4-x84&sig=vjdFL8YrtFct4cOM_F_PFkznTwU&redir_esc=y#v=onepage&q&f=false
+
+\section{Um adendo Bayesiano}
+Do ponto de vista Bayesiano, podemos enxergar a função de probabilidade {\em a posteriori} de $\gamma$ como:
+
+O que explica porque a propriedade de invariância a transformações nos parâmetros (sec. \ref{sec:pseudo}) não é mantida por
+uma transformação não-injetora.
 
 \section{Aplicação}
 (****** vou explicar o passo a passo detalhadamente, aqui vai um resumão da aplicação *******)

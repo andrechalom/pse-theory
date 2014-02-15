@@ -212,7 +212,7 @@ scatterplots of the correlation between each parameter and the result using the 
 \textbf{plotscatter}, partial rank correlation using the function \textbf{plotprcc} and
 agreement between different hypercube sizes with the function \textbf{sbma}.
 
-\cleardoublepage
+\newpage
 \subsection{ECDF}
 The ecdf, short for empirical cumulative distribution function, may be used to 
 illustrate the distribution of the model results, in our case the final population.
@@ -222,7 +222,7 @@ high probability, between 35 and 45.
 plotecdf(myLHS)
 @
 
-\cleardoublepage
+\newpage
 \subsection{Scatterplots}
 Here, we can see a scatterplot of the result as a function of each parameter. As
 all the parameters are being changed for each run of the model, the scatterplots
@@ -239,7 +239,7 @@ and will ultimately lead to chaotic solutions \cite{May1976, Murray02}.
 plotscatter(myLHS)
 @
 
-\cleardoublepage
+\newpage
 \subsection{Partial correlation}
 The partial (rank) correlation coefficient (pcc or prcc) measures how strong are
 the linear associations between the result and each input parameter, after 
@@ -283,7 +283,7 @@ is very low, the SBMA may converge slowly. Also, if none of the model parameters
 to be monotonically correlated with the output, the agreement between runs may stay as
 low as 0.2 even for very large hypercubes. 
 
-\cleardoublepage
+\newpage
 \section{Multiple response variables}\label{multiple}
 In the previous section, we have examined a model that 
 returned a single number,
@@ -326,7 +326,7 @@ res.names <- paste("Time",1:Time)
 myLHS <- LHS(modelRun, factors, 100, q, q.arg, res.names, nboot=50)
 @
 
-\cleardoublepage
+\newpage
 \subsection{ECDF}
 The first plot we will produce will, again, be the ECDF.
 We may produce several plots using the parameter 
@@ -341,7 +341,7 @@ We may notice that the population values are spread over a
 wider range in the first time steps, but converge to a narrow
 distribution on time 6.
 
-\cleardoublepage
+\newpage
 \subsection{Scatterplots}
 Next, we investigate the correlation plots for the variables
 with each input parameter. To reduce the number of plots, we
@@ -352,7 +352,7 @@ linear model from being ploted with the parameter ``add.lm'':
 plotscatter(myLHS, index.res=c(1,3,6), add.lm=FALSE)
 @
 
-\cleardoublepage
+\newpage
 \subsection{Partial correlation}
 The partial correlation plots also accept the ``index.res''
 argument:
@@ -360,7 +360,7 @@ argument:
 plotprcc(myLHS, index.res=c(1,3,6))
 @
 
-\cleardoublepage
+\newpage
 \subsection{Agreement between runs}
 We have seen how the function \textbf{sbma} measures the agreement
 between two runs in the previous section. Now, we will use
