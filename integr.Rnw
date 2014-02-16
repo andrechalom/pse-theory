@@ -76,9 +76,9 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite.
 \end{enumerate}
 
-(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
+%(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
 
-\section{Uma função de suporte}\label{sec:pseudo}
+\section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
 fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
 modelo, a partir de um conjunto de dados coletados?''. Sabemos que essa pergunta, se formulada sobre os parâmetros
@@ -90,41 +90,51 @@ $\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\cite{Ed
 Vamos estender esse resultado para uma função genérica. Nosso argumento se baseia em uma função de um argumento,
 $\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivial.
 
-Vamos construir uma função de pseudoverossimilhança $\Psi (\gamma | \bu{x})$, definida por:
+O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
+de hipóteses compostas sob o paradigma da verossimilhança. 
+
+%http://www.tandfonline.com/doi/abs/10.1080/00949657208810001?journalCode=gscs20#.Uv_UEJjTi00
+%http://biomet.oxfordjournals.org/content/62/2/451.short
+
+Vamos construir uma função de verossimilhança $\Psi (\gamma | \bu{x})$, definida por:
+
 \begin{equation}
-\Psi ( \gamma | \bu{x} ) = \int_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
+	\Psi ( \gamma | \bu{x} ) = \max\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
 \label{eqn:Psi}
 \end{equation}
 
-Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psi}
-nos diz que o suporte para esse valor de $\gamma$ é a soma do suporte dado aos valores de $\theta$. No entanto, a 
-verossimilhança, ao contrário da probabilidade, não é aditiva, de forma de a função $\Psi$ não é uma função de verossimilhança. 
-Vamos mostrar a seguir que as condições nas quais a função $\Psi$ satisfaz os requerimentos de uma 
+E agora vamos demonstrar que essa função possui as seguintes propriedades de uma função de 
 medida de suporte (ver \cite{Edwards72}, sec. 3.2):
 
 \begin{enumerate}
 	\item {\em Transitividade}.
-	\item {\em Aditividade}.
+	\item {\em Aditividade em relação aos dados}.
 	\item {\em Invariância a transformações dos dados}.
 	\item {\em Invariância a transformações dos parâmetros}. Não se mantém.
 	\item {\em Relevância e consistência}.
 	\item {\em Compatibilidade}.
 \end{enumerate}
 
-O problema de definição de uma pseudoverossimilhança para análise de incerteza em modelos está intimamente ligada à questão
-de hipóteses compostas sob o paradigma da verossimilhança. 
+Para clarificar nossa operação, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$ que 
+\textbf{não} é função de verossimilhança: $\Psi^\dagger (\gamma | \bu{x})$, definida por:
+\begin{equation}
+\Psi^\dagger ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
+\label{eqn:Psistar}
+\end{equation}
 
-%http://www.tandfonline.com/doi/abs/10.1080/00949657208810001?journalCode=gscs20#.Uv_UEJjTi00
-%http://biomet.oxfordjournals.org/content/62/2/451.short
+Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
+nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$. No entanto, a 
+verossimilhança, ao contrário da probabilidade, não é aditiva em relação ao parâmetro, de forma de a função $\Psi^\dagger$ 
+não é uma função de verossimilhança. 
+
+Do ponto de vista Bayesiano, podemos enxergar a função de probabilidade {\em a posteriori} de $\gamma$ como:
+
+
+O que explica porque a propriedade de invariância a transformações nos parâmetros não é mantida por
+uma transformação não-injetora.
 
 Statistical Evidence: A Likelihood Paradigm page 8
 %http://books.google.com.br/books?hl=en&lr=&id=oysWLTFaI_gC&oi=fnd&pg=PR11&dq=likelihood+composite+hypothesis&ots=W4nyN4-x84&sig=vjdFL8YrtFct4cOM_F_PFkznTwU&redir_esc=y#v=onepage&q&f=false
-
-\section{Um adendo Bayesiano}
-Do ponto de vista Bayesiano, podemos enxergar a função de probabilidade {\em a posteriori} de $\gamma$ como:
-
-O que explica porque a propriedade de invariância a transformações nos parâmetros (sec. \ref{sec:pseudo}) não é mantida por
-uma transformação não-injetora.
 
 \section{Aplicação}
 (****** vou explicar o passo a passo detalhadamente, aqui vai um resumão da aplicação *******)
@@ -134,7 +144,7 @@ Resumo de aplicação:
 	\item Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de crescimento constante ou descrescente com a classe de tamanho, modelo com 4 ou com 5 classes de tamanho, etc). Escreva a função de verossimilhança $L_i(\bu{\theta}|\bu{x})$ para cada modelo $i \in 1,...,n$.
 	\item Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo. 
 	\item Determine o valor de AIC para cada modelo. 
-	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) para gerar amostras a partir da função de verossimilhança do modelo. A distribuição de resultados $y$ do modelo pode ser vista como a função de verossimilhança de $y$, já que $y=f(x)$ (ver \cite{Edwards72}, sessão 6.5?)
+	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) para gerar amostras a partir da função de verossimilhança do modelo, de acordo com a equação \ref{eqn:Psi}. 
 	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de informação (ver \cite{Edwards72}, teorema 5.4.2?).
 	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
