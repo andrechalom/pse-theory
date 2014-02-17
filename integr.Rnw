@@ -93,6 +93,8 @@ $\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivia
 O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
 de hipóteses compostas sob o paradigma da verossimilhança. 
 
+ROYALL SESSAO 1.9
+
 %http://www.tandfonline.com/doi/abs/10.1080/00949657208810001?journalCode=gscs20#.Uv_UEJjTi00
 %http://biomet.oxfordjournals.org/content/62/2/451.short
 

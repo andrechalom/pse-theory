@@ -401,10 +401,25 @@ nula em favor de uma hipótese alternativa, dividindo o resultado desse processo
 verdadeira ou falsa, ou podemos rejeitar uma hipótese verdadeira ou falsa. O ato de rejeitar a hipótese nula verdadeira
 é conhecido como erro de tipo I, e o ato de aceitar uma hipótese nula falsa é conhecido como erro de tipo II. O conceito do 
 erro de tipo I encontra paralelo na teoria de Fisher, enquanto o erro de tipo II é ausente, e será contestado por Fisher em
-diversas bases.
+diversas bases. Esse procedimento consiste na construção prévia de uma região crítica, tal que, se os dados observados se
+encontrarem nesta região, a hipótese nula é rejeitada em favor da alternativa; caso contrário, a hipótese nula é aceita.
 
-*** Lenhard pag 10
-*** Neyman pag 11, simple hypothess
+A construção dessa região crítica é feita de forma a tolerar um valor para a probilidade de erro de tipo I, normalmente em
+0.05. Um resultado central do trabalho de Neyman e Pearson foi a demonstração de que, entre todas as possíveis regiões críticas,
+a região ótima, no sentido de minimizar a probabilidade de erro de tipo II, é aquela construída pela razão entre as 
+verossimilhanças \cite{Neyman1933}. 
+
+Convém notar que esse resultado é verdadeiro apenas para hipóteses ditas simples. Enquanto Neyman e Pearson obtém resultados
+parciais para testes envolvendo hipóteses compostas, outros autores vão eliminar essas hipóteses das suas considerações.
+Edwards, por exemplo, afirma que:
+
+``The class of hypotheses we call `statistical' is not necessarily closed with respect to the logical operations of
+alternation (`or') and negation (`not'). For a hypothesis resulting from either of these operations is likely to be composite,
+and composite hypotheses do not have well-defined statistical consequences, because the probabilities of occurrence of the
+component simple hypotheses are undefined. For example, if {\em p} is the parameter of a binomial model, about which inferences
+are to be made from some particular binomial results, `$p = \frac{1}{2}$' is a statistical hypothesis, because its 
+consequences are well-defined in probability terms, but its negation, `$p \neq \frac{1}{2}$', is not a statistical hypothesis,
+its consequences beign ill-defined.''\cite{Edwards72}
 
 Fisher critica duramente o procedimento de Neyman-Pearson por uma série de motivos, entre os quais o engessamento do procedimento,
 que levaria a uma aceitação ou rejeição de hipóteses acriticamente:
@@ -419,18 +434,6 @@ an intelligent attempt to {\em understand} the experimental situation.''\cite{Fi
 É curioso que um autor que tenha atacado tão intensamente os conceitos de probabilidade subjetiva seja também tão crítico de 
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
-
-Outros autores separam o caso da hipótese estatística dita simples da hipótese composta por diversos valores possíveis para um
-parâmetro, usando como critério o fato de que uma hipótese estatística deve consequencias bem definidas.
-Por exemplo, Edwards afirma que:
-
-``The class of hypotheses we call `statistical' is not necessarily closed with respect to the logical operations of
-alternation (`or') and negation (`not'). For a hypothesis resulting from either of these operations is likely to be composite,
-and composite hypotheses do not have well-defined statistical consequences, because the probabilities of occurrence of the
-component simple hypotheses are undefined. For example, if {\em p} is the parameter of a binomial model, about which inferences
-are to be made from some particular binomial results, `$p = \frac{1}{2}$' is a statistical hypothesis, because its 
-consequences are well-defined in probability terms, but its negation, `$p \neq \frac{1}{2}$', is not a statistical hypothesis,
-its consequences beign ill-defined.''\cite{Edwards72}
 
 \subsection {Optional stopping?}
 
@@ -605,6 +608,8 @@ Altough the likelihood function, and hence the curve, has the mathematical form 
 represent a statistical distribution in any sense.''\cite{Edwards72}
 
 * Pernerger \& Courvoisier, 2010: likelihood ratios are a more natural way of understanding evidence
+
+Fitelson: crítica em termos lógicos à verossimilhança. Middle way?
 
 \subsection{A abordagem por teoria da informação}
 
