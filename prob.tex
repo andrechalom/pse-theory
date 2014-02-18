@@ -311,7 +311,7 @@ Em seu trabalho de 1922, Fisher divide a tarefa da inferência estatística em 3
 problemas: problemas de especificação, ou seja, a determinação da função
 matemática que define a população; problemas de estimação, ou seja, o cálculo de estatísticas sobre a amostra que estimem 
 corretamente os parâmetros populacionais; e problemas de distribuição, ou seja, estimações realizadas sobre a distribuição
-das estatísticas calculadas sobre a amostra. Fisher sugere brevemente que o problema de especificação é um interesse menor,
+das estatísticas calculadas sobre a amostra. Fisher discorre brevemente sobre o problema de especificação,
 se concentrando nos problemas de estimação e distribuição. Sobre especificação, ele escreve:
 
 ``We may know by experience what forms are likely to be suitable, and the adequacy of our choice may be
@@ -319,6 +319,11 @@ tested {\em a posteriori} [by an objective criterion of goodness of fit].
 For empirical as the specification of the hypothetical population may be, this empiricism is cleared of its dangers if
 we can apply a rigorous and objective test of the adequacy with which the proposed population represents the whole of
 the available facts.''\citep{Fisher1922}
+
+A economia de palavras sobre especificação não deve sugerir que este é um problema de menor importância: pelo contrário,
+uma especificação incorreta vai inutilizar toda análise posterior. Fisher, no entanto, se debruça neste trabalho sobre
+uma teoria matemática, e parece reconhecer que as escolhas que levam à {\em escolha} de um modelo requerem deliberações
+que extrapolam suas fronteiras.
 
 Presumindo uma escolha adequada de modelo, ou seja,	de função matemática que descreva as propriedades da população,
 a tarefa da inferência estatística se concentra em estudar o pequeno número de parâmetros desse modelo que a descrevem
@@ -634,8 +639,9 @@ Enquanto alguns estatísticos vêem neste problema ``um uso ingênuo de p-valore
 consideram esta situação uma indicação clara de que o paradigma frequentista leva a contradições inerentes, e portanto 
 deve ser abandonado. A discordância entre as conclusões frequentistas e a inferência julgada aceitável por seus opositores 
 pode ser traçada na incoerência entre
-o procedimento de teste de hipóteses e o princípio da verossimilhança. Identificado e demonstrado por Allan Birnbaum em 1962, 
-este princípio afirma que toda a informação contida em uma amostra está	contida na função de verossimilhança \citep{Birnbaum62}. 
+o procedimento de teste de hipóteses e o princípio da verossimilhança. Utilizado já por Neyman e Pearson\citep{Neyman33},
+em caráter razoavelmente intuitivo, o princípio é demonstrado por Allan Birnbaum em 1962, 
+e afirma que toda a informação contida em uma amostra está	contida na função de verossimilhança \citep{Birnbaum62}. 
 Desta forma, a inferência feita à partir da amostra deve ser dependente da função de verossimilhança, e não do desenho
 experimental.
 No exemplo discutido acima, a função de verossimilhança do experimento é a mesma, não importando a intenção do pesquisador:
@@ -685,6 +691,43 @@ Fisher 22, pag 16. em diante
 
 * Data are fixed, pars are random VERSUS pars are fixed, data is random
 
+A escolha da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
+para atacar o teste de significância de Fisher foi reconhecer a necessidade lógica da comparação entre diferentes hipóteses.
+Enquanto o teste de significância privilegia uma hipótese nula, a abordagem de Neyman-Pearson, tal qual a de Edwards e Royall,
+vai refutar essa abordagem como incompleta. Os dados recolhidos por um experimento podem indicar uma alta ou baixa
+probabilidade para uma certa hipótese, mas isso não deve ser considerado evidência a favor ou contra essa hipótese sem
+que as hipóteses alternativas sejam igualmente escrutinizadas. É o uso da razão entre verossimilhanças de diferentes hipóteses,
+e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
+programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é famoso
+pela frase ``How often have I said to you that when you have eliminated the impossible, whatever remains, {\em however 
+improbable}, must be the truth?''.
+
+A divergência entre as abordagens se dá fundamentalmente com a {\em ação} que o cientista deve tomar após examinar a 
+razão de verossimilhanças. Neyman-Pearson argumentam que esse valor deve nortear um processo de teste de hipóteses, que
+leva ao {\em comportamento} de aceitar uma hipótese em detrimento das demais. Royall e Edwards realizam a separação
+conceitual entre o grau de certeza que temos sobre a hipótese, a força da evidência que um conjunto de dados confere
+a uma hipótese em detrimento de outras, e o curso de ação tomado após verificar tais quantidades. 
+
+Um exemplo interessante é dado pelo seguinte experimento mental: tome um baralho ordinário e vire a primeira carta,
+para encontrar um ás de espadas. Suponha agora duas hipóteses concorrentes: $H_N$ de que o baralho é normal e $H_A$
+de que o baralho é um engodo, composto por 52 ases de espadas. A verossimilhança de $H_N$ é 
+$\mathcal{L} (H_N|A \spadesuit) = \frac{1}{52}$, contra $\mathcal{L} (H_A | A \spadesuit) = 1 $. Enquanto o procedimento
+de Neyman-Pearson diz ``escolha a hipótese que leva à maior verossimilhança'', Royall e Edwards vêem nessa situação
+apenas uma {\em evidência} favorável a $H_A$ sobre $H_N$. Para transformar essa evidência em um grau de certeza,
+é necessário incorporar o nosso conhecimento {\em a priori} sobre a situação: enquanto nossa intuição diz
+que um baralho de engodo deve ser muito raro, e portanto o baralho examinado {\em provavelmente} é normal, um marciano,
+que não tem a mesma {\em priori}, deve achar muito natural que todas as cartas tenham a mesma figura, afinal todas tem o mesmo
+verso. Ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
+que divulgue seus dados na forma de razões de verossimilhança, não transformadas em valores-p ou {\em posterioris}, para que
+seus pares possam ter clareza de qual é a evidência apresentada. Neste aspecto, eles ecoam as palavras de Fisher:
+
+``We have the duty of formulating, of summarazing, and of communicating our conclusions, in intelligible form, in
+recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher55}
+
+Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
+probabilidade {\em a priori}, no que o paradigma da verossimihança difere das escolas Bayesianas? Para responder isso,
+precisamos voltar para Rudolph Carnap. ((((DESENVOLVER))))
+
 ``The probability model, the set of statistical hypotheses, and the data, form a triplet which is the foundation of
 statistical inference. Of the many outcomes, each with a specified probability given the hypothesis, which could have
 occurredon the basis of the accepted model, one {\em has} occurred - the data. What can they reveal about the hypotheses?''
@@ -698,7 +741,7 @@ Sufficiency p. 35
 hypotheses.
 (...)
 Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
-represent a statistical distribution in any sense.''\citep{Edwards72}
+represent a statistical distribution in any sense.'' \citep{Edwards72}
 
 * Pernerger \& Courvoisier, 2010: likelihood ratios are a more natural way of understanding evidence
 
@@ -708,6 +751,8 @@ probabilidade, de forma que sem uma interpretação para a probabilidade não po
 A teoria verossimilhantista corre, portanto, o risco de se assentar sobre uma areia movediça filosófica.
 
 Fitelson: crítica em termos lógicos à verossimilhança. Middle way?
+
+Verossimilhantismo subjetivista e o baralho marciano: nós USAMOS priors de qualquer forma
 
 \section{A abordagem por teoria da informação}
 

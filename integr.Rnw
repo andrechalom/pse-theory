@@ -91,7 +91,11 @@ Vamos estender esse resultado para uma função genérica. Nosso argumento se ba
 $\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivial.
 
 O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
-de hipóteses compostas sob o paradigma da verossimilhança. 
+de hipóteses compostas sob o paradigma da verossimilhança. O trabalho fundamental de Neyman e Pearson \citep{Neyman33}
+estabelece uma justificativa matemática para o princípio da verossimilhança em problemas envolvendo hipóteses simples.
+O problema de hipóteses compostas é resolvido dentro do paradigma frequentista para alguns casos particulares, como 
+o teste {\em t de Student}, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
+parâmetro desconhecido.
 
 ROYALL SESSAO 1.9
 
@@ -101,7 +105,7 @@ ROYALL SESSAO 1.9
 Vamos construir uma função de verossimilhança $\Psi (\gamma | \bu{x})$, definida por:
 
 \begin{equation}
-	\Psi ( \gamma | \bu{x} ) = \max\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
+	\Psi ( \gamma | \bu{x} ) = \sup\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
 \label{eqn:Psi}
 \end{equation}
 
