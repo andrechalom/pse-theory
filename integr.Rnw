@@ -7,12 +7,12 @@ muito interligadas, e costumam ser referidas como V \& V: a verificação consis
 computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
 reproduzir os fênomenos reais desejados. Outra forma de pensar e V \& V é que a validação se ocupa em determinar
 que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
-resolvendo as equações corretamente \cite{ASC2010}.
+resolvendo as equações corretamente \citep{ASC2010}.
 Questões relacionadas a verificação de modelos não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
 
 A calibração consiste em ajustar os parâmetros implementados no código para melhorar a concordância entre o resultado
 obtido pelo modelo e aquele observado em uma determinada situação. A correta calibração de um modelo é considerada
-essencial para que o modelo possa ser considerado para fins preditivos \cite{ASC2010}.
+essencial para que o modelo possa ser considerado para fins preditivos \citep{ASC2010}.
 
 As duas últimas etapas já foram extensamente discutidas no capítulo \ref{cap:pse}, mas é importante frisar que
 é geralmente aceito que a
@@ -22,9 +22,9 @@ validação do modelo.
 Durante o desenvolvimento e a análise de modelos matemáticos em ecologia, é comum separar a calibração por 
 estimativa dos parâmetros (EP)
 da análise de incerteza e sensibilidade (AIS) do modelo. Os dois passos são feitos em seções diferentes dos artigos, discutidos
-em capítulos diferentes dos livros \cite{Caswell89}, e frequentemente realizados por equipes diferentes. Em estudos que 
+em capítulos diferentes dos livros \citep{Caswell89}, e frequentemente realizados por equipes diferentes. Em estudos que 
 empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
-de parâmetros considerada ótima durante as estimativas de parâmetros \cite{SilvaMatos99}, e a análise de incerteza é apresentada
+de parâmetros considerada ótima durante as estimativas de parâmetros \citep{SilvaMatos99}, e a análise de incerteza é apresentada
 como um procedimento separado e posterior à análise do resultado considerado como principal. 
 Até mesmo a abordagem estatística usada em ambos os procedimentos pode ser incoerente.
 
@@ -42,7 +42,7 @@ uma ferramenta analítica, baseada em expansões lineares das funções de inter
 Dependendo do tipo de experimento utilizado para obter estimativas das taxas vitais, diferentes abordagens 
 podem ser utilizadas para encontrar um conjunto de valores que melhor represente o estado de conhecimento
 que temos de uma população, entre abordagens frequentistas, bayesianas ou baseadas em verossimilhança.
-Já a teoria analítica de AIS, devida em grande parte aos trabalhos de Hal Caswell \cite{Caswell89}, procede rotineiramente por
+Já a teoria analítica de AIS, devida em grande parte aos trabalhos de Hal Caswell \citep{Caswell89}, procede rotineiramente por
 tomar um modelo já parametrizado da forma ótima, e estudar as derivadas de primeira ordem da resposta de interesse
 em relação a cada um dos parâmetros de entrada. Nessa formulação, a quantidade e a qualidade dos dados de entrada
 para o modelo são ignorados, a menos de suas médias, e medidas de sensibilidade são tomadas exclusivamente sobre
@@ -86,7 +86,7 @@ de uma distribuição de probabilidade, é respondida através da função de ve
 transformações injetoras sobre parâmetros preservam as propriedades da função de verossimilhança, isso é: 
 se um parâmetro $\theta$ está associado a uma função de verossimilhança $\mathcal{L}(\theta|\bu{x})$ e 
 $\phi = f(\theta)$ é dada por uma função $f(\cdot)$ injetora, a verossimilhança de $\phi$ é dada simplesmente por
-$\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\cite{Edwards72}, sec. 2.5).
+$\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\citep{Edwards72}, sec. 2.5).
 Vamos estender esse resultado para uma função genérica. Nosso argumento se baseia em uma função de um argumento,
 $\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivial.
 
@@ -106,7 +106,7 @@ Vamos construir uma função de verossimilhança $\Psi (\gamma | \bu{x})$, defin
 \end{equation}
 
 E agora vamos demonstrar que essa função possui as seguintes propriedades de uma função de 
-medida de suporte (ver \cite{Edwards72}, sec. 3.2):
+medida de suporte (ver \citep{Edwards72}, sec. 3.2):
 
 \begin{enumerate}
 	\item {\em Transitividade}.
@@ -147,7 +147,7 @@ Resumo de aplicação:
 	\item Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo. 
 	\item Determine o valor de AIC para cada modelo. 
 	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) para gerar amostras a partir da função de verossimilhança do modelo, de acordo com a equação \ref{eqn:Psi}. 
-	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de informação (ver \cite{Edwards72}, teorema 5.4.2?).
+	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de informação (ver \citep{Edwards72}, teorema 5.4.2?).
 	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
 

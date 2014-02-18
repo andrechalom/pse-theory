@@ -31,15 +31,18 @@ model runs.
 Some models are either expressed or can be reasonably approximated by analytical
 functions. Such is the case for the matrix population models, for which a wide
 range of analytical tools are available to examine the uncertainty and
-sensitivity of parameters\cite{Caswell89}. In the general case, however, there
+sensitivity of parameters\citep{Caswell89}. In the general case, however, there
 is no possible formulation of the model in a closed equation, so analytical 
 methods are not possible.
 
+\sloppy
 The disciplines of uncertainty and sensivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
-developed in the 1980 and 1990 decades \cite{McKay79, Saltelli04, Florian92,
+developed in the 1980 and 1990 decades \citep{McKay79, Saltelli04, Florian92,
 Helton03, Helton05, Archer97, Huntington98, Ye98, Kleijnen99, Smith02, 
 ImanConover82, ImanConover87, Morris91, Saltelli99}.
+\fussy
+
 More recently, these analyses
 have been 
 successfully applied to biological models, in order to explore the possible 
@@ -48,7 +51,7 @@ probability distribution and the dependency of the output
 on different combinations of parameters, and to assess which parameters 
 require more experimental effort in order to be more confidently estimated. 
 This kind of parameter space exploration is considered a fundamental step
-prior to using the model in management decisions \cite{Bart95}. 
+prior to using the model in management decisions \citep{Bart95}. 
 
 One approach to the parameter space exploration, which will be described here,
 is to generate samples from the parameter space, run the model with these 
@@ -84,7 +87,7 @@ fit a model to the available data, which is the subject of linear and
 nonlinear estimation.
 
 However, the same model may be
-parametrized in different ways, as discussed by Ross \cite{Ross90}. For
+parametrized in different ways, as discussed by Ross \citep{Ross90}. For
 example, in population ecology, 
 the logistic growth equation may be represented with two
 parameters $r$ and $K$ as:
@@ -194,7 +197,7 @@ Another related concept that should not be confused with the constraints
 is the correlation between variables. For example, acidic soils are likely 
 to have a lower cation exchange capacity (CEC), and more alkaline soils are 
 likely to have a 
-larger CEC \cite{Sparks03}. Thus, those variables are {\em correlated}. 
+larger CEC \citep{Sparks03}. Thus, those variables are {\em correlated}. 
 Correlations have a profound impact on some analysis, however, they are
 difficult
 to measure, and data on correlations are not generally available on the 
@@ -213,7 +216,7 @@ interested in mapping where are these regions. In complex models, where several
 different regions might exist where the qualitative results of the models are 
 very different, we may ask how many of these regions are there, as well as map
 the frontiers between them. For a detailed discussion of this approach, see
-the PSExplorer software\cite{Tung10}.
+the PSExplorer software\citep{Tung10}.
 
 Another class of problems arises when the model produces some quantitative 
 response, and we are interessed in determining the dependency of this response 
@@ -225,7 +228,7 @@ input parameters is translated into the total variation of the results,
 which is the topic of uncertainty analysis, 
 and second, how much of the variation in the results can be ascribed to the 
 variation of each individual parameter, which is the topic of sensitivity 
-analysis \cite{Helton03, Helton05}. We will present the techniques and results
+analysis \citep{Helton03, Helton05}. We will present the techniques and results
 from both uncertainty and sensitivity analysis in section \ref{QuantAnal}.
 
 Also, the model which we wish to analyse can be any function of the input parameters.
@@ -250,7 +253,7 @@ response as a single value $y$, without loss of generality.
 
 Each of the input parameters $x_i$ is associated with a probability distribution
 $D_i(x)$, which represent our degree of knowledge about the values that $x_i$ may
-assume (see figure \ref{fig:Di} for examples); Berger \cite{Berger85} provides
+assume (see figure \ref{fig:Di} for examples); Berger \citep{Berger85} provides
 a more detailed discussion).
 
 Taken together, all the distributions $D_i$ form the {\em joint probability
@@ -283,11 +286,11 @@ mtext('d', line=-1)
 	\end{center}
 	\caption{Four different possibilities for chosing the distributions $D_i$. Pannel ``a'' shows 
 	the exponential distribution of life expectancy, which can be deduced
-	from theory \cite{Cole54}. Pannel ``b'' shows a gamma distribution,
+	from theory \citep{Cole54}. Pannel ``b'' shows a gamma distribution,
 	which can be used to model the number of parasites per host, but has
-	no theoretical derivation \cite{Bolker08}. Pannel ``c'' shows data 
+	no theoretical derivation \citep{Bolker08}. Pannel ``c'' shows data 
 	from an empirical study on the $CO_2$ uptake from plants 
-	\cite{Potvin90}, and pannel ``d'' shows an example where no prior
+	\citep{Potvin90}, and pannel ``d'' shows an example where no prior
 	information can be used.}
 	\label{fig:Di}
 \end{figure}

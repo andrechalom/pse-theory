@@ -5,7 +5,7 @@ In this section, we demonstrate the uses and advantages of the methods
 outlined in the previous sections by performing sensitivity analyses
 on a density-dependent model of the tropical palm {\em Euterpe edulis}
 (commonly known as palmito ju\c cara). All the data used here
-was extracted from Silva Matos {\em et al.} paper \cite{SilvaMatos99},
+was extracted from Silva Matos {\em et al.} paper \citep{SilvaMatos99},
 which compared a density independent matrix model of population growth
 with a density dependent model in which the recruitment of seedlings was
 affected by the number of seedings and adult trees. Silva Matos

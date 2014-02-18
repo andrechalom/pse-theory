@@ -9,7 +9,7 @@ Mandai, C.Y. \footnotemark[1] and  Prado, P.I. \footnotemark[1]
 
 This document presents a brief practical tutorial about the use of
 sensitivity analyses tools in the study of ecological models. To 
-read about the underlying theory, please refer to our work in \cite{Chalom12}.
+read about the underlying theory, please refer to our work in \citep{Chalom12}.
 
 We presume for this tutorial that you are already familiar with the
 R programing environment and with your chosen model. We will illustrate
@@ -182,7 +182,7 @@ modelRun <- function (my.data) {
 
 If your model is written in a different language, as C or Fortran,
 it is possible to write an interface with \R by compiling your model as a 
-shared library, and dynamically loading this library \cite{Geyer}.
+shared library, and dynamically loading this library \citep{Geyer}.
 Also, you should consider uncoupling the simulation and the analyses (see
 section \ref{uncouple}).
 
@@ -234,7 +234,7 @@ sensible are these model responses to the variation of each parameter.
 
 Note that population sizes bifurcate above a given value of parameter $r$. 
 This is a well known behaviour of many population models
-and will ultimately lead to chaotic solutions \cite{May1976, Murray02}.
+and will ultimately lead to chaotic solutions \citep{May1976, Murray02}.
 <<corplot, fig=T>>=
 plotscatter(myLHS)
 @
@@ -274,7 +274,7 @@ A value of -1 indicates complete disagreement between the runs, and a value
 of 1 indicates total agreement.	As the SBMA seldom reaches 1 for realistic models,
 some criterion must be used to indicate when the agreement should be considered
 good enough. More details about how the SBMA is calculated can be found on 
-\cite{Chalom12}.
+\citep{Chalom12}.
 
 It should be stressed that there is no ``magical'' number for deciding how close
 to unity the SBMA should be. It is reasonable to expect agreements around 0.7 to 0.9

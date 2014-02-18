@@ -5,7 +5,7 @@ The first question we would like to answer, in the context of quantitative
 analysis, is what is the probability distribution of the response variable $y$
 given that we know the join probabilities of the input parameters $\bu{x}$ 
 (see definitions in section \ref{PSE}), which is the subject of uncertainty
-analysis \cite{Helton03}. 
+analysis \citep{Helton03}. 
 
 This can be done by fitting a density curve to the output $y$ or an empiric
 cumulative distribution function (ecdf). If there is any theoretical reason
@@ -21,7 +21,7 @@ variable $y$ should present in nature. This functions may be used, for example,
 to provide confidence intervals on the model responses.
 
 However, this is only the case when the input variables are uncorrelated or
-when enough correlation terms have been taken into account. Smith (\cite{Smith02})
+when enough correlation terms have been taken into account. Smith (\citep{Smith02})
 provides an example where ignoring the correlation terms 
 leads to inaccuracies on the estimation of confidence intervals.
 
@@ -31,7 +31,7 @@ identification of patterns, and altough they cannot be used to prove
 any relationship between the model response and input, they may direct the
 research effort to the correct analyses. There are extensive reviews of the
 use of scatterplots to identify the important factors and emerging patterns
-in sensitivity analyses \cite{Kleijnen99}.
+in sensitivity analyses \citep{Kleijnen99}.
 
 We will present here some quantitative analyses tools, aimed at identifying
 increasingly complex patterns in the model responses. It should be stressed
@@ -43,7 +43,7 @@ The question of ``what is the effect of some combination of parameters to
 the model output'' may be answered by testing the relation between
 the parameters and outputs. 
 There are extensive reviews about detecting these relations after
-generating samples with Latin Hypercubes \cite{Marino08, Kleijnen99}, 
+generating samples with Latin Hypercubes \citep{Marino08, Kleijnen99}, 
 so we will give just a brief overview. We will first note that
 the methods used must take into account the variation of all the 
 parameters. For example, instead of calculating the correlation between
@@ -58,15 +58,15 @@ between the results and the input parameters, in order of increasing complexity,
 \begin{itemize}
 	\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
 		Is is usual to test the significance of this linear relation by a t-test 
-		\cite{Freedman07}.
+		\citep{Freedman07}.
 	\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient,
 		also refered to as Partial Rank Correlation Coefficient, or PRCC.
 		This measure is a robust
 		indicator of monotonic interactions between $y$ and $x_i$, and is subject
-		to significance testing as described in \cite{Marino08}.
-	\item Trends in central location, for which the Kruskal-Wallis test may be applied (\cite{Kleijnen99}).
+		to significance testing as described in \citep{Marino08}.
+	\item Trends in central location, for which the Kruskal-Wallis test may be applied (\citep{Kleijnen99}).
 	\item Trends in variability, for which the FAST method and Sobol' indices may be used in order to partition
-		the model variability (\cite{Archer97, Saltelli99, Saltelli04}).
+		the model variability (\citep{Archer97, Saltelli99, Saltelli04}).
 \end{itemize}
 
 Subsections \ref{linear} to \ref{FAST} will provide some
@@ -100,7 +100,7 @@ linear relation between the variables. The square of $\rho$, usually written as
 $R^2$, measures the fraction of the variance in the output that can be accounted
 for by a linear effect of $x_i$.
 Is is usual to test the significance of this linear relation by a t-test 
-\cite{Freedman07}.
+\citep{Freedman07}.
 
 Other than examining the individual relationships between the parameters and 
 the output, we can investigate the joint effect of several $x_i$, as
@@ -164,7 +164,7 @@ data, that is, if $y$ and $x_i$ are rank transformed and fitted as linear models
 of the remaining parameters, the correlation between the residuals is called
 PRCC, or Partial Rank Correlation Coefficient. This measure is a robust
 indicator of monotonic interactions between $y$ and $x_i$, and is subject
-to significance testing as described in \cite{Marino08}. This measure will 
+to significance testing as described in \citep{Marino08}. This measure will 
 perform better with increasing $N$.
 
 \subsubsection{Trends in central location}\label{Kruskal}
@@ -173,7 +173,7 @@ important and well-defined. The case in which $y \sim x_i^2$, $x_i \in (-1,1)$
 is a common example. This relation may be difficult to visualize, and sometimes
 may not be expressed analytically. In these cases, the Kruskal-Wallis rank
 sum test may be used to indicate the presence of such relations 
-\cite{Kleijnen99}.
+\citep{Kleijnen99}.
 
 In order to perform the test, the distribution of $x_i$ must be divided 
 into a number $N_{test}$ of disjoint intervals. The model response $y$ is then
@@ -225,14 +225,14 @@ parameter is to divide the distribution of $x_i$
 into a number $N_{test}$ of disjoint intervals and group the model response
 $y$ with respect to these intervals, as done on the Kruskal-Wallis test.
 In this case, the ANOVA F statistic can be used to test for equality 
-between the $y$ conditional to each class \cite{Kleijnen99}.
+between the $y$ conditional to each class \citep{Kleijnen99}.
 
 A similar approach, which we will use, is to employ the eFAST indices
-\cite{Saltelli99, Saltelli04},
+\citep{Saltelli99, Saltelli04},
 which is a variance decomposition method based on the FAST and
 Sobol' indices. While the Sobol' indices were described in 1969, in Russian,
 FAST was developed by Cukier et al. in 1973, and both are identical in all
-but one computation \cite{Archer97}. 
+but one computation \citep{Archer97}. 
 
 These methods estimate what fraction of the output variance can be explained
 by variation in each parameter $x_i$, which is called the {\em first-order 
@@ -265,7 +265,7 @@ involved.
 The Bayesian view of statistics present some alternatives to the 
 techniques outlined in the previous sections. Beven and Binley described
 a procedure for the Bayesian updating of probabilities called GLUE,
-for Generalized Likelihood Uncertainty Estimation\cite{Beven92}. While
+for Generalized Likelihood Uncertainty Estimation\citep{Beven92}. While
 the previously discussed methodologies are appropriate for purely exploratory
 analyses, the GLUE method is suited for problems in which one or more of 
 the parameters of the model require calibration using the object of prediction.
@@ -274,7 +274,7 @@ a set of models that will recreate it. This set is called {\em equifinal}.
 
 Despite the widespread use and recognition that the GLUE method has received,
 it is subject to criticisms by not being formally Bayesian, and
-formal Bayesian approaches have been developed\cite{Vrugt09}.
+formal Bayesian approaches have been developed\citep{Vrugt09}.
 Another approach, based on the Metropolis algorithm, is provided by 
-Kuczera\cite{Kuczera98}. %TODO
+Kuczera\citep{Kuczera98}. %TODO
 

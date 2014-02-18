@@ -280,7 +280,7 @@ plotelast(LHSlge)
 Vamos prosseguir agora a um estudo integrativo da calibração dos parâmetros do
 modelo e da incerteza dos resultados do modelo, usando a metodologia de Generalized
 Likelihood Uncertainty Estimation (GLUE). Para isso, usaremos os dados de 
-{\em Tribolium} da réplica A do trabalho de Desharnais \& Liu \cite{Desharnais87}.
+{\em Tribolium} da réplica A do trabalho de Desharnais \& Liu \citep{Desharnais87}.
 
 <<dadosDesharnais>>=
 days <- seq(0, 266, by=14)

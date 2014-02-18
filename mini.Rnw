@@ -2,7 +2,7 @@
 \section{Estudo de caso 1: um modelo mínimo}
 
 Um modelo de população estruturada que pode ser considerado mínimo é o modelo
-com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por Hal Caswell \cite{Caswell08} 
+com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por Hal Caswell \citep{Caswell08} 
 como um exemplo simples da aplicação da análise de sensibilidade analítica. 
 O modelo é associado à seguinte matriz:
 

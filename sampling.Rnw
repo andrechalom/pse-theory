@@ -10,7 +10,7 @@ One way of exploring the parameter space is by discretizing every distribution
 and running the model for every
 possible combination of values for all parameters. 
 This is called full parameter space exploration, as done 
-in \cite{Turchin97}, and altough it 
+in \citep{Turchin97}, and altough it 
 possesses many advantages, it may become very costly in terms of computer time. 
 In addition, the number of possible combinations increases exponentially with 
 the number of parameter dimensions considered.
@@ -18,7 +18,7 @@ the number of parameter dimensions considered.
 To circumvent the exponential increase in the number of samples, it is usual
 to explore the parameter space in the following fashion: holding all but one
 parameter constant, we analyse how the output of a model is affected by one
-parameter dimension at a time (as done in \cite{Yang08}). This analysis is
+parameter dimension at a time (as done in \citep{Yang08}). This analysis is
 refered to as individual parameter perturbance.
 This kind of analysis
 is, however, limited by the fact that the combinations of changed parameters
@@ -26,23 +26,23 @@ may give rise to complex and unexpected behaviours.
 Often, algorithms based on individual parameter perturbance are used as a first 
 step in order to discriminate between parameters
 that may have a substantial impact on the output, and parameters that are less
-relevant (but see \cite{Morris91} for an alternative). 
+relevant (but see \citep{Morris91} for an alternative). 
 
 Another viable option would be to
 chose $N$ random samples from the entire space, in order to analyse both
 the effect of each parameter and the combined effect of changing any
 combined number of parameters. This sampling scheme is called random 
 sampling, or Monte Carlo sampling,
-and has been applied to many biological models \cite{Letcher96}.
+and has been applied to many biological models \citep{Letcher96}.
 One important feature of the Monte Carlo sampling is that its accuracy
 does not depend on the number of dimensions of the problem,
-as shown in \cite{MacKay03}.
+as shown in \citep{MacKay03}.
 
 Stratified sampling strategies, which are a special case of Monte 
 Carlo sampling, consist in strategies for chosing these random samples while,
 at the same, making sure that each of the subdivisions (or {\em strata}) of
 the distribution are well represented.
-As shown on \cite{McKay79}, the estimatives of statistical properties (such
+As shown on \citep{McKay79}, the estimatives of statistical properties (such
 as the mean or the variance) of the model output are better represented by 
 stratified random sampling than by simple random sampling
 (see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
@@ -50,7 +50,7 @@ next session, the Latin Hypercube sampling is a practical and easy to understand
 stratified sampling strategy.
 
 Another class of Monte Carlo methods that should be mentioned here is the Markov
-Chain Monte Carlo (MCMC), which is also used on similar analyses \cite{MacKay03}. This
+Chain Monte Carlo (MCMC), which is also used on similar analyses \citep{MacKay03}. This
 methods consists in generating a sequence of points $\{\bu{x}^{(t)}\}$ from
 the parameter space whose distribution {\em converges} to the joint
 probability distribution $\bu{D}(\bu{x})$, and in which each sample $\bu{x}^{(t)}$
@@ -126,8 +126,8 @@ or experiments are unfeasible (see fig. \ref{fig:Di}).
 In possession of the distribution function $D_i$, we must sample one point
 from each equally probable interval. There are two approaches used here:
 it is possible to choose a random value from within the interval (as proposed
-by \cite{McKay79}), or instead, we can use the midpoint from each interval 
-\cite{Huntington98}. As the statistical properties of the generated samples
+by \citep{McKay79}), or instead, we can use the midpoint from each interval 
+\citep{Huntington98}. As the statistical properties of the generated samples
 are very similar, we will use the second approach here.
 
 The integral of the distribution function is called the cummulative distribution
@@ -140,7 +140,7 @@ We divide the range $(0,1)$ in $N$ intervals of size $1/N$, and use this quantil
 function to determine the $x$ values as the midpoints of each interval. 
 Summarizing, we take the $N$ points, represented as $x_{i,k}$, $k \in [1,N]$, 
 from the inverse cummulative distribution $F_i^{-1}(x)$ as\footnote{This formula is
-given for simplicity; see \cite{Huntington98} for an alternative with better numerical
+given for simplicity; see \citep{Huntington98} for an alternative with better numerical
 properties}:
 
 \begin{equation}
@@ -205,16 +205,16 @@ symbol, as represented in figure \ref{fig:glassLS}.
 As described above, the LH sampling generates an uniform distribution of samples 
 in each parametric dimension. However, there is no guarantee that the correlation 
 between two or more parameters will be zero, and the classical algorithm
-from McKay \cite{McKay79}, described in the previous section,
+from McKay \citep{McKay79}, described in the previous section,
 usually produces correlations as high as 0.3 between
 pairs of factors, which can difficult or even compromise further analyses. In this
 section, we will present one algorithm designed to take into
-account the correlation between the parameter variables \cite{Huntington98}, using
+account the correlation between the parameter variables \citep{Huntington98}, using
 a single-switch-optimized sample reordering scheme. 
 We will present the general case of prescribing a correlation matrix, and will 
 also present results for the trivial case of zero correlation terms. Other
-methods have been proposed to address this problem \cite{Ye98, Steinberg06, Florian92}, 
-including methods that deal with higher-order correlation terms \cite{Tang98}
+methods have been proposed to address this problem \citep{Ye98, Steinberg06, Florian92}, 
+including methods that deal with higher-order correlation terms \citep{Tang98}
 using orthogonal designs. These methods, however, either impose severe 
 restrictions on the number of samples that must be chosen or are too
 computationally intensive. 
@@ -261,7 +261,7 @@ to disentangle in general stochastic models. This has prevented the general
 analysis of such models until recently. In recent years, studies have shown
 that the important parameters and their effects can be correctly identified
 by running such models repeatedly for the same input variables and then
-averaging the output \cite{Segovia04}, given that
+averaging the output \citep{Segovia04}, given that
 the following conditions are respected:
 
 \begin{itemize}
@@ -309,14 +309,14 @@ any of them to H3, as the first two preserve the ordering of the three
 first parameters.
 
 Iman and Conover proposed a correlation coefficient for this problem
-called Top-Down Correlation Coefficient \cite{ImanConover87}, which is
+called Top-Down Correlation Coefficient \citep{ImanConover87}, which is
 based on Savage Scores. This coefficient, know as TDCC, 
-was extensively used for sensitivity analyses \cite{Marino08}. 
+was extensively used for sensitivity analyses \citep{Marino08}. 
 Another measure of concordance proposed more recently is the Symmetrized
-Blest Measure of Association (SBMA) \cite{Genest03}.
+Blest Measure of Association (SBMA) \citep{Genest03}.
 Recent research suggests that estimates for SBMA 
 produce a smaller standard error than TDCC without the assumption that 
-there is no correlation between the variables \cite{Maturi10}.
+there is no correlation between the variables \citep{Maturi10}.
 Thus, we propose using SBMA as a measure of concordance between analyses
 from different sample sizes. Defining the ranks from the first sample as
 $R_i$ and the ranks for the second sample as $S_i$, the estimator for the

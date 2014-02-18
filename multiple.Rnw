@@ -7,7 +7,7 @@ This document presents an extension to the practical tutorial
 found in the vignette ``pse\_tutorial'' of this package. If you're not
 familiar with the basic concepts of parameter space exploration,
 please refer to the tutorial. To 
-read about the underlying theory, please refer to our work in \cite{Chalom12}.
+read about the underlying theory, please refer to our work in \citep{Chalom12}.
 
 The problem we will address here is how to deal with the
 parameter space exploration of stochastic models. When considering 
@@ -21,7 +21,7 @@ run of the model may not be able to provide enough information about a
 particular point in the parameter space. Thus, it is necessary to run the
 model several times at the same combinations, and summarize the information
 for each point before proceeding to the uncertainty and sensibility analyses.
-This approach is discussed in \cite{Marino08}, and our terminology is based
+This approach is discussed in \citep{Marino08}, and our terminology is based
 on this paper. It should be noted that these problems are part of a
 fresh and open area of study, both in the biology and the engineering communities.
 The simplest solution is to evaluate average responses from many runs with each
