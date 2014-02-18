@@ -61,9 +61,11 @@ aprofundada das suas relações complexas com as demais. A separação da estat�
 muito repetida em textos introdutórios, esconde uma riqueza de detalhes, envolvendo contradições importantes dentro de cada
 escola e convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
 não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
-única base de inferência.
+única base de inferência. A presente exposição é, por força, limitada e fragmentária; muitos pontos mais finos da argumentação
+(envolvendo, por exemplo, a regra de sucessão de Laplace) foram deixados de fora para que o texto não se tornasse proibitivamente
+longo. 
 
-\subsection{Contra uma teoria axiomática}\label{sec:axiomatica}
+\section{Contra uma teoria axiomática}\label{sec:axiomatica}
 O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey Kolmogorov, matemático
 soviético muito prolífico em diversas áreas da ciência. Os axiomas da probabilidade podem ser escritos como \cite{Morettin09}:
 
@@ -101,7 +103,7 @@ pelo axioma da unitariedade, deve ser também 0, pois é a soma de infinitos ter
 Para encontrar uma definição de probabilidade que permita dar um sentido aos axiomas, vamos repassar a opinião de alguns dos 
 grandes pensadores sobre o tema nas próximas sessões.
 
-\subsection{Interpretação clássica}
+\section{Interpretação clássica}
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
 e Pierre Fermat desenvolveram métodos para resolver problemas envolvendo combinações de resultados em jogos de dados e outros
 jogos de azar. 
@@ -165,7 +167,7 @@ e não oferecer uma visão clara sobre a natureza das probabilidades.
 Determinar quais os méritos e falhas de Laplace e Bayes, respectivamente, é um problema muito debatido e que será retomado na
 sessão \ref{sec:bayes}.
 
-\subsection{Interpretação subjetivista}
+\section{Interpretação subjetivista}
 Uma visão alternativa é dada por Augustus de Morgan, conhecido principalmente por suas leis em lógica proposicional, 
 no seu tratado Formal Logic, de 1847. Para de Morgan, a única certeza que podemos ter é a de nossa própria existência. 
 Este conhecimento
@@ -214,9 +216,10 @@ para a probabilidade de um evento seja coerente para diversas pessoas. Isso irá
 de probabilidade pode ser perfeitamente adequada para embasar uma decisão pessoal, mas falhar enquanto uma ferramenta de 
 avanço da ciência, entendida como um corpo teórico objetivo e independente das opiniões de cada cientista individualmente.
 
-\subsection{Interpretação frequentista}
-A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destaca John Venn, em seu trabalho de 
-1866, para quem a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
+\section{Interpretação frequentista}
+A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destacam George Boole e John Venn
+Este último, em seu trabalho de 
+1866, postula que a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
 série infinita de experimentos:
 
 ``We may define the probability or chance (the terms are here regarded as synonymous) of the event happening in that
@@ -279,7 +282,7 @@ das quais são verdadeiras. Desta forma, a escolha da definição frequentista d
 das probabilidades inversas para comparar o mérito de diferentes hipóteses. Essa percepção vai levar ao desenvolvimento
 da escola de testes de significância e à proposição do conceito de verossimilhança, ambos por R. A.Fisher.
 
-\subsection{A formalização da inferência}
+\section{A formalização da inferência}
 
 A escola frequentista será de grande influência para a formulação da teoria de testes de hipóteses de R. A. Fisher, que se
 lança no começo da década de 1920 sobre o problema de formalizar a inferência estatística, ou seja, o processo de
@@ -356,7 +359,7 @@ a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia d
 {\em probabilidades} das hipóteses conflitantes, Fisher nota que as verossimilhanças calculadas acima não se comportam como 
 probabilidades, no sentido de não estarem sujeitas às leis da probabilidade (veja na sessão \ref{sec:axiomatica}).
 
-\subsection{Diferentes abordagens para testes de hipóteses}
+\section{Diferentes abordagens para testes de hipóteses}
 
 A estrutura mental desenvolvida por Fisher durante a década de 1920 vai levar também a um procedimento conhecido como teste de 
 significância, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
@@ -391,7 +394,7 @@ possíveis é falho. Como o valor de parâmetros é uma variável contínua, Ney
 
 ``If {\em x} is a continuous variable, then any value of {\em x} is a singularity of relative probability equal to zero. We are
 inclined to think that as far as a particular hypothesis is concerned, no test based upon the theory of probability can by
-itself provide any valuable evidence of the truth or falsehood of that hypothesis.''\cite{Neyman1933}
+itself provide any valuable evidence of the truth or falsehood of that hypothesis.'' \cite{Neyman1933}
 
 Enquanto isso é verdade a respeito de probabilidades, o mesmo não se verifica com verossimilhanças. Esse é um dos motivos
 pelos quais a verossimilhança é sempre instrumental em comparar hipóteses alternativas.
@@ -435,28 +438,44 @@ an intelligent attempt to {\em understand} the experimental situation.''\cite{Fi
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
 
-\subsection {Optional stopping?}
+\section{Lógica probabilística}
 
-*** Discutir optional stopping ***
-%http://en.wikipedia.org/wiki/Foundations_of_statistics
-\subsection{Lógica probabilística}
+Tanto de Morgan como Boole, de certa forma fundadores da interpretação subjetivista e frequentista da probabilidade,
+se ocuparam do estudo da probabilidade como um subconjunto da lógica formal, que constituía um interesse mais amplo para
+ambos. No mesmo espírito, o trabalho de Rudolph Carnap, à partir da década de 1940, vai ligar novamente o estudo da probabilidade
+às suas raízes dentro da lógica. A notação usada originalmente por Carnap favoreceu sua comunicação com filósofos e logicistas,
+mas dificultou seu acesso por estatísticos, de forma que vamos adaptar alguns termos e notações seguindo \cite{Zabell09} e 
+\cite{Fitelson07}. 
 
-Retomar de Morgan e Boole, raízes da probabilidade no estudo formal da lógica
+Carnap, primeiramente, reconhece que a palavra ``probabilidade'' é usada em
+dois significados diferentes, e portanto separa os conceitos de {\em probabilidade$_1$} e {\em probabilidade$_2$}, o primeiro
+se referindo a uma medida de confirmação, enquanto o segundo é uma medida de frequência. Enquanto {\em probabilidade$_1$} é
+um conceito útil para a formulação de um sistema de inferência, {\em probabilidade$_2$} pode ver seu uso em leis físicas, por
+exemplo. Assim, quando a lei da entropia é formulada em termos probabilísticos, é claro que a visão pessoal de cada sujeito
+é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases.
+
+***** Ler Carnap50 e Carnap62
+
+Carnap, seguindo o trabalho de 
+Wittgenstein, trabalha com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
+e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora uma hipótese $h$ \cite{Zabell09}.
+
 
 *** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
-\subsection{Probabilidade Bayesiana moderna}\label{sec:bayes}
+\section{Probabilidade Bayesiana moderna}\label{sec:bayes}
+
 Embora uma grande parcela da comunidade científica tenha adotado uma visão frequentista durante a primeira metade do século XX,
 tomando algum dos lados do debate entre Fisher e Neyman-Pearson, muitos autores continuaram seguindo a interpretação 
-subjetivista da probabilidade, mais ou menos semelhante à advogada por de Morgan. Entre eles, Frank P. Ramsey, 
-Bruno de Finetti e Leonard J. Savage
+subjetivista da probabilidade, mais ou menos semelhante à advogada por de Morgan. Entre eles, Frank P. Ramsey, Dennis Lindley,
+Harold Jeffreys, Bruno de Finetti e Leonard J. Savage
 podem ser apontados como os principais responsáveis por um interesse continuado na interpretação subjetiva, que, próximo à
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
 Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
 uma chance justa em uma aposta; embora as visões difiram no grau de empiricismo advogado,
-ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Note-se que a discordância entre Savage e de Finetti é
-maior em seus primeiros escritos, com seus pensamentos convergindo durante suas vidas}.
+ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Note-se que as discordâncias entre as posições de 
+Savage e de Finetti	dependem da época do texto analisado, com seus pensamentos convergindo durante suas vidas}.
 
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
 Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
@@ -465,23 +484,44 @@ Fisher, por exemplo, considera o argumento com o qual Bayes estabelece uma {\em 
 a respeito do problema específico que Bayes estava estudando, enquanto a escola Bayesiana verá esse argumento
 como aplicável a outras classes de problemas\cite{Aldrich08}. Assim, o resultado conhecido como Teorema de Bayes é aceito
 por todas as escolas de interpretação, enquanto que o argumento de Laplace 
-é aceito pela escola subjetivista e completamente rejeitado pela frequentista. 
+é, em essência, aceito pela escola subjetivista e completamente rejeitado pela frequentista. 
+
+Talvez a formalização mais convincente da teoria subjetivista de probabilidades é a dada por de Finetti no seu argumento sobre
+{\em Dutch books}. Um {\em Dutch book}, ou ``aposta holandesa'' 
+é um conjunto de apostas que garante um ganho para um apostador, qualquer que seja o
+resultado observado após o jogo. Suponha que um evento vai ser observado (seja uma corrida de cavalos, uma luta, etc), e um
+agente pode apostar uma quantia em dinheiro para cada possível resultado desse evento, baseado na sua avaliação subjetiva da
+probabilidade de cada resultado, e recebe um prêmio correspondente ao resultado que de fato ocorrer. A relação entre as 
+probabilidades e os prêmios é dita {\em incoerente} se uma ``aposta holandesa'' puder ser feita a favor ou contra o agente
+(ou seja, garantindo lucro ou perda sempre), e {\em coerente} caso contrário. De Finetti mostra que toda avaliação 
+coerente de probabilidades subjetivas implica nos axiomas da probabilidade \cite{deFinetti37}.
+
+Já a teoria de inferência Bayesiana pode ser vista, resumidamente, como uma estrutura de atualização das probabilidades subjetivas
+frente a novas evidências. O teorema de Bayes conecta a probabilidade {\em a priori} com a probabilidade {\em a posteriori}
+através do uso da verossimilhança dos dados. As grandes questões que precisam ser resolvidas são: como construir uma {\em priori}
+a partir do conhecimento prévio (que será retomada na sessão \ref{sec:classref}), e principalmente, como construir {\em prioris}
+na ausência de informação sobre o problema.
+Note-se que nem todo Bayesiano é totalmente subjetivista: como veremos, é possível empregar o teorema de Bayes a partir de
+{\em prioris} objetivas.
 
 A proposição da escola Bayesiana foi acompanhada de um debate intenso, nos quais os argumentos eram não raramente personalizados.
 Ronald Fisher foi um árduo crítico
-de Laplace, escrevendo que ``We can know nothing of the probability of hypotheses or hypothetical quantities''\cite{Fisher1921},
-e ``The theory of inverse probability is founded upon an error, and must be wholly rejected''\cite{Fisher1925}, ao mesmo tempo
-em que propunha uma metodologia de estimação fiducial, ou seja, presumindo uma base fixa de comparação. O método fiducial foi
-fundamentalmente abandonado nos anos seguintes, e é chamado por Savage de ``a bold attempt to make the Bayesian omelet without
-breaking the Bayesian eggs''\cite{Savage60}. 
+de Laplace, escrevendo que ``We can know nothing of the probability of hypotheses or hypothetical quantities'' \cite{Fisher1921},
+e ``The theory of inverse probability is founded upon an error, and must be wholly rejected'' \cite{Fisher1925}, ao mesmo tempo
+em que propunha uma metodologia de estimação fiducial, que permitia a inferência absoluta sobre hipóteses sem {\em prioris} 
+especificadas para uma classe de ``problemas bem-formulados''. O método fiducial foi fundamentalmente abandonado nos anos 
+seguintes à sua morte, sendo chamado por Savage de ``a bold attempt to make the Bayesian omelet without
+breaking the Bayesian eggs'' \cite{Savage60}, e é refutado por I. J. Good \cite{Good92}. No entanto, os argumentos de Fisher
+são sempre extremamente lúcidos e perspicazes, e a formulação moderna da teoria Bayesiana deve muito à crítica constante
+feita por ele sobre os pontos mais sutis da sua lógica.
 
 Com a axiomatização e formulação moderna da interpretação subjetivista, cuja história é intimamente ligada à da teoria
-econômica de utilidade (veja por exemplo \cite{Friedman48}),
-essa escola de pensamento vem ganhando maior aceitação nos meios científicos. Savage escreve sobre essa formulação moderna:
+econômica de utilidade (veja por exemplo \cite{Friedman48} e \cite{Pfanzagl67}),
+a escola Bayesiana de pensamento ganhou maior aceitação nos meios científicos. Savage escreve sobre essa formulação moderna:
 
 ``Personal probability can be regarded as part of a certain theory of coherent preference in the face of uncertainty. This
 preference theory is normative; its goal is to help us make better decisions by exposing to us possible incoherences in our
-attitudes toward real and hypothetical alternatives.''\cite{Savage67}
+attitudes toward real and hypothetical alternatives.'' \cite{Savage67}
 
 Essa exposição é reminiscente das palavras de de Morgan:
 
@@ -495,6 +535,8 @@ But he {\em believed} it, and thought he could show reason for his belief: to hi
 I shall say, for all that, that the probability {\em is} three to one; meaning that in the universal opinion of those who
 examine the subject, the state of mind to which a person {\em ought} to be able to bring himself is to look three times
 as confidently upon the arrival as upon the non-arrival.''\cite{deMorgan1847}
+
+\section{Críticas ao pensamento Bayesiano}
 
 Uma crítica da escola frequentista pode ser resumida como: se existirem chances físicas associadas a um evento
 e probabilidades subjetivas, não haveria motivo para supor que ambas serão iguais. Há duas respostas para esse problema 
@@ -520,7 +562,9 @@ justifiable. Probability does not correspond to a self-proclaimed `rational' bel
 belief of anyone''\cite{deFinetti51}
 
 Neste sentido, a posição de Anscombe, que privilegia um certo valor racional para a probabilidade de um evento,
-se afastam daquela defendida por de Finetti, e se aproxima da lógica probabilística de Rudolph Carnap.
+se afastam daquela defendida por de Finetti, e se aproxima da lógica probabilística de Rudolph Carnap e do Bayesianismo
+objetivo advogado por E. T. Jaynes \cite{Jaynes68}, que se utiliza do princípio da máxima entropia para determinar
+{\em prioris} plenamente objetivas.
 
 Outra crítica diz respeito ao fato de que, enquanto subjetiva, a probabilidade percebida por um sujeito pode não corresponder
 à probabilidade anunciada por ele. Esse problema é abordado pela teoria de {\em Scoring Rules}, desenvolvida por
@@ -534,17 +578,25 @@ values x to values which are probabilities. In particular, it follows that value
 intervals or by the rules of fuzzy logic are inadmissible. Only probability is a sensible description of uncertainty.''
 \cite{Lindley82}
 
-Um fator importante é a maior percepção moderna
+A escola Bayesiana também é criticada ao assumir uma postura subjetivista, que não seria compatível com o desenvolvimento
+da ciência, definida como a construção de conhecimento racional objetivo. Essa oposição, a bem da verdade, é mais reveladora
+de uma visão sobre a natureza da ciência do que uma crítica propriamente ao paradigma Bayesiano. Frise-se que mesmo 
+avaliações de probabilidade pessoais e subjetivas podem estar abertas ao estudo objetivo, uma posição que remonta ao trabalho
+de C.S. Peirce \cite{Stigler78}.
+Outro fator importante é a maior percepção moderna
 de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
-order on the subjective elements of the deciding person.''\cite{Savage60}.	
+order on the subjective elements of the deciding person.''\cite{Savage60}.
 
-\subsection{Probabilidade e propensão}
+\section{Probabilidade e propensão}
+
+Peirce on randomization (Stigler78)
 
 	** Popper sobre probabilidades **
 
 O interesse de Popper em estudar a probabilidade a partir de descrições da física quântica é natural por motivos. O primeiro
-é que há evidências de que a natureza da física quântica é intrinsecamente probabilística \cite{???}, ao contrário de fenômenos
+é que há evidências de que a natureza da física quântica é intrinsecamente probabilística \cite{Gudder88}, ao contrário 
+de fenômenos
 macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
 O segundo é que o estudo de problemas quânticos leva naturalmente a estruturas matemáticas semelhantes às probabilidades, mas
 com	propriedades distintas, como as quasiprobabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
@@ -557,7 +609,48 @@ de probabilidades, pois uma interpretação deve possuir uma determinada estrutu
 ``Interpretations in the literal sense (...) have sufficient intrinsic mathematical structure that one can derive
 the characteristics of probability from them.''\cite{Milne93}
 
-\subsection{O problema da classe de referência}\label{sec:classref}
+\section {O problema do ``Optional stopping''}
+
+Uma crítica muito veemente aos proponentes da inferência frequentista é dada pelo problema da parada opcional, ou 
+``optional stopping''. Suponha que um cientista realizou uma série de 12 ensaios de Bernoulli, ou seja, experimentos aleatórios
+com dois possíveis resultados (sucesso e falha), independentes e de mesma probabilidade. Após obter 3 sucessos, o cientista
+decide testar a hipótese nula de que a probabilidade de sucesso é de 0.5. Pelo paradigma frequentista, esse teste depende
+da maneira como o experimento foi projetado. Se o cientista planejava fazer 12 experimentos, a probabilidade de observar 3
+ou menos sucessos sob a hipótese nula é de $ \left( {0 \choose 12} + ... + {3 \choose 12}\right) (\frac{1}{2})^{12} = 7.3\%$. No entanto, se o cientista decidiu continuar realizando experimentos até
+encontrar o terceiro sucesso, a probabilidade de chegar a doze tentativas é de 
+$1 - \left( \frac{1}{2}^3 + {3 \choose 2} \frac{1}{2}^4 + ... + {10 \choose 2} \frac{1}{2}^{11}\right) = 3.3\%$. Ou seja,
+dependendo da intenção original do cientista, os mesmos dados podem servir para refutar ou não a hipótese nula.
+
+Para evitar esse tipo de  paradoxo, a sabedoria convencional dos estatísticos frequentistas afirma que um cientista {\em não pode}
+examinar os próprios dados enquanto os coleta. Toda a análise estatística deve ser feita posteriormente à coleta. 
+Desta forma, o cientista que realizou os 12 testes e encontrou um p-valor de 7.3\%, próximo do nível crítico de 5\%, é
+proibido de continuar a coleta de dados. Richard Royall, citando essa prática, diz:
+
+``Subsequent observations, no matter how consistent and convincing, can never justify a claim of statistical significance
+at his target level (...). Finding that the early partial results represent evidence that is only fairly strong precludes
+the possibility that the evidence in the final results might be quite strong. Does this make sense?'' \cite{Royall97}
+
+Enquanto alguns estatísticos vêem neste problema ``um uso ingênuo de p-valores'' \cite{Good92}, outros, como Richard Royall,
+consideram esta situação uma indicação clara de que o paradigma frequentista leva a contradições inerentes, e portanto 
+deve ser abandonado. A discordância entre as conclusões frequentistas e a inferência julgada aceitável por seus opositores 
+pode ser traçada na incoerência entre
+o procedimento de teste de hipóteses e o princípio da verossimilhança. Identificado e demonstrado por Allan Birnbaum em 1962, 
+este princípio afirma que toda a informação contida em uma amostra está	contida na função de verossimilhança \cite{Birnbaum62}. 
+Desta forma, a inferência feita à partir da amostra deve ser dependente da função de verossimilhança, e não do desenho
+experimental.
+No exemplo discutido acima, a função de verossimilhança do experimento é a mesma, não importando a intenção do pesquisador:
+
+\begin{equation}
+	\mathcal{L}(p|x) \alpha p^3(1-p)^9
+\end{equation}
+
+A razão de verossimilhanças, critério já utilizado por Fisher e Neyman-Pearson, entre os valores de $p=0.5$ e $p=3/12$ é de 
+aproximadamente 5, oferecendo uma evidência moderada a favor do valor $p=3/12$. Dentro do paradigma Bayesiano, onde o princípio
+da verossimilhança é aceito, essa razão de verossimilhanças deve ser usada para atualizar as probabilidades que cada hipótese
+tem {\em a priori}. Como vamos expor na sessão \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
+vão questionar o uso de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
+
+\section{O problema da classe de referência}\label{sec:classref}
 
 Em seu trabalho de 1922, Fisher escreve:
 
@@ -580,7 +673,7 @@ probability level, for no one of them has objective reality, all being products 
 Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
-\subsection{A escolha da verossimilhança}
+\section{A escolha da verossimilhança}\label{sec:likelihood}
 Fisher 22, pag 16. em diante
 
 %Livro do Edwards
@@ -611,24 +704,29 @@ represent a statistical distribution in any sense.''\cite{Edwards72}
 
 Fitelson: crítica em termos lógicos à verossimilhança. Middle way?
 
-\subsection{A abordagem por teoria da informação}
+\section{A abordagem por teoria da informação}
 
 %http://books.google.com.br/books?id=DlP_h4aMhiYC&printsec=frontcover#v=onepage&q&f=false
 Anderson 2008, AIC, Kulback-Liebler
 
-\section{O papel da incerteza na produção do conhecimento científico}
-%http://en.wikipedia.org/wiki/Bayesian_probability#Personal_probabilities_and_objective_methods_for_constructing_priors
+\section{Conclusões}
+
+Concluímos essa sessão com a conclusão de que a divisão entre 
 
 ** O papel de Carnap e Karl Pearson entre os positivistas lógicos; críticas a visão subjetiva E a população infinita de Fisher **
 (Lenhard06 e Zabell09)
 
 **** discutir a visão de Popper ****
+``Those theories which are under a probabilistic form (thermodynamics, statistical [mechanics?], etc.) can never be refuted (...):
+after all, even an event with probability 0 can well occur. According to Popper we then have to take a methodological decision
+and consider a probabilistic theory {\em T} refuted if a certain event occured which, as far as {\em T} is concerned, would 
+otherwise be extremely unlikely.'' \cite{deFinetti2010}
 
 *** positivismo lógico VERSUS falsificacionismo?? Lakatos? ***
 
 *** Kuhn e o papel do subjetivismo na ciência ****
 
-*** Hume sobre inducao. Paper do Savage sobre induction ***
+*** Hume sobre inducao. Paper do Savage sobre induction  Mais Fitelson??  ***
 
 *** Simberloff e testes de hipoteses ***
 
@@ -636,7 +734,8 @@ Ciência enquanto descrição/compreensão versus tomada de decisão científica
 
 A discussão metodológica na aplicação da estatística às ciências práticas deve estar subordinada a uma discussão
 epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a apresentação de
-métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese em
+métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese 
+e procedimentos frequentistas em
 bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
 coerentes com uma visão de ciência enquanto descrição/compreensão do mundo natural.
 
