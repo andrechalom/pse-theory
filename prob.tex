@@ -595,7 +595,19 @@ order on the subjective elements of the deciding person.'' \citep{Savage60}.
 
 \section{Probabilidade e propensão}
 
+%In English, "likelihood" appears in many writings by Charles Sanders Peirce, where model-based inference (usually abduction but sometimes including induction) is distinguished from statistical procedures based on objective[disambiguation needed] randomization. Peirce's preference for randomization-based inference is discussed in "Illustrations of the Logic of Science" (1877–1878) and "A Theory of Probable Inference" (1883)".
+
+ %   "probabilities that are strictly objective and at the same time very great, although they can never be absolutely conclusive, ought nevertheless to influence our preference for one hypothesis over another; but slight probabilities, even if objective, are not worth consideration; and merely subjective likelihoods should be disregarded altogether. For they are merely expressions of our preconceived notions" (7.227 in his Collected Papers).
+
+%	    "But experience must be our chart in economical navigation; and experience shows that likelihoods are treacherous guides. Nothing has caused so much waste of time and means, in all sorts of researchers, as inquirers' becoming so wedded to certain likelihoods as to forget all the other factors of the economy of research; so that, unless it be very solidly grounded, likelihood is far better disregarded, or nearly so; and even when it seems solidly grounded, it should be proceeded upon with a cautious tread, with an eye to other considerations, and recollection of the disasters caused." (Essential Peirce, volume 2, pages 108–109)
+
+%		Like Thiele, Peirce considers the likelihood for a binomial distribution. Peirce uses the logarithm of the odds-ratio throughout his career. Peirce's propensity for using the log odds is discussed by Stephen Stigler.
+
 Peirce on randomization (Stigler78)
+
+% Peirce held that science achieves statistical probabilities, not certainties, and that spontaneity (absolute chance) is real (see Tychism on his view). Most of his statistical writings promote the frequency interpretation of probability (objective ratios of cases), and many of his writings express skepticism about (and criticize the use of) probability when such models are not based on objective randomization.[94] Though Peirce was largely a frequentist, his possible world semantics introduced the "propensity" theory of probability before Karl Popper.[95][96] Peirce (sometimes with Joseph Jastrow) investigated the probability judgments of experimental subjects, "perhaps the very first" elicitation and estimation of subjective probabilities in experimental psychology and (what came to be called) Bayesian statistics.[2]
+
+% Peirce was one of the founders of statistics. He formulated modern statistics in "Illustrations of the Logic of Science" (1877–8) and "A Theory of Probable Inference" (1883). With a repeated measures design, he introduced blinded, controlled randomized experiments in 1884 (Hacking 1990:205)[1] (before Ronald A. Fisher).[2] He invented optimal design for experiments on gravity, in which he "corrected the means". He used correlation and smoothing. Peirce extended the work on outliers by Benjamin Peirce, his father.[2] He introduced terms "confidence" and "likelihood" (before Jerzy Neyman and Fisher). (See Stephen Stigler's historical books and Ian Hacking 1990[1]).
 
 	** Popper sobre probabilidades **
 
@@ -654,7 +666,7 @@ A razão de verossimilhanças, critério já utilizado por Fisher e Neyman-Pears
 aproximadamente 5, oferecendo uma evidência moderada a favor do valor $p=3/12$. Dentro do paradigma Bayesiano, onde o princípio
 da verossimilhança é aceito, essa razão de verossimilhanças deve ser usada para atualizar as probabilidades que cada hipótese
 tem {\em a priori}. Como vamos expor na sessão \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
-vão questionar o uso de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
+vão questionar o uso explícito de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
 
 \section{O problema da classe de referência}\label{sec:classref}
 
@@ -680,6 +692,15 @@ Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
 \section{A escolha da verossimilhança}\label{sec:likelihood}
+
+A grandeza conhecida como verossimilhança, defendida por Fisher em 1922, viu grande uso nas últimas páginas. Por um lado,
+ela é a base sobre a qual se assenta o teste de hipóteses de Neyman-Pearson. Por outro, ela é a ponte entre a {\em priori}
+e a {\em posteriori} Bayesianas. No final dos anos 1960, o uso da verossimilhança como base da inferência ganha vida 
+independente, e em grande parte devido ao trabalho de A.W.F. Edwards em 1972, é possível considerar essa postura como
+uma escola independente de pensamento, denominada às vezes Verossimilhantismo. Mais recentemente, essa escolha vai ser
+apoiada por Richard Royall. 
+
+
 Fisher 22, pag 16. em diante
 
 %Livro do Edwards
@@ -717,9 +738,14 @@ apenas uma {\em evidência} favorável a $H_A$ sobre $H_N$. Para transformar ess
 é necessário incorporar o nosso conhecimento {\em a priori} sobre a situação: enquanto nossa intuição diz
 que um baralho de engodo deve ser muito raro, e portanto o baralho examinado {\em provavelmente} é normal, um marciano,
 que não tem a mesma {\em priori}, deve achar muito natural que todas as cartas tenham a mesma figura, afinal todas tem o mesmo
-verso. Ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
+verso. 
+
+Ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
 que divulgue seus dados na forma de razões de verossimilhança, não transformadas em valores-p ou {\em posterioris}, para que
-seus pares possam ter clareza de qual é a evidência apresentada. Neste aspecto, eles ecoam as palavras de Fisher:
+seus pares possam ter clareza de qual é a evidência apresentada. 
+Ao recuperar o papel do cientista como tomador de decisões subjetivas, a abordagem da verossimilhança volta a se encontrar
+com o pensamento de Fisher, que critica Neyman-Pearson por um programa que é adequado ao processamento industrial de lotes,
+mas não à produção de conhecimento científico. Neste aspecto, Royall e Edwards ecoam as palavras de Fisher:
 
 ``We have the duty of formulating, of summarazing, and of communicating our conclusions, in intelligible form, in
 recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher55}
@@ -761,22 +787,21 @@ Anderson 2008, AIC, Kulback-Liebler
 
 \section{Conclusões}
 
-Concluímos essa sessão com a conclusão de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
-``estatística Bayesiana'' escondem o fato de que há, na verdade, uma variedade de correntes filosóficas que, baseadas
+Concluímos essa sessão com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
+``estatística Bayesiana'' esconde o fato de que há, na verdade, uma variedade de correntes filosóficas que, baseadas
 em idéias distintas sobre a natureza das probabilidades, chegam a conclusões distintas sobre assuntos díspares da epistemologia 
 à metodologia de inferência. A escola frequentista é fundamentalmente dividida entre a modelagem de Fisher e a rigidez de
 Neyman-Pearson, enquanto a escola Bayesiana é dividida entre os subjetivistas como de Finetti e os objetivistas como Jaynes.
 Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Carnap e Karl Pearson, que atacarão tanto
 a visão subjetiva de probabilidade quanto o modelo de população infinita dos frequentistas \citep{Lenhard06, Zabell09}.
-Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, que propõe
-que a verossimilhança é a única base lógica para a inferência.
+Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, e posteriormente
+expandida por Akaike, que propõem que a verossimilhança é a única base lógica para a inferência.
 
 É necessário que as divergências entre os diversos autores citados sejam interpretadas não na sua práxis, que representa 
-o nível metodológico, como costuma acontecer, e sim nos seus fundamentos, em cada suposição elementar feita sobre os
+o nível metodológico, como costuma acontecer em círculos mais inclinados à ciência do que à filosofia, 
+e sim nos seus fundamentos, em cada suposição elementar feita sobre os
 elementos constituintes da teoria probabilística e de inferência. Possivelmente, essas suposições devem ser mapeadas em
 distintos elementos da filosofia da ciência.
-
-
 
 ** O papel de Carnap e Karl Pearson entre os positivistas lógicos; críticas a visão subjetiva E a população infinita de Fisher **
 (Lenhard06 e Zabell09)
