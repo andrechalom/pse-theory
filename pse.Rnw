@@ -146,22 +146,25 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 
 
 % CAPITULO 1
-\chapter{Sobre probabilidade e inferência: WORK IN PROGRESS}
+\definecolor{shadecolor}{rgb}{1, 0.8, 0.8}
+\chapter{Sobre probabilidade e inferência}
 \input prob.tex
 
 % CAPITULO 2
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
 \selectlanguage{english}
 \chapter{Parameter space exploration: a synthesis}\label{cap:pse}
 \input intro.tex
 \input sampling.tex
 \input quantanal.tex
 \input leslie.tex
-\input twolife.tex
+%\input twolife.tex
 \input revlit.tex
 
 % CAPITULO 3
 \selectlanguage{brazilian}
-\chapter{Uma abordagem integrativa para análises de incerteza: WORK IN PROGRESS}
+\definecolor{shadecolor}{rgb}{1, 0.8, 0.8}
+\chapter{Uma abordagem integrativa para análises de incerteza}
 \input integr.tex
 \input caveat.tex
 \input mini.tex
@@ -170,6 +173,8 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 %%% TODO incluir resultados de Heterodera AQUI???
 
 \appendix
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\selectlanguage{english}
 \chapter{Sensitivity analyses: a brief tutorial with \R package pse}
 \input pse_tutorial.tex
 \chapter{Multiple runs of the same parameter combination with \R package pse}

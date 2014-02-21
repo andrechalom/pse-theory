@@ -35,16 +35,13 @@ sensitivity of parameters\citep{Caswell89}. In the general case, however, there
 is no possible formulation of the model in a closed equation, so analytical 
 methods are not possible.
 
-\sloppy
 The disciplines of uncertainty and sensivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
 developed in the 1980 and 1990 decades \citep{McKay79, Saltelli04, Florian92,
 Helton03, Helton05, Archer97, Huntington98, Ye98, Kleijnen99, Smith02, 
 ImanConover82, ImanConover87, Morris91, Saltelli99}.
-\fussy
 
-More recently, these analyses
-have been 
+More recently, these analyses have been 
 successfully applied to biological models, in order to explore the possible 
 outcomes from the model output, estimate their
 probability distribution and the dependency of the output 

@@ -280,36 +280,41 @@ mtext('(b)', at=0)
 		\label{fig:sobol}
 \end{figure}
 
-The last analysis we present here is the Extended Fourier Amplitude Sensitivity Test 
-(eFAST, fig. \ref{fig:fast}). This analysis provides an estimation of the fraction of variation
+The last analyses we present here are the decomposition of variance by Extended Fourier Amplitude Sensitivity Test 
+(eFAST, fig. \ref{fig:fast}) and Sobol' methods.
+These analyses provides an estimation of the fraction of variation
 of model output that can be explained by the individual variation of each parameter 
 (which we call first-order sensitivity, or main effect),
 along with the total variation caused by interaction between that parameter and others
 (total-order sensitivity). The interaction term for each parameter is the difference
 between its first and total order sensitivities. 
-The eFAST analysis is substantially more intensive
-in terms of computer time than the previously mentioned. The analyses presented here required 
-\Sexpr{length(fast8$y)} and \Sexpr{length(dfast8$y)} runs of the simulations, respectively.
+These analyses are substantially more intensive
+in terms of computer time than the previously mentioned. The eFAST analyses presented here required 
+\Sexpr{length(fast8$y)} and \Sexpr{length(dfast8$y)} runs of the simulations, respectively,
+for the independent and dependent cases.
 Table \ref{tabfast} shows the SBMA measure of concordance between different sizes. Note
 that $N_s$ reported should be multiplied by the number of parameters in each model to
 obtain the total number of simulations executed. Notice that, while the main effect $D_i$
 converge for both model, the total order $D_t$ indices are still variable with large sample sizes.
+This difference in the results for several eFAST analyses, together with 
+the differences between the eFAST and Sobol' results, hint at a numerical instability of this method.
+Sobol' indexes results are dislayed on Fig. \ref{fig:sobol}.
 
 <<table2, fig=FALSE, results=tex>>=
 print(xtable(tabfast, caption='Comparison of eFAST analyses by sample size for both models', label='tabfast'), sanitize.text.function = identity)
 @
 
-This analysis reveals that the output of the density independent model is mostly explained
+This analyses reveal that the output of the density independent model is mostly explained
 by first-order relations (which explain \Sexpr{round(sum(fast8$D1/fast8$V)*100)} \% of the 
-output variation), with $F_7$ and the growth terms being the most important. The importance
-of the linear terms shouldn't come
+output variation, according to the eFAST analysis), with $F_7$ and the growth terms being the most important. 
+The importance of the linear terms shouldn't come
 as a surprise, as the matrix growth model is a linear model.
 The density-dependent model, which has \Sexpr{round(sum(dfast8$D1/dfast8$V)*100)} \% of 
-the output variation predicted by linear terms, exhibit more complex interactions
-between the terms, in particular interactions involving $s_7$, $g_m$ and $a$,
-the
-survival for adult plants, and the terms associated with competition between seedlings, 
-respectively.
+the output variation predicted by linear terms, according to the eFAST analysis,
+exhibit more complex interactions between the terms, but while eFAST indicate the
+survival of adults and the terms associated with competition between seedlings as
+origins of these interactions, the Sobol' method points at higher-order terms involving
+the survival of seedlings.
 
 \subsection{Conclusions}
 

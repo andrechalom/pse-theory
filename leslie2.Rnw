@@ -1,3 +1,4 @@
+\begin{shaded}
 \section{Estudo de caso 3: um modelo de população estruturada com denso-dependência}
 Nesta sessão, retomamos o modelo para a população de {\em E. edulis} apresentado
 na sessão \ref{Leslie}, para comparar as análises de incerteza e sensibilidade realizadas 
@@ -102,3 +103,5 @@ elas <- n.1 %*% dndtheta %*% Mtheta
 dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
 barplot(dNdtheta, names=c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6","g6","s7","gm","a","z"));
 @
+
+\end{shaded}

@@ -164,6 +164,8 @@ curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 	\label{fig:LikFunc}
 \end{figure}
 
+\begin{shaded}
+
 A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
 foram utilizadas para gerar \Sexpr{dim(dis)[1]} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
 de $\lambda$. A distribuição dos valores de $\lambda$ 
@@ -198,4 +200,4 @@ abline(h=0, lty=3)
 
 queremos saber, dada uma amostra $x_i$, quais são as sensibilidades de $\lambda$ aos parâmetros $\theta_i$
 Para isso, vamos determinar qual é o melhor modelo da forma $\hat{\lambda} = a*sigma+b*gamma+c*f$ que representa $\lambda$
-
+\end{shaded}

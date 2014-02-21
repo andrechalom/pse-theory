@@ -78,6 +78,7 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 
 %(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
 
+\begin{shaded}
 \section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
 fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
@@ -87,11 +88,15 @@ transformações injetoras sobre parâmetros preservam as propriedades da funç�
 se um parâmetro $\theta$ está associado a uma função de verossimilhança $\mathcal{L}(\theta|\bu{x})$ e 
 $\phi = f(\theta)$ é dada por uma função $f(\cdot)$ injetora, a verossimilhança de $\phi$ é dada simplesmente por
 $\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\citep{Edwards72}, sec. 2.5).
-Vamos estender esse resultado para uma função genérica. Nosso argumento se baseia em uma função de um argumento,
-$\gamma = g(\theta)$, sendo que a generalização para mais dimensões é trivial.
+
+Nosso trabalho, então, é o de estender esse resultado para uma função genérica. 
+Nosso argumento se baseia em uma função de um argumento, $\gamma = g(\theta)$, sendo que a generalização 
+para mais dimensões é trivial.\footnote{A notação usada aqui é mais compatível com a literatura estatística,
+enquanto na sessão \ref{PSE}, definimos as entradas, resultados e o modelo em si como $x$, $y$ e $f$, relacionados
+como $y = f(x)$, aqui podemos pensar nesses objetos como $\theta$, $\gamma$ e $g$, respectivamente.}
 
 O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
-de hipóteses compostas sob o paradigma da verossimilhança. O trabalho fundamental de Neyman e Pearson \citep{Neyman33}
+de hipóteses compostas sob o paradigma da verossimilhança. O trabalho fundamental de Neyman e Pearson \citep{Neyman1933}
 estabelece uma justificativa matemática para o princípio da verossimilhança em problemas envolvendo hipóteses simples.
 O problema de hipóteses compostas é resolvido dentro do paradigma frequentista para alguns casos particulares, como 
 o teste {\em t de Student}, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
@@ -154,5 +159,5 @@ Resumo de aplicação:
 	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de informação (ver \citep{Edwards72}, teorema 5.4.2?).
 	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
-
+\end{shaded}
 

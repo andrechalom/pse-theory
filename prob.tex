@@ -217,7 +217,7 @@ de probabilidade pode ser perfeitamente adequada para embasar uma decisão pesso
 avanço da ciência, entendida como um corpo teórico objetivo e independente das opiniões de cada cientista individualmente.
 
 \section{Interpretação frequentista}
-A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destacam George Boole e John Venn
+A próxima crítica à visão de Laplace vem de uma série de pensadores dentre os quais se destacam George Boole e John Venn.
 Este último, em seu trabalho de 
 1866, postula que a probabilidade de um evento se refere a frequência relativa com a qual esse evento se repetiria em uma
 série infinita de experimentos:
@@ -280,7 +280,63 @@ a situation if there is an analogy between the situation and the concept of rand
 Não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente de uma população de sentenças, algumas
 das quais são verdadeiras. Desta forma, a escolha da definição frequentista de probabilidade implica em abandonar o método
 das probabilidades inversas para comparar o mérito de diferentes hipóteses. Essa percepção vai levar ao desenvolvimento
-da escola de testes de significância e à proposição do conceito de verossimilhança, ambos por R. A.Fisher.
+da escola de testes de significância e à proposição do conceito de verossimilhança.
+
+\section{Interpretação por propensões}
+
+Uma terceira interpretação para a natureza da probabilidade é dada pelo cientista e lógico norte-americano C.S. Peirce,
+cuja obra prolífica se estende sobre vários ramos da estatística moderna. O interesse de Peirce no estudo de probabilidades
+deve ser traçado na sua visão indeterminista, segundo a qual eventos não se sucedem de maneira estritamente causal, mas são
+influenciados por um elemento de chance. Peirce baseia essa visão na constatação de que ``the mind is not subject to `law'
+in the same rigid sense that matter is (...). There always remains a certain ammount of arbitrary spontaneity in its action''
+\citep{Peirce1892}, expandindo essa doutrina ao mundo físico ao notar que as leis determinísticas 
+da física newtoniana são simétricas no tempo, e portanto, incompatíveis com fenômenos evolucionários, como os descritos por
+Charles Darwin. Essa visão se opõe, portanto, à postura de Laplace, e indica uma predisposição a considerar que probabilidades
+são características do mundo natural, sendo portanto de natureza objetiva. Se a experiência no mundo natural é atormentada
+pela sorte, ela não pode ser base para um sistema de conhecimento baseado estritamente na dedução. Peirce irá desenvolver
+portanto um sistema de argumentação baseada em probabilidades, como o argumento de Dedução Provável Simples \citep{Fetzer93}:
+
+\begin{enumerate}
+	\item Uma proporção $p$ de As são Bs
+	\item X é um A
+	\item Portanto, X é um B com probabilidade $p$ 
+\end{enumerate}
+
+Apesar de defender a visão frequentista, Peirce observa ainda um descompasso entre a concordância da frequência de ocorrência
+de uma série de experimentos e sua probabilidade com a {\em definição} da probabilidade como sendo essa frequência. Para
+essa visão, a probabilidade de um evento específico não pode ser definida. ``Qual a probabilidade de que um lance qualquer
+de moeda dê cara?'' é uma pergunta que tem resposta no paradigma frequentista, enquanto ``qual a probabilidade de que 
+{\em o próximo lance de moeda que eu fizer} dê cara?'' é uma pergunta que não pode ser respondida. Peirce, portanto, lança
+mão de uma propriedade física intrínseca descrita como ``would-be'':
+
+``I am, then, to define the meanings of the statemente that the {\em probability} that if a die be thrown from a dice
+box it will turn up a number divisible by three, is one third. The statement means that the die has a certain `would-be';
+and to say that it has a certain `would-be' is to say that it has a property, quite anlogous to any {\em habit} that a man
+might have. Only the `would-be' of the die is presumable as much simpler and more definite than the man's habit as the
+die's homogeneous composition and cubical shape is simples than the nature of the man's nervous system and soul.''
+(C. S. Peirce, CP 2.664, in \citep{Fetzer93})
+
+Uma interpretação mais recente, de surpreendente similaridade com a dada por Peirce, é proposta por Karl Popper, sob o nome
+de {\em propensão}, o que irá fazer com que filósofos contemporâneos passem a se referir à interpretação de Peirce pelo mesmo
+nome.
+O interesse de Popper em estudar a probabilidade a partir de descrições da física quântica é natural por dois motivos. O primeiro
+é que há evidências de que a natureza da física quântica é intrinsecamente probabilística \citep{Gudder88}, ao contrário 
+de fenômenos
+macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
+O segundo é que o estudo de problemas quânticos leva naturalmente a estruturas matemáticas semelhantes às probabilidades, mas
+com	propriedades distintas, como as quasiprobabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
+axioma de aditividade de Kolmogorov e ter regiões de probabilidade negativa \citep{Mandel95}.
+
+A visão de probabilidades como propensões, advogada por Peirce ou Popper é, 
+no entanto, criticada por não prover nenhuma base operacional para o cálculo de probabilidades à partir
+da definição de propensidades. É inconclusivo se esta visão pode ser considerada uma teoria de interpretação
+de probabilidades, pois uma interpretação deve possuir uma determinada estrutura, como cita Peter Milne:
+
+``Interpretations in the literal sense (...) have sufficient intrinsic mathematical structure that one can derive
+the characteristics of probability from them.''\citep{Milne93}
+
+Desta forma, embora a visão de propensões tenha tido novo interesse nos últimos anos em círculos filosóficos \citep{Gillies2000},
+ela tem recebido pouca atenção em meios científicos.
 
 \section{A formalização da inferência}
 
@@ -338,7 +394,9 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 \end{enumerate}
 
 Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma quantidade conhecida como
-verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Fisher define essa quantidade,
+verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Embora já identificada por C.S.
+Peirce, a exposição de Fisher sobre verossimilhança é um passo fundamental para sua aceitação entre estatísticos europeus.
+Fisher define essa quantidade,
 cujo uso mais imediato é identificar as hipóteses sobre determinado parâmetro que encontram maior suporte das evidências,
 como:
 
@@ -443,6 +501,7 @@ an intelligent attempt to {\em understand} the experimental situation.''\citep{F
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
 
+\begin{shaded}
 \section{Lógica probabilística}
 
 Tanto de Morgan como Boole, contados entre os fundadores da interpretação subjetivista e frequentista da probabilidade,
@@ -469,6 +528,8 @@ e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora u
 *** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
+\end{shaded}
+
 \section{Probabilidade Bayesiana moderna}\label{sec:bayes}
 
 Embora uma grande parcela da comunidade científica tenha adotado uma visão frequentista durante a primeira metade do século XX,
@@ -541,11 +602,12 @@ I shall say, for all that, that the probability {\em is} three to one; meaning t
 examine the subject, the state of mind to which a person {\em ought} to be able to bring himself is to look three times
 as confidently upon the arrival as upon the non-arrival.''\citep{deMorgan1847}
 
-\section{Críticas ao pensamento Bayesiano}
+\section{Críticas e secções do pensamento Bayesiano}
 
 Uma crítica da escola frequentista pode ser resumida como: se existirem chances físicas associadas a um evento
 e probabilidades subjetivas, não haveria motivo para supor que ambas serão iguais. Há duas respostas para esse problema 
-entre os proponentes do subjetivismo:
+entre os proponentes da teoria Bayesiana, que essencialmente caracterizam as vertentes objetiva e subjetiva do Bayesianismo
+moderno.
 
 Por um lado, dadas algumas condições sobre a construção da
 probabilidade subjetiva de um ator racional, pode ser demonstrado que as chances físicas de um evento são iguais 
@@ -593,39 +655,6 @@ de que a escola frequentista, ao ser obrigada a escolher um modelo mental de ref
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
 order on the subjective elements of the deciding person.'' \citep{Savage60}.
 
-\section{Probabilidade e propensão}
-
-%In English, "likelihood" appears in many writings by Charles Sanders Peirce, where model-based inference (usually abduction but sometimes including induction) is distinguished from statistical procedures based on objective[disambiguation needed] randomization. Peirce's preference for randomization-based inference is discussed in "Illustrations of the Logic of Science" (1877–1878) and "A Theory of Probable Inference" (1883)".
-
- %   "probabilities that are strictly objective and at the same time very great, although they can never be absolutely conclusive, ought nevertheless to influence our preference for one hypothesis over another; but slight probabilities, even if objective, are not worth consideration; and merely subjective likelihoods should be disregarded altogether. For they are merely expressions of our preconceived notions" (7.227 in his Collected Papers).
-
-%	    "But experience must be our chart in economical navigation; and experience shows that likelihoods are treacherous guides. Nothing has caused so much waste of time and means, in all sorts of researchers, as inquirers' becoming so wedded to certain likelihoods as to forget all the other factors of the economy of research; so that, unless it be very solidly grounded, likelihood is far better disregarded, or nearly so; and even when it seems solidly grounded, it should be proceeded upon with a cautious tread, with an eye to other considerations, and recollection of the disasters caused." (Essential Peirce, volume 2, pages 108–109)
-
-%		Like Thiele, Peirce considers the likelihood for a binomial distribution. Peirce uses the logarithm of the odds-ratio throughout his career. Peirce's propensity for using the log odds is discussed by Stephen Stigler.
-
-Peirce on randomization (Stigler78)
-
-% Peirce held that science achieves statistical probabilities, not certainties, and that spontaneity (absolute chance) is real (see Tychism on his view). Most of his statistical writings promote the frequency interpretation of probability (objective ratios of cases), and many of his writings express skepticism about (and criticize the use of) probability when such models are not based on objective randomization.[94] Though Peirce was largely a frequentist, his possible world semantics introduced the "propensity" theory of probability before Karl Popper.[95][96] Peirce (sometimes with Joseph Jastrow) investigated the probability judgments of experimental subjects, "perhaps the very first" elicitation and estimation of subjective probabilities in experimental psychology and (what came to be called) Bayesian statistics.[2]
-
-% Peirce was one of the founders of statistics. He formulated modern statistics in "Illustrations of the Logic of Science" (1877–8) and "A Theory of Probable Inference" (1883). With a repeated measures design, he introduced blinded, controlled randomized experiments in 1884 (Hacking 1990:205)[1] (before Ronald A. Fisher).[2] He invented optimal design for experiments on gravity, in which he "corrected the means". He used correlation and smoothing. Peirce extended the work on outliers by Benjamin Peirce, his father.[2] He introduced terms "confidence" and "likelihood" (before Jerzy Neyman and Fisher). (See Stephen Stigler's historical books and Ian Hacking 1990[1]).
-
-	** Popper sobre probabilidades **
-
-O interesse de Popper em estudar a probabilidade a partir de descrições da física quântica é natural por motivos. O primeiro
-é que há evidências de que a natureza da física quântica é intrinsecamente probabilística \citep{Gudder88}, ao contrário 
-de fenômenos
-macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
-O segundo é que o estudo de problemas quânticos leva naturalmente a estruturas matemáticas semelhantes às probabilidades, mas
-com	propriedades distintas, como as quasiprobabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
-axioma de aditividade de Kolmogorov e ter regiões de probabilidade negativa \citep{Mandel95}.
-
-A visão de Popper é, no entanto, criticada por não prover nenhuma base operacional para o cálculo de probabilidades à partir
-da definição de propensidades. É inconclusivo se a visão de Popper pode ser considerada uma teoria de interpretação
-de probabilidades, pois uma interpretação deve possuir uma determinada estrutura, como cita Peter Milne:
-
-``Interpretations in the literal sense (...) have sufficient intrinsic mathematical structure that one can derive
-the characteristics of probability from them.''\citep{Milne93}
-
 \section {O problema do ``Optional stopping''}
 
 Uma crítica muito veemente aos proponentes da inferência frequentista é dada pelo problema da parada opcional, ou 
@@ -651,7 +680,7 @@ Enquanto alguns estatísticos vêem neste problema ``um uso ingênuo de p-valore
 consideram esta situação uma indicação clara de que o paradigma frequentista leva a contradições inerentes, e portanto 
 deve ser abandonado. A discordância entre as conclusões frequentistas e a inferência julgada aceitável por seus opositores 
 pode ser traçada na incoerência entre
-o procedimento de teste de hipóteses e o princípio da verossimilhança. Utilizado já por Neyman e Pearson\citep{Neyman33},
+o procedimento de teste de hipóteses e o princípio da verossimilhança. Utilizado já por Neyman e Pearson\citep{Neyman1933},
 em caráter razoavelmente intuitivo, o princípio é demonstrado por Allan Birnbaum em 1962, 
 e afirma que toda a informação contida em uma amostra está	contida na função de verossimilhança \citep{Birnbaum62}. 
 Desta forma, a inferência feita à partir da amostra deve ser dependente da função de verossimilhança, e não do desenho
@@ -668,6 +697,7 @@ da verossimilhança é aceito, essa razão de verossimilhanças deve ser usada p
 tem {\em a priori}. Como vamos expor na sessão \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
 vão questionar o uso explícito de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
 
+\begin{shaded}
 \section{O problema da classe de referência}\label{sec:classref}
 
 Em seu trabalho de 1922, Fisher escreve:
@@ -691,6 +721,9 @@ probability level, for no one of them has objective reality, all being products 
 Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
+\end{shaded}
+
+\begin{shaded}
 \section{A escolha da verossimilhança}\label{sec:likelihood}
 
 A grandeza conhecida como verossimilhança, defendida por Fisher em 1922, viu grande uso nas últimas páginas. Por um lado,
@@ -748,7 +781,7 @@ com o pensamento de Fisher, que critica Neyman-Pearson por um programa que é ad
 mas não à produção de conhecimento científico. Neste aspecto, Royall e Edwards ecoam as palavras de Fisher:
 
 ``We have the duty of formulating, of summarazing, and of communicating our conclusions, in intelligible form, in
-recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher55}
+recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher1955}
 
 Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
 probabilidade {\em a priori}, no que o paradigma da verossimihança difere das escolas Bayesianas? Para responder isso,
@@ -829,3 +862,4 @@ e procedimentos frequentistas em
 bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
 coerentes com uma visão de ciência enquanto descrição/compreensão do mundo natural.
 
+\end{shaded}

@@ -277,6 +277,7 @@ plotelast(LHSlge)
 	\label{LHSlge}
 \end{figure}
 
+\begin{shaded}
 Vamos prosseguir agora a um estudo integrativo da calibração dos parâmetros do
 modelo e da incerteza dos resultados do modelo, usando a metodologia de Generalized
 Likelihood Uncertainty Estimation (GLUE). Para isso, usaremos os dados de 
@@ -320,3 +321,4 @@ test <- Tribolium(exp(a$par[1]), logistic(a$par[2]), logistic(a$par[3]), logisti
 test <- matrix(test, ncol=3, byrow=T)
 matplot(test)
 @
+\end{shaded}
