@@ -82,7 +82,11 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 \section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
 fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
-modelo, a partir de um conjunto de dados coletados?''. Sabemos que essa pergunta, se formulada sobre os parâmetros
+modelo, a partir de um conjunto de dados coletados?''. Em um modelo de crescimento populacional, por exemplo, a pergunta
+se torna ``qual o suporte que os dados coletados fornecem para a hipótese de que a população está crescendo ou estável,
+{\em versus} a hipótese de que a população está em declínio?''.
+
+Sabemos que essa pergunta, se formulada sobre os parâmetros
 de uma distribuição de probabilidade, é respondida através da função de verossimilhança. Também sabemos que
 transformações injetoras sobre parâmetros preservam as propriedades da função de verossimilhança, isso é: 
 se um parâmetro $\theta$ está associado a uma função de verossimilhança $\mathcal{L}(\theta|\bu{x})$ e 
