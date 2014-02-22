@@ -140,7 +140,12 @@ Para clarificar nossa operação, vamos construir uma outra função a partir de
 Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
 nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$. No entanto, a 
 verossimilhança, ao contrário da probabilidade, não é aditiva em relação ao parâmetro, de forma de a função $\Psi^\dagger$ 
-não é uma função de verossimilhança. 
+não é uma função de verossimilhança:
+
+``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
+hypotheses (...).
+Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
+represent a statistical distribution in any sense.'' \citep{Edwards72}
 
 Do ponto de vista Bayesiano, podemos enxergar a função de probabilidade {\em a posteriori} de $\gamma$ como:
 
@@ -150,6 +155,9 @@ uma transformação não-injetora.
 
 Statistical Evidence: A Likelihood Paradigm page 8
 %http://books.google.com.br/books?hl=en&lr=&id=oysWLTFaI_gC&oi=fnd&pg=PR11&dq=likelihood+composite+hypothesis&ots=W4nyN4-x84&sig=vjdFL8YrtFct4cOM_F_PFkznTwU&redir_esc=y#v=onepage&q&f=false
+
+DÁ PRA USAR O MIDDLE-WAY DO FITELSON EM UA?
+
 
 \section{Aplicação}
 (****** vou explicar o passo a passo detalhadamente, aqui vai um resumão da aplicação *******)

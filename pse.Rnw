@@ -60,7 +60,7 @@
 		\par
 		\vspace{200pt}
 		{\Huge Exploração de espaços de parâmetros de modelos 
-		biológicos sob o paradigma da verossimilhança}
+		biológicos sob diferentes paradigmas estatísticos}
 		\par
 		\vfill
 		\textbf{{\large São Paulo}\\
@@ -80,7 +80,7 @@
 	\par
 	\vspace{200pt}
 		{\Huge Exploração de espaços de parâmetros de modelos 
-		biológicos sob o paradigma da verossimilhança}
+		biológicos sob diferentes paradigmas estatísticos}
 \end{center}
 \par
 \vspace{90pt}
@@ -112,19 +112,20 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 	  para melhor compreender, avaliar a confiabilidade e interpretar o resultado destes modelos.
 	  Neste trabalho, apresentamos uma investigação de métodos existentes para responder as
 	  questões relevantes da área, com ênfase na técnica conhecida como Hipercubo Latino e com foco
-	  na análise quantitativa dos resultados. Ainda, propomos uma metodologia paralela baseada no
-	  paradigma estatístico da verossimilhança, e realizamos a comparação entre resultados
-	  analíticos de incerteza e sensibilidade, e resultados obtidos do Hipercubo e do método baseado
-	  em verossimilhança. 
-
+	  na análise quantitativa dos resultados, e realizamos a 
+	  comparação entre resultados analíticos de incerteza e sensibilidade e resultados obtidos 
+	  do Hipercubo.
+	  Ainda, examinamos a proposta de uma metodologia 
+	  paralela baseada no paradigma estatístico da verossimilhança.
+	  
 	  O capítulo 1 introduz uma investigação a respeito dos conceitos históricos sobre a natureza
-	  da probabilidade, e justifica a escolha da verossimilhança como base da inferência estatística.
+	  da probabilidade, situando o conceito da verossimilhança como componente central da inferência estatística.
 
 	  O capítulo 2 (em inglês) traz uma revisão bibliográfica sobre o estado da arte em análises
 	  de incerteza e sensibilidade, apresentando um exemplo de aplicação das técnicas descritas a um
 	  problema de crescimento populacional estruturado.
 
-	  O capítulo 3 propõe uma metodologia baseada na verossimilhança dos dados
+	  O capítulo 3 examina a proposta de uma metodologia baseada na verossimilhança dos dados
 	  como uma abordagem integrativa entre a estimação de parâmetros e a análise de incerteza, apresentando
 	  resultados preliminares.
 

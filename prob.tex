@@ -1,4 +1,4 @@
-\section{Conceitos históricos sobre a natureza das probabilidades}
+\section{A história e a natureza da probabilidade}
 
 John Venn, no prefácio do seu estudo de 1866, escreve:
 
@@ -62,8 +62,8 @@ muito repetida em textos introdutórios, esconde uma riqueza de detalhes, envolv
 escola e convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
 não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
 única base de inferência. A presente exposição é, por força, limitada e fragmentária; muitos pontos mais finos da argumentação
-(envolvendo, por exemplo, a regra de sucessão de Laplace) foram deixados de fora para que o texto não se tornasse proibitivamente
-longo. 
+foram deixados de fora para que o texto não se tornasse proibitivamente longo. É quase um bordão afirmar que cada 
+sessão aqui poderia ser expandida para um livro; algumas delas na verdade são esforços para resumir livros já escritos.
 
 \section{Contra uma teoria axiomática}\label{sec:axiomatica}
 O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey Kolmogorov, matemático
@@ -430,7 +430,7 @@ a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia d
 {\em probabilidades} das hipóteses conflitantes, Fisher nota que as verossimilhanças calculadas acima não se comportam como 
 probabilidades, no sentido de não estarem sujeitas às leis da probabilidade (veja na sessão \ref{sec:axiomatica}).
 
-\section{Diferentes abordagens para testes de hipóteses}
+\section{Abordagens para testes de hipóteses}
 
 A estrutura mental desenvolvida por Fisher durante a década de 1920 vai levar também a um procedimento conhecido como teste de 
 significância, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
@@ -572,7 +572,15 @@ coerente de probabilidades subjetivas implica nos axiomas da probabilidade \cite
 
 Já a teoria de inferência Bayesiana pode ser vista, resumidamente, como uma estrutura de atualização das probabilidades subjetivas
 frente a novas evidências. O teorema de Bayes conecta a probabilidade {\em a priori} com a probabilidade {\em a posteriori}
-através do uso da verossimilhança dos dados. As grandes questões que precisam ser resolvidas são: como construir uma {\em priori}
+através do uso da verossimilhança dos dados. No caso de duas hipóteses concorrentes $H1$ e $H2$, para explicar um evento observado
+$E$, o teorema de Bayes diz que:
+
+\begin{equation}
+	\frac{p(H1|E)}{p(H2|E)}= \frac{p(E|H1)}{p(E|H2)} \,\frac{p(H1)}{p(H2)}
+\end{equation}
+
+Onde o termo $\frac{p(E|H1)}{p(E|H2)}$ é justamente a razão das verossimilhanças.
+As grandes questões que precisam ser resolvidas são: como construir uma {\em priori}
 a partir do conhecimento prévio (que será retomada na sessão \ref{sec:classref}), e principalmente, como construir {\em prioris}
 na ausência de informação sobre o problema.
 Note-se que nem todo Bayesiano é totalmente subjetivista: como veremos, é possível empregar o teorema de Bayes a partir de
@@ -585,9 +593,11 @@ e ``The theory of inverse probability is founded upon an error, and must be whol
 em que propunha uma metodologia de estimação fiducial, que permitia a inferência absoluta sobre hipóteses sem {\em prioris} 
 especificadas para uma classe de ``problemas bem-formulados''. O método fiducial foi fundamentalmente abandonado nos anos 
 seguintes à sua morte, sendo chamado por Savage de ``a bold attempt to make the Bayesian omelet without
-breaking the Bayesian eggs'' \citep{Savage60}, e é refutado por I. J. Good \citep{Good92}. No entanto, os argumentos de Fisher
-são sempre extremamente lúcidos e perspicazes, e a formulação moderna da teoria Bayesiana deve muito à crítica constante
-feita por ele sobre os pontos mais sutis da sua lógica.
+breaking the Bayesian eggs'' \citep{Savage60}, e é considerado como refutado por 
+I. J. Good \citep{Good92}. No entanto, os argumentos de Fisher
+alcançaram várias vezes uma grande lucidez e perspicácia, e a formulação moderna da teoria Bayesiana 
+deve muito à crítica constante feita por ele sobre os pontos mais sutis da sua lógica. \footnote{
+O argumento fiducial continua sendo altamente controverso entre estatísticos, sendo defendido em \citep{Hacking65}.}
 
 Com a axiomatização e formulação moderna da interpretação subjetivista, cuja história é intimamente ligada à da teoria
 econômica de utilidade (veja por exemplo \citep{Friedman48} e \citep{Pfanzagl67}),
@@ -596,6 +606,18 @@ a escola Bayesiana de pensamento ganhou maior aceitação nos meios científicos
 ``Personal probability can be regarded as part of a certain theory of coherent preference in the face of uncertainty. This
 preference theory is normative; its goal is to help us make better decisions by exposing to us possible incoherences in our
 attitudes toward real and hypothetical alternatives.'' \citep{Savage67}
+
+Savage, ainda, propõe a teoria subjetiva de probabilidade como uma resposta ao problema da indução:
+
+``The theory of personal probability [prescribes] exactly how a set of beliefs should change in light of what is observed.
+It can help you say, `My opinions today are the rational consequence of what they were yesterday and of what I have seen
+since yesterday.' In principle, yesterday's opinions can be traced to the day before, but even given a coherent demigod
+able to trace his present opinions back to those with which he was born and to what he has experienced since, the theory
+of personal probability does not pretend to say with what system of opinions he ought to have been born. It leaves him, just
+as Hume would say, without rational foundation for his beliefs of today (...). That all my beliefs are but my personal
+opinions, no matter how well some of them may coincide with opinions of others, seems to me not a paradox but a truism (...).
+If there is a rational basis for beliefs going beyond mere coherency, then there are some specific opinions that a rational
+baby demigod must have. Put that way, the notion of any such basis seems to me quite counterintuitive.'' \citep{Savage67}
 
 Essa exposição é reminiscente das palavras de de Morgan:
 
@@ -726,12 +748,12 @@ shown, a multiplicity of populations to each of which we can legitimately regard
 probability level, for no one of them has objective reality, all being products of the statistican's imagination.''
 \citep{Fisher1955}
 
+Fisher 22, pag 16. em diante
 Reference class problem
 % http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
 
 \end{shaded}
 
-\begin{shaded}
 \section{A escolha da verossimilhança}\label{sec:likelihood}
 
 A grandeza conhecida como verossimilhança, defendida por Fisher em 1922, viu grande uso nas últimas páginas. Por um lado,
@@ -740,26 +762,20 @@ e a {\em posteriori} Bayesianas. No final dos anos 1960, o uso da verossimilhan�
 independente, e em grande parte devido ao livro de I. Hacking em 1965 sobre a lógica da inferência, 
 e ao trabalho de A.W.F. Edwards em 1972, é possível considerar essa postura como
 uma escola independente de pensamento, denominada às vezes Verossimilhantismo. Mais recentemente, essa escolha vai ser
-veementemente apoiada por Richard Royall. 
+veementemente apoiada por Richard Royall. Esta escola de pensamento se baseia na conjunção do princípio da 
+verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhança, enunciada por Hacking:
 
-
-Fisher 22, pag 16. em diante
-
-%Livro do Edwards
-**** Discutir o livro do Edwards e verossimilhança ****
-
- pagina 176
-* Verossimilhança por Fisher e seu papel na estat frequentista
-* Papel da ver. na estat bayesiana
-
-* Data are fixed, pars are random VERSUS pars are fixed, data is random
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
+\citep{Hacking65}
 
 A escolha da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
 para atacar o teste de significância de Fisher foi reconhecer a necessidade lógica da comparação entre diferentes hipóteses.
 Enquanto o teste de significância privilegia uma hipótese nula, a abordagem de Neyman-Pearson, tal qual a de Edwards e Royall,
 vai refutar essa abordagem como incompleta. Os dados recolhidos por um experimento podem indicar uma alta ou baixa
 probabilidade para uma certa hipótese, mas isso não deve ser considerado evidência a favor ou contra essa hipótese sem
-que as hipóteses alternativas sejam igualmente escrutinizadas. É o uso da razão entre verossimilhanças de diferentes hipóteses,
+que hipóteses alternativas sejam igualmente escrutinizadas. É o uso da razão entre verossimilhanças de diferentes hipóteses,
 e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
 programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é famoso
 pela frase ``How often have I said to you that when you have eliminated the impossible, whatever remains, {\em however 
@@ -768,64 +784,75 @@ improbable}, must be the truth?''.
 A divergência entre as abordagens se dá fundamentalmente com a {\em ação} que o cientista deve tomar após examinar a 
 razão de verossimilhanças. Neyman-Pearson argumentam que esse valor deve nortear um processo de teste de hipóteses, que
 leva ao {\em comportamento} de aceitar uma hipótese em detrimento das demais. Royall e Edwards realizam a separação
-conceitual entre o grau de certeza que temos sobre a hipótese, a força da evidência que um conjunto de dados confere
-a uma hipótese em detrimento de outras, e o curso de ação tomado após verificar tais quantidades. 
+conceitual entre (1) o grau de certeza que temos sobre a hipótese, (2) a força da evidência que um conjunto de dados confere
+a uma hipótese em detrimento de outras, e (3) o curso de ação tomado após verificar tais quantidades. O curso de ação tomado
+deve levar em conta uma multiplicade de outros fatores, representados por {\em priors} e funções de perda na teoria de 
+decisões: Laplace já havia separado esses conceitos com o problema do 
+número de juízes necessário para condenar um prisioneiro. A decisão, além de levar em conta as probabilidades de
+condenar um inocente ou perdoar um culpado, deve levar em conta se a pena será uma multa ou a morte.
 
-Um exemplo interessante é dado pelo seguinte experimento mental: tome um baralho ordinário e vire a primeira carta,
+Um exemplo interessante sobre verossimilhanças é dado 
+pelo seguinte experimento mental: tome um baralho ordinário e vire a primeira carta,
 para encontrar um ás de espadas. Suponha agora duas hipóteses concorrentes: $H_N$ de que o baralho é normal e $H_A$
 de que o baralho é um engodo, composto por 52 ases de espadas. A verossimilhança de $H_N$ é 
 $\mathcal{L} (H_N|A \spadesuit) = \frac{1}{52}$, contra $\mathcal{L} (H_A | A \spadesuit) = 1 $. Enquanto o procedimento
 de Neyman-Pearson diz ``escolha a hipótese que leva à maior verossimilhança'', Royall e Edwards vêem nessa situação
-apenas uma {\em evidência} favorável a $H_A$ sobre $H_N$. Para transformar essa evidência em um grau de certeza,
+apenas uma {\em evidência} favorável a $H_A$ sobre $H_N$. Para transformar essa evidência em um curso de ação, é necessário
+incorporar mais informação ao problema. 
+Ainda, para transformar essa evidência em um grau de certeza,
 é necessário incorporar o nosso conhecimento {\em a priori} sobre a situação: enquanto nossa intuição diz
 que um baralho de engodo deve ser muito raro, e portanto o baralho examinado {\em provavelmente} é normal, um marciano,
 que não tem a mesma {\em priori}, deve achar muito natural que todas as cartas tenham a mesma figura, afinal todas tem o mesmo
 verso. 
 
-Ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
+Em particular, 
+ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
 que divulgue seus dados na forma de razões de verossimilhança, não transformadas em valores-p ou {\em posterioris}, para que
 seus pares possam ter clareza de qual é a evidência apresentada. 
 Ao recuperar o papel do cientista como tomador de decisões subjetivas, a abordagem da verossimilhança volta a se encontrar
 com o pensamento de Fisher, que critica Neyman-Pearson por um programa que é adequado ao processamento industrial de lotes,
-mas não à produção de conhecimento científico. Neste aspecto, Royall e Edwards ecoam as palavras de Fisher:
+mas não à produção de conhecimento científico. Neste aspecto, Royall e Edwards ecoam as palavras de Fisher e de I. Good:
 
 ``We have the duty of formulating, of summarazing, and of communicating our conclusions, in intelligible form, in
 recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher1955}
 
+``If a Bayesian is a subjectivist, he will know that the initial probability density varies from person to person and
+so he will see the value if graphing the likelihood function for communication.'' \citep{Good76}
+
 Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
-probabilidade {\em a priori}, no que o paradigma da verossimihança difere das escolas Bayesianas? Para responder isso,
-precisamos voltar para Rudolph Carnap. ((((DESENVOLVER))))
+probabilidade {\em a priori}, no que o paradigma da verossimihança difere das escolas Bayesianas? Ou ainda: será que a 
+inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em priors}''? Para responder isso,
+é importante retomar a formulação da lei da verossimilhança:
 
-``The probability model, the set of statistical hypotheses, and the data, form a triplet which is the foundation of
-statistical inference. Of the many outcomes, each with a specified probability given the hypothesis, which could have
-occurredon the basis of the accepted model, one {\em has} occurred - the data. What can they reveal about the hypotheses?''
-\citep{Edwards72}
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is \textbf{evidence supporting $A$ over $B$}
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
+\citep{Hacking65}
 
+Embora seja possível considerar o paradigma Bayesiano como um paradigma verossimilhantista {\em sensu lato}, 
+ele utiliza a razão das verossimilhanças como meio para construir quantias absolutas, a probabilidade 
+{\em a posteriori} de $A$ e a probabilidade {\em a posteriori} de $B$. Um verossimilhantista {\em sensu stricto}, ao contrário,
+verá na razão das verossimilhanças
+o objeto final do seu estudo. O paradigma da verossimilhança, dessa forma, se opõe à transformação de uma quantidade de 
+suporte relacional entre $A$ e $B$ em quantidades não-relacionais de suporte para cada hipótese \citep{Fitelson07}.
+Embora Royall e Edwards forneçam razões fortes para aceitar essa lei como premissa, ela não é uma necessidade lógica.
+Note-se aqui que as definições de evidência ou suporte estatístico não possuem, nos textos de Royall e Edwards,
+definições externas que lhes garantam
+propriedades distintivas. A aceitação da lei da verossimilhança equivale logicamente à definição de evidência pela razão
+da verossimilhança de hipóteses simples.
 
-Definições e teoremas de verossimilhança em Edwards, pp 29-3?
-Sufficiency p. 35
-
-``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
-hypotheses.
-(...)
-Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
-represent a statistical distribution in any sense.'' \citep{Edwards72}
-
-* Pernerger \& Courvoisier, 2010: likelihood ratios are a more natural way of understanding evidence
-
+A interpretação verossimilhantista da evidência recebe diversas críticas. Uma, no entanto, é especialmente contundente:
 Edwards propõe que definir a natureza da probabilidade é um problema irrelevante, dado que a evidência estatística é
 formulada por razões de verossimilhança, e não por probabilidades. No entanto, a definição de verossimilhança {\em é} uma
 probabilidade, de forma que sem uma interpretação para a probabilidade não podemos ter uma interpretação para a verossimilhança.
 A teoria verossimilhantista corre, portanto, o risco de se assentar sobre uma areia movediça filosófica.
 
-Fitelson: crítica em termos lógicos à verossimilhança. Middle way?
-
-Verossimilhantismo subjetivista e o baralho marciano: nós USAMOS priors de qualquer forma
-
+\begin{shaded}
 \section{A abordagem por teoria da informação}
 
 %http://books.google.com.br/books?id=DlP_h4aMhiYC&printsec=frontcover#v=onepage&q&f=false
 Anderson 2008, AIC, Kulback-Liebler
+\end{shaded}
 
 \section{Conclusões}
 
@@ -837,7 +864,7 @@ Neyman-Pearson, enquanto a escola Bayesiana é dividida entre os subjetivistas c
 Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Carnap e Karl Pearson, que atacarão tanto
 a visão subjetiva de probabilidade quanto o modelo de população infinita dos frequentistas \citep{Lenhard06, Zabell09}.
 Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, e posteriormente
-expandida por Akaike, que propõem que a verossimilhança é a única base lógica para a inferência.
+expandida por Akaike, que propõem a razão de verossimilhança como única base lógica para a inferência.
 
 É necessário que as divergências entre os diversos autores citados sejam interpretadas não na sua práxis, que representa 
 o nível metodológico, como costuma acontecer em círculos mais inclinados à ciência do que à filosofia, 
@@ -845,30 +872,54 @@ e sim nos seus fundamentos, em cada suposição elementar feita sobre os
 elementos constituintes da teoria probabilística e de inferência. Possivelmente, essas suposições devem ser mapeadas em
 distintos elementos da filosofia da ciência.
 
-** O papel de Carnap e Karl Pearson entre os positivistas lógicos; críticas a visão subjetiva E a população infinita de Fisher **
-(Lenhard06 e Zabell09)
+Embora essa discussão seja muito vasta, acredito que dois pontos da filosofia, e suas conexões com o uso de estatística,
+não podem ser evadidos por cientistas naturais: o problema da indução e o problema da demarcação.
+O primeiro diz respeito à construção de conhecimento através da observação: se observamos que o sol sempre nasce no leste,
+isso pode ser usado para estabelecer como fato que o sol nascerá sempre no leste? A conexão feita entre ``eu observei esse
+fato no passado'' e ``eu prevejo que esse fato se repetirá no futuro'' não encontra justificativa lógica. Nossa própria convicção
+de que a indução deve funcionar para estabelecer fatos é baseada em uma indução. O segundo problema pode ser formulado como
+``o que distingue uma teoria científica?''
 
-**** discutir a visão de Popper ****
+Embora ambos os problemas possam ser considerados abertos ainda nos dias de hoje,
+as respostas dadas a ambas as perguntas por Karl Popper desfrutam de grande aceitação na comunidade científica, em particular
+nas ciências naturais. 
+Enquanto autores anteriores consideravam o mérito de teorias científicas associado à sua {\em verificação}, Popper
+contradiz essa visão com a idéia de que uma teoria científica deve ser {\em falseável}:
+
+``It is easy to obtain confirmations, or verifications, for nearly every theory - if we look for confirmations.
+
+Confirmations should count only if they are the result of {\em risky predictions}; that is to say, if, unenlightened by 
+the theory in question, we should have expected an event which was incompatible with the theory - an 
+event which would have refuted the theory.
+
+Every {\em good} scientific theory is a prohibition: it forbids certain things to happen. The more a theory forbids, the 
+better it is.
+
+A theory which is not refutable by any conceivable event is non-scientific. Irrefutability is not a virtue of a 
+theory (as people often think) but a vice.'' \citep{Popper63}
+
+Já em relação ao problema da indução, Popper propõe que ele não tem uma solução aceitável porque a pergunta, em si, está
+equivocada:
+
+``The actual procedure of science is to operate with conjectures: to jump to conclusions — often after one single observation.
+(...) Tests proceed partly by way of observation, and observation is thus very important; but its function is not that of 
+producing theories. It plays its role in rejecting, eliminating, and criticizing theories'' \citep{Popper63}
+
+Toda teoria estatística que é usada na ciência deve, por força dessas questões, prover uma forma de testar teorias conflitantes
+e de rejeitar teorias incompatíveis com as observações experimentais. Como as teorias relevantes para problemas práticos costumam
+realizar previsões sobrepostas, sem que testes conclusivos possam ser feitos, esse requisito tem dupla função: garantir
+que toda teoria científica é testável pelos procedimentos estatísticos é também garantir que o procedimento estatístico escolhido
+permite o teste de qualquer teoria científica relevante. Este requisito terá importância central no problema de testar
+teorias cuja própria formulação é estatística:
+
 ``Those theories which are under a probabilistic form (thermodynamics, statistical [mechanics?], etc.) can never be refuted (...):
 after all, even an event with probability 0 can well occur. According to Popper we then have to take a methodological decision
 and consider a probabilistic theory {\em T} refuted if a certain event occured which, as far as {\em T} is concerned, would 
 otherwise be extremely unlikely.'' \citep{deFinetti2010}
 
-*** positivismo lógico VERSUS falsificacionismo?? Lakatos? ***
-
-*** Kuhn e o papel do subjetivismo na ciência ****
-
-*** Hume sobre inducao. Paper do Savage sobre induction  Mais Fitelson??  ***
-
-*** Simberloff e testes de hipoteses ***
-
-Ciência enquanto descrição/compreensão versus tomada de decisão científica. 'Ultimo paragrafo de Fisher55
-
-A discussão metodológica na aplicação da estatística às ciências práticas deve estar subordinada a uma discussão
-epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a apresentação de
+Reforçamos que a discussão metodológica na aplicação da estatística às ciências práticas deve estar subordinada a uma discussão
+epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a proposição de
 métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese 
 e procedimentos frequentistas em
 bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
-coerentes com uma visão de ciência enquanto descrição/compreensão do mundo natural.
-
-\end{shaded}
+adequados ao uso na ciência, norteada na discussão acima sobre indução e demarcação.
