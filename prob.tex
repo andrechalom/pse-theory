@@ -510,7 +510,7 @@ uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por mei
 de teste de hipóteses. 
 
 \begin{shaded}
-\section{Lógica probabilística}
+\section{Probabilidade necessária}
 
 Tanto de Morgan como Boole, contados entre os fundadores da interpretação subjetivista e frequentista da probabilidade,
 se ocuparam do estudo da probabilidade como um subconjunto da lógica formal, que constituía um interesse mais amplo para
@@ -524,16 +524,20 @@ dois significados diferentes, e portanto separa os conceitos de {\em probabilida
 se referindo a uma medida de confirmação, enquanto o segundo é uma medida de frequência. Enquanto {\em probabilidade$_1$} é
 um conceito útil para a formulação de um sistema de inferência, {\em probabilidade$_2$} pode ver seu uso em leis físicas, por
 exemplo. Assim, quando a lei da entropia é formulada em termos probabilísticos, é claro que a visão pessoal de cada sujeito
-é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases. (**CONFIRMAR**)
-
-***** Ler Carnap50 e Carnap62
+é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases.
 
 Carnap, seguindo o trabalho de 
 Wittgenstein, trabalha com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
 e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora uma hipótese $h$ \citep{Zabell09}.
+Essa visão será desenvolvida de forma a construir uma visão de probabilidade como uma necessidade lógica:
+
+``The truth conditions for a probability statement are logical or semantic: they are built into the language in the same
+way that the truth conditions for logical entailment are built into the language. Given the statement `It will rain tomorrow',
+and given a body of evidence $e$, there is exactly one real number $r$, determined by logical conditions alone, such
+that the probability of `It will rain tomorrow', relative to the body of evidence $e$, is $r$.'' \citep{Kyburg74}
 
 
-*** visao de Carnap sobre probabilidades ***
+%*** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
 \end{shaded}
@@ -548,19 +552,19 @@ podem ser apontados como os principais responsáveis por um interesse continuado
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
 Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
 uma chance justa em uma aposta; embora as visões difiram no grau de empiricismo advogado,
-ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Note-se que as discordâncias entre as posições de 
-Savage e de Finetti	dependem da época do texto analisado, com seus pensamentos convergindo durante suas vidas}.
+ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Para uma visão mais aprofundada das diferenças
+filosóficas entre de Finetti e os demais subjetivistas, veja \citep{Galavotti89}.}
 
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
 Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
-e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade\citep{Zabell09}.
+e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade \citep{Zabell09}.
 Fisher, por exemplo, considera o argumento com o qual Bayes estabelece uma {\em priori} uniforme como um comentário
 a respeito do problema específico que Bayes estava estudando, enquanto a escola Bayesiana verá esse argumento
-como aplicável a outras classes de problemas\citep{Aldrich08}. Assim, o resultado conhecido como Teorema de Bayes é aceito
+como aplicável a outras classes de problemas \citep{Aldrich08}. Assim, o resultado conhecido como Teorema de Bayes é aceito
 por todas as escolas de interpretação, enquanto que o argumento de Laplace 
 é, em essência, aceito pela escola subjetivista e completamente rejeitado pela frequentista. 
 
-Talvez a formalização mais convincente da teoria subjetivista de probabilidades é a dada por de Finetti no seu argumento sobre
+Talvez a formalização mais convincente da teoria subjetivista de probabilidades seja a dada por de Finetti no seu argumento sobre
 {\em Dutch books}. Um {\em Dutch book}, ou ``aposta holandesa'' 
 é um conjunto de apostas que garante um ganho para um apostador, qualquer que seja o
 resultado observado após o jogo. Suponha que um evento vai ser observado (seja uma corrida de cavalos, uma luta, etc), e um
@@ -582,9 +586,9 @@ $E$, o teorema de Bayes diz que:
 Onde o termo $\frac{p(E|H1)}{p(E|H2)}$ é justamente a razão das verossimilhanças.
 As grandes questões que precisam ser resolvidas são: como construir uma {\em priori}
 a partir do conhecimento prévio (que será retomada na sessão \ref{sec:classref}), e principalmente, como construir {\em prioris}
-na ausência de informação sobre o problema.
-Note-se que nem todo Bayesiano é totalmente subjetivista: como veremos, é possível empregar o teorema de Bayes a partir de
-{\em prioris} objetivas.
+na ausência de informação sobre o problema. Fisher aponta que {\em presumir a indiferença} em relação a um parâmetro
+$p$ depende da forma matemática do modelo empregado: tomando $\sin \theta = 2p-1$, uma {\em priori} ``plana'' em relação a $p$ 
+privilegiará alguns valores de $\theta$ e vice-versa \citep{Fisher1922}.
 
 A proposição da escola Bayesiana foi acompanhada de um debate intenso, nos quais os argumentos eram não raramente personalizados.
 Ronald Fisher foi um árduo crítico
@@ -597,7 +601,8 @@ breaking the Bayesian eggs'' \citep{Savage60}, e é considerado como refutado po
 I. J. Good \citep{Good92}. No entanto, os argumentos de Fisher
 alcançaram várias vezes uma grande lucidez e perspicácia, e a formulação moderna da teoria Bayesiana 
 deve muito à crítica constante feita por ele sobre os pontos mais sutis da sua lógica. \footnote{
-O argumento fiducial continua sendo altamente controverso entre estatísticos, sendo defendido em \citep{Hacking65}.}
+O argumento fiducial continua sendo altamente controverso entre estatísticos, sendo defendido por exemplo
+em \citep{Hacking65}.}
 
 Com a axiomatização e formulação moderna da interpretação subjetivista, cuja história é intimamente ligada à da teoria
 econômica de utilidade (veja por exemplo \citep{Friedman48} e \citep{Pfanzagl67}),
@@ -606,18 +611,6 @@ a escola Bayesiana de pensamento ganhou maior aceitação nos meios científicos
 ``Personal probability can be regarded as part of a certain theory of coherent preference in the face of uncertainty. This
 preference theory is normative; its goal is to help us make better decisions by exposing to us possible incoherences in our
 attitudes toward real and hypothetical alternatives.'' \citep{Savage67}
-
-Savage, ainda, propõe a teoria subjetiva de probabilidade como uma resposta ao problema da indução:
-
-``The theory of personal probability [prescribes] exactly how a set of beliefs should change in light of what is observed.
-It can help you say, `My opinions today are the rational consequence of what they were yesterday and of what I have seen
-since yesterday.' In principle, yesterday's opinions can be traced to the day before, but even given a coherent demigod
-able to trace his present opinions back to those with which he was born and to what he has experienced since, the theory
-of personal probability does not pretend to say with what system of opinions he ought to have been born. It leaves him, just
-as Hume would say, without rational foundation for his beliefs of today (...). That all my beliefs are but my personal
-opinions, no matter how well some of them may coincide with opinions of others, seems to me not a paradox but a truism (...).
-If there is a rational basis for beliefs going beyond mere coherency, then there are some specific opinions that a rational
-baby demigod must have. Put that way, the notion of any such basis seems to me quite counterintuitive.'' \citep{Savage67}
 
 Essa exposição é reminiscente das palavras de de Morgan:
 
@@ -632,11 +625,24 @@ I shall say, for all that, that the probability {\em is} three to one; meaning t
 examine the subject, the state of mind to which a person {\em ought} to be able to bring himself is to look three times
 as confidently upon the arrival as upon the non-arrival.''\citep{deMorgan1847}
 
+Savage, ainda, propõe a teoria subjetiva de probabilidade como uma resposta ao problema da indução, ou seja,
+como podemos justificar que nossa experiência passada possa ser usada para prever eventos futuros:
+
+``The theory of personal probability [prescribes] exactly how a set of beliefs should change in light of what is observed.
+It can help you say, `My opinions today are the rational consequence of what they were yesterday and of what I have seen
+since yesterday.' In principle, yesterday's opinions can be traced to the day before, but even given a coherent demigod
+able to trace his present opinions back to those with which he was born and to what he has experienced since, the theory
+of personal probability does not pretend to say with what system of opinions he ought to have been born. It leaves him, just
+as Hume would say, without rational foundation for his beliefs of today (...). That all my beliefs are but my personal
+opinions, no matter how well some of them may coincide with opinions of others, seems to me not a paradox but a truism (...).
+If there is a rational basis for beliefs going beyond mere coherency, then there are some specific opinions that a rational
+baby demigod must have. Put that way, the notion of any such basis seems to me quite counterintuitive.'' \citep{Savage67}
+
 \section{Críticas e secções do pensamento Bayesiano}
 
 Uma crítica da escola frequentista pode ser resumida como: se existirem chances físicas associadas a um evento
-e probabilidades subjetivas, não haveria motivo para supor que ambas serão iguais. Há duas respostas para esse problema 
-entre os proponentes da teoria Bayesiana, que essencialmente caracterizam as vertentes objetiva e subjetiva do Bayesianismo
+e probabilidades subjetivas, não haveria motivo para supor que ambas serão iguais. Há diferentes respostas para esse problema 
+entre os proponentes da teoria Bayesiana, que essencialmente caracterizam as diversas vertentes do Bayesianismo
 moderno.
 
 Por um lado, dadas algumas condições sobre a construção da
@@ -679,8 +685,7 @@ A escola Bayesiana também é criticada ao assumir uma postura subjetivista, que
 da ciência, definida como a construção de conhecimento racional objetivo. Essa oposição, a bem da verdade, é mais reveladora
 de uma visão sobre a natureza da ciência do que uma crítica propriamente ao paradigma Bayesiano. Frise-se que mesmo 
 avaliações de probabilidade pessoais e subjetivas podem estar abertas ao estudo objetivo, uma posição que remonta ao trabalho
-de C.S. Peirce \citep{Stigler78}.
-Outro fator importante é a maior percepção moderna
+de C.S. Peirce \citep{Stigler78}.  Outro fator importante para responder essa crítica é a maior percepção moderna
 de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
 order on the subjective elements of the deciding person.'' \citep{Savage60}.
@@ -692,7 +697,8 @@ Uma crítica muito veemente aos proponentes da inferência frequentista é dada 
 com dois possíveis resultados (sucesso e falha), independentes e de mesma probabilidade. Após obter 3 sucessos, o cientista
 decide testar a hipótese nula de que a probabilidade de sucesso é de 0.5. Pelo paradigma frequentista, esse teste depende
 da maneira como o experimento foi projetado. Se o cientista planejava fazer 12 experimentos, a probabilidade de observar 3
-ou menos sucessos sob a hipótese nula é de $ \left( {0 \choose 12} + ... + {3 \choose 12}\right) (\frac{1}{2})^{12} = 7.3\%$. No entanto, se o cientista decidiu continuar realizando experimentos até
+ou menos sucessos sob a hipótese nula é de $ \left( {0 \choose 12} + ... + {3 \choose 12}\right) (\frac{1}{2})^{12} = 7.3\%$. 
+No entanto, se o cientista decidiu continuar realizando experimentos até
 encontrar o terceiro sucesso, a probabilidade de chegar a doze tentativas é de 
 $1 - \left( \frac{1}{2}^3 + {3 \choose 2} \frac{1}{2}^4 + ... + {10 \choose 2} \frac{1}{2}^{11}\right) = 3.3\%$. Ou seja,
 dependendo da intenção original do cientista, os mesmos dados podem servir para refutar ou não a hipótese nula.
@@ -748,9 +754,32 @@ shown, a multiplicity of populations to each of which we can legitimately regard
 probability level, for no one of them has objective reality, all being products of the statistican's imagination.''
 \citep{Fisher1955}
 
-Fisher 22, pag 16. em diante
-Reference class problem
-% http://mcps.umn.edu/philosophy/6_8Kyburg.pdf
+A mesma questão se manifesta no exemplo mais frequente de aplicação do teorema de Bayes: dado o resultado positivo em um
+teste clínico, qual a probabilidade do paciente ter a doença? A resolução desse problema passa por identificar que:
+
+\begin{equation}
+P(D|+) = \frac{P(+|D)P(D)}{P(+|D)P(D)+P(+|\bar D) P(\bar D)}
+\end{equation}
+
+Onde $P(+)$ é a probabilidade do teste dar positivo 
+e $P(D)$ é a probabilidade de um
+indivíduo ter a doença. Este termo vai ser interpretado como a {\em priori} por um Bayesiano, ou mais geralmente
+como a prevalência da doença na população. A aparente simplicidade desse exemplo esconde a {\em escolha} de uma população:
+devemos considerar a prevalência na cidade onde o indivíduo mora, ou no país? Indivíduos de ambos os gêneros devem ser
+considerados? A prevalência deve levar em consideração a faixa etária, a renda, o hábito esportivo, alimentar ou uso de
+substâncias pelo indivíduo? Como cita Henry Kyburg:
+
+``Probability theorists and statisticians have tended to take one of two tacks in relation to this problem:
+either they deny the significance of probability assertions about individuals, claiming that they are meaningless;
+or they open the door the whole way, and say that an individual may be regarded as a member of any number of classes, 
+that each of these classes may properly give rise to a probability statement, and that, so far as the theory is concerned,
+each of these probabilities is as good as another. (...)
+
+Some philosophers have argued that this is a merely pragmatic problem, rather than a theoretical one (...). But calling
+a problem practical or pragmatic is no way to solve it.'' \citep{Kyburg74}
+
+%Fisher 22, pag 16. em diante???
+% http://mcps.umn.edu/philosophy/6_8Kyburg.pdf pag. 15
 
 \end{shaded}
 
@@ -851,7 +880,7 @@ A teoria verossimilhantista corre, portanto, o risco de se assentar sobre uma ar
 \section{A abordagem por teoria da informação}
 
 %http://books.google.com.br/books?id=DlP_h4aMhiYC&printsec=frontcover#v=onepage&q&f=false
-Anderson 2008, AIC, Kulback-Liebler
+%Anderson 2008, AIC, Kulback-Liebler
 \end{shaded}
 
 \section{Conclusões}

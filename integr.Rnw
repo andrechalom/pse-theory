@@ -76,9 +76,6 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite.
 \end{enumerate}
 
-%(********* DESENVOLVER O ARGUMENTO SOBRE INFORMAÇÃO DE FISHER AQUI *************)
-
-\begin{shaded}
 \section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
 fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
@@ -100,36 +97,23 @@ enquanto na sessão \ref{PSE}, definimos as entradas, resultados e o modelo em s
 como $y = f(x)$, aqui podemos pensar nesses objetos como $\theta$, $\gamma$ e $g$, respectivamente.}
 
 O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
-de hipóteses compostas sob o paradigma da verossimilhança. O trabalho fundamental de Neyman e Pearson \citep{Neyman1933}
+de hipóteses estatísticas compostas. O trabalho fundamental de Neyman e Pearson \citep{Neyman1933}
 estabelece uma justificativa matemática para o princípio da verossimilhança em problemas envolvendo hipóteses simples.
 O problema de hipóteses compostas é resolvido dentro do paradigma frequentista para alguns casos particulares, como 
 o teste {\em t de Student}, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
-parâmetro desconhecido.
+parâmetro desconhecido. Estatísticos frequentistas tratam o problema de hipóteses compostas através do máximo de
+verossimilhança obtido por qualquer de suas hipóteses simples componentes. Muito do trabalho nessa área se concentrará
+em encontrar aproximações para a distribuição dessa estatística \citep{Wilks38}.
 
-ROYALL SESSAO 1.9
-
-%http://www.tandfonline.com/doi/abs/10.1080/00949657208810001?journalCode=gscs20#.Uv_UEJjTi00
-%http://biomet.oxfordjournals.org/content/62/2/451.short
-
-Vamos construir uma função de verossimilhança $\Psi (\gamma | \bu{x})$, definida por:
+Sob esta inspiração, vamos construir uma função tentativa de suporte $\Psi^\delta (\gamma | \bu{x})$, definida por:
 
 \begin{equation}
-	\Psi ( \gamma | \bu{x} ) = \sup\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
-\label{eqn:Psi}
+	\Psi^\delta ( \gamma | \bu{x} ) = \sup\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
+\label{eqn:Psidelta}
 \end{equation}
 
-E agora vamos demonstrar que essa função possui as seguintes propriedades de uma função de 
-medida de suporte (ver \citep{Edwards72}, sec. 3.2):
-
-\begin{enumerate}
-	\item {\em Transitividade}.
-	\item {\em Aditividade em relação aos dados}.
-	\item {\em Invariância a transformações dos dados}.
-	\item {\em Invariância a transformações dos parâmetros}. Não se mantém.
-	\item {\em Relevância e consistência}.
-	\item {\em Compatibilidade}.
-\end{enumerate}
-
+Essa função pode ser intuitivamente interpretada no sentido de equiparar a verossimilhança da hipótese composta com
+a da sua melhor hipótese simples componente.
 Para clarificar nossa operação, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$ que 
 \textbf{não} é função de verossimilhança: $\Psi^\dagger (\gamma | \bu{x})$, definida por:
 \begin{equation}
@@ -139,37 +123,73 @@ Para clarificar nossa operação, vamos construir uma outra função a partir de
 
 Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
 nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$. No entanto, a 
-verossimilhança, ao contrário da probabilidade, não é aditiva em relação ao parâmetro, de forma de a função $\Psi^\dagger$ 
-não é uma função de verossimilhança:
+verossimilhança, ao contrário da probabilidade, não é necessariamente aditiva em relação ao parâmetro, 
+de forma de a função $\Psi^\dagger$ não é uma função de verossimilhança:
 
 ``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
 hypotheses (...).
 Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
 represent a statistical distribution in any sense.'' \citep{Edwards72}
 
-Do ponto de vista Bayesiano, podemos enxergar a função de probabilidade {\em a posteriori} de $\gamma$ como:
+Em geral, ao determinar regras para combinar o suporte de hipóteses simples para construir uma função de suporte
+para hipóteses compostas, estamos considerando funções da forma:
 
+\begin{equation}
+\Psi ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \kappa(\theta) \,d\theta
+\label{eqn:Psi}
+\end{equation}
 
-O que explica porque a propriedade de invariância a transformações nos parâmetros não é mantida por
-uma transformação não-injetora.
+Onde a função $\Psi^\dagger$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
+no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Precisamos examinar as propriedades dessa classe
+de funções; examinar se elas se adequam aos requerimentos de uma função de suporte; e investigar a relação entre
+a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
+Antes, no entanto, vamos nos defrontar com o problema geral do teste de hipóteses compostas.
 
-Statistical Evidence: A Likelihood Paradigm page 8
-%http://books.google.com.br/books?hl=en&lr=&id=oysWLTFaI_gC&oi=fnd&pg=PR11&dq=likelihood+composite+hypothesis&ots=W4nyN4-x84&sig=vjdFL8YrtFct4cOM_F_PFkznTwU&redir_esc=y#v=onepage&q&f=false
+\begin{shaded}
+\section{Hipóteses compostas}
+Como exposto na sessão \ref{sec:likelihood}, a lei da verossimilhança (LL), enunciada por Ian Hacking, se refere a hipóteses
+simples:
 
-DÁ PRA USAR O MIDDLE-WAY DO FITELSON EM UA?
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
+\citep{Hacking65}
 
+Como, então, trabalhar com hipóteses compostas? A resposta tradicional de verossimilhantistas para essa questão é uma
+simples negativa: Edwards descarta hipóteses compostas como ``desinteressantes para a ciência'' \citep{Edwards72},
+enquanto Royall enxerga na requisição de que as hipóteses sejam simples um benefício, e não uma falha, da abordagem
+por verossimilhança \cite{Royall97}, exemplificado no problema a seguir:
 
-\section{Aplicação}
-(****** vou explicar o passo a passo detalhadamente, aqui vai um resumão da aplicação *******)
+\section{Propriedades de uma função de suporte}
+Vamos investigar as seguintes propriedades de uma função de medida de suporte (ver \citep{Edwards72}, sec. 3.2):
 
-Resumo de aplicação:
 \begin{enumerate}
-	\item Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de crescimento constante ou descrescente com a classe de tamanho, modelo com 4 ou com 5 classes de tamanho, etc). Escreva a função de verossimilhança $L_i(\bu{\theta}|\bu{x})$ para cada modelo $i \in 1,...,n$.
+	\item {\em Transitividade}.
+	\item {\em Aditividade em relação aos dados}.
+	\item {\em Invariância a transformações dos dados}.
+	\item {\em Invariância a transformações dos parâmetros}. 
+	\item {\em Relevância e consistência}.
+	\item {\em Compatibilidade}.
+\end{enumerate}
+
+
+
+\section{Proposta de aplicação}
+
+Uma metodologia de análise de incerteza baseada em uma função de suporte, após a escolha de uma determinada forma para
+a equação de suporte $\Psi(\gamma|\bu{x})$ deve ser dada por:
+
+\begin{enumerate}
+	\item Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de crescimento 
+		constante ou descrescente com a classe de tamanho, modelo com 4 ou com 5 classes de tamanho, etc). Escreva a 
+		função de verossimilhança $L_i(\bu{\theta}|\bu{x})$ para cada modelo $i \in 1,...,n$.
 	\item Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo. 
 	\item Determine o valor de AIC para cada modelo. 
-	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) para gerar amostras a partir da função de verossimilhança do modelo, de acordo com a equação \ref{eqn:Psi}. 
-	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando os pesos designados pela diferença de informação (ver \citep{Edwards72}, teorema 5.4.2?).
+	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) 
+		para gerar amostras a partir da função de verossimilhança do modelo, e combine
+		esses valores para gerar uma função de suporte de acordo com a equação \ref{eqn:Psi}. 
+	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando 
+		os pesos designados pela diferença de informação.
 	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
 \end{shaded}
-
