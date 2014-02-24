@@ -1,5 +1,5 @@
 \SweaveOpts{fig=T,echo=F}
-\section{Case study 1: a density-dependent population matrix model}\label{Leslie}
+\section{Case study: a density-dependent population matrix model}\label{Leslie}
 \subsection{Model description}
 In this section, we demonstrate the uses and advantages of the methods
 outlined in the previous sections by performing sensitivity analyses

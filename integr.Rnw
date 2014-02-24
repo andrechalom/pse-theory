@@ -145,20 +145,87 @@ de funções; examinar se elas se adequam aos requerimentos de uma função de s
 a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
 Antes, no entanto, vamos nos defrontar com o problema geral do teste de hipóteses compostas.
 
-\begin{shaded}
 \section{Hipóteses compostas}
-Como exposto na sessão \ref{sec:likelihood}, a lei da verossimilhança (LL), enunciada por Ian Hacking, se refere a hipóteses
-simples:
+Como exposto na sessão \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
+enunciada por Ian Hacking, se refere a hipóteses simples:
 
+\begin{description}
+\item[LL]
 ``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
 hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
 if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
 \citep{Hacking65}
+\end{description}
 
 Como, então, trabalhar com hipóteses compostas? A resposta tradicional de verossimilhantistas para essa questão é uma
 simples negativa: Edwards descarta hipóteses compostas como ``desinteressantes para a ciência'' \citep{Edwards72},
 enquanto Royall enxerga na requisição de que as hipóteses sejam simples um benefício, e não uma falha, da abordagem
-por verossimilhança \cite{Royall97}, exemplificado no problema a seguir:
+por verossimilhança \citep{Royall97}, exemplificado no problema a seguir:
+
+Suponha que um grupo de pesquisadores da área médica realizam um experimento para determinar a probabilidade de sucesso
+de um certo tratamento. Eles estão particularmente interessados em descobrir se o novo tratamento tem mais probabilidade de 
+sucesso do que 0.2, que representa a probabilidade de sucesso de um tratamento concorrente. Após aplicar o novo tratamento
+em 17 pacientes, eles encontram sucesso em 9. O que esse resultado pode dizer sobre as hipóteses?
+
+Uma análise frequentista vai confrontar a hipótese nula $H_0: \theta = 0.2$, e concluir que a probabilidade de encontrar
+9 ou mais sucessos em 17 realizações de um processo Bernoulli com $p=0.2$ é de aproximadamente 0.04\%, rejeitando a hipótese.
+
+Uma análise Bayesiana vai considerar as hipóteses $H_1:\theta \leq 0.2$ versus $H_2: \theta > 0.2$. O estatístico Bayesiano
+deve escolher uma forma para representar seu conhecimento prévio, e pode, por exemplo,
+usar a {\em priori} uniforme, dada por $B(1,1)$, como feito por Bayes, encontrando uma {\em posteriori}
+igual a $B(10,9)$, ou uma {\em priori} de Jeffreys, dada por $B(\frac{1}{2},\frac{1}{2})$, encontrando uma {\em posteriori}
+de $B(9.5, 8.5)$. Ambas as análises levam a probabilidades muito baixas para $H_1$: 0.09\% e 0.11\%, respectivamente.
+
+Ainda, a razão de verossimilhança entre o estimador de máxima verossimilhança para $\theta = 0.52$ e qualquer hipótese
+simples $H_p:\theta=p , \, p \leq 0.2$ é de no mínimo 91.4. Todos esses cálculos sugerem que os dados sejam coerentes com
+a hipótese de maior suporte ser aquela que considera que o novo tratamento tem probabilidade de sucesso maior do que 0.2.
+
+No entanto, a lei da verossimilhança de Hacking não permite essa afirmação, pois $H_1$ e $H_2$ não são hipóteses que
+atribuam um único valor de probabilidade às observações da variável aleatória sob consideração. É importante notar que
+isso não é uma consequência da formulação das hipóteses envolvendo desigualdades, de fato as hipóteses $H^\dagger_1 : \gamma = 0$
+e $H^\dagger_2 : \gamma = 1$ são equivalentes, e tão intratáveis quanto, as hipóteses $H_1$ e $H_2$, com $\gamma$ sendo dado por
+
+\begin{equation}
+	\gamma = \left\{ 
+	\begin{array}{c c}
+		0, & \theta \leq 0.2 \\
+		1, & \theta > 0.2 
+	\end{array}
+	\right.
+\end{equation}
+
+Embora o uso de hipóteses compostas seja necessário para tratar hipóteses formuladas a respeito do resultado de modelos,
+pouco progresso se fez na elaboração de uma lei da verossimilhança que se aplique a hipóteses compostas. Os caminhos que podem
+ser trilhados aqui são:
+
+\begin{enumerate}
+	\item Tratar a questão através da modelagem de {\em nuisance parameters}; \label{i:prof}
+	\item Formular uma lei da verossimilhança que seja aplicável a hipóteses compostas;\label{i:alt}
+	\item Apresentar uma metodologia baseada em uma extensão lógica da lei da verossimilhança.\label{i:ext}
+\end{enumerate}
+
+A proposta \ref{i:prof} se baseia em métodos como a verossimilhança perfilhada e a verossimilhança condicional, que são
+propostas {\em ad hoc} usadas para reduzir o estudo de modelos estatísticos multiparamétricos a um parâmetro por vez.
+Embora essa proposta seja valiosa quando possível, ela não é factível em uma larga classe de modelos, e é embasada
+em aproximações.
+A proposta \ref{i:alt} se baseia na formulação axiomática de uma lei geral, GLL (do inglês Generalized Law of Likelihood),
+que seja compatível com a lei da verossimilhança LL
+para hipóteses simples, mas que extenda seu domínio para hipóteses compostas. Em contraste, a proposta \ref{i:ext} 
+propõe utilizar uma definição mais fraca de evidência, baseada em uma lei fraca da verossimilhança (WLL, do inglês
+Weak Law of Likelihood), tal que aceitar LL implique em aceitar WLL, mas a conversa não seja verdadeira.
+
+\begin{shaded}
+\section{Uma lei geral de verossimilhança}
+
+O suporte absoluto a um único valor de parâmetro pode ser infinitesimal - mas o mesmo racional pode ser empregue
+sobre uma região $x+dx$, construindo uma função que atribui a cada intervalo uma densidade de suporte absoluto.
+
+\section{Uma lei fraca de verossimilhança}
+
+O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
+nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
+Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
+essa singularidade.
 
 \section{Propriedades de uma função de suporte}
 Vamos investigar as seguintes propriedades de uma função de medida de suporte (ver \citep{Edwards72}, sec. 3.2):
