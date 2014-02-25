@@ -131,9 +131,13 @@ Met.f <- function (x) {
 #		x[nrow(x)+1,] <- atual
 #	}
 #}
-dis <- x
+#dis <- x
+getlambda = function (sigma, f, gamma) A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+getlambda = Vectorize(getlambda)
+#dis <- cbind(dis, lambda = getlambda(dis[,1], dis[,2], dis[,3]))
 #save(dis, file="R/mini.Rdata")
 load("R/mini.Rdata")
+d <- density(dis[,4])
 
 #ALTERNATIVA
 #library(mcmc)
@@ -141,9 +145,6 @@ load("R/mini.Rdata")
 #m <- metrop(Met.f, atual, 99999, blen=5)
 #dis <- m$batch
 # Analise de incerteza sobre lambda
-getlambda = function (sigma, f, gamma) A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
-getlambda = Vectorize(getlambda)
-dis <- cbind(dis, lambda = getlambda(dis[,1], dis[,2], dis[,3]))
 # instabilidades numericas...
 #dis$lambda[dis$lambda<0] <- - dis$lambda[dis$lambda<0]
 @
@@ -164,40 +165,36 @@ curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 	\label{fig:LikFunc}
 \end{figure}
 
-\begin{shaded}
-
 A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
 foram utilizadas para gerar \Sexpr{dim(dis)[1]} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
-de $\lambda$. A distribuição dos valores de $\lambda$ 
+de $\lambda$. A distribuição dos valores de $\lambda$ foi usada como aproximação para a função de suporte de $\lambda$,
+exibida na figura \ref{fig:lambda}. A máxima densidade dessa distribuição é atingida em 
+$\lambda = $ \Sexpr{round(d$x[which(d$y == max(d$y))],2)}. As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
+resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas.
 
-e a densidade de respostas do modelo
-foi 
+Futuramente, serão realizadas análises mais aprofundadas sobre esse exemplo.
 
-
- Exemplo usando Metropolis
+\begin{figure}
 <<Case1>>=
 plot(density(dis[,4]))
-d <- density(dis[,4])
-lambda
-d$x[which(d$y == max(d$y))]
-
+@
+	\caption{Distribuição dos resultados do modelo}
+	\label{fig:lambda}
+\end{figure}
+\begin{figure}
+<<>>=
 # Analise de sensibilidade sobre lambda
 library(pse)
 library(sensitivity)
-source("R/pse.R")
+#source("R/pse.R")
 plotscatter(dis[,c(1,2,3)], dis[,4])
-
+@
+	\label{fig:lambdascatter}
+\end{figure}
+\begin{figure}
+<<>>=
 plot(pcc(dis[,c(1,2,3)], dis[,4], rank=TRUE))
 abline(h=0, lty=3)
-
 @
-
-
-
-
-
-
-
-queremos saber, dada uma amostra $x_i$, quais são as sensibilidades de $\lambda$ aos parâmetros $\theta_i$
-Para isso, vamos determinar qual é o melhor modelo da forma $\hat{\lambda} = a*sigma+b*gamma+c*f$ que representa $\lambda$
-\end{shaded}
+	\label{fig:lambdaprcc}
+\end{figure}

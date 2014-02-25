@@ -277,13 +277,12 @@ plotelast(LHSlge)
 	\label{LHSlge}
 \end{figure}
 
-\begin{shaded}
-Vamos prosseguir agora a um estudo integrativo da calibração dos parâmetros do
-modelo e da incerteza dos resultados do modelo, usando a metodologia de Generalized
-Likelihood Uncertainty Estimation (GLUE). Para isso, usaremos os dados de 
-{\em Tribolium} da réplica A do trabalho de Desharnais \& Liu \citep{Desharnais87}.
+%Vamos prosseguir agora a um estudo integrativo da calibração dos parâmetros do
+%modelo e da incerteza dos resultados do modelo, usando a metodologia de Generalized
+%Likelihood Uncertainty Estimation (GLUE). Para isso, usaremos os dados de 
+%{\em Tribolium} da réplica A do trabalho de Desharnais \& Liu \citep{Desharnais87}.
 
-<<dadosDesharnais>>=
+<<dadosDesharnais, fig=F>>=
 days <- seq(0, 266, by=14)
 adults <- c(64, 78, 78, 77, 61, 85, 102, 104, 120, 122, 132, 120, 113, 97, 136, 122, 117, 105, 120, 99)
 pupae <- c(35, 4, 109, 28, 77, 71, 36, 136, 35, 76, 28, 252, 5, 236, 20, 176, 7, 189, 12, 226)
@@ -291,7 +290,7 @@ larvae <- c(70, 263, 75, 125, 203, 57, 182, 27, 265, 32, 309, 8, 360, 24, 357, 1
 trib <- data.frame(adults, pupae, larvae)
 trib.conf <- as.vector(t(trib))
 rownames(trib) <- days
-matplot(trib, type='l')
+#matplot(trib, type='l')
 # Nova funcao para calcular a serie temporal completa, e nao apenas o eq. metabolico da pop final
 Tribolium <- function(b, cea, cel, cpa, mua, mul, a, p, l, time) {
 		Np <- c(a, p, l) #Pop inicial!
@@ -315,10 +314,9 @@ logit <- function (p) log(p) - log(1-p)
 constrain <- function(x) c(exp(x[1]), logistic(x[2]), logistic(x[3]), logistic(x[4]), logistic(x[5]), logistic(x[6]))
 ssqres <- function (x) sum((Tribolium(x[1], x[2], x[3], x[4], x[5], x[6], 64, 35, 70, 19) - trib.conf)^2)
 cssqres <- function(x) ssqres(constrain(x))
-a <- optim(par=c(log(b), logit(cea), logit(cel), logit(cpa), logit(mua), logit(mul)), fn=cssqres, method="SANN", control=list(maxit=2000))
-print(a$par)
-test <- Tribolium(exp(a$par[1]), logistic(a$par[2]), logistic(a$par[3]), logistic(a$par[4]), logistic(a$par[5]), logistic(a$par[6]), 64, 35, 70, 19)
-test <- matrix(test, ncol=3, byrow=T)
-matplot(test)
+#a <- optim(par=c(log(b), logit(cea), logit(cel), logit(cpa), logit(mua), logit(mul)), fn=cssqres, method="SANN", control=list(maxit=2000))
+#print(a$par)
+#test <- Tribolium(exp(a$par[1]), logistic(a$par[2]), logistic(a$par[3]), logistic(a$par[4]), logistic(a$par[5]), logistic(a$par[6]), 64, 35, 70, 19)
+#test <- matrix(test, ncol=3, byrow=T)
+#matplot(test)
 @
-\end{shaded}
