@@ -277,10 +277,9 @@ plotelast(LHSlge)
 	\label{LHSlge}
 \end{figure}
 
-%Vamos prosseguir agora a um estudo integrativo da calibração dos parâmetros do
-%modelo e da incerteza dos resultados do modelo, usando a metodologia de Generalized
-%Likelihood Uncertainty Estimation (GLUE). Para isso, usaremos os dados de 
-%{\em Tribolium} da réplica A do trabalho de Desharnais \& Liu \citep{Desharnais87}.
+Após a definição de uma metodologia integrativa coerente com o verossimilhantismo,
+essa análise poderá ser aplicada ao modelo de {\em Tribolium}, a partir de dados
+originais em \cite{Desharnais87}.
 
 <<dadosDesharnais, fig=F>>=
 days <- seq(0, 266, by=14)

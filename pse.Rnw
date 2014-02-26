@@ -159,7 +159,6 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input sampling.tex
 \input quantanal.tex
 \input leslie.tex
-%\input twolife.tex
 \input revlit.tex
 
 % CAPITULO 3
@@ -170,8 +169,6 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \input caveat.tex
 \input mini.tex
 \input tribolium.tex
-\input leslie2.tex
-%%% TODO incluir resultados de Heterodera AQUI???
 
 \appendix
 \definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
