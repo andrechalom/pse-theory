@@ -76,6 +76,14 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite.
 \end{enumerate}
 
+Vamos considerar problemas onde $\bu{x}$ representa um vetor de dados obtidos de forma independente
+em um ou mais experimentos a partir de uma variável aleatória $\bu{X}$, tal que $P(\bu{X}\!=\!\bu{x}) = f(\bu{x};\theta)$. 
+O parâmetro
+(ou vetor de parâmetros) $\theta$ é desconhecido e pode assumir valores em $\Theta$. A verossimilhança de $\theta$
+dadas as observações $\bu{x}$ é dada por $\mathcal{L} (\theta | \bu{x}) = f(\bu{x}; \theta)$. A razão de verossimilhanças
+sob o mesmo conjunto de dados pode ser abreviada como $L(\theta_1, \theta_2) = \frac{\mathcal{L}(\theta_1|\bu{x})}
+{\mathcal{L}(\theta_2|\bu{x})}$.
+
 \section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
 fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
@@ -115,16 +123,18 @@ Sob esta inspiração, vamos construir uma função tentativa de suporte $\Psi^\
 Essa função pode ser intuitivamente interpretada no sentido de equiparar a verossimilhança da hipótese composta com
 a da sua melhor hipótese simples componente.
 Para clarificar nossa operação, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$ que 
-\textbf{não} é função de verossimilhança: $\Psi^\dagger (\gamma | \bu{x})$, definida por:
+\textbf{não} é função de verossimilhança: $\Psi^\star (\gamma | \bu{x})$, definida por:
 \begin{equation}
-\Psi^\dagger ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
+\Psi^\star ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
 \label{eqn:Psistar}
 \end{equation}
 
 Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
-nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$. No entanto, a 
+nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$.
+Enquanto a função \ref{eqn:Psidelta} tem uma forte inspiração nos trabalhos frequentistas, a função \ref{eqn:Psistar}
+vem de uma inspiração Bayesiana. No entanto, a 
 verossimilhança, ao contrário da probabilidade, não é necessariamente aditiva em relação ao parâmetro, 
-de forma de a função $\Psi^\dagger$ não é uma função de verossimilhança:
+de forma de a função $\Psi^\star$ não é uma função de verossimilhança:
 
 ``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
 hypotheses (...).
@@ -139,7 +149,7 @@ para hipóteses compostas, estamos considerando funções da forma:
 \label{eqn:Psi}
 \end{equation}
 
-Onde a função $\Psi^\dagger$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
+Onde a função $\Psi^\star$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
 no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Precisamos examinar as propriedades dessa classe
 de funções; examinar se elas se adequam aos requerimentos de uma função de suporte; e investigar a relação entre
 a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
@@ -177,11 +187,15 @@ igual a $B(10,9)$, ou uma {\em priori} de Jeffreys, dada por $B(\frac{1}{2},\fra
 de $B(9.5, 8.5)$. Ambas as análises levam a probabilidades muito baixas para $H_1$: 0.09\% e 0.11\%, respectivamente.
 
 Ainda, a razão de verossimilhança entre o estimador de máxima verossimilhança para $\theta = 0.52$ e qualquer hipótese
-simples $H_p:\theta=p , \, p \leq 0.2$ é de no mínimo 91.4. Todos esses cálculos sugerem que os dados sejam coerentes com
+simples $H_p:\theta=p , \, p \leq 0.2$ é de no mínimo 91.5. Todos esses cálculos sugerem que os dados sejam coerentes com
 a hipótese de maior suporte ser aquela que considera que o novo tratamento tem probabilidade de sucesso maior do que 0.2.
 
 No entanto, a lei da verossimilhança de Hacking não permite essa afirmação, pois $H_1$ e $H_2$ não são hipóteses que
-atribuam um único valor de probabilidade às observações da variável aleatória sob consideração. É importante notar que
+atribuam um único valor de probabilidade às observações da variável aleatória sob consideração. Royall aponta que, embora
+algumas hipóteses simples componentes de $H_1$ sejam melhor suportadas do que as componentes de $H_2$, isso não é válido em
+geral: a hipótese $\theta = 0.2$ é mais suportada do que $\theta=0.9$ por um fator de 22.
+
+É importante notar que
 isso não é uma consequência da formulação das hipóteses envolvendo desigualdades, de fato as hipóteses $H^\dagger_1 : \gamma = 0$
 e $H^\dagger_2 : \gamma = 1$ são equivalentes, e tão intratáveis quanto, as hipóteses $H_1$ e $H_2$, com $\gamma$ sendo dado por
 
@@ -214,18 +228,95 @@ para hipóteses simples, mas que extenda seu domínio para hipóteses compostas.
 propõe utilizar uma definição mais fraca de evidência, baseada em uma lei fraca da verossimilhança (WLL, do inglês
 Weak Law of Likelihood), tal que aceitar LL implique em aceitar WLL, mas a conversa não seja verdadeira.
 
-\begin{shaded}
 \section{Uma lei geral de verossimilhança}
 
-O suporte absoluto a um único valor de parâmetro pode ser infinitesimal - mas o mesmo racional pode ser empregue
-sobre uma região $x+dx$, construindo uma função que atribui a cada intervalo uma densidade de suporte absoluto.
+Talvez a generalização mais óbvia para a lei da verossimilhança para hipóteses compostas seja tomar o máximo (ou supremo,
+no casos em que o máximo não existe) da verossimilhança de suas hipóteses simples. Esse é o caminho perseguido por
+\cite{Zhang09} e \cite{Bickel10}, por exemplo. Zhang considera duas hipóteses, $H_1 : \theta \in \Theta_1 \subset \Theta$
+versus $H_2 : \theta \in \Theta_2 \subset \Theta$, e postula os seguintes axiomas (levemente modificados para coerência
+com a notação):
 
+\begin{axiom}
+	Se $\inf \mathcal{L}(\Theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, então a observação $\bu{x}$ 
+	é uma evidência a favor de $\Theta_1$.\label{ax:inf}
+\end{axiom}
+
+\begin{axiom}
+	Se $\bu{x}$ é evidência a favor de $H_1^*$ em relação a $H_2$ e $H_1^*$ implica em $H_1$, então $\bu{x}$ é evidência de 
+	$H_1$ sobre $H_2$.\label{ax:coh}
+\end{axiom}
+
+O primeiro axioma estabelece que se a imagem de $\mathcal{L} (\Theta_1|\bu{x})$ e $\mathcal{L} (\Theta_2|\bu{x})$ são intervalos
+disjuntos, portanto, se toda hipótese simples que implica em $H_1$ é suportada {\em versus} toda hipótese simples que implica
+em $H_2$, então $H_1$ é suportada {\em versus} $H_2$. Não parece haver motivo para rejeitar esse axioma, além de uma
+indisposição prévia a tratar hipóteses compostas. Já o segundo axioma é uma forma de estabelecer coerência lógica.
+É importante clarificar que esse requisito de coerência {\em não é} equivalente a supor que a estrutura lógica das hipóteses
+deve ser usada como base para justificar um grau de crença sobre $H_1^*$ ou $H_1$: se $H_1^*$ implica em $H_1$ e a recíproca
+não é verdadeira, o axioma \ref{ax:coh} {\em não} justifica que $H_1^*$ seja melhor suportada que $H_1$ por qualquer evidência.
+Destes axiomas, deriva-se uma lei geral da verossimilhança:
+
+\begin{theorem}
+	\textbf{(GLL)} Se $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, então existe evidência
+	a favor de $H_1$ sobre $H_2$.
+\end{theorem}
+
+\begin{proof}
+	Seja $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. Então existe $\theta_1 \in \Theta_1$
+	tal que $\mathcal{L} (\theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. Do axioma \ref{ax:inf}, a hipótese
+	$H_1^* : \theta = \theta_1$ é suportada em relação a $H_2$. Mas $H_1^*$ implica $H_1$, e a conclusão segue do axioma
+	\ref{ax:coh}.
+\end{proof}
+
+Embora não decorra dos axiomas, o uso de uma razão de verossimilhança generalizada $\sup \mathcal{L}(\Theta_1 | \bu{x}) / 
+\sup \mathcal{L} (\Theta_2 | \bu{x}) $ parece natural para quantificar a força da evidência. É trivial que GLL é 
+compatível com LL no caso de hipóteses simples, e com alguns casos particulares expostos por \citep{Royall97}. Essa formulação
+da GLL pode ser usada para apresentar questões de análise de incerteza e para formalizar o uso de verossimilhanças perfilhadas
+em alguns casos de modelos com {\em nuisance parameters}. 
+
+No entanto, a implicação mais surpreendente da GLL é que ela permite uma medida de confirmação {\em absoluta} de hipóteses.
+Uma hipótese  $H_1: \theta \in \Theta_1$ possui evidência favorável se $\sup \mathcal{L}(\Theta_1|\bu{x}) > 
+\sup \mathcal{L} (\Theta_1^c|\bu{x}$, onde $^c$ representa o conjunto complementar, ou $L(\Theta_1, \Theta_1^c) > 1$.
+Embora esse suporte seja nulo no caso
+de hipóteses simples sobre parâmetros contínuos, esse não é caso quando $\Theta$ é finito.
+
+Considere um exemplo, dado por \cite{Royall97}: 
+
+Existem três urnas com bolas brancas em diferentes proporções: um quarto ($\theta_1$), metade ($\theta_2$) e 
+três quartos ($\theta_3$); identificamos como $H_i$ as três urnas possíveis.
+Se nenhuma bola branca for observada após 5 sorteios com reposição, essa observação, $\bu{x}$, implica que
+$\mathcal{L} (\theta_1 | \bu{x} ) \propto (\frac{3}{4})^5$,
+$\mathcal{L} (\theta_2 | \bu{x} ) \propto (\frac{1}{2})^5$ e
+$\mathcal{L} (\theta_3 | \bu{x} ) \propto (\frac{1}{4})^5$.
+
+A LL nos permite afirmar que $L(\theta_1, \theta_2) = 7.6$ é evidência mediana a favor de $H_1$ sobre $H_2$, e 
+$L(\theta_2, \theta_3) = 32$ é evidência forte de $H_2$ sobre $H_3$. No entanto, a LL não permite inferências sobre a hipótese
+composta $H_c : \theta=\theta_1 \lor \theta=\theta_3$ em comparação com $H_2$; equivalentemente, LL não permite
+inferências sobre a evidência absoluta $H_2$ sobre $\sim\!\! H_2$.
+
+Por outro lado, a GLL permite a afirmação de que $L(\theta_1 \lor \theta_3, \theta_2) = 7.6$ representa suporte para $H_c$ em
+relação a $H_2$, e ainda que
+o suporte absoluto para as três hipóteses é de 
+$L(\theta_1, \sim\!\! \theta_1) = 7.6$,
+$L(\theta_2, \sim\!\! \theta_2) = 0.13$,
+$L(\theta_3, \sim\!\! \theta_3) = 0.004$, confirmando que apenas a hipótese 1 tem força de evidência superior a 1.
+
+Uma desvantagem em aceitar a GLL é que o suporte a hipóteses compostas não se comporta da mesma forma que a razão
+de verossimilhanças para hipóteses simples. Suponha que o pesquisador, no mesmo problema das urnas, retira agora duas
+bolas brancas. Essa nova observação leva aos resultados 
+$L(\theta_1, \sim\!\! \theta_1) = 0.11$,
+$L(\theta_2, \sim\!\! \theta_2) = 0.44$,
+$L(\theta_3, \sim\!\! \theta_3) = 2.25$, oferecendo suporte apenas para $H_3$. No entanto, não há como combinar essa
+evidência com a apresentada acima: as quantidades derivadas do supremo da verossimilhança não são multiplicativas para conjuntos
+de dados distintos, ao contrário da verossimilhança. Essa constatação, no entanto, não invalida o teorema da GLL, embora
+lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
+
+\begin{shaded}
 \section{Uma lei fraca de verossimilhança}
 
-O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
-nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
-Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
-essa singularidade.
+%O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
+%nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
+%Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
+%essa singularidade.
 
 \section{Propriedades de uma função de suporte}
 Vamos investigar as seguintes propriedades de uma função de medida de suporte (ver \citep{Edwards72}, sec. 3.2):
