@@ -307,11 +307,19 @@ $L(\theta_1, \sim\!\! \theta_1) = 0.11$,
 $L(\theta_2, \sim\!\! \theta_2) = 0.44$,
 $L(\theta_3, \sim\!\! \theta_3) = 2.25$, oferecendo suporte apenas para $H_3$. No entanto, não há como combinar essa
 evidência com a apresentada acima: as quantidades derivadas do supremo da verossimilhança não são multiplicativas para conjuntos
-de dados distintos, ao contrário da verossimilhança. Essa constatação, no entanto, não invalida o teorema da GLL, embora
+de dados distintos, ao contrário da verossimilhança. A força de evidência absoluta para $\theta_1$ tomando o conjunto completo 
+de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
+Essa constatação, no entanto, não invalida o teorema da GLL, embora
 lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
 
 \begin{shaded}
 \section{Uma lei fraca de verossimilhança}
+
+Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
+de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
+consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
+e é o caminho que vamos seguir nesta sessão.
+
 
 %O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
 %nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
