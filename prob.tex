@@ -254,8 +254,13 @@ $n_x$ sendo o número de eventos favoráveis e $n_t$ sendo o número de experime
 	P(x) = \lim_{n_t \rightarrow \infty} \frac{n_x}{n_t} 
 \end{equation}
 
-No entanto, só temos acesso aos primeiros termos dessa série, e não podemos tirar conclusões sobre o limite de uma série apenas
-observando os primeiros elementos. Observar o início de uma série sequer garante que o limite descrito acima exista.
+Essa proposição foi criticada por muitos anos sob o argumento de que, quando temos acesso aos primeiros termos de uma série,
+não podemos tirar conclusões sobre o limite desta. Observar o início de uma série sequer garante que o limite descrito 
+acima exista. A demonstração da Lei Forte dos Grandes Números \citep{Loeve77} vai embasar essa proposição, com a garantia de 
+que a média amostral de uma variável aleatória converge quase certamente para sua esperança. Embora essa lei forneça uma
+justificativa para pensar na probabilidade como uma média a longo prazo, é importante frisar que ela não implica na
+interpretação frequentista.
+
 Mesmo quando temos acesso a um grande conjunto de dados para estimar o valor de uma determinada
 probabilidade, esse conjunto pode ser suficientemente heterogêneo para que nossa conclusão se torne incorreta. Como escreve Venn,
 
@@ -277,7 +282,8 @@ raises no more (and no less) alarm than the infinite straight line of Euclid. I 
 a situation if there is an analogy between the situation and the concept of random choice from a defined population.''
 \citep{Edwards72}
 
-Não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente de uma população de sentenças, algumas
+Para um frequentista,
+não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente de uma população de sentenças, algumas
 das quais são verdadeiras. Desta forma, a escolha da definição frequentista de probabilidade implica em abandonar o método
 das probabilidades inversas para comparar o mérito de diferentes hipóteses. Essa percepção vai levar ao desenvolvimento
 da escola de testes de significância e à proposição do conceito de verossimilhança.
@@ -522,7 +528,8 @@ se ocuparam do estudo da probabilidade como um subconjunto da lógica formal, qu
 ambos. No mesmo espírito, o trabalho de Rudolph Carnap, à partir da década de 1940, vai ligar novamente o estudo da probabilidade
 às suas raízes dentro da lógica. A notação usada originalmente por Carnap favoreceu sua comunicação com filósofos e logicistas,
 mas dificultou seu acesso por estatísticos, de forma que vamos adaptar alguns termos e notações seguindo textos mais
-modernos (\citep{Zabell09} e \citep{Fitelson07}). 
+modernos (\citep{Zabell09} e \citep{Fitelson07}), que combinam a notação de Carnap com a de W.E. Johnson, que forneceu
+resultados semelhantes de forma independente 20 anos antes de Carnap. 
 
 A questão da definição da palavra ``probabilidade'' não deve ser a de decidir quais acepções dessa palavra são
 corretas ou incorretas, mas sim quais são satisfatórias, e se existe alguma definição mais satisfatória que as demais.
@@ -539,8 +546,8 @@ um conceito útil para a formulação de um sistema de inferência, {\em probabi
 exemplo. Assim, quando a lei da entropia é formulada em termos probabilísticos, é claro que a visão pessoal de cada sujeito
 é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases. 
 
-Carnap, seguindo o trabalho de 
-Wittgenstein, trabalha com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
+Seguindo o trabalho de Wittgenstein, Carnap trabalha 
+com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
 e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora uma hipótese $h$ \citep{Zabell09}.
 Essa visão será desenvolvida de forma a construir uma visão de probabilidade como uma necessidade lógica:
 
@@ -549,7 +556,7 @@ way that the truth conditions for logical entailment are built into the language
 and given a body of evidence $e$, there is exactly one real number $r$, determined by logical conditions alone, such
 that the probability of `It will rain tomorrow', relative to the body of evidence $e$, is $r$.'' \citep{Kyburg74}
 
-
+Johnson e Carnap 
 %*** visao de Carnap sobre probabilidades ***
 %http://en.wikipedia.org/wiki/Probability_interpretations
 %http://stephanhartmann.org/HHL10_Zabell.pdf
@@ -564,7 +571,8 @@ Harold Jeffreys, Bruno de Finetti e Leonard J. Savage
 podem ser apontados como os principais responsáveis por um interesse continuado na interpretação subjetiva, que, próximo à
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
 Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
-uma chance justa em uma aposta; embora as visões difiram no grau de empiricismo advogado,
+uma chance justa em uma aposta; embora as visões sejam razoavelmente intercambiáveis, e difiram pouco 
+no grau de empiricismo advogado,
 ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Para uma visão mais aprofundada das diferenças
 filosóficas entre de Finetti e os demais subjetivistas, veja \citep{Galavotti89}.}
 
@@ -746,7 +754,6 @@ da verossimilhança é aceito, essa razão de verossimilhanças deve ser usada p
 tem {\em a priori}. Como vamos expor na sessão \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
 vão questionar o uso explícito de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
 
-\begin{shaded}
 \section{O problema da classe de referência}\label{sec:classref}
 
 Em seu trabalho de 1922, Fisher escreve:
@@ -791,10 +798,10 @@ each of these probabilities is as good as another. (...)
 Some philosophers have argued that this is a merely pragmatic problem, rather than a theoretical one (...). But calling
 a problem practical or pragmatic is no way to solve it.'' \citep{Kyburg74}
 
-%Fisher 22, pag 16. em diante???
-% http://mcps.umn.edu/philosophy/6_8Kyburg.pdf pag. 15
-
-\end{shaded}
+Essa questão, então, perpassa a formulação do problema de inferência para ambas as principais escolas. De certa forma,
+podemos ver que os problemas de ambas as escolas se concentram não na interpretação do dado observado, mas sim
+no {\em background} contra o qual ele vai ser comparado. Isso inspira a questão: será que é possível desenvolver
+um programa de inferência focado na observação, sem precisar recorrer a classes externas de referência?
 
 \section{A escolha da verossimilhança}\label{sec:likelihood}
 
@@ -832,6 +839,10 @@ deve levar em conta uma multiplicade de outros fatores, representados por {\em p
 decisões: Laplace já havia separado esses conceitos com o problema do 
 número de juízes necessário para condenar um prisioneiro. A decisão, além de levar em conta as probabilidades de
 condenar um inocente ou perdoar um culpado, deve levar em conta se a pena será uma multa ou a morte.
+
+A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de modelos
+geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a log-verossimilhança
+com a perda de informação de cada modelo \citep{Akaike74}.
 
 Um exemplo interessante sobre verossimilhanças é dado 
 pelo seguinte experimento mental: tome um baralho ordinário e vire a primeira carta,
@@ -888,13 +899,6 @@ Edwards propõe que definir a natureza da probabilidade é um problema irrelevan
 formulada por razões de verossimilhança, e não por probabilidades. No entanto, a definição de verossimilhança {\em é} uma
 probabilidade, de forma que sem uma interpretação para a probabilidade não podemos ter uma interpretação para a verossimilhança.
 A teoria verossimilhantista corre, portanto, o risco de se assentar sobre uma areia movediça filosófica.
-
-\begin{shaded}
-\section{A abordagem por teoria da informação}
-
-%http://books.google.com.br/books?id=DlP_h4aMhiYC&printsec=frontcover#v=onepage&q&f=false
-%Anderson 2008, AIC, Kulback-Liebler
-\end{shaded}
 
 \section{A incerteza e a produção de conhecimento}
 
