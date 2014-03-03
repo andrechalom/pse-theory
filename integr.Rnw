@@ -153,7 +153,23 @@ Onde a função $\Psi^\star$ é obtida trivialmente com $\kappa(\theta)=1$, e a 
 no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Precisamos examinar as propriedades dessa classe
 de funções; examinar se elas se adequam aos requerimentos de uma função de suporte; e investigar a relação entre
 a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
-Antes, no entanto, vamos nos defrontar com o problema geral do teste de hipóteses compostas.
+\cite{Edwards72} enumera as seguintes propriedades desejáveis em uma função de medida de suporte:
+
+\begin{enumerate}
+	\item {\em Transitividade}: Se $H_1$ tem melhor suporte que $H_2$ e $H_2$ tem melhor suporte que $H_3$, então
+		$H_1$ deve ter melhor suporte que $H_3$.
+	\item {\em Aditividade em relação aos dados}: o suporte relativo entre duas hipóteses deprendido de uma
+		observação deve ser facilmente combinável com o suporte relativo para as mesmas hipóteses deprendido
+		de uma observação diferente.\footnote{Edwards usa ``aditividade'' sobre a log-verossimilhança, equivalentemente medidas
+		de verossimilhança podem ser combinadas de forma multiplicativa.}
+	\item {\em Invariância a transformações injetoras dos dados}.
+	\item {\em Invariância a transformações injetoras dos parâmetros}. 
+	\item {\em Relevância e consistência}: se uma hipótese for verdadeira, ela deve receber mais suporte do que hipóteses
+		concorrentes no longo termo. O suporte relativo deve ser coerente entre diversos problemas: o mesmo valor de
+		suporte relativo deve ter o mesmo significado.
+	\item {\em Compatibilidade}: uma medida de suporte deve ser facilmente usada para atualizar informações na forma de
+		{\em prioris}, nos casos nos quais elas existam.
+\end{enumerate}
 
 \section{Hipóteses compostas}
 Como exposto na sessão \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
@@ -326,19 +342,7 @@ e é o caminho que vamos seguir nesta sessão.
 %Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
 %essa singularidade.
 
-\section{Propriedades de uma função de suporte}
-Vamos investigar as seguintes propriedades de uma função de medida de suporte (ver \citep{Edwards72}, sec. 3.2):
-
-\begin{enumerate}
-	\item {\em Transitividade}.
-	\item {\em Aditividade em relação aos dados}.
-	\item {\em Invariância a transformações dos dados}.
-	\item {\em Invariância a transformações dos parâmetros}. 
-	\item {\em Relevância e consistência}.
-	\item {\em Compatibilidade}.
-\end{enumerate}
-
-
+\end{shaded}
 
 \section{Proposta de aplicação}
 
@@ -358,4 +362,3 @@ a equação de suporte $\Psi(\gamma|\bu{x})$ deve ser dada por:
 		os pesos designados pela diferença de informação.
 	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
-\end{shaded}
