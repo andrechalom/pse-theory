@@ -249,9 +249,9 @@ da derivada precisa ser realizada numericamente, e em segundo lugar,
 a fra\c c\~ao $\frac{x}{y}$ n\~ao faz sentido se n\~ao h\'a um ponto
 privilegiado ao redor do qual a an\'alise est\'a sendo feita. Portanto,
 definimos como elasticidade de $y$ em rela\c c\~ao a $x$ o produto
-$\frac{<x>}{<y>}s_{yx}$, em que o sinal de $<>$ representa 
+$\frac{\langle x \rangle}{ \langle y \rangle}s_{yx}$, em que o sinal de $\langle \rangle$ representa 
 a m\'edia e $s_{yx}$ \'e o coeficiente linear da regress\~ao parcial
-de $y$ em fun\c c\~ao de $x$.
+de $y$ em fun\c c\~ao de $x$. % qual a justificativa?
 
 O resultado dessa an\'alise de elasticidade, sem restringir os par\^ametros
 a uma pequena regi\~ao no entorno da medida obtida, podem ser visualizados

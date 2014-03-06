@@ -1,5 +1,6 @@
 \section{Motivação}
-O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar as seguintes etapas: 
+O desenvolvimento e utilização de modelos matemáticos e computacionais deve encompassar % anglicismo
+as seguintes etapas: 
 verificação, validação, calibração, análise de incerteza e análise de sensibilidade.
 
 As duas primeiras etapas estão historicamente 
@@ -63,7 +64,8 @@ o modelo correto para reproduzir o fenômeno visto.
 A formulação estocástica da teoria de análise de incerteza e sensibilidade global, interpretada dentro de uma
 abordagem pautada pelo princípio da verossimilhança, é capaz de contemplar da mesma forma todas as fontes de 
 incerteza descritas acima, gerando como resultado um quadro completo do nosso conhecimento a respeito de 
-um sistema. Embora para sistemas muito simples as abordagens possam convergir, isso não se verifica para problemas
+um sistema. % Antes de enumerar as vantagens cabe uma definição desta abordagem
+Embora para sistemas muito simples as abordagens possam convergir, isso não se verifica para problemas
 e sistemas de maior complexidade. As principais vantagens de usar a formulação estocástica são:
 
 \begin{enumerate}
@@ -73,7 +75,7 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 		na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de 
 		verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela 
 		amostra - enquanto a abordagem analítica pode, alternadamente, desperdiçar informações coletadas ou 
-		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite.
+		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite. % aqui há dois aspectos: o uso da informação de incerteza ou variância contida na amostra, o que pode ser feito de várias maneiras, e justificar o uso da funçãod e verosimilhnaça como a maniera mais adequada de se fazer isso.
 \end{enumerate}
 
 Vamos considerar problemas onde $\bu{x}$ representa um vetor de dados obtidos de forma independente
@@ -82,7 +84,7 @@ O parâmetro
 (ou vetor de parâmetros) $\theta$ é desconhecido e pode assumir valores em $\Theta$. A verossimilhança de $\theta$
 dadas as observações $\bu{x}$ é dada por $\mathcal{L} (\theta | \bu{x}) = f(\bu{x}; \theta)$. A razão de verossimilhanças
 sob o mesmo conjunto de dados pode ser abreviada como $L(\theta_1, \theta_2) = \frac{\mathcal{L}(\theta_1|\bu{x})}
-{\mathcal{L}(\theta_2|\bu{x})}$.
+{\mathcal{L}(\theta_2|\bu{x})}$. % qual o propósito deste parágrafo?
 
 \section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
@@ -148,7 +150,7 @@ para hipóteses compostas, estamos considerando funções da forma:
 \Psi ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \kappa(\theta) \,d\theta
 \label{eqn:Psi}
 \end{equation}
-
+% isto é MUITO legal!
 Onde a função $\Psi^\star$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
 no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Precisamos examinar as propriedades dessa classe
 de funções; examinar se elas se adequam aos requerimentos de uma função de suporte; e investigar a relação entre
@@ -238,6 +240,7 @@ A proposta \ref{i:prof} se baseia em métodos como a verossimilhança perfilhada
 propostas {\em ad hoc} usadas para reduzir o estudo de modelos estatísticos multiparamétricos a um parâmetro por vez.
 Embora essa proposta seja valiosa quando possível, ela não é factível em uma larga classe de modelos, e é embasada
 em aproximações.
+% Ainda não está claro para mim que analisar a função de verossimilhança com muito parâmetros (e.g. por meio de perfilhamento) é o mesmo problema que construir hipóteses compostas. Lembre-se de me explicar esta parte.
 A proposta \ref{i:alt} se baseia na formulação axiomática de uma lei geral, GLL (do inglês Generalized Law of Likelihood),
 que seja compatível com a lei da verossimilhança LL
 para hipóteses simples, mas que extenda seu domínio para hipóteses compostas. Em contraste, a proposta \ref{i:ext} 
@@ -323,7 +326,9 @@ $L(\theta_1, \sim\!\! \theta_1) = 0.11$,
 $L(\theta_2, \sim\!\! \theta_2) = 0.44$,
 $L(\theta_3, \sim\!\! \theta_3) = 2.25$, oferecendo suporte apenas para $H_3$. No entanto, não há como combinar essa
 evidência com a apresentada acima: as quantidades derivadas do supremo da verossimilhança não são multiplicativas para conjuntos
-de dados distintos, ao contrário da verossimilhança. A força de evidência absoluta para $\theta_1$ tomando o conjunto completo 
+de dados distintos, ao contrário da verossimilhança. 
+% Intuição: se o problema é apenas esse pode existir uma outra operação de conjuntos que faça o papel da multiplicação para as hipóteses simples. Faz sentido?
+A força de evidência absoluta para $\theta_1$ tomando o conjunto completo 
 de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
 Essa constatação, no entanto, não invalida o teorema da GLL, embora
 lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
@@ -334,7 +339,7 @@ lance dúvidas quanto à aplicabilidade da razão de verossimilhança generaliza
 Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
 de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
 consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
-e é o caminho que vamos seguir nesta sessão.
+e é o caminho que vamos seguir nesta sessão. % isso é o mesmo que fomular uma lei fraca?
 
 
 %O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
@@ -342,9 +347,11 @@ e é o caminho que vamos seguir nesta sessão.
 %Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
 %essa singularidade.
 
+% Faz sentido esta especulação
 \end{shaded}
 
 \section{Proposta de aplicação}
+% A proposta faz sentido para mim, mas depois de ler as seções anteriores fiquei em dúvida sobre a interpretação. Creio que isso acontece porque ainda não há uma ligação clara entre a teoria das seções anteriores a aplicação e exemplos que começma aqui, confere?
 
 Uma metodologia de análise de incerteza baseada em uma função de suporte, após a escolha de uma determinada forma para
 a equação de suporte $\Psi(\gamma|\bu{x})$ deve ser dada por:
@@ -362,3 +369,16 @@ a equação de suporte $\Psi(\gamma|\bu{x})$ deve ser dada por:
 		os pesos designados pela diferença de informação.
 	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
 \end{enumerate}
+% Tive dificuldades de identificar estes passos nos exemplos. No
+% modelo mínimo me parece que há um só modelo, portanto os passos 1, 3
+% e 5 não se aplicam? Ainda assim, me parece ter sentido após o ajuste
+% fazer a análise de incerteza e sensisbilidade amostrando-se a
+% superfície de verossimilhança como você fez. No caso do Tribolium vc
+% não usou este procedimento, apenas o hipercubo para investigar numa
+% vizinhança definida por uma distribuiçãod e probabilidades, correto?
+% Novamente faz sentido, mas falta conectar teoria com exemplos de
+% alguma maneira. Um caminho é separar a proposta em duas partes:
+% exploração estocástica (contra análise local por aproximação linear,
+% no caso de modelos matriciais); e exploração estocástica baseada na
+% inceerteza das estimativas, expressa pela função de
+% verossmilhança. Me lembre de discutirmos isso.
