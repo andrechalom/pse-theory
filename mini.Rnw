@@ -168,11 +168,12 @@ curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
 foram utilizadas para gerar \Sexpr{dim(dis)[1]} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
 de $\lambda$. A distribuição dos valores de $\lambda$ foi usada como aproximação para a função de suporte de $\lambda$,
-exibida na figura \ref{fig:lambda}. % Isso é uma função de suporte ou uma distribuição a posteriori
+exibida na figura \ref{fig:lambda}. % PI: Isso é uma função de suporte ou uma distribuição a posteriori
 A máxima densidade dessa distribuição é atingida em 
 $\lambda = $ \Sexpr{round(d$x[which(d$y == max(d$y))],2)}. As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
 resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas.
-% O significado desses resultados ainda não estão claros para mim.
+% PI: O significado desses resultados ainda não estão claros para mim.
+% C: Nem pra mim, pra falar a verdade. Mas não acho q eu possa ser tão sincero por escrito :P
 
 Futuramente, serão realizadas análises mais aprofundadas sobre esse exemplo.
 
@@ -180,7 +181,7 @@ Futuramente, serão realizadas análises mais aprofundadas sobre esse exemplo.
 <<Case1>>=
 plot(density(dis[,4]))
 @
-	\caption{Distribuição dos resultados do modelo% obtidos amostrando-se a função verossimilhança ...}
+	\caption{Distribuição dos resultados do modelo obtidos amostrando-se a função de verossimilhança dos parâmetros.}
 	\label{fig:lambda}
 \end{figure}
 \begin{figure}
