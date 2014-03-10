@@ -11,13 +11,13 @@ of many of the calculatins, but there seems to them, if I may so express it, an 
 of the subject. To many persons the mention of Probability suggests little else than the notion of a set of rules, very
 ingenious and profound rules no doubt, with which mathematicians amuse themselves by setting and solving puzzles.''
 \citep{Venn1866}
-%% PI: Algo contra o ambiente 'quote'?
+%% PI: Algo contra o ambiente 'quote'? C: anotado para a próxima versão
 
 No século e meio que se passou desde esta publicação, a aplicação da estatística se tornou uma obrigatoriedade no meio científico.
 Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não 
 mencione alguma propriedade
-estatística a respeito das amostras coletadas. % ou de resultados
-                                % experimentais obtidos. A distinção
+estatística a respeito das amostras coletadas ou de resultados experimentais obtidos. 
+								% PI: A distinção
                                 % entre amostragem e experimentação é
                                 % importante e pode te ajudar, veja
                                 % observações mais abaixo. 
@@ -160,7 +160,7 @@ a ciência da probabilidade deve se basear em leis físicas do mundo natural, e 
 sobre o mundo. A probabilidade é, desta forma, algo que existe objetivamente.
 Esta interpretação faz com que as leis da probabilidade, estritamente, só possam ser aplicadas para 
 sistemas simples, sobre os quais temos um alto conhecimento e controle. 
-%% Diria a sistemas para os quais temos boas premissas a respeito do
+%% PI: Diria a sistemas para os quais temos boas premissas a respeito do
 %% processo que gera os eventos. Isso implica necessariamente em alto
 %% grau de conhecimento e controle? Podemos ignorar muito do sistema,
 %% desde que tenhamos os elemntos para sua deescrição suficiente, em
@@ -176,18 +176,17 @@ quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivo
 Presumindo que as probabilidades estão corretas, o método usado por Laplace é conhecido como ``método das probabilidades
 inversas'', e tem uma alta importância na história da estatística.  No entanto, 
 nenhuma explicação convincente é dada sobre como medir essas probabilidades dentro do paradigma clássico.
-%% Se o método de probabilidade inversa é importante para seu
+%% PI: Se o método de probabilidade inversa é importante para seu
 %% argumento aqui é preciso explicar melhor e deixar mais clara a
-%% antítese com a concepção de probabilidade apres netada no trecho anterior.
+%% antítese com a concepção de probabilidade apres netada no trecho anterior. <TODO>
 Deve-se notar que o argumento de Laplace espelha o raciocínio desenvolvido pelo rev. Thomas Bayes em seu trabalho publicado
 postumamente em 1763. Esse trabalho não será discutido a fundo aqui, por ser muito convoluto em seus detalhes e notação,
-e não oferecer uma visão clara sobre a natureza das probabilidades.
-Determinar quais os méritos e falhas de Laplace e Bayes, respectivamente, é um problema muito debatido e que será retomado na
-sessão \ref{sec:bayes}.
-%% Não ficou claro o propósito deste trecho finalizando essa seção. No
+e não oferecer uma visão clara sobre a natureza das probabilidades. No entanto, vamos considerar o impacto que esse trabalho
+tiveram sobre o pensamento estatístico na sessão \ref{sec:bayes}.
+%% PI: Não ficou claro o propósito deste trecho finalizando essa seção. No
 %% início parece que vc não vai
 %% considerar o método de probabilidades inversas (logo Bayes) mas em
-%% seguida diz que será tratado em outra seção.
+%% seguida diz que será tratado em outra seção. C: reformulei
 
 \section{Interpretação subjetivista}
 Uma visão alternativa é dada por Augustus de Morgan, conhecido principalmente por suas leis em lógica proposicional, 
@@ -243,7 +242,7 @@ uma ferramenta de avanço da ciência, entendida como um corpo teórico objetivo
 
 \section{Interpretação frequentista}
 A próxima crítica à visão de Laplace 
-%% Uma leitura descuidada poderia considerar a interpretação
+%% PI: Uma leitura descuidada poderia considerar a interpretação
 %% frequentista como um mero refinamento da concepção mecanística
 %% Laplaciana. De fato há pontos de contato. Esta seção pode avançar
 %% mais nas concordâncias e diferenças entre estas duas
@@ -279,7 +278,7 @@ moment.''\citep{Venn1866}
 Há um problema claro com a visão dita frequentista, advogada por Venn, que é o fato de que não temos 
 acesso a infinitas experiências para determinar o valor
 de uma dada probabilidade. 
-% OK, mas o próprio trecho do Venn que você citou dá a solução: a série
+% PI: OK, mas o próprio trecho do Venn que você citou dá a solução: a série
 % infinita desconhecida é susbtituída por uma série teórica de
 % propriedades conhecidas. Isso não poderia ser visto como uma
 % transferência do subjetivismo da medida de probabilidade para a
@@ -300,7 +299,7 @@ $n_x$ sendo o número de eventos favoráveis e $n_t$ sendo o número de experime
 
 Essa proposição foi criticada por muitos anos sob o argumento de que, quando temos acesso aos primeiros termos de uma série,
 não podemos tirar conclusões sobre o limite desta. 
-% A não ser que se proponha uma expressão teórica para esta série, que
+% PI: A não ser que se proponha uma expressão teórica para esta série, que
 % seja uma boa descrição dos termos observados empiricamente. Há aqui
 % uma distinção entre uam sequência de valores observados e uma série
 % no sentido matemático, não?
@@ -308,7 +307,7 @@ Observar o início de uma série sequer garante que o limite descrito
 acima exista. A demonstração da Lei Forte dos Grandes Números \citep{Loeve77} vai embasar essa proposição, com a garantia de 
 que a média amostral de uma variável aleatória converge quase certamente para sua esperança. Embora essa lei forneça uma
 justificativa para pensar na probabilidade como uma média a longo prazo, é importante frisar que ela não implica na
-interpretação frequentista. % Por que? Acho que você vai ter que
+interpretação frequentista. % PI: Por que? Acho que você vai ter que
                             % gastar mais algumas linhas para explicar
                             % seu argumento aqui. 
 
@@ -324,7 +323,7 @@ Assim, para a visão frequentista a probabilidade que queremos medir é algo que
 possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
 a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema real, essa objetividade
 apenas se concretiza dentro da idealização de um dado modelo, para o qual temos que presumir uma certa regularidade. 
-% Aqui há dois elementos importantíssimos da noção freuqentista:
+% PI: Aqui há dois elementos importantíssimos da noção freuqentista:
 % modelo de variável aleatória e a suposição de que este modelo é o
 % mesmo na escala de tempo e espaço de um estudo. Isso implica na
 % concepção de parâmetro e estimativa frequentistas.
@@ -349,9 +348,8 @@ da escola de testes de significância e à proposição do conceito de verossimi
 \section{Interpretação por propensões}
 
 Uma terceira interpretação para a natureza da probabilidade é dada pelo cientista e lógico norte-americano C.S. Peirce,
-cuja obra prolífica se estende sobre vários ramos da estatística
-moderna. 
-% Se estende por vários outros campos, faça-se justiça ao homem.
+cuja obra prolífica se estende sobre vários ramos da estatística moderna. 
+% PI: Se estende por vários outros campos, faça-se justiça ao homem. C: uma palavra: prazo.
 O interesse de Peirce no estudo de probabilidades
 deve ser traçado na sua visão indeterminista, segundo a qual eventos não se sucedem de maneira estritamente causal, mas são
 influenciados por um elemento de chance. Peirce baseia essa visão na constatação de que ``the mind is not subject to `law'
@@ -377,8 +375,11 @@ portanto um sistema de argumentação baseada em probabilidades, como o argument
 	\item Portanto, X é um B com probabilidade $p$ 
 \end{enumerate}
 
-Apesar de defender a visão frequentista, % isto não está auto-evidente
-                                % no que foi escrito até agora.
+Apesar de defender a visão frequentista, 
+% PI: isto não está auto-evidente
+% no que foi escrito até agora. C: Não está pq não é evidente. Peirce é certamente um objetivista, rejeitando qualquer
+% utilidade para probabilidades pessoais; mas qual é a conexão entre o mundo físico e a probabilidade é uma questão
+% sobre a qual ele parece ter mudado de idéia durante a vida.
 Peirce observa ainda um descompasso entre a concordância da frequência de ocorrência
 de uma série de experimentos e sua probabilidade com a {\em definição} da probabilidade como sendo essa frequência. Para
 essa visão, a probabilidade de um evento específico não pode ser definida. ``Qual a probabilidade de que um lance qualquer
@@ -400,7 +401,7 @@ embora possa causar espanto ao cientista moderno, acostumado com a visão
 frequentista, não é diferente de aceitar outras propriedades
 primitivas presentes nas teorias físicas, como massa, carga elétrica
 ou {\em spin}.
-%Você afirma isso no sentido de propriedades fenomenológicas que foram
+% PI: Você afirma isso no sentido de propriedades fenomenológicas que foram
 %atribuídas a objetos para tornar seu comportamento coerente com uma
 %certa teoria? Note que carga e mais recentemente massa não são mais
 %propriedades deste tipo, pois foram decompostas em processos ou
@@ -448,7 +449,7 @@ qualquer teoria de probabilidades objetiva e não baseada em frequências observ
 Desta forma, embora a visão de propensões tenha recebido pouca atenção em meios científicos
 ela tem tido novo interesse nos últimos anos em círculos filosóficos \citep{Gillies2000}.
 
-\section{A formalização da inferência}% inferência frequentista?
+\section{A formalização da inferência}% PI: inferência frequentista? C: Não: o trabalho de Fisher vai pavimentar o caminho para todas as escolas de inferência
 
 A escola frequentista será de grande influência para a formulação da teoria de testes de hipóteses de R. A. Fisher, que se
 lança no começo da década de 1920 sobre o problema de formalizar a inferência estatística, ou seja, o processo de
@@ -522,25 +523,21 @@ Para melhor compreender essa grandeza, vamos usar um exemplo citado por Laplace 
 proporção de batismos (usado para representar o número de nascimentos) de meninos e meninas em Paris nos anos 
 de 1745 a 1784. Laplace tem a hipótese, corroborada por dados coletados em diversas outras cidades, de que nascem mais meninos
 do que meninas em uma proporção de $22$ para $21$. Coletando a
-informação de que 
-%houveram 
-houve
-$393386$ nascimentos de 
-meninos e $377555$
+informação de que houveram $393386$ nascimentos de meninos e $377555$
 nascimentos de meninas no período, e presumindo o modelo binomial para os nascimentos, a verossimilhança da hipótese levantada
 por Laplace é dada pela probabilidade atribuída ao valor $393386$ pelo modelo binomial com tamanho $393386 + 377555 = 770941$
 e probabilidade de sucesso $22/(21+22) \sim 0.511$. Essa probabilidade é um número da ordem de $10^{-5}$. Ao calcular a 
 verossimilhança da hipótese de que não há preponderância de nenhum gênero, ou seja, a probabilidade de sucesso é de $0.5$, 
 encontramos o valor de $10^{-74}$, muitas ordens de grandeza inferior ao anterior. Portanto, os dados indicados por Laplace
 fornecem uma evidência mais forte para a hipótese de que os nascimentos de meninos são mais prováveis na proporção de $22$
-para $21$. % em relação à outra hipótese
+para $21$. % PI: em relação à outra hipótese. C: essa frase depende da interpretação do que é evidência, vide sessão sobre Carnap
 
 Laplace não formaliza esse argumento em seu livro, sem dúvida pela dificuldade de realizar as contas indicadas acima sem
 a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia desenvolver esse raciocínio em termos das 
 {\em probabilidades} das hipóteses conflitantes, Fisher nota que as verossimilhanças calculadas acima não se comportam como 
 probabilidades, no sentido de não estarem sujeitas às leis da
 probabilidade (veja na sessão \ref{sec:axiomatica}).
-%Um aspecto importantíssimo aqui é que Fisher fez isso
+%PI: Um aspecto importantíssimo aqui é que Fisher fez isso
 %intencionalmente: ele procurava fazer frente aos Bayesianos e sua
 %concepção de que nosso grau de confiança em uma hipótese pode ser
 %expresso por uma probabilidade. Para isso, ele precisava de uma
@@ -549,8 +546,6 @@ probabilidade (veja na sessão \ref{sec:axiomatica}).
 %confiança em uma hipótese é proporcional à probabilidade que ela
 %atribui a dados observados, mas não é uma probabilidade (já que
 %proporcionalidade não garante os axiomas).
-
-
 
 \section{Abordagens para testes de hipóteses}
 % Embora haja forte relação com a seção anterior, ela não está muito
@@ -577,11 +572,10 @@ e é calculada a probabilidade do desvio entre a estatística calculada e a sua 
 encontrado. 
 
 Em um exemplo simples, queremos saber se uma moeda é justa ou não lançando-a 20 vezes. É improvável que o número de caras seja
-exatamente 10, mesmo para uma moeda justa. Como o resultado de cada lançamento %é
-admite duas	respostas (cara ou coroa), e a probabilidade de cada lançamento é suposta constante e independente, o modelo escolhido
-deve ser uma binomial. % Prefiro dizer que sob essas premissas podemos
-                       % usar o modelo binomial. E se possível
-                       % relembrar aqui que esta foi a etapa de especificação.
+exatamente 10, mesmo para uma moeda justa. Como o resultado de cada lançamento é uma de duas respostas (cara ou coroa), 
+e a probabilidade de cada lançamento é suposta constante e independente, o modelo escolhido para representar o problema
+pode ser uma binomial\footnote{Determinar que o modelo binomial é adequado corresponde ao problema da especificação
+segundo Fisher}.
 A hipótese nula é a de que a probabilidade da binomial é de 0.5. Nesse caso, podemos calcular a 
 distribuição esperada do número de caras, e veremos que em 82\% dos experimentos realizados, a diferença entre o valor esperado
 de dez caras e o resultado obtido será de 1 ou mais; em 26\%, de 3 ou mais; e em 4\%, de 5 ou mais. Ao examinar o resultado 
@@ -599,9 +593,9 @@ possíveis é falho. Como o valor de parâmetros é uma variável contínua, Ney
 inclined to think that as far as a particular hypothesis is concerned, no test based upon the theory of probability can by
 itself provide any valuable evidence of the truth or falsehood of that hypothesis.'' \citep{Neyman1933}
 
-Enquanto isso é verdade a respeito de probabilidades, o mesmo não se verifica com verossimilhanças. Esse é um dos motivos
-pelos quais a verossimilhança é sempre instrumental em comparar
-hipóteses alternativas.% esta observação não está meio perdida aqui?
+%Enquanto isso é verdade a respeito de probabilidades, o mesmo não se verifica com verossimilhanças. Esse é um dos motivos
+%pelos quais a verossimilhança é sempre instrumental em comparar
+%hipóteses alternativas.% esta observação não está meio perdida aqui?
 
 Neyman e Pearson propõe um procedimento formal para delimitar quando devemos aceitar e quando devemos rejeitar a hipótese
 nula em favor de uma hipótese alternativa, dividindo o resultado desse processo em quatro classes: podemos aceitar uma hipótese
@@ -617,10 +611,11 @@ a região ótima, no sentido de minimizar a probabilidade de erro de tipo II, é
 verossimilhanças \citep{Neyman1933}. 
 
 Convém notar que esse resultado é verdadeiro apenas para hipóteses
-ditas simples. % como este é conceito central na dissertação, creio
+ditas simples, ou seja, hipóteses que atribuem um único valor de probabilidade para cada possível observação.
+% PI: como este é conceito central na dissertação, creio
                % que é preciso defini-lo precisamente, e de uma
                % maneira ampla o suficiente para comportar os usos ao
-               % longo de toda dissertação.
+               % longo de toda dissertação. C: done
 Enquanto Neyman e Pearson obtém resultados
 parciais para testes envolvendo hipóteses compostas, outros autores vão eliminar essas hipóteses das suas considerações.
 Edwards, por exemplo, afirma que:
@@ -647,7 +642,6 @@ an intelligent attempt to {\em understand} the experimental situation.''\citep{F
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
 
-\begin{shaded}
 \section{Probabilidade necessária}
 
 Tanto de Morgan como Boole, contados entre os fundadores da interpretação subjetivista e frequentista da probabilidade,
@@ -683,11 +677,19 @@ way that the truth conditions for logical entailment are built into the language
 and given a body of evidence $e$, there is exactly one real number $r$, determined by logical conditions alone, such
 that the probability of `It will rain tomorrow', relative to the body of evidence $e$, is $r$.'' \citep{Kyburg74}
 
-Johnson e Carnap 
-%*** visao de Carnap sobre probabilidades ***
-%http://en.wikipedia.org/wiki/Probability_interpretations
-%http://stephanhartmann.org/HHL10_Zabell.pdf
-\end{shaded}
+Carnap provê ainda uma distinção entre três formas de confirmação: classificatória (a evidência confirma ou não a hipótese),
+quantitativa (com qual intensidade a evidência suporta a hipótese) e relacional (a evidência confirma uma hipótese mais do que
+outra)\citep{Carnap62}. 
+
+Johnson e Carnap desenvolvem um argumento segundo o qual observações passadas de um processo multinomial embasam a probabilidade
+de observações futuras, baseados nos postulados da permutação e da combinação; 
+provendo assim uma base para regras de sucessão como a 
+desenvolvida por Laplace sem a necessidade de invocar uma ignorância {\em a priori} sobre o valor de um parâmetro. 
+No entanto, a aplicação desses princípios para problemas gerais em inferência necessita de uma extensão desses resultados
+para considerar não apenas observações futuras idênticas, mas observações {\em similares}. A definição dessa similaridade
+e seu uso operacional para problemas de inferência levam a problemas matemáticos extremamente complexos, e uma teoria
+geral de inferência baseada em probabilidades necessárias ainda não foi alcançada (veja \cite{Zabell09} para um histórico
+mais completo).
 
 \section{Probabilidade Bayesiana moderna}\label{sec:bayes}
 
@@ -1020,18 +1022,6 @@ pena será uma multa ou a morte.
 % (2) e (3) indicar que, na concepção de Royall, as escolas são
 % definidas por estas diferentes formalizações de inferência.
 
-A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de modelos
-geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a log-verossimilhança
-com a perda de informação de cada modelo \citep{Akaike74}. % Merece
-                                % uma seção à parte, pela importãncia
-                                % do conceito em si e pelo fenômeno de
-                                % sociologia da ciência que foi a
-                                % rápida aceitação da seleção de
-                                % modelos baseada em AIC nas ciências
-                                % naturais (Ver Johson & Omland Trends
-                                % in Ecology and Evolution). Além
-                                % disso, aqui está interposto entre os
-                                % conceitos e o exemplo.
 
 Um exemplo interessante 
 sobre verossimilhanças é dado 
@@ -1115,6 +1105,18 @@ sobre uma areia movediça filosófica.
 % justificaria que isso já foi feito na escolha do modelo. Podemos
 % testar chamando o João para sua banca.
 
+A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de modelos
+geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a log-verossimilhança
+com a perda de informação de cada modelo \citep{Akaike74}. % Merece
+                                % uma seção à parte, pela importãncia
+                                % do conceito em si e pelo fenômeno de
+                                % sociologia da ciência que foi a
+                                % rápida aceitação da seleção de
+                                % modelos baseada em AIC nas ciências
+                                % naturais (Ver Johson & Omland Trends
+                                % in Ecology and Evolution). Além
+                                % disso, aqui está interposto entre os
+                                % conceitos e o exemplo.
 \section{A incerteza e a produção de conhecimento}
 
 Concluímos essa sessão com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 

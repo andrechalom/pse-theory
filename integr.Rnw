@@ -250,7 +250,7 @@ ser comparadas sejam dadas por pares $(\mu = \mu_0, \sigma = \sigma_0)$
 representando um valor fixo para a média e desvio padrão dessa normal, 
 é possível comparar uma aproximação para suporte relativo para diferentes valores para a média, com o desvio padrão livre
 - portanto, caracterizando a hipótese composta $(\mu = \mu_0, \sigma \geq 0)$.
-Para alguns casos de hipóteses compostas, é possível descrever uma transformação de parâmetros que permite essa abordagem;
+Para alguns casos de hipóteses compostas, é possível descrever uma transformação de parâmetros que permita essa abordagem;
 no entanto uma teoria geral para tratar hipóteses compostas baseada nessas técnicas parece improvável.
 
 % PI: Ainda não está claro para mim que analisar a função de verossimilhança com muito parâmetros (e.g. por meio de perfilhamento) é o mesmo problema que construir hipóteses compostas. Lembre-se de me explicar esta parte.
@@ -348,7 +348,6 @@ de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
 Essa constatação, no entanto, não invalida o teorema da GLL, embora
 lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
 
-\begin{shaded}
 \section{Uma lei fraca de verossimilhança}
 
 Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
@@ -356,6 +355,48 @@ de uma medida absoluta de confirmação, os principais defensores da lei da vero
 consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
 e é o caminho que vamos seguir nesta sessão. % PI: isso é o mesmo que fomular uma lei fraca?
 
+Um exemplo devido a Branden Fitelson \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
+tome um baralho de 52 cartas bem embaralhado, e considere as hipóteses (simples) 
+$H_1$: a primeira carta é o ás de espadas {\em versus}
+$H_2$: a primeira carta é preta. A observação de uma carta de espadas leva às seguintes verossimilhanças: 
+$\mathcal{L} ( H_1 | \spadesuit ) = k 1 > \mathcal{L} ( H_2 | \spadesuit ) = k \frac{1}{2}$, sendo $k$ uma constante de 
+proporcionalidade, e a lei da verossimilhança nos leva a declarar o suporte para $H_1$ sobre $H_2$. Mas a evidência apresentada
+sobre $H_1$ é inconclusiva, mas garante $H_2$. Fitelson traça essa discordância na relação entre os chamados ``{\em catch-alls}'',
+$P(E | \sim\!\!H_1)$ e $P(E|\sim\!\!H_2)$\footnote{Em casos de cartas de baralhos, os {\em catch-alls} estão bem definidos;
+objetivistas podem ter problemas em aceitar a formulação de {\em catch-alls} em problemas mais gerais, como "essa observação
+provê suporte à teoria da evolução"}. Uma formulação mais geral sobre a lei da verossimilhança, apelidada por J. Joyce de
+lei fraca da verossimilhança (WLL) é dada por:
+
+\begin{description}
+\item[WLL]
+``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ {\em if} $P(E|H_1) > P(E|H_2)$ {\em a}
+$P(E|\sim\!\!H_1) \leq P(E|\sim\!\!H_2)$.''
+\citep{Fitelson07}
+\end{description}
+
+É evidente que LL $\implies$ WLL. No entanto, as principais correntes de Bayesianismo moderno {\em também} aceitam WLL: dada uma
+medida de confirmação $c(H,E)$, a expressão Bayesiana equivalente a LL é:
+
+\begin{description}
+\item[$\dagger_c$]
+``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ according to measure $c$ {\em iff} $c(H_1,E) > c(H_2,E)$.''
+\citep{Fitelson07}
+\end{description}
+
+Três possíveis formas para a medida de confirmação são:
+\begin{description}
+\item[Diferença] $d(H,E) = P(H|E)-P(H)$
+\item[Razão] $r(H,E) = \frac{P(H|E)}{P(H)}$
+\item[Razão de verossimilhanças] $l(H,E) = \frac{P(E|H)}{P(E|\sim\!\!H)}$
+\end{description}
+
+É importante relembrar que a confirmação Bayesiana dada por $c(H,E)$ 
+tem um caráter não-relacional, à partir do qual se {\em deriva} uma 
+medida de confirmação relacional; verossimilhantistas enxergam na lei da verossimilhança uma relação primitiva.
+E enquanto a construção da medida de confirmação não-relacional depende da especificação de {\em prioris}, a WLL não faz uso 
+direto deles, mas apenas da especificação de {\em catch-alls}. Uma teoria que utilizasse a WLL sem invocar {\em prioris}
+poderia embasar uma escola de inferência intermediária, sem o uso de {\em prioris} que incomoda objetivistas, nem a restrição
+arbitrária ao tratamento de hipóteses compostas.
 
 %O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
 %nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
@@ -363,7 +404,6 @@ e é o caminho que vamos seguir nesta sessão. % PI: isso é o mesmo que fomular
 %essa singularidade.
 
 % PI: Faz sentido esta especulação
-\end{shaded}
 
 % \section{Proposta de aplicação}
 % PI: A proposta faz sentido para mim, mas depois de ler as seções anteriores fiquei em dúvida sobre a interpretação. Creio que isso acontece porque ainda não há uma ligação clara entre a teoria das seções anteriores a aplicação e exemplos que começma aqui, confere?
