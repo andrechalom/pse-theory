@@ -145,10 +145,12 @@ vem de uma inspiração Bayesiana. No entanto, a
 verossimilhança, ao contrário da probabilidade, não é necessariamente aditiva em relação ao parâmetro, 
 de forma de a função $\Psi^\star$ não é uma função de verossimilhança:
 
+\begin{quote}
 ``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
 hypotheses (...).
 Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
 represent a statistical distribution in any sense.'' \citep{Edwards72}
+\end{quote}
 
 Em geral, ao determinar regras para combinar o suporte de hipóteses simples para construir uma função de suporte
 para hipóteses compostas, estamos considerando funções da forma:
