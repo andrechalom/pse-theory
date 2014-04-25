@@ -371,7 +371,7 @@ lei fraca da verossimilhança (WLL) é dada por:
 
 \begin{description}
 \item[WLL]
-``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ {\em if} $P(E|H_1) > P(E|H_2)$ {\em a}
+``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ {\em if} $P(E|H_1) > P(E|H_2)$ {\em and}
 $P(E|\sim\!\!H_1) \leq P(E|\sim\!\!H_2)$.''
 \citep{Fitelson07}
 \end{description}
@@ -397,7 +397,8 @@ tem um caráter não-relacional, à partir do qual se {\em deriva} uma
 medida de confirmação relacional; verossimilhantistas enxergam na lei da verossimilhança uma relação primitiva.
 E enquanto a construção da medida de confirmação não-relacional depende da especificação de {\em prioris}, a WLL não faz uso 
 direto deles, mas apenas da especificação de {\em catch-alls}. Uma teoria que utilizasse a WLL sem invocar {\em prioris}
-poderia embasar uma escola de inferência intermediária, sem o uso de {\em prioris} que incomoda objetivistas, nem a restrição
+poderia embasar uma escola de inferência intermediária, sem o uso de {\em prioris} ao qual objetivistas objetam, 
+nem a restrição
 arbitrária ao tratamento de hipóteses compostas.
 
 %O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,

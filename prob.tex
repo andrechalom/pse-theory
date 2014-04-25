@@ -176,10 +176,12 @@ nenhuma explicação convincente é dada sobre como medir essas probabilidades d
 %% PI: Se o método de probabilidade inversa é importante para seu
 %% argumento aqui é preciso explicar melhor e deixar mais clara a
 %% antítese com a concepção de probabilidade apres netada no trecho anterior. <TODO>
-Deve-se notar que o argumento de Laplace espelha o raciocínio desenvolvido pelo rev. Thomas Bayes em seu trabalho publicado
+Deve-se notar que o argumento de Laplace se assemelha ao raciocínio desenvolvido pelo rev. Thomas Bayes 
+em seu trabalho publicado
 postumamente em 1763. Esse trabalho não será discutido a fundo aqui, por ser muito convoluto em seus detalhes e notação,
-e não oferecer uma visão clara sobre a natureza das probabilidades. No entanto, vamos considerar o impacto que esse trabalho
-tiveram sobre o pensamento estatístico na sessão \ref{sec:bayes}.
+e não oferecer uma visão clara sobre a natureza das probabilidades. No entanto, vamos considerar 
+o impacto que esse trabalho
+teve sobre o pensamento estatístico na sessão \ref{sec:bayes}.
 %% PI: Não ficou claro o propósito deste trecho finalizando essa seção. No
 %% início parece que vc não vai
 %% considerar o método de probabilidades inversas (logo Bayes) mas em
@@ -249,8 +251,8 @@ A próxima crítica à visão de Laplace
 vem de uma série de pensadores dentre os quais se destacam George Boole e John Venn.
 Este último, em seu trabalho de 
 1866, postula que a probabilidade de um evento se refere à
- frequência relativa com a qual esse evento se repetiria em uma
-série infinita de experimentos:
+frequência relativa com a qual esse evento se repetiria em uma
+série infinita de experimentos, pelo que sua visão será conhecida como frequentista:
 
 \begin{quote}
 ``We may define the probability or chance (the terms are here regarded as synonymous) of the event happening in that
@@ -262,6 +264,14 @@ the inappropriate one presented by nature, choosing it, of course, with as littl
 This is nothing more than has to be done, and invariably is done, whenever natural objects are made subjects of strict science.''
 \citep{Venn1866}
 \end{quote}
+
+A probabilidade de um dado evento poderia então ser definida como o limite da razão entre o número de eventos
+favoráveis sobre o número de experimentos realizados, com o número de experimentos realizados indo para o infinito. Com 
+$n_x$ sendo o número de eventos favoráveis e $n_t$ sendo o número de experimentos realizados:
+
+\begin{equation}
+	P(x) = \lim_{n_t \rightarrow \infty} \frac{n_x}{n_t} 
+\end{equation}
 
 Venn também critica a visão subjetivista de de Morgan, sob
 o argumento de que uma avaliação individual está sujeita a
@@ -278,41 +288,22 @@ which they happen to combine in our consciousness at the
 moment.''\citep{Venn1866}
 \end{quote}
 
-Há um problema claro com a visão dita frequentista, advogada por Venn, que é o fato de que não temos 
-acesso a infinitas experiências para determinar o valor
-de uma dada probabilidade. 
-% PI: OK, mas o próprio trecho do Venn que você citou dá a solução: a série
-% infinita desconhecida é susbtituída por uma série teórica de
-% propriedades conhecidas. Isso não poderia ser visto como uma
-% transferência do subjetivismo da medida de probabilidade para a
-% escolha do modelo de variável aleatória? Isto colocaria
-% frequentistas mais próximos de Bayesianos. Por outro lado a
-% justificativa para a escolha de um certo modelo deveria ser
-% primeiros princípios tão sólidos como propriedades físicas que
-% garantem que os dois lados da moeda caem com igual chance. Neste
-% sentido, o freuqentismo como construção de um modelo de uma série
-% infinita de repetições aproximaria-se da concepção física de Laplace.
-A probabilidade de um dado evento poderia ser definida como o limite da razão entre o número de eventos
-favoráveis sobre o número de experimentos realizados, com o número de experimentos realizados indo para o infinito. Com 
-$n_x$ sendo o número de eventos favoráveis e $n_t$ sendo o número de experimentos realizados:
+A definição frequentista leva a um problema claro: não temos acesso a infinitas experiências para
+determinar o valor de uma dada probabilidade. A série infinita postulada por Venn precisa, para
+qualquer fim prático, ser identificada com uma realização parcial observável. No entanto,
+essa realização parcial pode ser identificada com infinitas séries diferentes, algumas das quais convergentes,
+outras divergentes. O pesquisador frequentista precisa, assim, tomar uma decisão pessoal sobre
+qual série utilizar. Ao embasar esse modelo em princípios físicos (dois lados de uma moeda caem com igual chance),
+ele estará se aproximando da concepção física de Laplace; ao escolher qualquer outra série, ele estará
+transferindo a subjetividade da medida de probabilidade para a escolha do modelo.
 
-\begin{equation}
-	P(x) = \lim_{n_t \rightarrow \infty} \frac{n_x}{n_t} 
-\end{equation}
-
-Essa proposição foi criticada por muitos anos sob o argumento de que, quando temos acesso aos primeiros termos de uma série,
-não podemos tirar conclusões sobre o limite desta. 
-% PI: A não ser que se proponha uma expressão teórica para esta série, que
-% seja uma boa descrição dos termos observados empiricamente. Há aqui
-% uma distinção entre uam sequência de valores observados e uma série
-% no sentido matemático, não?
-Observar o início de uma série sequer garante que o limite descrito 
-acima exista. A demonstração da Lei Forte dos Grandes Números \citep{Loeve77} vai embasar essa proposição, com a garantia de 
-que a média amostral de uma variável aleatória converge quase certamente para sua esperança. Embora essa lei forneça uma
+Nenhum critério objetivo garante que uma destas séries potenciais é aquela com ``menor desvio possível
+em relação aos fatos observados''; a Lei dos Grandes Números \citep{Loeve77} vai embasar uma determinada escolha,
+que a média amostral de uma variável aleatória converge quase certamente para sua esperança. 
+Embora essa lei forneça uma
 justificativa para pensar na probabilidade como uma média a longo prazo, é importante frisar que ela não implica na
-interpretação frequentista. % PI: Por que? Acho que você vai ter que
-                            % gastar mais algumas linhas para explicar
-                            % seu argumento aqui. 
+interpretação frequentista: a atualização de crenças Bayesiana vai levar ao mesmo resultado com amostras suficientemente
+grandes.
 
 Mesmo quando temos acesso a um grande conjunto de dados para estimar o valor de uma determinada
 probabilidade, esse conjunto pode ser suficientemente heterogêneo para que nossa conclusão se torne incorreta. Como escreve Venn,
@@ -343,8 +334,10 @@ a situation if there is an analogy between the situation and the concept of rand
 \citep{Edwards72}
 \end{quote}
 
-Para um frequentista,
-não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente de uma população de sentenças, algumas
+Finalmente, a concepção frequentista, apesar de ter pontos de contato com o pensamento laplaciano, apresenta
+uma ruptura com a metodologia de probabilidades inversas. Para um frequentista,
+não faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente 
+de uma população de sentenças, algumas
 das quais são verdadeiras. % Por que?
 Desta forma, a escolha da definição frequentista de probabilidade implica em abandonar o método
 das probabilidades inversas para comparar o mérito de diferentes
@@ -358,11 +351,15 @@ Uma terceira interpretação para a natureza da probabilidade é dada pelo cient
 cuja obra prolífica se estende sobre vários ramos da estatística moderna. 
 % PI: Se estende por vários outros campos, faça-se justiça ao homem. C: uma palavra: prazo.
 O interesse de Peirce no estudo de probabilidades
-deve ser traçado na sua visão indeterminista, segundo a qual eventos não se sucedem de maneira estritamente causal, mas são
-influenciados por um elemento de chance. Peirce baseia essa visão na constatação de que ``the mind is not subject to `law'
-in the same rigid sense that matter is (...). There always remains a certain ammount of arbitrary spontaneity in its action''
+deve ser traçado na sua visão indeterminista, segundo a qual eventos não 
+se sucedem de maneira estritamente causal, mas são
+influenciados por um elemento de chance. Peirce baseia essa visão 
+na constatação de que ``the mind is not subject to `law'
+in the same rigid sense that matter is (...). There always remains 
+a certain ammount of arbitrary spontaneity in its action''
 \citep{Peirce1892}, expandindo essa doutrina ao mundo físico ao notar que as leis determinísticas 
-da física newtoniana são simétricas no tempo, e portanto, incompatíveis com fenômenos evolucionários, como os descritos por
+da física newtoniana são simétricas no tempo, e portanto, 
+incompatíveis com fenômenos evolucionários, como os descritos por
 Charles Darwin. % Não entendi a assertiva nem seu propósito neste
                 % ponto do seu argumento
 Essa visão se opõe, portanto, à postura de Laplace, e indica uma predisposição a considerar que probabilidades
@@ -1175,16 +1172,16 @@ com a perda de informação de cada modelo \citep{Akaike74}. % Merece
 Concluímos essa sessão com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
 ``estatística Bayesiana'' esconde o fato de que há, na verdade, uma variedade de correntes filosóficas que, baseadas
 em idéias distintas sobre a natureza das probabilidades, chegam a
-conclusões distintas sobre assuntos díspares % não entendi o 'díspares'
-da epistemologia 
+conclusões distintas sobre assuntos variados da epistemologia 
 à metodologia de inferência. A escola frequentista é fundamentalmente dividida entre a modelagem de Fisher e a rigidez de
-Neyman-Pearson, enquanto a escola Bayesiana é dividida entre os
-subjetivistas como de Finetti e os objetivistas como Jaynes.% Pretende
-                                % falar algo de Jaynes?
+Neyman-Pearson, enquanto a escola Bayesiana é dividida em uma miríade de escolas, desde
+subjetivistas anti-realistas como de Finetti até objetivistas como Jaynes.
+% PI: Pretende falar algo de Jaynes? C: Por enquanto não
 Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Carnap e Karl Pearson, que atacarão tanto
 a visão subjetiva de probabilidade quanto o modelo de população infinita dos frequentistas \citep{Lenhard06, Zabell09}.
-Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, e posteriormente
-expandida por Akaike, que propõem a razão de verossimilhança como única base lógica para a inferência.
+Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, 
+posteriormente expandida por Royall e Sober e complementada
+Akaike, que propõem a razão de verossimilhança como única base lógica para a inferência.
 
 É necessário que as divergências entre os diversos autores citados sejam interpretadas não na sua práxis, que representa 
 o nível metodológico, como costuma acontecer em círculos mais inclinados à ciência do que à filosofia, 
