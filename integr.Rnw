@@ -73,7 +73,7 @@ e sistemas de maior complexidade. As principais vantagens de usar a formulação
 	\item A abordagem analítica é local (portanto, responde ao que acontece com perturbações infinitesimais) 
 		e depende das funções serem "suaves" na vizinhança, a estocástica é global e não tem essa limitação.
 	\item Uma abordagem estocástica (baseada ou não na verossimilhança) permite que a informação contida na 
-		variabilidade amostral seja utilizada para representar a incerteza sobre os parâmetros (veja sessão \ref{Sampling}).
+		variabilidade amostral seja utilizada para representar a incerteza sobre os parâmetros (veja seção \ref{Sampling}).
 	\item O princípio de verossimilhança afirma que toda a informação contida nas amostras coletadas está contida 
 		na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de 
 		verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela 
@@ -98,7 +98,7 @@ O parâmetro
 dadas as observações $\bu{x}$ é dada por $\mathcal{L} (\theta | \bu{x}) = f(\bu{x}; \theta)$. A razão de verossimilhanças
 sob o mesmo conjunto de dados pode ser abreviada como $L(\theta_1, \theta_2) = \frac{\mathcal{L}(\theta_1|\bu{x})}
 {\mathcal{L}(\theta_2|\bu{x})}$. 
-% PI: qual o propósito deste parágrafo? C: estabelecer a notação. Mudei para essa sessão para ficar + natural
+% PI: qual o propósito deste parágrafo? C: estabelecer a notação. Mudei para essa seção para ficar + natural
 
 Sabemos que essa pergunta, se formulada sobre os parâmetros
 de uma distribuição de probabilidade, é respondida através da função de verossimilhança. Também sabemos que
@@ -110,7 +110,7 @@ $\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\citep{E
 Nosso trabalho, então, é o de estender esse resultado para uma função genérica. 
 Nosso argumento se baseia em uma função de um argumento, $\gamma = g(\theta)$, sendo que a generalização 
 para mais dimensões é trivial.\footnote{A notação usada aqui é mais compatível com a literatura estatística,
-enquanto na sessão \ref{PSE}, definimos as entradas, resultados e o modelo em si como $x$, $y$ e $f$, relacionados
+enquanto na seção \ref{PSE}, definimos as entradas, resultados e o modelo em si como $x$, $y$ e $f$, relacionados
 como $y = f(x)$, aqui podemos pensar nesses objetos como $\theta$, $\gamma$ e $g$, respectivamente.}
 
 O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
@@ -183,7 +183,7 @@ a adoção dessas funções e as bases lógicas da inferência, em especial o pr
 \end{enumerate}
 
 \section{Hipóteses compostas}
-Como exposto na sessão \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
+Como exposto na seção \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
 enunciada por Ian Hacking, se refere a hipóteses simples:
 
 \begin{description}
@@ -355,7 +355,7 @@ lance dúvidas quanto à aplicabilidade da razão de verossimilhança generaliza
 Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
 de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
 consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
-e é o caminho que vamos seguir nesta sessão. % PI: isso é o mesmo que fomular uma lei fraca?
+e é o caminho que vamos seguir nesta seção. % PI: isso é o mesmo que fomular uma lei fraca?
 
 Um exemplo devido a Branden Fitelson \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
 tome um baralho de 52 cartas bem embaralhado, e considere as hipóteses (simples) 
@@ -410,7 +410,7 @@ arbitrária ao tratamento de hipóteses compostas.
 
 % \section{Proposta de aplicação}
 % PI: A proposta faz sentido para mim, mas depois de ler as seções anteriores fiquei em dúvida sobre a interpretação. Creio que isso acontece porque ainda não há uma ligação clara entre a teoria das seções anteriores a aplicação e exemplos que começma aqui, confere?
-% C: Verdade. Fiquei mto em dúvida sobre colocar ou não essa sessão aqui; estou retirando ela para a quali, depois volto a inseri-la qndo tiver a teoria mais clara. Vou tb deixar mais claro que as aplicações nas proximas sessoes NÃO foram feitas dentro desse  paradigma ainda.
+% C: Verdade. Fiquei mto em dúvida sobre colocar ou não essa seção aqui; estou retirando ela para a quali, depois volto a inseri-la qndo tiver a teoria mais clara. Vou tb deixar mais claro que as aplicações nas proximas sessoes NÃO foram feitas dentro desse  paradigma ainda.
 
 %Uma metodologia de análise de incerteza baseada em uma função de suporte, após a escolha de uma determinada forma para
 %a equação de suporte $\Psi(\gamma|\bu{x})$ deve ser dada por:

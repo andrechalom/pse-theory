@@ -8,7 +8,7 @@ in it some of the marks and consequent disadvantages of a {\em sectional} study.
 has been cultivated with great assiduity, and the results they have obtained will always be reckoned among the most 
 extraordinary products of mathematical genius. But by the general body of thinking men its principles seem to be regarded
 with indifference or suspicion. Such persons may admire the ingenuity displayed, and be struck with the profoundity
-of many of the calculatins, but there seems to them, if I may so express it, an {\em unreality} about the whole treatment
+of many of the calculations, but there seems to them, if I may so express it, an {\em unreality} about the whole treatment
 of the subject. To many persons the mention of Probability suggests little else than the notion of a set of rules, very
 ingenious and profound rules no doubt, with which mathematicians amuse themselves by setting and solving puzzles.''
 \citep{Venn1866}
@@ -18,14 +18,10 @@ No século e meio que se passou desde esta publicação, a aplicação da estat�
 Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não 
 mencione alguma propriedade
 estatística a respeito das amostras coletadas ou de resultados experimentais obtidos. 
-								% PI: A distinção
-                                % entre amostragem e experimentação é
-                                % importante e pode te ajudar, veja
-                                % observações mais abaixo. 
 Por muitos anos, a estatística vigente nas análises biológicas teve uma
 forte inspiração frequentista, com testes de hipóteses e valores {\em p} sendo requeridos para publicações. 
-No entanto, existe uma ampla crítica à forma como essa estatística é
-utilizada nas ciências biológicas e na área de medicina \citep{Ioannidis05}.
+No entanto, existe uma ampla e duradoura crítica à forma como essa estatística é
+utilizada nas ciências biológicas e na área de medicina \citep{Ioannidis05, Burnham11, Barber14, Gardner86}.
 
 Muito da crítica decorre da interpretação
 simplista assumida por muitos cientistas a respeito do valor {\em p} reportado sobre um problema, mas as suas raízes devem
@@ -50,9 +46,14 @@ to be blindly accepted with all their assumed consequences. Of impartial and lib
 
 Embora o debate sobre a natureza da probabilidade tenha sido fervorosamente promovido por matemáticos e estatísticos,
 este não alcança, muitas vezes, o cientista que faz uso do ferramental da probabilidade para resolver um problema particular.
+Assim como o debate matemático era ignorado por estudantes de filosofia à época de Venn, hoje o debate filosófico e 
+epistemológico é ignorado por estudantes da área de ciências e cientistas. Isso pode ser parcialmente atribuído 
+ao aumento histórico na especialização de currículos - o que diminui o estusiasmo e desempenho dos estudantes em áreas não
+relacionadas à sua especialidade \citep{Popham04}.
+
 Para poder discorrer sobre a estimação de incertezas e a atribuição de probabilidades a diferentes resultados de um modelo,
 é necessário examinar com atenção o que entendemos sobre probabilidade. O conceito por trás da palavra probabilidade vai
-embasar não apenas o que entendemos pela palavra probabilidade, mas também traz um significado para os conceitos de
+embasar não apenas o que entendemos pela palavra probabilidade em si, mas também traz um significado para os conceitos de
 incerteza, inferência e simulação, que serão de importância para a discussão a seguir. 
 
 Embora o debate surja como uma questão sobre a natureza das probabilidades, vamos encontrar as divergências práticas
@@ -71,8 +72,8 @@ muito repetida em textos introdutórios, esconde uma riqueza de detalhes, envolv
 escola e convergências nos pensamentos entre escolas diferentes. Essa separação também apaga a importância de definições que
 não se encaixam em nenhuma das alternativas, como a lógica probabilística de Carnap e o apelo à verossimilhança enquanto 
 única base de inferência. A presente exposição é, por força, limitada e fragmentária; muitos pontos mais finos da argumentação
-foram deixados de fora para que o texto não se tornasse proibitivamente longo. É quase um bordão afirmar que cada 
-sessão aqui poderia ser expandida para um livro; algumas delas na verdade são esforços para resumir livros já escritos.
+foram deixados de fora para que o texto não se tornasse proibitivamente longo. É um lugar comum afirmar que cada 
+seção aqui poderia ser expandida para um livro; algumas delas na verdade são esforços para resumir livros já escritos.
 
 \section{Contra uma teoria axiomática}\label{sec:axiomatica}
 O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey Kolmogorov, matemático
@@ -84,17 +85,18 @@ soviético muito prolífico em diversas áreas da ciência. Os axiomas da probab
 	\item[Aditividade] A probabilidade de eventos mutuamente exclusivos é aditiva: $P(U \cup V) = P(U)+P(V)$.
 \end{description}
 
-Uma abordagem puramente axiomática para a probabilidade, embora seja útil para resolver problemas matemáticos, resultantes do
-cálculo da probabilidade associada a um experimento mental, é insuficiente do ponto de vista filosófico por não 
+Uma abordagem puramente axiomática para a probabilidade, embora seja útil sob uma perspectiva estritamente matemática, como
+para resolver problemas resultantes do cálculo da probabilidade associada a um experimento mental, 
+é insuficiente ao ser aplicada ao conhecimento científico de experimentos empíricos, por não
 levar a uma conclusão sobre no que {\em consiste} uma probabilidade. A proposição desses axiomas não leva a nenhuma conclusão 
 sobre problemas reais: não há como conectar uma proposição teórica derivada dos axiomas da probabilidade a um problema
 prático sem assumir, em algum momento, um significado para a palavra probabilidade que não está contido nos axiomas. Uma posição
 que pode ser tentadora é presumir que probabilidade assume {\em qualquer} significado coerente com os axiomas: essa posição,
-no entanto, também falha por não restringir o tipo de proposição ao qual probabilidades podem ser associadas (veja a sessão
+no entanto, também falha por não restringir o tipo de proposição ao qual probabilidades podem ser associadas (veja a seção
 \ref{sec:classref}). 
 
-Outro problema da visão axiomática é que, se os axiomas se baseiam em conveniência matemática e não na coerência com o uso 
-real da probabilidade, alguns problemas decorrentes da axiomatização podem passar despercebidos. Considere a troca do axioma
+Outro problema da visão estritamente axiomática é que alguns problemas decorrentes da axiomatização podem passar despercebidos. 
+Considere a troca do axioma
 de aditividade pelo seguinte axioma de aditividade completa (ou $\sigma$-aditividade):
 
 \begin{description}
@@ -109,8 +111,8 @@ já que existem infinitos números racionais em qualquer intervalo intervalo,
 a probabilidade de sortear cada número racional individualmente é zero; logo a probabilidade do evento certo, que é 1, 
 pelo axioma da unitariedade, deve ser também 0, pois é a soma de infinitos termos iguais a zero.
 
-Para encontrar uma definição de probabilidade que permita dar um sentido aos axiomas, vamos repassar a opinião de alguns dos 
-grandes pensadores sobre o tema nas próximas sessões.
+Para encontrar uma definição de probabilidade que permita conectar os axiomas a questões práticas do uso de probabilidades na
+ciência, vamos repassar a opinião de alguns dos grandes pensadores sobre o tema nas próximas sessões.
 
 \section{Interpretação clássica}
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
@@ -127,12 +129,17 @@ nas mesmas idéias que ``qual a chance de uma moeda jogada para cima dar coroa?'
 um questionamento sobre o nosso conhecimento atual dos processos biológicos e da condição de vida dos indivíduos dessa espécie
 do que um questionamento sobre um processo físico simples que pode ser repetido um grande número de vezes. 
 
-Porém, mesmo textos escritos por estatísticos empregam frequentemente definições conflitantes sobre probabilidades: às vezes,
+O tamanho desta disparidade entre os exemplos simples e os problemas mais práticos faz com que muitas vezes
+textos sobre probabilidades empreguem definições conflitantes sobre probabilidades: às vezes,
 elas são usadas para representar algo pessoal e subjetivo, como um nível de confiança; outras vezes são apresentadas como a
 razão entre diferentes contagens.
 
-A primeira tentativa de definir formalmente o conceito de probabilidade vem em 1814,
-com o trabalho de Pierre Simon de Laplace:
+A primeira tentativa influente de definir formalmente o conceito de probabilidade vem em 1814,
+com o trabalho de Pierre Simon de Laplace\footnote{
+	Há uma série de trabalhos mais antigos sobre a natureza das probabilidades, mas estes ou não propuseram uma definição 
+	explícita, como o {\em Ars conjectandi} de Jakob Bernoulli (1713) ou não tiveram grande influência
+	na comunidade científica, como o {\em Liber de ludo aleae} de Cardano, escrito em 1525 e publicado apenas em 1663.
+}:
 
 \begin{quote}
 ``La théorie des hasards consiste à réduire tous les évènemens du même genre, à un certain nombre de cas également
@@ -181,7 +188,7 @@ em seu trabalho publicado
 postumamente em 1763. Esse trabalho não será discutido a fundo aqui, por ser muito convoluto em seus detalhes e notação,
 e não oferecer uma visão clara sobre a natureza das probabilidades. No entanto, vamos considerar 
 o impacto que esse trabalho
-teve sobre o pensamento estatístico na sessão \ref{sec:bayes}.
+teve sobre o pensamento estatístico na seção \ref{sec:bayes}.
 %% PI: Não ficou claro o propósito deste trecho finalizando essa seção. No
 %% início parece que vc não vai
 %% considerar o método de probabilidades inversas (logo Bayes) mas em
@@ -231,6 +238,11 @@ a probabilidade de que o signo zodiacal
 de uma pessoa afete
 suas características, como sociabilidade ou perseverança?'', embora perfeitamente válidas para a visão de de Morgan, apresentam
 grande dificuldade em ser respondidas nesse paradigma.
+
+
+
+<TODO> tem coisas aqui pra serem pensadas
+
 
 A visão subjetiva de probabilidades permite ainda que frases cotidianas, como ``é provável que chova hoje'' ou ``existe uma grande
 chance de encontrarmos o José hoje'', sejam tratadas pelo mesmo ponto de vista que os jogos de azar. Mas
@@ -544,13 +556,13 @@ e probabilidade de sucesso $22/(21+22) \sim 0.511$. Essa probabilidade é um nú
 verossimilhança da hipótese de que não há preponderância de nenhum gênero, ou seja, a probabilidade de sucesso é de $0.5$, 
 encontramos o valor de $10^{-74}$, muitas ordens de grandeza inferior ao anterior. Portanto, os dados indicados por Laplace
 fornecem uma evidência mais forte para a hipótese de que os nascimentos de meninos são mais prováveis na proporção de $22$
-para $21$. % PI: em relação à outra hipótese. C: essa frase depende da interpretação do que é evidência, vide sessão sobre Carnap
+para $21$. % PI: em relação à outra hipótese. C: essa frase depende da interpretação do que é evidência, vide seção sobre Carnap
 
 Laplace não formaliza esse argumento em seu livro, sem dúvida pela dificuldade de realizar as contas indicadas acima sem
 a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia desenvolver esse raciocínio em termos das 
 {\em probabilidades} das hipóteses conflitantes, Fisher nota que as verossimilhanças calculadas acima não se comportam como 
 probabilidades, no sentido de não estarem sujeitas às leis da
-probabilidade (veja na sessão \ref{sec:axiomatica}).
+probabilidade (veja na seção \ref{sec:axiomatica}).
 %PI: Um aspecto importantíssimo aqui é que Fisher fez isso
 %intencionalmente: ele procurava fazer frente aos Bayesianos e sua
 %concepção de que nosso grau de confiança em uma hipótese pode ser
@@ -767,7 +779,7 @@ $E$, o teorema de Bayes diz que:
 
 Onde o termo $\frac{p(E|H1)}{p(E|H2)}$ é justamente a razão das verossimilhanças.
 As grandes questões que precisam ser resolvidas são: como construir uma {\em priori}
-a partir do conhecimento prévio (que será retomada na sessão \ref{sec:classref}), e principalmente, como construir {\em prioris}
+a partir do conhecimento prévio (que será retomada na seção \ref{sec:classref}), e principalmente, como construir {\em prioris}
 na ausência de informação sobre o problema. Fisher aponta que {\em presumir a indiferença} em relação a um parâmetro
 $p$ depende da forma matemática do modelo empregado: tomando $\sin \theta = 2p-1$, uma {\em priori} ``plana'' em relação a $p$ 
 privilegiará alguns valores de $\theta$ e vice-versa \citep{Fisher1922}.
@@ -937,7 +949,7 @@ No exemplo discutido acima, a função de verossimilhança do experimento é a m
 A razão de verossimilhanças, critério já utilizado por Fisher e Neyman-Pearson, entre os valores de $p=0.5$ e $p=3/12$ é de 
 aproximadamente 5, oferecendo uma evidência moderada a favor do valor $p=3/12$. Dentro do paradigma Bayesiano, onde o princípio
 da verossimilhança é aceito, essa razão de verossimilhanças deve ser usada para atualizar as probabilidades que cada hipótese
-tem {\em a priori}. Como vamos expor na sessão \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
+tem {\em a priori}. Como vamos expor na seção \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
 vão questionar o uso explícito de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
 
 \section{O problema da classe de referência}\label{sec:classref}
@@ -1169,7 +1181,7 @@ com a perda de informação de cada modelo \citep{Akaike74}. % Merece
                                 % conceitos e o exemplo.
 \section{A incerteza e a produção de conhecimento}
 
-Concluímos essa sessão com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
+Concluímos essa seção com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
 ``estatística Bayesiana'' esconde o fato de que há, na verdade, uma variedade de correntes filosóficas que, baseadas
 em idéias distintas sobre a natureza das probabilidades, chegam a
 conclusões distintas sobre assuntos variados da epistemologia 
