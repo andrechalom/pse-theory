@@ -8,6 +8,12 @@ found in the vignette ``pse\_tutorial'' of this package. If you're not
 familiar with the basic concepts of parameter space exploration,
 please refer to the tutorial. To 
 read about the underlying theory, please refer to our work in \citep{Chalom12}.
+You should have installed \R 
+\footnote{This tutorial was written and tested with \R version 
+3.0.1, but it should work with newer versions}
+along with an interface and 
+text editor of your liking, and the package ``pse''
+(available on http://cran.r-project.org/web/packages/pse).
 
 The problem we will address here is how to deal with the
 parameter space exploration of stochastic models. When considering 

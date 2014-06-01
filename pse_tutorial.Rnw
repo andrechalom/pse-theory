@@ -19,7 +19,8 @@ You should have installed \R
 \footnote{This tutorial was written and tested with \R version 
 3.0.1, but it should work with newer versions}
 along with an interface and 
-text editor of your liking, and the package ``pse''. This package is based
+text editor of your liking, and the package ``pse''
+(available on http://cran.r-project.org/web/packages/pse). This package is based
 on the ``sensitivity'' package, and is designed to resemble its uses, so
 researchers who already use it will be able to write code with the pse
 package easily. Major differences will be noted on the help pages and

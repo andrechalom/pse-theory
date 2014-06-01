@@ -86,7 +86,7 @@
 \par
 \vspace{90pt}
 \hspace*{175pt}\parbox{7.6cm}{
-{\large Relatório de andamento da dissertação de mestrado apresentada ao
+{\large Dissertação de mestrado apresentada ao
 Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de São Paulo}}
 \par
 \vspace{1em}
@@ -132,7 +132,8 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 
 	  Durante o progresso do presente trabalho, um pacote de funções na linguagem \R foi desenvolvido
 	  para facilitar o uso funcional das ferramentas teóricas expostas acima. Os apêndices deste texto
-	  trazem um tutorial e exemplos de uso deste pacote, disponível livremente na internet.
+	  trazem um tutorial e exemplos de uso deste pacote, disponível livremente na internet, no endereço
+	  http://cran.r-project.org/web/packages/pse.
 
 	  \par
 	  \vspace{1em}
