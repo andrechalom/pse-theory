@@ -136,9 +136,10 @@ razão entre diferentes contagens.
 
 A primeira tentativa influente de definir formalmente o conceito de probabilidade vem em 1814,
 com o trabalho de Pierre Simon de Laplace\footnote{
-	Há uma série de trabalhos mais antigos sobre a natureza das probabilidades, mas estes ou não propuseram uma definição 
-	explícita, como o {\em Ars conjectandi} de Jakob Bernoulli (1713) ou não tiveram grande influência
-	na comunidade científica, como o {\em Liber de ludo aleae} de Cardano, escrito em 1525 e publicado apenas em 1663.
+	Há uma série de trabalhos mais antigos na área, mas estes ou se preocupavam mais com questões
+	operacionais do cálculo da probabilidade, como o {\em Ars conjectandi} de Jacques Bernoulli (1713) ou não tiveram 
+	grande influência na comunidade científica, como o {\em Liber de ludo aleae} de Cardano, escrito em 1525 e 
+	publicado apenas em 1663.
 }:
 
 \begin{quote}
@@ -569,9 +570,10 @@ calcular a distribuição que uma certa estatística teria, se um mesmo experime
 
 O procedimento de teste de significância, segundo Fisher, requer a escolha de um modelo apropriado e a especificação de uma 
 hipótese (conhecida como hipótese nula) para a qual é possível
-calcular a distribuição da estatística de interesse.% falta definir
-                                % estatística de interesse, que é o
-                                % construto central do teste de significância.
+calcular a distribuição da estatística de interesse (veja detalhes no exemplo abaixo).
+% falta definir
+% estatística de interesse, que é o
+% construto central do teste de significância.
 Após realizar um experimento, a estatística calculada sobre a amostra é comparada com a distribuição teórica sob a hipótese nula,
 e é calculada a probabilidade do desvio entre a estatística calculada e a sua esperança ser {\em tão grande ou maior} do que o
 encontrado. 
@@ -600,10 +602,6 @@ inclined to think that as far as a particular hypothesis is concerned, no test b
 itself provide any valuable evidence of the truth or falsehood of that hypothesis.'' \citep{Neyman1933}
 \end{quote}
 
-%Enquanto isso é verdade a respeito de probabilidades, o mesmo não se verifica com verossimilhanças. Esse é um dos motivos
-%pelos quais a verossimilhança é sempre instrumental em comparar
-%hipóteses alternativas.% esta observação não está meio perdida aqui?
-
 Neyman e Pearson propõe um procedimento formal para delimitar quando devemos aceitar e quando devemos rejeitar a hipótese
 nula em favor de uma hipótese alternativa, dividindo o resultado desse processo em quatro classes: podemos aceitar uma hipótese
 verdadeira ou falsa, ou podemos rejeitar uma hipótese verdadeira ou falsa. O ato de rejeitar a hipótese nula verdadeira
@@ -619,10 +617,6 @@ verossimilhanças \citep{Neyman1933}.
 
 Convém notar que esse resultado é verdadeiro apenas para hipóteses
 ditas simples, ou seja, hipóteses que atribuem um único valor de probabilidade para cada possível observação.
-% PI: como este é conceito central na dissertação, creio
-               % que é preciso defini-lo precisamente, e de uma
-               % maneira ampla o suficiente para comportar os usos ao
-               % longo de toda dissertação. C: done
 Enquanto Neyman e Pearson obtém resultados
 parciais para testes envolvendo hipóteses compostas, outros autores vão eliminar essas hipóteses das suas considerações.
 Edwards, por exemplo, afirma que:
@@ -719,7 +713,18 @@ ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Para uma v
 filosóficas entre de Finetti e os demais subjetivistas, veja \citep{Galavotti89}.}
 
 A inferência Bayesiana é devida ao rev. Thomas Bayes, que demonstrou o teorema que leva seu nome, e ao já mencionado marquês de
-Laplace, que formulou a metodologia das probabilidades inversas. A contribuição relativa de Bayes e Laplace aos sucessos
+Laplace, que formulou a metodologia das probabilidades inversas. Em notação moderna, o teorema de Bayes se escreve simplesmente
+\citep{Morettin09}:
+
+\begin{equation}
+	P(A|B) = \frac{P(A)P(B|A)}{P(B)}
+\end{equation}
+
+Aqui, $P(A|B)$ indica a probabilidade de A condicional a B, ou seja, a probabilidade de que A seja verdade dado que B é verdade.
+Este teorema decorre diretamente dos axiomas usuais da probabilidade, e é aceito por todas as escolas de interpretação
+para calcular XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+A contribuição relativa de Bayes e Laplace aos sucessos
 e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade \citep{Zabell09}.
 Fisher, por exemplo, considera o argumento com o qual Bayes estabelece uma {\em priori} uniforme como um comentário
 a respeito do problema específico que Bayes estava estudando, enquanto a escola Bayesiana verá esse argumento
