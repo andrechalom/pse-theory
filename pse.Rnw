@@ -167,6 +167,7 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \selectlanguage{brazilian}
 \definecolor{shadecolor}{rgb}{1, 0.8, 0.8}
 \chapter{Uma abordagem integrativa para análises de incerteza}
+\label{cap:integr}
 \input integr.tex
 \input caveat.tex
 \input mini.tex

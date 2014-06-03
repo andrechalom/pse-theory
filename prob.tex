@@ -370,7 +370,7 @@ influenciados por um elemento de chance. Peirce baseia essa visão
 na constatação de que ``the mind is not subject to `law'
 in the same rigid sense that matter is (...). There always remains 
 a certain ammount of arbitrary spontaneity in its action''
-\citep{Peirce1892}. Os objetos do mundo material também 
+\citep{Peirce1892}. 
 
 A oposição de Peirce a às outras escolas filosóficas ocorre, então, em um nível mais fundamental do que dicotomia entre
 subjetivistas e frequentistas: enquanto para os autores anteriores, notadamente Laplace, a realidade física 
@@ -602,7 +602,7 @@ inclined to think that as far as a particular hypothesis is concerned, no test b
 itself provide any valuable evidence of the truth or falsehood of that hypothesis.'' \citep{Neyman1933}
 \end{quote}
 
-Neyman e Pearson propõe um procedimento formal para delimitar quando devemos aceitar e quando devemos rejeitar a hipótese
+Neyman e Pearson propõem um procedimento formal para delimitar quando devemos aceitar e quando devemos rejeitar a hipótese
 nula em favor de uma hipótese alternativa, dividindo o resultado desse processo em quatro classes: podemos aceitar uma hipótese
 verdadeira ou falsa, ou podemos rejeitar uma hipótese verdadeira ou falsa. O ato de rejeitar a hipótese nula verdadeira
 é conhecido como erro de tipo I, e o ato de aceitar uma hipótese nula falsa é conhecido como erro de tipo II. O conceito do 
@@ -617,7 +617,7 @@ verossimilhanças \citep{Neyman1933}.
 
 Convém notar que esse resultado é verdadeiro apenas para hipóteses
 ditas simples, ou seja, hipóteses que atribuem um único valor de probabilidade para cada possível observação.
-Enquanto Neyman e Pearson obtém resultados
+Enquanto Neyman e Pearson obtêm resultados
 parciais para testes envolvendo hipóteses compostas, outros autores vão eliminar essas hipóteses das suas considerações.
 Edwards, por exemplo, afirma que:
 
@@ -628,7 +628,7 @@ and composite hypotheses do not have well-defined statistical consequences, beca
 component simple hypotheses are undefined. For example, if {\em p} is the parameter of a binomial model, about which inferences
 are to be made from some particular binomial results, `$p = \frac{1}{2}$' is a statistical hypothesis, because its 
 consequences are well-defined in probability terms, but its negation, `$p \neq \frac{1}{2}$', is not a statistical hypothesis,
-its consequences beign ill-defined.''\citep{Edwards72}
+its consequences being ill-defined.''\citep{Edwards72}
 \end{quote}
 
 Fisher critica duramente o procedimento de Neyman-Pearson por uma série de motivos, entre os quais o engessamento do procedimento,
@@ -646,6 +646,12 @@ an intelligent attempt to {\em understand} the experimental situation.''\citep{F
 É curioso que um autor que tenha atacado tão intensamente os conceitos de probabilidade subjetiva seja também tão crítico de 
 uma abordagem que visa minimizar as decisões subjetivas a serem tomadas por meio de uma estruturação rígida do procedimento
 de teste de hipóteses. 
+
+Enquanto o debate entre Fisher, Neyman e Pearson dividia os proponentes da inferência frequentista,
+a visão subjetivista da probabilidade foi gradualmente abandonada em círculos científicos. O interesse nessa escola
+de pensamento irá retornar à partir da década de 1960, com o trabalho dos chamados Bayesianos, mas essa linha de 
+pensamento tem pontos importantes de contato com uma escola independente: a probabilidade necessária de
+W.E. Johnson e Rudolf Carnap.
 
 \section{Probabilidade necessária}
 
@@ -667,10 +673,14 @@ biólogos ``descobriram que baleias não são peixes'': o que mudou foi o própr
 Carnap, primeiramente, reconhece que a palavra ``probabilidade'' é usada em
 dois grupos diferentes de significados, e 
 portanto separa os conceitos de {\em probabilidade$_1$} e {\em probabilidade$_2$}, o primeiro
-se referindo a uma medida de confirmação, enquanto o segundo é uma medida de frequência. Enquanto {\em probabilidade$_1$} é
-um conceito útil para a formulação de um sistema de inferência, {\em probabilidade$_2$} pode ver seu uso em leis físicas, por
-exemplo. Assim, quando a lei da entropia é formulada em termos probabilísticos, é claro que a visão pessoal de cada sujeito
-é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases. 
+se referindo a uma medida de confirmação, enquanto o segundo é uma medida de frequência.
+Enquanto os frequentistas identificam os dois conceitos como se referindo ao mesmo objeto, outras escolas
+de pensamento vão conectar esses conceitos de forma menos direta.
+% Enquanto {\em probabilidade$_1$} é
+% um conceito útil para a formulação de um sistema de inferência, {\em probabilidade$_2$} pode ver seu uso em leis físicas, por
+% exemplo.
+% Assim, quando a lei da entropia é formulada em termos probabilísticos, é claro que a visão pessoal de cada sujeito
+%é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases. 
 
 Seguindo o trabalho de Wittgenstein, Carnap trabalha 
 com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
@@ -686,7 +696,8 @@ that the probability of `It will rain tomorrow', relative to the body of evidenc
 
 Carnap provê ainda uma distinção entre três formas de confirmação: classificatória (a evidência confirma ou não a hipótese),
 quantitativa (com qual intensidade a evidência suporta a hipótese) e relacional (a evidência confirma uma hipótese mais do que
-outra)\citep{Carnap62}. 
+outra)\citep{Carnap62}. Vamos retornar a essa tipologia de confirmação na seção \ref{sec:likelihood} para contrastar
+a abordagem de verossimilhança com a abordagem Bayesiana.
 
 Johnson e Carnap desenvolvem um argumento segundo o qual observações passadas de um processo multinomial embasam a probabilidade
 de observações futuras, baseados nos postulados da permutação e da combinação; 
@@ -722,25 +733,23 @@ Laplace, que formulou a metodologia das probabilidades inversas. Em notação mo
 
 Aqui, $P(A|B)$ indica a probabilidade de A condicional a B, ou seja, a probabilidade de que A seja verdade dado que B é verdade.
 Este teorema decorre diretamente dos axiomas usuais da probabilidade, e é aceito por todas as escolas de interpretação
-para calcular XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+para {\em atualizar} informações de probabilidade à luz de um novo conhecimento. Um exemplo de uso muito comum em livros
+introdutórios é o de exames clínicos. A probabilidade de que uma dada pessoa tenha uma doença, sem informações adicionais,
+pode ser estimada grosseiramente pela prevalência da doença na população. Quando esta pessoa se submete a um exame clínico
+de propriedades conhecidas\footnote{Nesse caso, é necessário especificar a sensibilidade do teste, ou seja, 
+a proporção de pessoas doentes que recebem um resultado positivo pelo teste, e a especificidade do teste, ou seja,
+a proporção de pessoas saudáveis que recebem um resultado negativo pelo teste}, nós podemos usar esse novo conhecimento
+para {\em atualizar} a nossa estimativa de que esta pessoa de fato tenha esta doença.
 
 A contribuição relativa de Bayes e Laplace aos sucessos
 e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade \citep{Zabell09}.
 Fisher, por exemplo, considera o argumento com o qual Bayes estabelece uma {\em priori} uniforme como um comentário
-a respeito do problema específico que Bayes estava estudando, enquanto a escola Bayesiana verá esse argumento
-como aplicável a outras classes de problemas \citep{Aldrich08}. Assim, o resultado conhecido como Teorema de Bayes é aceito
-por todas as escolas de interpretação, enquanto que o argumento de Laplace 
-é, em essência, aceito pela escola subjetivista e completamente
-rejeitado pela frequentista. % esta distinção não ficou clara. Passa
-                             % por aí deixar mais clara se s distinção
-                             % entre o teorema, que é uma dedução
-                             % matemática da relação entre
-                             % probabilidades condicionais, e o seu
-                             % uso em diferentes contextos (um deles é
-                             % o de inferência sob a concepção
-                             % subjetivista de probabilidade, que é a
-                             % única maneira de inputar probabilidades
-                             % a hipóteses).
+a respeito do problema específico que Bayes estava estudando, enquanto Laplace verá esse argumento
+como aplicável a outras classes de problemas \cite{Laplace1814} - em particular, Laplace argumenta que podemos
+introduzir probabilidades iguais a hipóteses sobre as quais não conhecemos nada. 
+Assim, enquanto o Teorema de Bayes é aceito por todas as escolas de interpretação, o argumento de Laplace
+é, em essência, aceito pela escola subjetivista \citep{Aldrich08} e completamente
+rejeitado pela frequentista. 
 
 Talvez a formalização mais convincente da teoria subjetivista de probabilidades seja a dada por de Finetti no seu argumento sobre
 {\em Dutch books}. Um {\em Dutch book}, ou ``aposta holandesa'' 
@@ -750,7 +759,7 @@ agente pode apostar uma quantia em dinheiro para cada possível resultado desse 
 probabilidade de cada resultado, e recebe um prêmio correspondente ao resultado que de fato ocorrer. A relação entre as 
 probabilidades e os prêmios é dita {\em incoerente} se uma ``aposta holandesa'' puder ser feita a favor ou contra o agente
 (ou seja, garantindo lucro ou perda sempre), e {\em coerente} caso contrário. De Finetti mostra que toda avaliação 
-coerente de probabilidades subjetivas implica nos axiomas da probabilidade \citep{deFinetti37}.
+coerente de probabilidades subjetivas implica os axiomas da probabilidade \citep{deFinetti37}.
 
 Já a teoria de inferência Bayesiana pode ser vista, resumidamente, como uma estrutura de atualização das probabilidades subjetivas
 frente a novas evidências. O teorema de Bayes conecta a probabilidade {\em a priori} com a probabilidade {\em a posteriori}
@@ -783,13 +792,14 @@ seguintes à sua morte, sendo chamado por Savage de ``a bold attempt to make the
 breaking the Bayesian eggs'' \citep{Savage60}, e é considerado como refutado por 
 I. J. Good \citep{Good92}. No entanto, os argumentos de Fisher
 alcançaram várias vezes uma grande lucidez e perspicácia, e a formulação moderna da teoria Bayesiana 
-deve muito à crítica constante feita por ele sobre os pontos mais sutis da sua lógica. \footnote{
-O argumento fiducial continua sendo altamente controverso entre estatísticos, sendo defendido por exemplo
-em \citep{Hacking65}.}
+deve muito à crítica constante feita por ele sobre os pontos mais sutis da sua lógica\footnote{
+O argumento fiducial continua sendo altamente controverso entre filósofos e cientistas, sendo defendido por exemplo
+em \citep{Hacking65} e na segunda edição de \citep{Edwards72}.}.
 
 Com a axiomatização e formulação moderna da interpretação subjetivista, cuja história é intimamente ligada à da teoria
 econômica de utilidade (veja por exemplo \citep{Friedman48} e \citep{Pfanzagl67}),
-a escola Bayesiana de pensamento ganhou maior aceitação nos meios científicos. Savage escreve sobre essa formulação moderna:
+a escola Bayesiana de pensamento ganhou maior aceitação nos meios científicos. 
+Savage escreve sobre essa formulação moderna:
 
 \begin{quote}
 ``Personal probability can be regarded as part of a certain theory of coherent preference in the face of uncertainty. This
@@ -848,7 +858,7 @@ chance refers to the phenomenon, the probability refers to your attitude
 towards the phenomenon, and they are in perfect agreement''\citep{Anscombe63}
 \end{quote}
 
-Contraste-se com essa visão a posição advogada por de Finneti, para quem a probabilidade não precisa ser racionalmente
+Contraste-se com essa visão a posição anti-realista advogada por de Finneti, para quem a probabilidade não precisa ser racionalmente
 justificável:
 
 \begin{quote}
@@ -858,7 +868,7 @@ belief of anyone''\citep{deFinetti51}
 \end{quote}
 
 Neste sentido, a posição de Anscombe, que privilegia um certo valor racional para a probabilidade de um evento,
-se afastam daquela defendida por de Finetti, e se aproxima da lógica probabilística de Rudolph Carnap e do Bayesianismo
+se afasta daquela defendida por de Finetti, e se aproxima da lógica probabilística de Rudolph Carnap e do Bayesianismo
 objetivo advogado por E. T. Jaynes \citep{Jaynes68}, que se utiliza do princípio da máxima entropia para determinar
 {\em prioris} plenamente objetivas.
 
@@ -878,20 +888,20 @@ intervals or by the rules of fuzzy logic are inadmissible. Only probability is a
 
 A escola Bayesiana também é criticada ao assumir uma postura subjetivista, que não seria compatível com o desenvolvimento
 da ciência, definida como a construção de conhecimento racional objetivo. Essa oposição, a bem da verdade, é mais reveladora
-de uma visão sobre a natureza da ciência do que uma crítica propriamente ao paradigma Bayesiano. Frise-se que mesmo 
-avaliações de probabilidade pessoais e subjetivas podem estar abertas ao estudo objetivo, uma posição que remonta ao trabalho
+de uma visão sobre a natureza da ciência do que uma crítica propriamente ao paradigma Bayesiano:
+para um Bayesiano, o julgamento treinado de um especialista treinado, permite uma relação confiável com natureza, 
+ainda que não objetiva.. Frise-se que mesmo avaliações de probabilidade pessoais e subjetivas podem estar abertas 
+ao estudo objetivo, uma posição que remonta ao trabalho
 de C.S. Peirce \citep{Stigler78}.  Outro fator importante para responder essa crítica é a maior percepção moderna
 de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
 order on the subjective elements of the deciding person.'' \citep{Savage60}.
 
 \section {O problema do ``Optional stopping''} 
-% Na primeira leitura me perguntei: Se esta seção e a seguinte são 
-% críticas ao frequentismo porque
-% colocá-la aqui?
-% Ao final acho que entendi sua linha de racioncínio, mas começar
-% estas seções com uma frase que já indique ao leitor porque voltar a
-% tratar de problemas do frequentismo pode ajudar a mantê-lo com você.
+
+Nas seções anteriores, encontramos a proposição de duas escolas de inferência: a frequentista e a bayesiana, e críticas
+a esta segunda. Nesta seção e na próxima vamos nos debruçar sobre críticas feitas sobre a escola frequentista, em dois
+problemas que expõem dificuldades fundamentais em sua aplicação - e justificam a procura por uma terceira escolha.
 
 Uma crítica muito veemente aos proponentes da inferência frequentista é dada pelo problema da parada opcional, ou 
 ``optional stopping''. Suponha que um cientista realizou uma série de 12 ensaios de Bernoulli, ou seja, experimentos aleatórios
@@ -933,8 +943,8 @@ No exemplo discutido acima, a função de verossimilhança do experimento é a m
 A razão de verossimilhanças, critério já utilizado por Fisher e Neyman-Pearson, entre os valores de $p=0.5$ e $p=3/12$ é de 
 aproximadamente 5, oferecendo uma evidência moderada a favor do valor $p=3/12$. Dentro do paradigma Bayesiano, onde o princípio
 da verossimilhança é aceito, essa razão de verossimilhanças deve ser usada para atualizar as probabilidades que cada hipótese
-tem {\em a priori}. Como vamos expor na seção \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
-vão questionar o uso explícito de {\em prioris}, se atendo apenas ao valor da razão de verossimilhanças.
+tem {\em a priori}. Como veremos na seção \ref{sec:likelihood}, proponentes da verossimilhança como base da inferência
+vão questionar o uso explícito de {\em prioris}, atendo-se apenas ao valor da razão de verossimilhanças.
 
 \section{O problema da classe de referência}\label{sec:classref}
 
@@ -960,8 +970,9 @@ probability level, for no one of them has objective reality, all being products 
 \citep{Fisher1955}
 \end{quote}
 
-A mesma questão se manifesta no exemplo mais frequente de aplicação do teorema de Bayes: dado o resultado positivo em um
-teste clínico, qual a probabilidade do paciente ter a doença? A resolução desse problema passa por identificar que:
+A mesma questão se manifesta no exemplo mais frequente de aplicação do teorema de Bayes (brevemente discutido
+na seção \label{sec:bayes}): dado o resultado positivo em um
+teste clínico, qual a probabilidade de que o paciente tenha a doença? A resolução desse problema passa por identificar que:
 
 \begin{equation}
 P(D|+) = \frac{P(+|D)P(D)}{P(+|D)P(D)+P(+|\bar D) P(\bar D)}
@@ -969,7 +980,7 @@ P(D|+) = \frac{P(+|D)P(D)}{P(+|D)P(D)+P(+|\bar D) P(\bar D)}
 
 Onde $P(+)$ é a probabilidade do teste dar positivo 
 e $P(D)$ é a probabilidade de um
-indivíduo ter a doença. Este termo vai ser interpretado como a {\em priori} por um Bayesiano, ou mais geralmente
+indivíduo ter a doença. Este último termo vai ser interpretado como a {\em priori} por um Bayesiano, ou mais geralmente
 como a prevalência da doença na população. A aparente simplicidade desse exemplo esconde a {\em escolha} de uma população:
 devemos considerar a prevalência na cidade onde o indivíduo mora, ou no país? Indivíduos de ambos os gêneros devem ser
 considerados? A prevalência deve levar em consideração a faixa etária, a renda, o hábito esportivo, alimentar ou uso de
@@ -999,11 +1010,11 @@ e a {\em posteriori} Bayesianas. No final dos anos 1960, o uso da verossimilhan�
 independente, e em grande parte devido ao livro de I. Hacking em 1965 sobre a lógica da inferência, 
 e ao trabalho de A.W.F. Edwards em 1972, é possível considerar essa postura como
 uma escola independente de pensamento, denominada às vezes Verossimilhantismo. Mais recentemente, essa escolha vai ser
-veementemente apoiada por Richard Royall. Esta escola de pensamento se baseia na conjunção do princípio da 
+veementemente apoiada por Richard Royall e Elliott Sober. Esta escola de pensamento se baseia na conjunção do princípio da 
 verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhança, enunciada por Hacking:
 % Não ficou clara a distinção entre a lei e o princípio, nem que a
 % escola se distingue por aceitar ambos, enquanto todas as escolas
-% aceitam a lei.
+% aceitam a lei. <TODO>
 
 \begin{quote}
 ``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
@@ -1012,25 +1023,15 @@ if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, mea
 \citep{Hacking65}
 \end{quote}
 
-A escolha da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
+Enquanto o pensamento Bayesiano aceita o princípio da verossimilhança, mas pode ter divergências com a lei (um ponto
+que vai ser retomado no capítulo \label{cap:integr}), a inferência frequentista aceita a lei, mas nega o princípio.
+
+A escola da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
 para atacar o teste de significância de Fisher foi reconhecer a
 necessidade lógica da comparação entre diferentes hipóteses.
-% Não é curioso que o ataque tenha usado uma função criada pelo
-% próprio Fisher?
 Enquanto o teste de significância privilegia uma hipótese nula, a abordagem de Neyman-Pearson, tal qual a de Edwards e Royall,
-vai refutar essa abordagem como incompleta. Os dados recolhidos por um experimento podem indicar uma alta ou baixa
-probabilidade para uma certa hipótese, % conceito bayesiano. Para
-                                % escola frequentista e de
-                                % verossimilhança hipóteses tem
-                                % suporte, não probabilidades. Esta é
-                                % a essência do argumento de Fisher
-                                % para definir a verossimilhança,
-                                % depois refinado por
-                                % outros. Aproveitando: já
-                                % mencionei a história em alguns
-                                % outros comentários. A citacao
-                                % classica é um trecho do início de
-                                % Statistical Methods. Veja http://www.economics.soton.ac.uk/staff/aldrich/fisherguide/prob+lik.htm
+vai refutar essa abordagem como incompleta. Os dados recolhidos por um experimento podem indicar um alto ou baixo
+suporte para uma certa hipótese, 
 mas isso não deve ser considerado evidência a favor ou contra essa hipótese sem
 que hipóteses alternativas sejam igualmente escrutinizadas. É sobre o uso da razão entre verossimilhanças de diferentes hipóteses,
 e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
@@ -1042,35 +1043,18 @@ A divergência entre as abordagens se dá fundamentalmente com a {\em ação} qu
 razão de verossimilhanças. Neyman-Pearson argumentam que esse valor deve nortear um processo de teste de hipóteses, que
 leva ao {\em comportamento} de aceitar uma hipótese em detrimento das demais. Royall e Edwards realizam a separação
 conceitual entre (1) o grau de certeza que temos sobre a hipótese, (2) a força da evidência que um conjunto de dados confere
-a uma hipótese em detrimento de outras, e (3) o curso de ação tomado após verificar tais quantidades. O curso de ação tomado
-deve levar em conta uma multiplicidade de outros fatores, representados por {\em priors} e funções de perda na teoria de 
+a uma hipótese em detrimento de outras, e (3) o curso de ação tomado após verificar tais quantidades. Enquanto a escola
+Bayesiana vai relacionar a força de evidência (2) com o grau de certeza (1), e a proposição de Neyman e Pearson vai 
+identificar a força de evidência (2) com o curso de ação (3), a proposta dos verossimilhantistas é de que a inferência
+estatística se concentra {\em apenas} na força da evidência. O curso de ação tomado
+pode levar em conta uma multiplicidade de outros fatores, representados por {\em priors} e funções de perda na teoria de 
 decisões: Laplace já havia separado esses conceitos com o problema do 
 número de juízes necessário para condenar um prisioneiro. A decisão, além de levar em conta as probabilidades de
 condenar um inocente ou perdoar um culpado, deve levar em conta se a
 pena será uma multa ou a morte.
-% Uma diferença crucial aqui é que Royall atribui à inferência
-% estatística apenas a medida da força de evidência (2) , e contrasta isso
-% do papel de tomada de decisão (3) que Neymann-Pearson atribuem à
-% inferência, e o papel de definir grau de certeza (1) que os Bayesianos
-% incluem dentro da inferência. O que está em debate aqui não é mais a
-% uma questão interna da estatística, como a concepção de
-% probabilidade. Royal explicita melhor do que ninguém que é
-% necessário discutir o papel da estatística na pesquisa
-% científica. Um argumento fácil de vender é que a inferência deve
-% replicar a lógica da pesquisa, veja meu comentário sobre isso
-% abaixo. Aqui o que que é mais importante é além de distinguir (1),
-% (2) e (3) indicar que, na concepção de Royall, as escolas são
-% definidas por estas diferentes formalizações de inferência.
 
-
-Um exemplo interessante 
-sobre verossimilhanças é dado 
-% Sugiro para ficar mais explícita a ligação com oc conceitos do
-% parágrafo anterior (pulando o de AIC):
-% Um exemplo que ilustra as diferentes concepções de
-% inferência e suas consequências é dado ...
-pelo seguinte experimento mental: 
-tome um baralho ordinário e vire a primeira carta,
+Um exemplo que ilustra as diferentes concepções de inferência e suas consequências é dado pelo seguinte experimento
+mental: tome um baralho ordinário e vire a primeira carta,
 para encontrar um ás de espadas. Suponha agora duas hipóteses concorrentes: $H_N$ de que o baralho é normal e $H_A$
 de que o baralho é um engodo, composto por 52 ases de espadas. A verossimilhança de $H_N$ é 
 $\mathcal{L} (H_N|A \spadesuit) = \frac{1}{52}$, contra $\mathcal{L} (H_A | A \spadesuit) = 1 $. Enquanto o procedimento
@@ -1098,7 +1082,7 @@ recognition of the right of other free minds to utilize them in making their own
 
 \begin{quote}
 ``If a Bayesian is a subjectivist, he will know that the initial probability density varies from person to person and
-so he will see the value if graphing the likelihood function for communication.'' \citep{Good76}
+so he will see the value of graphing the likelihood function for communication.'' \citep{Good76}
 \end{quote}
 
 Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
@@ -1111,7 +1095,7 @@ inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em
 hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is \textbf{evidence supporting $A$ over $B$}
 if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
 \citep{Hacking65}
-% Porque repetir a lei e não enunciar o princípio em nenhum ponto do texto?
+% Porque repetir a lei e não enunciar o princípio em nenhum ponto do texto? <TODO>
 \end{quote}
 
 Embora seja possível considerar o paradigma Bayesiano como um paradigma verossimilhantista {\em sensu lato}, 
@@ -1130,17 +1114,15 @@ propriedades distintivas. % Seguro? Me soa estranho pois ambos começam com a
                           % escapar separar probabilidade de
                           % credibilidade. Suspeito de um esqueleto no
                           % armário, gostaria de ler e discutir isso
-                          % com vc.
+                          % com vc. <TODO>
 A aceitação da lei da verossimilhança equivale logicamente à definição de evidência pela razão
-da verossimilhança de hipóteses simples. % Entendo que o ponto prepare
-                                % para a questão das hipóteses simples
-                                % x compostas, mas aqui ele parece
-                                % meio solto.
+da verossimilhança de hipóteses simples. 
 
 A interpretação verossimilhantista da evidência recebe diversas críticas. Uma, no entanto, é especialmente contundente:
 Edwards propõe que definir a natureza da probabilidade é um problema irrelevante, dado que a evidência estatística é
-formulada por razões de verossimilhança, e não por probabilidades. No entanto, a definição de verossimilhança {\em é} uma
-probabilidade, de forma que sem uma interpretação para a probabilidade não podemos ter uma interpretação para a verossimilhança.
+formulada por razões de verossimilhança, e não por probabilidades. No entanto, a verossimilhança é, por definição,  
+{\em uma função proporcional a uma probabilidade}, de forma que sem uma interpretação para a probabilidade não podemos
+ter uma interpretação para a verossimilhança.
 A teoria verossimilhantista corre, portanto, o risco de se assentar
 sobre uma areia movediça filosófica.
 % A verossimilhança é uma função
@@ -1151,9 +1133,12 @@ sobre uma areia movediça filosófica.
 % justificaria que isso já foi feito na escolha do modelo. Podemos
 % testar chamando o João para sua banca.
 
+\section{Interseções com teoria da informação} % <TODO>
+
 A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de modelos
 geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a log-verossimilhança
-com a perda de informação de cada modelo \citep{Akaike74}. % Merece
+com a perda de informação de cada modelo \citep{Akaike74}. 
+								% Merece
                                 % uma seção à parte, pela importãncia
                                 % do conceito em si e pelo fenômeno de
                                 % sociologia da ciência que foi a
@@ -1163,20 +1148,20 @@ com a perda de informação de cada modelo \citep{Akaike74}. % Merece
                                 % in Ecology and Evolution). Além
                                 % disso, aqui está interposto entre os
                                 % conceitos e o exemplo.
-\section{A incerteza e a produção de conhecimento}
+\section{A incerteza e a produção de conhecimento} <TODO: comentários do Charbel>
 
-Concluímos essa seção com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
+Concluímos esse capítulo com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
 ``estatística Bayesiana'' esconde o fato de que há, na verdade, uma variedade de correntes filosóficas que, baseadas
 em idéias distintas sobre a natureza das probabilidades, chegam a
 conclusões distintas sobre assuntos variados da epistemologia 
 à metodologia de inferência. A escola frequentista é fundamentalmente dividida entre a modelagem de Fisher e a rigidez de
 Neyman-Pearson, enquanto a escola Bayesiana é dividida em uma miríade de escolas, desde
 subjetivistas anti-realistas como de Finetti até objetivistas como Jaynes.
-% PI: Pretende falar algo de Jaynes? C: Por enquanto não
-Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Carnap e Karl Pearson, que atacarão tanto
+Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Rudolf Carnap, que ao lado de Karl Pearson
+atacarão tanto
 a visão subjetiva de probabilidade quanto o modelo de população infinita dos frequentistas \citep{Lenhard06, Zabell09}.
 Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, 
-posteriormente expandida por Royall e Sober e complementada
+posteriormente expandida por Royall e Sober e complementada por
 Akaike, que propõem a razão de verossimilhança como única base lógica para a inferência.
 
 É necessário que as divergências entre os diversos autores citados sejam interpretadas não na sua práxis, que representa 
