@@ -453,7 +453,7 @@ com propriedades distintas, como as quasiprobabilidades, úteis no estudo de ót
 axioma de aditividade de Kolmogorov e ter regiões de probabilidade
 negativa \citep{Mandel95}.
 
-\section{A formalização da inferência}
+\section{A formalização da inferência}\label{sec:infer}
 
 A escola frequentista será de grande influência para a formulação da teoria de testes de hipóteses de R. A. Fisher, que se
 lança no começo da década de 1920 sobre o problema de formalizar a inferência estatística, ou seja, o processo de
@@ -511,6 +511,12 @@ melhor formalizadas posteriormente, as idéias presentes ainda são de grande va
 	\item Eficiência: ``that statistic is to be chosen which has the least probable error''
 	\item Suficiência: ``the statistic chosen should summarise the whole of the relevant information supplied by the sample''
 \end{enumerate}
+
+É importante frisar que estas definições se dão em relação a um problema de estimação bem posto. Quando coletamos
+uma amostra de uma população, de distribuição normal e variância conhecida e perguntamos ``qual é o melhor estimador para a média populacional'', 
+a média amostral se mostra uma estatística suficiente. Por outro lado, se a distribuição da qual estamos amostrando
+é uma distribuição gama, de parâmetros $\alpha$ e $\beta$ desconhecidos, a média amostral {\em não é} uma estatística
+suficiente.
 
 Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma quantidade conhecida como
 verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Embora já identificada por C.S.
@@ -581,8 +587,8 @@ encontrado.
 Em um exemplo simples, queremos saber se uma moeda é justa ou não lançando-a 20 vezes. É improvável que o número de caras seja
 exatamente 10, mesmo para uma moeda justa. Como o resultado de cada lançamento é uma de duas respostas (cara ou coroa), 
 e a probabilidade de cada lançamento é suposta constante e independente, o modelo escolhido para representar o problema
-pode ser uma binomial\footnote{Determinar que o modelo binomial é adequado corresponde ao problema da especificação
-segundo Fisher}.
+pode ser uma binomial (Determinar que o modelo binomial é adequado corresponde ao problema da especificação,
+segundo Fisher).
 A hipótese nula é a de que a probabilidade da binomial é de 0.5. Nesse caso, podemos calcular a 
 distribuição esperada do número de caras, e veremos que em 82\% dos experimentos realizados, a diferença entre o valor esperado
 de dez caras e o resultado obtido será de 1 ou mais; em 26\%, de 3 ou mais; e em 4\%, de 5 ou mais. Ao examinar o resultado 
@@ -794,7 +800,9 @@ I. J. Good \citep{Good92}. No entanto, os argumentos de Fisher
 alcançaram várias vezes uma grande lucidez e perspicácia, e a formulação moderna da teoria Bayesiana 
 deve muito à crítica constante feita por ele sobre os pontos mais sutis da sua lógica\footnote{
 O argumento fiducial continua sendo altamente controverso entre filósofos e cientistas, sendo defendido por exemplo
-em \citep{Hacking65} e na segunda edição de \citep{Edwards72}.}.
+em \citep{Hacking65} e na segunda edição de \citep{Edwards72}.}. Ao mesmo tempo que propunha o argumento fiducial,
+Fisher também defendia a inspeção e interpretação da função de verossimilhança apenas, em uma abordagem que será
+retomada mais recentemente.
 
 Com a axiomatização e formulação moderna da interpretação subjetivista, cuja história é intimamente ligada à da teoria
 econômica de utilidade (veja por exemplo \citep{Friedman48} e \citep{Pfanzagl67}),
@@ -925,15 +933,16 @@ at his target level (...). Finding that the early partial results represent evid
 the possibility that the evidence in the final results might be quite strong. Does this make sense?'' \citep{Royall97}
 \end{quote}
 
-Enquanto alguns estatísticos vêem neste problema ``um uso ingênuo de p-valores'' \citep{Good92}, outros, como Richard Royall,
+Alguns estatísticos vêem neste problema ``um uso ingênuo de p-valores'' \citep{Good92}, ao lembrar que, sob um
+ponto de vista Fisheriano, um valor p de 7.3\% não leva a qualquer juízo sobre a validade ou não da hipótese nula.
+Outros, como Richard Royall,
 consideram esta situação uma indicação clara de que o paradigma frequentista leva a contradições inerentes, e portanto 
 deve ser abandonado. A discordância entre as conclusões frequentistas e a inferência julgada aceitável por seus opositores 
 pode ser traçada na incoerência entre
 o procedimento de teste de hipóteses e o princípio da verossimilhança. Utilizado já por Neyman e Pearson\citep{Neyman1933},
 em caráter razoavelmente intuitivo, o princípio é demonstrado por Allan Birnbaum em 1962, 
-e afirma que toda a informação contida em uma amostra está	contida na função de verossimilhança \citep{Birnbaum62}. 
-Desta forma, a inferência feita à partir da amostra deve ser dependente da função de verossimilhança, e não do desenho
-experimental.
+e afirma que toda a inferência feita a partir de um experimento deve ser baseada na função de verossimilhança,
+sendo portanto irrelevante o desenho experimental \citep{Birnbaum62}. 
 No exemplo discutido acima, a função de verossimilhança do experimento é a mesma, não importando a intenção do pesquisador:
 
 \begin{equation}
@@ -1004,14 +1013,42 @@ um programa de inferência focado na observação, sem precisar recorrer a class
 
 \section{A escolha da verossimilhança}\label{sec:likelihood}
 
-A grandeza conhecida como verossimilhança, defendida por Fisher em 1922, viu grande uso nas últimas páginas. Por um lado,
+A grandeza conhecida como verossimilhança, defendida por Fisher a partir de 1922, viu grande uso nas últimas páginas. Por um lado,
 ela é a base sobre a qual se assenta o teste de hipóteses de Neyman-Pearson. Por outro, ela é a ponte entre a {\em priori}
 e a {\em posteriori} Bayesianas. No final dos anos 1960, o uso da verossimilhança como base da inferência ganha vida 
 independente, e em grande parte devido ao livro de I. Hacking em 1965 sobre a lógica da inferência, 
 e ao trabalho de A.W.F. Edwards em 1972, é possível considerar essa postura como
 uma escola independente de pensamento, denominada às vezes Verossimilhantismo. Mais recentemente, essa escolha vai ser
 veementemente apoiada por Richard Royall e Elliott Sober. Esta escola de pensamento se baseia na conjunção do princípio da 
-verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhança, enunciada por Hacking:
+verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhança, enunciada por Hacking.
+
+Birnbaum deriva o princípio da verossimilhança a partir de dois princípios mais facilmente aceitos\footnote{
+Essa derivação é controversa até o presente, sendo contestada por uma série de filósofos e estatísticos 
+e defendida por outros (veja \citep{Mayo10} e \citep{Gandenberger12}, respectivamente, para críticas e defesas
+ atuais)}: o princípio da suficiência e o princípio da condicionalidade. Informalmente, estes princípios afirmam que
+"dados que não agregam informação são irrelevantes para a inferência", e "experimentos que poderiam ser realizados
+ mas não foram são irrelevantes para a inferência". Desses princípios, Birnbaum deduz o princípio da verossimilhança,
+informalmente, "resultados amostrais possíveis mas não observados são irrelevantes para a inferência", de forma 
+que questões como o desenho amostral não podem influenciar a inferência realizada. 
+
+Birnbaum usa a notação $(E, x)$ para representar um par formado por $E$, um modelo estatístico, e $x$, o resultado 
+de uma amostra. 
+
+\begin{description}
+\item[LL]
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
+\citep{Hacking65}
+\end{description}
+The principle of sufficiency (S): If E is a specified experiment, with outcomes x; if t = t(x) is any sufficient statistic; and if E' is the experiment, derived from E, in which any outcome x of E is represented only by the corresponding value t = t(x) of the sufficient statistic; then for each x, Ev(E, x) = Ev(E', t), where t=t(x).
+
+The principle of conditionality (C): If E is any experiment having the form of a mixture of component experiments Eh, then for each outcome (Eh, Xh) of E we have Ev(E, (Eh, Xh)) = Ev(Eh, Xh). That is, the evidential meaning of any outcome of any mixture experiment is the same as that of the correspond- ing outcome of the corresponding component experiment, ignoring the over-all structure of the mixture experiment. (
+
+, that is, a mathematical model of an instance of experimental evidence
+
+\label{sec:infer}
+XXXXXXXXXXXXXXXXXXXXXXXXX TODO:
 % Não ficou clara a distinção entre a lei e o princípio, nem que a
 % escola se distingue por aceitar ambos, enquanto todas as escolas
 % aceitam a lei. <TODO>
@@ -1133,7 +1170,7 @@ sobre uma areia movediça filosófica.
 % justificaria que isso já foi feito na escolha do modelo. Podemos
 % testar chamando o João para sua banca.
 
-\section{Interseções com teoria da informação} % <TODO>
+\section{A abordagem por teoria da informação} % <TODO>
 
 A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de modelos
 geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a log-verossimilhança
