@@ -560,11 +560,6 @@ probabilidade (veja na seção \ref{sec:axiomatica}).
 %proporcionalidade não garante os axiomas).
 
 \section{Abordagens para testes de hipóteses}
-% Embora haja forte relação com a seção anterior, ela não está muito
-% evidente. Em algum ponto entre as duas é preciso ligar o conceito de
-% verossimilhança, o método de máxima verossimilhança com testes de
-% significância e p-values.
-
 A estrutura mental desenvolvida por Fisher durante a década de 1920 vai levar também a um procedimento conhecido como teste de 
 significância, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
 durante a década de 1930. Em um terminologia que vai influenciar muito do pensamento em inferência estatística do século XX,
@@ -905,7 +900,7 @@ de que a escola frequentista, ao ser obrigada a escolher um modelo mental de ref
 Savage escreve que ``the Bayesian approach is more objectivistic than the frequentist approach in that it imposes a greater
 order on the subjective elements of the deciding person.'' \citep{Savage60}.
 
-\section {O problema do ``Optional stopping''} 
+\section{O problema da parada opcional} 
 
 Nas seções anteriores, encontramos a proposição de duas escolas de inferência: a frequentista e a bayesiana, e críticas
 a esta segunda. Nesta seção e na próxima vamos nos debruçar sobre críticas feitas sobre a escola frequentista, em dois
@@ -1025,43 +1020,39 @@ verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhanç
 Birnbaum deriva o princípio da verossimilhança a partir de dois princípios mais facilmente aceitos\footnote{
 Essa derivação é controversa até o presente, sendo contestada por uma série de filósofos e estatísticos 
 e defendida por outros (veja \citep{Mayo10} e \citep{Gandenberger12}, respectivamente, para críticas e defesas
- atuais)}: o princípio da suficiência e o princípio da condicionalidade. Informalmente, estes princípios afirmam que
+atuais)}: o princípio da suficiência e o princípio da condicionalidade. Informalmente, estes princípios afirmam que
 "dados que não agregam informação são irrelevantes para a inferência", e "experimentos que poderiam ser realizados
- mas não foram são irrelevantes para a inferência". Desses princípios, Birnbaum deduz o princípio da verossimilhança,
+mas não foram são irrelevantes para a inferência". Desses princípios, Birnbaum deduz o princípio da verossimilhança,
 informalmente, "resultados amostrais possíveis mas não observados são irrelevantes para a inferência", de forma 
-que questões como o desenho amostral não podem influenciar a inferência realizada. 
-
-Birnbaum usa a notação $(E, x)$ para representar um par formado por $E$, um modelo estatístico, e $x$, o resultado 
-de uma amostra. 
+que questões como o desenho amostral não podem influenciar a inferência realizada: 
 
 \begin{description}
-\item[LL]
-``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
-hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
-if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
-\citep{Hacking65}
+\item[L]
+``The likelihood principle: If $E$ and $E\prime$ are any two experiments with the same parameter space,
+ represented respectively by density functions $f(x, \theta)$ and $g(y, \theta)$; and if $x$ and $y$ are
+ any respective outcomes determining the same likelihood function; then $Ev(E, x) = Ev(E\prime, y)$.
+ That is, the evidential meaning of any outcome $x$ of any experiment $E$ is characterized fully by giving
+ the likelihood function $cf(x, \theta)$ (which need be described only up to an arbitrary positive constant
+ factor), without other reference to the structure of $E$.''
+\citep{Birnbaum62}
 \end{description}
-The principle of sufficiency (S): If E is a specified experiment, with outcomes x; if t = t(x) is any sufficient statistic; and if E' is the experiment, derived from E, in which any outcome x of E is represented only by the corresponding value t = t(x) of the sufficient statistic; then for each x, Ev(E, x) = Ev(E', t), where t=t(x).
-
-The principle of conditionality (C): If E is any experiment having the form of a mixture of component experiments Eh, then for each outcome (Eh, Xh) of E we have Ev(E, (Eh, Xh)) = Ev(Eh, Xh). That is, the evidential meaning of any outcome of any mixture experiment is the same as that of the correspond- ing outcome of the corresponding component experiment, ignoring the over-all structure of the mixture experiment. (
-
-, that is, a mathematical model of an instance of experimental evidence
-
 \label{sec:infer}
-XXXXXXXXXXXXXXXXXXXXXXXXX TODO:
-% Não ficou clara a distinção entre a lei e o princípio, nem que a
-% escola se distingue por aceitar ambos, enquanto todas as escolas
-% aceitam a lei. <TODO>
+
+Já a lei da verossimilhança é enunciada por Hacking como:
 
 \begin{quote}
 ``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
-hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$
-if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting 
+$A$ over $B$ if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength
+ of that evidence.''
 \citep{Hacking65}
 \end{quote}
 
-Enquanto o pensamento Bayesiano aceita o princípio da verossimilhança, mas pode ter divergências com a lei (um ponto
-que vai ser retomado no capítulo \label{cap:integr}), a inferência frequentista aceita a lei, mas nega o princípio.
+A divergência entre a escola da verossimilhança e a inferência frequentista se dá pois esta última rejeita o
+princípio da verossimilhança (embora aceite tanto a lei da verossimilhança quanto os princípios da suficiência
+e condicionalidade). Por outro lado, a escola da verossimilhança vai divergir da inferência Bayesiana, que aceita
+o princípio da verossimilhança, pela interpretação da lei da verossimilhança (um  ponto
+que vai ser retomado mais adiante nesta seção).
 
 A escola da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
 para atacar o teste de significância de Fisher foi reconhecer a
@@ -1123,7 +1114,7 @@ so he will see the value of graphing the likelihood function for communication.'
 \end{quote}
 
 Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
-probabilidade {\em a priori}, no que o paradigma da verossimihança difere das escolas Bayesianas? Ou ainda: será que a 
+probabilidade {\em a priori}, no que o paradigma da verossimilhança difere das escolas Bayesianas? Ou ainda: será que a 
 inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em prioris}''? Para responder isso,
 é importante retomar a formulação da lei da verossimilhança:
 
@@ -1132,7 +1123,6 @@ inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em
 hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is \textbf{evidence supporting $A$ over $B$}
 if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
 \citep{Hacking65}
-% Porque repetir a lei e não enunciar o princípio em nenhum ponto do texto? <TODO>
 \end{quote}
 
 Embora seja possível considerar o paradigma Bayesiano como um paradigma verossimilhantista {\em sensu lato}, 
@@ -1142,18 +1132,14 @@ verá na razão das verossimilhanças
 o objeto final do seu estudo. O paradigma da verossimilhança, dessa forma, se opõe à transformação de uma quantidade de 
 suporte relacional entre $A$ e $B$ em quantidades não-relacionais de
 suporte para cada hipótese \citep{Fitelson07}. %perfeito!
-Embora Royall e Edwards forneçam razões fortes para aceitar essa lei como premissa, ela não é uma necessidade lógica.
-Note-se aqui que as definições de evidência ou suporte estatístico não possuem, nos textos de Royall e Edwards,
-definições externas que lhes garantam
-propriedades distintivas. % Seguro? Me soa estranho pois ambos começam com a
-                          % definição de suporte. Talvez a razão
-                          % esteja lá na maneira como Fisher tentou
-                          % escapar separar probabilidade de
-                          % credibilidade. Suspeito de um esqueleto no
-                          % armário, gostaria de ler e discutir isso
-                          % com vc. <TODO>
-A aceitação da lei da verossimilhança equivale logicamente à definição de evidência pela razão
-da verossimilhança de hipóteses simples. 
+Embora Royall e Edwards forneçam razões fortes para aceitar essa lei como premissa, ela não é uma necessidade lógica,
+e não decorre de princípios mais básicos - ao contrário do princípio da verossimilhança.
+Note-se aqui que o texto de Royall não provê nenhuma definição do que seja evidência ou suporte estatístico,
+enquanto Edwards provê apenas uma lista de propriedades desejáveis a uma medida de suporte, demonstrando que
+a razão de verossimilhanças é coerente com estas propriedades. Hacking, por outro lado, usa os axiomas de 
+\citep{Koopman40} para embasar sua definição de suporte, à qual a lei da verossimilhança é adicionada
+axiomaticamente - e de forma coerente. A posição de todos estes autores indica que a aceitação da 
+lei da verossimilhança equivale a uma definição de evidência. 
 
 A interpretação verossimilhantista da evidência recebe diversas críticas. Uma, no entanto, é especialmente contundente:
 Edwards propõe que definir a natureza da probabilidade é um problema irrelevante, dado que a evidência estatística é
@@ -1170,11 +1156,42 @@ sobre uma areia movediça filosófica.
 % justificaria que isso já foi feito na escolha do modelo. Podemos
 % testar chamando o João para sua banca.
 
-\section{A abordagem por teoria da informação} % <TODO>
+\section{A abordagem por seleção de modelos} 
 
-A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de modelos
-geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a log-verossimilhança
-com a perda de informação de cada modelo \citep{Akaike74}. 
+A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de
+modelos geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a
+log-verossimilhança com a perda de informação de cada modelo \citep{Akaike74}. O procedimento de escolha de modelos
+vai retomar o problema da especificação de Fisher (conforme descrito na seção \ref{sec:infer}) como um problema
+possível de ser tratado dentro da metodologia estatística. 
+
+A proposta do AIC é baseada na divergência de Kullback-Leibler\footnote{Muitas vezes referida incorretamente
+como ``distância de Kullback-Leibler'', a divergência de Kullback-Leibler não apresenta em geral propriedades
+de uma métrica: em particular, a divergência entre $P$ e $Q$ não é igual à divergência entre $Q$ e $P$} 
+\citep{Kullback51}, definida
+como a diferença entre duas distribuições de probabilidade, $P$ e $Q$; supondo que $P$ é a distribuição verdadeira,
+a divergência de $Q$ a partir de $P$ é a medida de informação perdida ao aproximar $P$ usando $Q$.
+
+O uso da divergência de KL na inferência estatística espelha a definição de Fisher de uma população infinita, 
+para a qual existe uma lei de distribuição desconhecida, com parâmetros desconhecidos. Da mesma forma que
+na inferência Fisheriana, a amostra disponível será usada em comparação com esse modelo idealizado. A relação entre
+a distribuição real para KL e a realidade é a mesma que a relação entre a população Fisheriana e a realidade: 
+após aceitar essa construção teórica, a qualidade do ajuste (``goodness of fit'') deve ser verificada entre
+os fatos disponíveis e o modelo mental. 
+
+Como definida acima, a divergência de KL não pode ser medida ou estimada, pois ela depende da distribuição
+verdadeira, suposta desconhecida. O resultado fundamental de Akaike é que
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+http://en.wikipedia.org/wiki/Akaike_information_criterion
+http://web.ipac.caltech.edu/staff/fmasci/home/statistics_refs/AIC_in_modelselection.pdf
+
+
+ As it stands, the KL information quantity in (6) is not directly observable or
+estimable since it depends on the true distribution and consequently on the unknown
+true and model parameters. Therefore, maximization of the mean log likelihood is
+carried out, and asymptotically an unbiased estimator of the mean expected log
+likelihood is searched by correcting the bias of the observed mean log likelihood
+
+
 								% Merece
                                 % uma seção à parte, pela importãncia
                                 % do conceito em si e pelo fenômeno de

@@ -350,6 +350,17 @@ de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
 Essa constatação, no entanto, não invalida o teorema da GLL, embora
 lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
 
+Em um desenvolvimento independente, o estatístico indiano Debabrata Basu propôs uma generalização
+alternativa para a lei da verossimilhança em 1975:
+\begin{quote}
+``{\em The strong law of likelihood}: For any two subsets $A$ and $B$ of $\Theta$, the data supports the 
+hypothesis $\omega \in A$ better than the hypothesis $\omega in B$ if
+\begin{equation}
+\sum_{\omega \in A} \mathcal{L}(\omega} > \sum_{\omega \in A} \mathcal{L}(\omega}
+\end{equation}
+Let us recall the [assertion] that all our sets (the sample space, the parameter space, etc.) are finite.''
+\end{quote}\citep{Basu75}
+
 \section{Uma lei fraca de verossimilhança}
 
 Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
