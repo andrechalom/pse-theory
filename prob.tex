@@ -1164,7 +1164,8 @@ log-verossimilhança com a perda de informação de cada modelo \citep{Akaike74}
 vai retomar o problema da especificação de Fisher (conforme descrito na seção \ref{sec:infer}) como um problema
 possível de ser tratado dentro da metodologia estatística. 
 
-A proposta do AIC é baseada na divergência de Kullback-Leibler\footnote{Muitas vezes referida incorretamente
+A proposta do AIC (Akaike Information Criterion)
+é baseada na divergência de Kullback-Leibler\footnote{Muitas vezes referida incorretamente
 como ``distância de Kullback-Leibler'', a divergência de Kullback-Leibler não apresenta em geral propriedades
 de uma métrica: em particular, a divergência entre $P$ e $Q$ não é igual à divergência entre $Q$ e $P$} 
 \citep{Kullback51}, definida
@@ -1176,55 +1177,81 @@ para a qual existe uma lei de distribuição desconhecida, com parâmetros desco
 na inferência Fisheriana, a amostra disponível será usada em comparação com esse modelo idealizado. A relação entre
 a distribuição real para KL e a realidade é a mesma que a relação entre a população Fisheriana e a realidade: 
 após aceitar essa construção teórica, a qualidade do ajuste (``goodness of fit'') deve ser verificada entre
-os fatos disponíveis e o modelo mental. 
+os fatos disponíveis e o modelo mental, e não mais com a realidade. 
 
 Como definida acima, a divergência de KL não pode ser medida ou estimada, pois ela depende da distribuição
-verdadeira, suposta desconhecida. O resultado fundamental de Akaike é que
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-http://en.wikipedia.org/wiki/Akaike_information_criterion
-http://web.ipac.caltech.edu/staff/fmasci/home/statistics_refs/AIC_in_modelselection.pdf
+verdadeira, suposta desconhecida. O resultado fundamental de Akaike é mostrar que uma fórmula simples
+(conhecida como AIC)
+aproxima assintoticamente sem viés a divergência de KL relativa esperada dentro de um conjunto estabelecido
+de modelos. Ou seja, para um grande número de pontos amostrais, a log-verossimilhança máxima de cada modelo
+($\log(\mathcal{L}(\hat\theta|x))$)
+aproxima a diferença de divergência de KL entre os modelos de forma enviesada, e a correção para este viés
+é aproximadamente igual ao número de parâmetros livres no modelo ($K$)\citep{Burnham04}. 
+Assim, podemos calcular o AIC como:
 
+\begin{equation}
+AIC = 2K - 2\log(\mathcal{L}(\hat\theta|x))
+\end{equation
 
- As it stands, the KL information quantity in (6) is not directly observable or
-estimable since it depends on the true distribution and consequently on the unknown
-true and model parameters. Therefore, maximization of the mean log likelihood is
-carried out, and asymptotically an unbiased estimator of the mean expected log
-likelihood is searched by correcting the bias of the observed mean log likelihood
+O valor do AIC de um único modelo não possui nenhum significado: ele apenas pode ser usado {\em em comparação}
+com o AIC de outro modelo proposto para o mesmo conjunto de dados. É usual calcular a diferença entre o AIC de cada
+modelo e o AIC mínimo encontrado:
 
+\begin{equation}
+\Delta_i = AIC_i - AIC_{min}
+\end{equation}
 
-								% Merece
-                                % uma seção à parte, pela importãncia
-                                % do conceito em si e pelo fenômeno de
-                                % sociologia da ciência que foi a
-                                % rápida aceitação da seleção de
-                                % modelos baseada em AIC nas ciências
-                                % naturais (Ver Johson & Omland Trends
-                                % in Ecology and Evolution). Além
-                                % disso, aqui está interposto entre os
-                                % conceitos e o exemplo.
+Este valor pode ser usado para comparar diversos modelos dentro do mesmo arcabouço conceitual no qual se realiza a
+estimativa dos parâmetros. O melhor modelo, dentro do conjunto escolhido, terá $\Delta_i = 0$, enquanto os demais
+modelos poderão ser ordenados em relação a esses valores. Essa ordenação permite que todos os modelos plausíveis
+sejam usados para a realização de inferências ou previsões (veja uma descrição completa em \citep{Burnham02}).
+
+O uso do número de parâmetros $K$ para ``penalizar'' modelos com mais parâmetros é intuitivamente atraente, por
+se aproximar de um princípio de parcimônia. Proponentes anteriores da abordagem de verossimilhança já haviam notado
+que o modelo com melhor verossimilhança para qualquer conjunto de dados é o de criação particular: o uso do AIC
+fornece um motivo sólido e teoricamente bem embasado para preferir os modelos com menos parâmetros livres.
+Ainda, o uso de seleção de modelos permite que cada modelo comparado se relacione com uma hipótese biologicamente
+interpretável, ao contrário do uso de testes de significância, nos quais a hipótese nula dificilmente tem relevância
+biológica. Estes motivos, aliados ao fácil uso do AIC, fizeram com que o uso de seleção de modelos tenha
+visto interesse crescente na ecologia e outras áreas da biologia \citep{Johnson04}.
+
+Outra medida usada em ordenação de modelos é conhecida como Bayesian Information Criterion (BIC) \citep{Schwarz78},
+o que levou a um debate na literatura da área sobre qual critério deve ser usado \citep{Weakliem99}. Embora os
+argumentos a favor de cada critério estejam fora do escopo deste texto, é importante notar que o debate não pode
+ser enquadrado como proponentes do Bayesianismo {\em versus} proponentes do frequentismo/verossimilhança, já que
+tanto o AIC pode ser deduzido dentro do paradigma Bayesiano pelo uso de uma ``{\em priori} esperta'' 
+\citep{Burnham04}, como o BIC pode ser deduzido de uma perspectiva de teoria da informação usando uma 
+``verossimilhança substituta'' \citep{Stoica04}.
+
 \section{A incerteza e a produção de conhecimento} <TODO: comentários do Charbel>
 
-Concluímos esse capítulo com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística frequentista'' e 
+Concluímos esse capítulo com a ponderação de que a divisão rotineiramente feita entre as ditas ``estatística
+frequentista'' e 
 ``estatística Bayesiana'' esconde o fato de que há, na verdade, uma variedade de correntes filosóficas que, baseadas
 em idéias distintas sobre a natureza das probabilidades, chegam a
 conclusões distintas sobre assuntos variados da epistemologia 
-à metodologia de inferência. A escola frequentista é fundamentalmente dividida entre a modelagem de Fisher e a rigidez de
+à metodologia de inferência. A escola frequentista é fundamentalmente dividida entre a modelagem de Fisher e a
+rigidez de
 Neyman-Pearson, enquanto a escola Bayesiana é dividida em uma miríade de escolas, desde
 subjetivistas anti-realistas como de Finetti até objetivistas como Jaynes.
-Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Rudolf Carnap, que ao lado de Karl Pearson
-atacarão tanto
-a visão subjetiva de probabilidade quanto o modelo de população infinita dos frequentistas \citep{Lenhard06, Zabell09}.
+Essa taxonomia, no entanto, não acomoda a visão de positivistas lógicos como Rudolf Carnap, que ao lado de Karl
+Pearson atacarão tanto
+a visão subjetiva de probabilidade quanto o modelo de população infinita dos frequentistas
+\citep{Lenhard06, Zabell09}.
 Tampouco é suficiente para enquadrar o trabalho de Peirce sobre propensões, ou a visão agnóstica de Edwards, 
 posteriormente expandida por Royall e Sober e complementada por
 Akaike, que propõem a razão de verossimilhança como única base lógica para a inferência.
 
-É necessário que as divergências entre os diversos autores citados sejam interpretadas não na sua práxis, que representa 
+É necessário que as divergências entre os diversos autores citados sejam interpretadas não na sua práxis, que
+representa 
 o nível metodológico, como costuma acontecer em círculos mais inclinados à ciência do que à filosofia, 
 e sim nos seus fundamentos, em cada suposição elementar feita sobre os
-elementos constituintes da teoria probabilística e de inferência. Possivelmente, essas suposições devem ser mapeadas em
+elementos constituintes da teoria probabilística e de inferência. Possivelmente, essas suposições devem ser
+mapeadas em
 distintos elementos da filosofia da ciência.
 
-Embora essa discussão seja muito vasta, acredito que dois pontos da filosofia - e suas conexões com o uso de estatística -
+Embora essa discussão seja muito vasta, acredito que dois pontos da filosofia - e suas conexões com o uso de
+estatística -
 não podem ser evadidos por cientistas naturais: o problema da indução e o problema da demarcação.
 O primeiro diz respeito à construção de conhecimento através da observação: se observamos que o sol sempre nasce no leste,
 isso pode ser usado para estabelecer como fato que o sol nascerá sempre no leste? A conexão feita entre ``eu observei esse
