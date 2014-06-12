@@ -4,6 +4,7 @@
 \usepackage[twoside,margin=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
++-
 \usepackage[square,sort]{natbib}
 \usepackage{framed, color}
 \definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
@@ -144,17 +145,13 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \tableofcontents
 \cleardoublepage
 \pagestyle{fancy}
-
 \pagenumbering{arabic}
 
-
 % CAPITULO 1
-\definecolor{shadecolor}{rgb}{1, 0.8, 0.8}
 \chapter{Sobre probabilidade e inferência}
 \input prob.tex
 
 % CAPITULO 2
-\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
 \selectlanguage{english}
 \chapter{Parameter space exploration: a synthesis}\label{cap:pse}
 \input intro.tex
@@ -165,16 +162,13 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 
 % CAPITULO 3
 \selectlanguage{brazilian}
-\definecolor{shadecolor}{rgb}{1, 0.8, 0.8}
-\chapter{Uma abordagem integrativa para análises de incerteza}
-\label{cap:integr}
+\chapter{Uma abordagem integrativa para análises de incerteza}\label{cap:integr}
 \input integr.tex
 \input caveat.tex
 \input mini.tex
 \input tribolium.tex
 
 \appendix
-\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
 \selectlanguage{english}
 \chapter{Sensitivity analyses: a brief tutorial with \R package pse}
 \input pse_tutorial.tex
