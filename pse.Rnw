@@ -4,10 +4,10 @@
 \usepackage[twoside,margin=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
-+-
 \usepackage[square,sort]{natbib}
 \usepackage{framed, color}
 \definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\usepackage{lastpage}
 \setlength{\topmargin}{0cm}
 
 % Create friendly environments for theorems, propositions, &c.
@@ -55,7 +55,9 @@
 \selectlanguage{brazilian}
 \setkeys{Gin}{width=0.8\textwidth}
 
-% CAPA
+% No começo, páginas sem cabeçalho
+\pagestyle{empty}
+%%% CAPA
 \begin{titlepage}
 	\begin{center}
 		{\LARGE Andre Chalom}
@@ -70,10 +72,9 @@
 	\end{center}
 \end{titlepage}
 
-% A partir daqui páginas sem cabeçalho
-\pagestyle{empty}
-% Faz com que a página seguinte sempre seja ímpar (insere pg em branco)
 \cleardoublepage
+% Faz com que a página seguinte sempre seja ímpar (insere pg em branco)
+
 \pagenumbering{roman}
 
 % Página de rosto
@@ -97,6 +98,48 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \begin{center}
 	\textbf{{\large São Paulo}\\
 	{\large 2014}}
+\end{center}
+
+\newpage
+
+% Ficha Catalográfica
+\hspace{8em}\fbox{\begin{minipage}{10cm}
+Chalom, A.
+
+\hspace{2em}Exploração de espaços de parâmetros de modelos biológicos sob diferentes paradigmas estatísticos
+
+\hspace{2em}\pageref{LastPage} páginas
+
+\hspace{2em}Dissertação (Mestrado) - Programa Interunidades de Pós-Graduação em Bioinformática.
+
+\begin{enumerate}
+\item Análise de sensibilidade
+\item Análise de incerteza
+\item Modelagem numérica
+\item Verossimilhança
+\end{enumerate}
+I. Universidade de São Paulo. Programa Interunidades de Pós-Graduação em Bioinformática.
+
+\end{minipage}}
+\par
+\vspace{2em}
+\begin{center}
+{\LARGE\textbf{Comissão Julgadora:}}
+
+\par
+\vspace{10em}
+\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l l}
+\rule{16em}{1px} 	& \rule{16em}{1px} \\
+Prof. Dr. 		& Prof. Dr. \\
+**Nome**			& **Nome**
+\end{tabular*}
+
+\par
+\vspace{10em}
+
+\parbox{16em}{\rule{16em}{1px} \\
+Prof. Dr. \\
+Paulo Inácio de Knegt López de Prado}
 \end{center}
 
 % Preambulo
@@ -140,12 +183,53 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 	  \vspace{1em}
 	  \noindent\textbf{Palavras-chave:} análise de sensibilidade, análise de incerteza, modelagem numérica, verossimilhança
 	  \newpage
+	  
+\selectlanguage{english}
+\begin{center}
+\emph{\begin{large}Abstract\end{large}}\label{abstract}
+		  \vspace{2pt}
+	  \end{center}
+	  \noindent
+There is a growing trend in the use of mathematical modelling tools in the
+study of many areas of the biological sciences. 
+
+The use of computer models in science is increasing, specially in fields where laboratory
+experiments are too complex or to costly, like ecology.
+
+Questions of efficient, systematic and error-proof exploration of parameter spaces are
+are of great importance to better understand, estimate confidences and make use of the 
+output from these models. 
+
+We present a survey of the proposed methods to answer these questions, with emphasis
+on the Latin Hypercube Sampling and focusing on quantitative analysis of the results. We also
+compare analytical results for sensitivity and uncertainty, where relevant, to LHS results.
+Finally, we examine the proposal of a methodology based on the likelihood statistical paradigm.
+
+Chapter 1 introduces a brief investigation about the historical visions about the nature of
+probability, in order to situate the concept of likelihood as a central component in statistical inference.
+
+Chapter 2 (in english) shows a revision about the state-of-art uncertainty and sensitivity analyses,
+with a practical example of applying the described techniques to a model of structured population growth.
+
+Chapter 3 examines the proposal of a likelihood based approach as an integrative procedure between
+parameter value estimation and uncertainty analyses, with preliminary results.
+
+During the progress of this work, a package of \R functions was developed
+to facilitate the real world use of the above theoretical tools. The appendices of this text
+bring a tutorial and examples of using this package, freely available on the Internet at
+http://cran.r-project.org/web/packages/pse.
+
+	  \par
+	  \vspace{1em}
+	  \noindent\textbf{Keywords:} uncertainty analysis, sensitivity analysis, numerical modeling, likelihood
+	  \newpage
 
 \cleardoublepage
 \tableofcontents
 \cleardoublepage
 \pagestyle{fancy}
 \pagenumbering{arabic}
+\selectlanguage{brazilian}
 
 % CAPITULO 1
 \chapter{Sobre probabilidade e inferência}
