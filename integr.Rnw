@@ -5,7 +5,7 @@ verificação, validação, calibração, análise de incerteza e análise de se
 As duas primeiras etapas estão historicamente 
 muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
 computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
-reproduzir os fênomenos reais desejados. Outra forma de pensar e V \& V é que a validação se ocupa em determinar
+reproduzir os fênomenos reais desejados. Outra forma de pensar em V \& V é que a validação se ocupa em determinar
 que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
 resolvendo as equações corretamente \citep{ASC2010}.
 Questões relacionadas a verificação de modelos não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
