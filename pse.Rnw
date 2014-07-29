@@ -7,7 +7,6 @@
 \usepackage[square,sort]{natbib}
 \usepackage{framed, color}
 \definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
-\usepackage{lastpage}
 \setlength{\topmargin}{0cm}
 
 % Create friendly environments for theorems, propositions, &c.
@@ -108,7 +107,7 @@ Chalom, A.
 
 \hspace{2em}Exploração de espaços de parâmetros de modelos biológicos sob diferentes paradigmas estatísticos
 
-\hspace{2em}\pageref{LastPage} páginas
+\hspace{2em}\pageref{END} páginas
 
 \hspace{2em}Dissertação (Mestrado) - Programa Interunidades de Pós-Graduação em Bioinformática.
 
@@ -176,12 +175,14 @@ Paulo Inácio de Knegt López de Prado}
 
 	  Durante o progresso do presente trabalho, um pacote de funções na linguagem \R foi desenvolvido
 	  para facilitar o uso funcional das ferramentas teóricas expostas acima. Os apêndices deste texto
-	  trazem um tutorial e exemplos de uso deste pacote, disponível livremente na internet, no endereço
+	  trazem um tutorial e exemplos de uso deste pacote, pensado para ser ao mesmo tempo prático e de
+	  fácil extensão, e disponível livremente na internet, no endereço
 	  http://cran.r-project.org/web/packages/pse.
 
 	  \par
 	  \vspace{1em}
-	  \noindent\textbf{Palavras-chave:} análise de sensibilidade, análise de incerteza, modelagem numérica, verossimilhança
+	  \noindent\textbf{Palavras-chave:} análise de sensibilidade, análise de incerteza, 
+	  modelagem numérica, verossimilhança
 	  \newpage
 	  
 \selectlanguage{english}
@@ -264,4 +265,5 @@ http://cran.r-project.org/web/packages/pse.
 \bibliographystyle{apalike}
 \bibliography{chalom}
 
+\label{END}
 \end{document}

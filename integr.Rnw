@@ -356,7 +356,7 @@ alternativa para a lei da verossimilhança em 1975:
 ``{\em The strong law of likelihood}: For any two subsets $A$ and $B$ of $\Theta$, the data supports the 
 hypothesis $\omega \in A$ better than the hypothesis $\omega in B$ if
 \begin{equation}
-\sum_{\omega \in A} \mathcal{L}(\omega} > \sum_{\omega \in A} \mathcal{L}(\omega}
+\sum_{\omega \in A} \mathcal{L}(\omega) > \sum_{\omega \in A} \mathcal{L}(\omega)
 \end{equation}
 Let us recall the [assertion] that all our sets (the sample space, the parameter space, etc.) are finite.''
 \end{quote}\citep{Basu75}
