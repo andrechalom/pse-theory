@@ -1,75 +1,115 @@
-set.seed(42)
+# Use PLUE to perform a Profile Likelihood Uncertainty Analysis
+# Comments on the parameters below
+PLUE <- function(model, factors, N, LL, start, Q = NULL) {
+	if (is.numeric(factors) && length(factors) == 1) {
+		factors = paste("I", 1:factors, sep = "")
+	} else if (!is.character(factors)) {
+		stop("Error in function PLUE: factors should be either a single number or a character vector")
+	}
+	if (!is.numeric(N) || length(N) != 1) {
+		stop("Error in function PLUE: N should be a single number")
+	}
+	if (class(LL) != "function") {
+		stop("Error in function PLUE: nLL should be a function")
+	}
+	# jumping distribution
+	if (is.null(Q)) {
+		Q <- function (x) rnorm (length(factors), as.numeric(x), rep(0.02, length(factors)))
+	}
+
+	current <- as.numeric(start)
+	# L will hold our input data
+	L = as.data.frame(matrix(nrow = N, ncol = length(factors)))
+	L[1,] <- current
+	# nLL (soon to be a vector) will hold the -LL of each data point
+	nLL = -LL(current)
+	#
+	#Metropolis/Monte Carlo Iteration
+	#
+	for (i in 2:N) {
+		new <- Q(current)
+		alpha <- LL(new) - LL(current)
+		if (is.nan(alpha)) alpha = -Inf
+		if (alpha >= 0 || runif(1,0,1) < exp(alpha)) { # point accepted
+			L[i,] <-  new
+			nLL[i] <- - LL(new)
+			current <- new
+		} else { # we continue on the same point
+			L[i,] <- current
+			nLL[i] <- -LL(new)
+		}
+	}
+
+	# Apply the model to the input data
+	res <- model(L)
+
+	# Now we profile the results to find out 
+	# "what are the lower/upper limits to the 0.1-Delta nLL region?"
+	# "what are the lower/upper limits to the 0.2-Delta nLL region?"
+	# and so on and so on
+	mmin <- min(nLL[!is.infinite(nLL)])
+	mmax <- max(nLL[!is.infinite(nLL)])
+	prof <- seq(mmin, mmax, length.out=100)
+	lower = c(); upper = c();
+	for (i in 1:100)
+	{
+		search <- res[nLL <= prof[i]]
+		lower[i] <- min(search); upper[i] <- max(search)
+	}
+	# finally, we subtract the minimum LL to normalize the profile to 0
+	prof = prof - mmin
+	X <- list(call = match.call(), N = N, model = model, factors = factors, LL = LL, nLL = nLL, start = start,
+			  Q = Q, L = L, res = res, prof = prof, lower = lower, upper = upper)
+	class(X) <- "PLUE"
+	return(X)
+}
+	
+print.PLUE <- function(plue) {
+	stop("TODO!")
+}
+
+# Something like a plot.profmle for PLUE
+plot.PLUE <- function(plue) {
+	plot(0, type='n', xlim =c(min(plue$lower), max(plue$upper)), 
+		 ylim=c(0, max(plue$prof)), main="PLUE", xlab="Result", ylab="Delta Likelihood")
+	lines(plue$prof~plue$lower)
+	lines(plue$prof~plue$upper)
+	abline(h=2, lty=3)
+}
+
+####################### END PLUE CODE 
+# An example of how to use it (see pse.pdf sec. 3.7)
+# Helper functions for the model
+tr <- function (A) return(A[1,1]+A[2,2])
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+getlambda = function (sigma, f, gamma) {
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+}
+getlambda = Vectorize(getlambda)
+model <- function(x) getlambda(x[,1], x[,2], x[,3])
+
+factors = c("sigma", "f", "gamma")
+
+N = 100000
+
 # pop iniciail: juv, ad, total
 n <- c(10, 15); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev
+# x obs: maturados, nascidos, sobrev.totais
 obs <- c(3, 2, 23)
-# NOVA observacao, coerente com as observacoes acima
-new.n <- c(round(obs[3]/n.t*(n[1]-obs[1]))+obs[2],round(obs[3]/n.t*n[2])+obs[1]) 
+# melhor chute para os parametros
 sigma <- obs[3]/n.t
 f <- obs[2]/n[2]
 gamma <- obs[1]/n[1]
-A <- matrix(c(sigma*(1-gamma),f,sigma*gamma,sigma),byrow=T, ncol=2)
-tr <- function (A) return(A[1,1]+A[2,2])
-A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
-lambda <- A.to.lambda(A)
-# Agora vamos brincar de Metropolis!
-# jumping distribution
-Q <- function (x) rnorm (3, as.numeric(x), c(0.02,0.02, 0.02))
-# probability distribution
-Met.f <- function (x) {
+start = c(sigma, f, gamma)
+# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+LL <- function (x) {
+	# try... not working properly (still displays a lot of warning messages!)
 	t <- try(dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
 				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
 				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE))
-	if (is.nan(t)) return (-Inf)
 	return(t)
 }
-# Ponto inicial:
-x = data.frame(sigma=sigma, f=f, gamma=gamma, nLL = -Met.f(c(sigma,f,gamma)))
-atual <- as.numeric(x[1,])
-#
-#Iteration
-#
-for (i in 1:9999) {
-	novo <- Q(atual)
-	alfa <- Met.f(novo) - Met.f(atual)
-	if (is.nan(alfa)) alfa = -Inf
-	if (alfa >= 0 || runif(1,0,1) < exp(alfa)) { #aceite
-		x[nrow(x)+1,] <-  c(novo, -Met.f(novo))
-		atual <- novo
-	} else {
-		x[nrow(x)+1,] <- c(atual, -Met.f(atual))
-	}
-}
-dis <- x
-getlambda = function (sigma, f, gamma) A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
-getlambda = Vectorize(getlambda)
-dis <- cbind(dis, lambda = getlambda(dis[,1], dis[,2], dis[,3]))
 
-#save(dis, file="R/mini.Rdata")
-#load("R/mini.Rdata")
-d <- density(dis[,5])
-
-curve(dbinom(obs[3], n.t, x))
-curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
-curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
-
-plot(density(dis[,5]))
-
-dis
-
-
-mmin <- min(dis$nLL)
-mmax <- max(dis$nLL)
-prof <- seq(mmin, mmax, length.out=100)
-lower = c(); upper = c();
-for (i in 1:100)
-{
-	search <- dis$lambda[dis$nLL <= prof[i]]
-	lower[i] <- min(search); upper[i] <- max(search)
-}
-
-prof = prof - mmin
-plot(0, type='n', xlim =c(min(lower), max(upper)), ylim=c(0, max(prof)), main="PLUE", xlab="Result", ylab="Delta Likelihood")
-lines(prof~lower)
-lines(prof~upper)
-abline(h=2, lty=3)
+# On a 3 GHz Pentium, N = 10000 takes 7 secs, N = 100000 takes 700, so growth seems to be quadratic
+system.time(plue <- PLUE(model, factors, N, LL, start))
+plot(plue)
