@@ -256,7 +256,10 @@ a more detailed discussion).
 Taken together, all the distributions $D_i$ form the {\em joint probability
 distribution} of the parameters, $\bu{D}(\bu{x})$. This function takes into
 account not only the individual distribution of each parameter, but also
-all the correlation terms between them. 
+all the correlation terms between them\footnote{For clarity, it should be
+noted that the joint probability distribution is {\em not} used explicitly
+in the methods discussed here. Only the marginal distributions and correlation
+terms, if necessary, are explicitly used.}. 
 
 In very simple models, it may be possible to analitically deduce the behaviour
 of the model response taken at each point of the joint distribution of parameters.

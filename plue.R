@@ -1,7 +1,3 @@
-logistic <- function (p) exp(p)/(1+exp(p))
-logit <- function (p) log(p) - log(1-p)
-curve(logistic(x),-9,9)
-
 set.seed(42)
 # pop iniciail: juv, ad, total
 n <- c(10, 15); n.t <- sum(n)
@@ -57,6 +53,23 @@ curve(dbinom(obs[3], n.t, x))
 curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
 curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 
-plot(density(dis[,4]))
+plot(density(dis[,5]))
 
 dis
+
+
+mmin <- min(dis$nLL)
+mmax <- max(dis$nLL)
+prof <- seq(mmin, mmax, length.out=100)
+lower = c(); upper = c();
+for (i in 1:100)
+{
+	search <- dis$lambda[dis$nLL <= prof[i]]
+	lower[i] <- min(search); upper[i] <- max(search)
+}
+
+prof = prof - mmin
+plot(0, type='n', xlim =c(min(lower), max(upper)), ylim=c(0, max(prof)), main="PLUE", xlab="Result", ylab="Delta Likelihood")
+lines(prof~lower)
+lines(prof~upper)
+abline(h=2, lty=3)
