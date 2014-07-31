@@ -1,22 +1,12 @@
-# Use PLUE to perform a Profile Likelihood Uncertainty Analysis
-# Comments on the parameters below
-PLUE <- function(model, factors, N, LL, start, Q = NULL) {
-	if (is.numeric(factors) && length(factors) == 1) {
-		factors = paste("I", 1:factors, sep = "")
-	} else if (!is.character(factors)) {
-		stop("Error in function PLUE: factors should be either a single number or a character vector")
-	}
-	if (!is.numeric(N) || length(N) != 1) {
-		stop("Error in function PLUE: N should be a single number")
-	}
-	if (class(LL) != "function") {
-		stop("Error in function PLUE: nLL should be a function")
-	}
-	# jumping distribution
-	if (is.null(Q)) {
-		Q <- function (x) rnorm (length(factors), as.numeric(x), rep(0.02, length(factors)))
-	}
+valid <- function(x) (!is.infinite(x)) & (!is.nan(x)) & (!is.na(x)) 
 
+MCMC.internal <- function(LL, start, opts) {
+	# jumping distribution
+	if (is.null(opts$Q)) {
+		Q <- function (x) rnorm (length(factors), as.numeric(x), rep(0.02, length(factors)))
+	} else {
+		Q <- opts$Q
+	}
 	current <- as.numeric(start)
 	# L will hold our input data
 	L = as.data.frame(matrix(nrow = N, ncol = length(factors)))
@@ -39,27 +29,60 @@ PLUE <- function(model, factors, N, LL, start, Q = NULL) {
 			nLL[i] <- -LL(new)
 		}
 	}
+	return (list(L=L, nLL=nLL))
+}
 
+
+
+# Use PLUE to perform a Profile Likelihood Uncertainty Analysis
+# Comments on the parameters below
+PLUE <- function(model, factors, N, LL, start, method=c("internal", "mcmc"), opts = list()) {
+	# Input validation for common errors and "default" value handling:
+	method = match.arg(method)
+	my.opts = list(Q=NULL)
+	my.opts[names(opts)] <- opts
+
+	if (is.numeric(factors) && length(factors) == 1) {
+		factors = paste("I", 1:factors, sep = "")
+	} else if (!is.character(factors)) {
+		stop("Error in function PLUE: factors should be either a single number or a character vector")
+	}
+	if (!is.numeric(N) || length(N) != 1) {
+		stop("Error in function PLUE: N should be a single number")
+	}
+	if (class(LL) != "function") {
+		stop("Error in function PLUE: nLL should be a function")
+	}
+
+	if (method=="internal") {
+		data = MCMC.internal(LL, start, opts)
+	} else {
+		require(mcmc)
+		stop("TODO!")
+	}
 	# Apply the model to the input data
-	res <- model(L)
+	res <- model(data$L)
 
 	# Now we profile the results to find out 
 	# "what are the lower/upper limits to the 0.1-Delta nLL region?"
 	# "what are the lower/upper limits to the 0.2-Delta nLL region?"
 	# and so on and so on
-	mmin <- min(nLL[!is.infinite(nLL)])
-	mmax <- max(nLL[!is.infinite(nLL)])
+	
+	mmin <- min(data$nLL[valid(data$nLL) ])
+	mmax <- max(data$nLL[valid(data$nLL)])
 	prof <- seq(mmin, mmax, length.out=100)
 	lower = c(); upper = c();
 	for (i in 1:100)
 	{
-		search <- res[nLL <= prof[i]]
+		search <- res[data$nLL <= prof[i]]
+		search <- search[valid(search)]
 		lower[i] <- min(search); upper[i] <- max(search)
 	}
 	# finally, we subtract the minimum LL to normalize the profile to 0
 	prof = prof - mmin
-	X <- list(call = match.call(), N = N, model = model, factors = factors, LL = LL, nLL = nLL, start = start,
-			  Q = Q, L = L, res = res, prof = prof, lower = lower, upper = upper)
+
+	X <- list(call = match.call(), N = N, model = model, factors = factors, LL = LL, nLL = data$nLL, start = start,
+			  opts = opts, data = data$L, res = res, prof = prof, lower = lower, upper = upper)
 	class(X) <- "PLUE"
 	return(X)
 }
@@ -90,7 +113,7 @@ model <- function(x) getlambda(x[,1], x[,2], x[,3])
 
 factors = c("sigma", "f", "gamma")
 
-N = 100000
+N = 20000
 
 # pop iniciail: juv, ad, total
 n <- c(10, 15); n.t <- sum(n)
