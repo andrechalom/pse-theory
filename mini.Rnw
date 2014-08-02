@@ -201,3 +201,48 @@ abline(h=0, lty=3)
 @
 	\label{fig:lambdaprcc}
 \end{figure}
+
+<<>>=
+
+####################### END PLUE CODE 
+# An example of how to use it (see pse.pdf sec. 3.7)
+# Helper functions for the model
+tr <- function (A) return(A[1,1]+A[2,2])
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+getlambda = function (sigma, f, gamma) {
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+}
+getlambda = Vectorize(getlambda)
+model <- function(x) getlambda(x[,1], x[,2], x[,3])
+
+factors = c("sigma", "f", "gamma")
+
+N = 10000
+
+# pop iniciail: juv, ad, total
+n <- c(100, 150); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(30, 20, 230)
+# melhor chute para os parametros
+sigma <- obs[3]/n.t
+f <- obs[2]/n[2]
+gamma <- obs[1]/n[1]
+start = c(sigma, f, gamma)
+# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+LL <- function (x) 
+{
+	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+	if (is.nan(t)) return (-Inf);
+	return(t);
+}
+
+# On a 3 GHz Pentium, N = 10000 takes 7 secs, N = 100000 takes 700, so growth seems to be quadratic
+##system.time(plue <- PLUE(model, factors, N, LL, start))
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10))
+plot(plue)
+
+get.results(plue)
+
+@
