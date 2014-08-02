@@ -1,5 +1,7 @@
 valid <- function(x) (!is.infinite(x)) & (!is.nan(x)) & (!is.na(x)) 
 
+# Simple Metropolis algorithm, provided to make the analyses possible without
+# depending on the mcmc package
 MCMC.internal <- function(LL, start, opts) {
 	# jumping distribution
 	if (is.null(opts$Q)) {
@@ -32,14 +34,12 @@ MCMC.internal <- function(LL, start, opts) {
 	return (list(L=L, nLL=nLL))
 }
 
-
-
 # Use PLUE to perform a Profile Likelihood Uncertainty Analysis
 # Comments on the parameters below
 PLUE <- function(model, factors, N, LL, start, method=c("internal", "mcmc"), opts = list()) {
 	# Input validation for common errors and "default" value handling:
 	method = match.arg(method)
-	my.opts = list(Q=NULL)
+	my.opts = list(Q=NULL, blen=1, nspac=1, scale=1)
 	my.opts[names(opts)] <- opts
 
 	if (is.numeric(factors) && length(factors) == 1) {
@@ -55,10 +55,12 @@ PLUE <- function(model, factors, N, LL, start, method=c("internal", "mcmc"), opt
 	}
 
 	if (method=="internal") {
-		data = MCMC.internal(LL, start, opts)
-	} else {
+		data = MCMC.internal(LL, start, my.opts)
+	} else { # using the mcmc package
 		require(mcmc)
-		stop("TODO!")
+		outfun <- function(x) return(c(x, -LL(x))) # makes metrop return the nLL along with each data point
+		temp <- mcmc::metrop(LL, start, N, blen=my.opts$blen, nspac=my.opts$nspac, scale=my.opts$scale, outfun=outfun)
+		data <- list(L=temp$batch[,-ncol(temp$batch)], nLL=temp$batch[,ncol(temp$batch)])
 	}
 	# Apply the model to the input data
 	res <- model(data$L)
@@ -70,19 +72,20 @@ PLUE <- function(model, factors, N, LL, start, method=c("internal", "mcmc"), opt
 	
 	mmin <- min(data$nLL[valid(data$nLL) ])
 	mmax <- max(data$nLL[valid(data$nLL)])
-	prof <- seq(mmin, mmax, length.out=100)
+	prof <- seq(mmin, mmax, length.out=200)
 	lower = c(); upper = c();
-	for (i in 1:100)
+	for (i in 1:200)
 	{
 		search <- res[data$nLL <= prof[i]]
-		search <- search[valid(search)]
+		search <- search[valid(search)] #throw away NA, NaN, Inf, etc
 		lower[i] <- min(search); upper[i] <- max(search)
 	}
 	# finally, we subtract the minimum LL to normalize the profile to 0
 	prof = prof - mmin
+	profile <- rbind(data.frame(limit = lower[200:1], ll = prof[200:1]), data.frame(limit=upper, ll = prof))
 
 	X <- list(call = match.call(), N = N, model = model, factors = factors, LL = LL, nLL = data$nLL, start = start,
-			  opts = opts, data = data$L, res = res, prof = prof, lower = lower, upper = upper)
+			  opts = opts, data = data$L, res = res, profile = profile)
 	class(X) <- "PLUE"
 	return(X)
 }
@@ -93,10 +96,7 @@ print.PLUE <- function(plue) {
 
 # Something like a plot.profmle for PLUE
 plot.PLUE <- function(plue) {
-	plot(0, type='n', xlim =c(min(plue$lower), max(plue$upper)), 
-		 ylim=c(0, max(plue$prof)), main="PLUE", xlab="Result", ylab="Delta Likelihood")
-	lines(plue$prof~plue$lower)
-	lines(plue$prof~plue$upper)
+	plot(plue$profile, type="l", main="PLUE", xlab="Result", ylab="Delta Likelihood")
 	abline(h=2, lty=3)
 }
 
@@ -113,26 +113,28 @@ model <- function(x) getlambda(x[,1], x[,2], x[,3])
 
 factors = c("sigma", "f", "gamma")
 
-N = 20000
+N = 1000000
 
 # pop iniciail: juv, ad, total
-n <- c(10, 15); n.t <- sum(n)
+n <- c(100, 150); n.t <- sum(n)
 # x obs: maturados, nascidos, sobrev.totais
-obs <- c(3, 2, 23)
+obs <- c(30, 20, 230)
 # melhor chute para os parametros
 sigma <- obs[3]/n.t
 f <- obs[2]/n[2]
 gamma <- obs[1]/n[1]
 start = c(sigma, f, gamma)
 # probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
-LL <- function (x) {
-	# try... not working properly (still displays a lot of warning messages!)
-	t <- try(dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+LL <- function (x) 
+{
+	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
 				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
-				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE))
-	return(t)
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+	if (is.nan(t)) return (-Inf);
+	return(t);
 }
 
 # On a 3 GHz Pentium, N = 10000 takes 7 secs, N = 100000 takes 700, so growth seems to be quadratic
-system.time(plue <- PLUE(model, factors, N, LL, start))
+##system.time(plue <- PLUE(model, factors, N, LL, start))
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10))
 plot(plue)
