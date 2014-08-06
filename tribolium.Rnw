@@ -1,31 +1,41 @@
 \SweaveOpts{fig=T,echo=F}
 \setkeys{Gin}{width=0.8\textwidth}
 
-\section{Estudo de caso 2: Modelo 
-n\~ao linear do crescimento populacional de {\em Tribolium}}
+\section{Case study 2: Non-linear structured model of {\em Tribolium} population}\label{Tribolium}
 
-Embora a teoria para calcular sensibilidades e elasticidades de modelos matriciais
-lineares remonte ao final d\'ecada de 70, uma teoria para o estudo consistente
-de \'indices de sensibilidade para modelos n\~ao lineares (por exemplo, nos quais
-taxas de transi\c c\~ao dependem da densidade ou frequ\^encia de alguma classe)
-s\'o foi formalizada por Hal Caswell em uma s\'erie de trabalhos publicados entre 2008
-e 2010.
+\subsection{Model description}
+In this section, we present another example of performing uncertainty and sensitivity analyses
+to structured population models. This particular example was chosen because of its use by Hal Caswell
+in a series of papers published between 2008 and 2010, to illustrate the newly developed 
+techniques of analytical sensitivity analyses. Although the theory which provides the tools
+to determine sensitivity and elasticity of linear matrix models has been established in the late
+1970s, a consistent theory for the study of sensitivity of non-linear models (those in which the
+transition frequencies depend on the density or frequency or some size or age class) has only
+been fully developed in the recent years \citep{Caswell08, Caswell09, Caswell10}.
 
-Assim, a sensibilidade de modelos matriciais gerais em ecologia de popula\c c\~oes
-vem sendo feita por uma abordagem anal\'itica, que, em linhas gerais, consiste em
-linearizar a matriz de transi\c c\~ao pr\'oxima ao ponto de equil\'ibrio e aplicar
-regras do c\'alculo matricial para extrair resultados anal\'iticos sobre a 
-sensibilidade da matriz linearizada aos par\^ametros.
+In terms of the analytical analyses, the {\em sensitivity} of the result $y$ in respect to a
+parameter $x$ is given by the derivative $\frac{dy}{dx}$, and represents the additive effect
+that a small perturbation in $x$ exerts over the result $y$. The {\em elasticity} of $y$ in
+respect to $x$ is given by $\frac{x}{y}\frac{dy}{dx}$, and represents the proportional effect 
+of this perturbation.
 
-A sensibilidade do resultado $y$ de um modelo a um par\^ametro $x$ \'e dada pela derivada
-$\frac{dy}{dx}$, e representa o efeito aditivo que uma pequena pequena perturba\c c\~ao 
-em $x$ exerce no resultado $y$. J\'a a elasticidade de $y$ em rela\c c\~ao a $x$ \'e dada por
-$\frac{x}{y}\frac{dy}{dx}$, e representa o efeito proporcial dessa pequena perturba\c c\~ao.
+To be able to compare the analytical results to a stochastic analysis based on Latin Hypercubes,
+we need to define how to estimate the elasticity using this methodology. The formula $\frac{x}{y}\frac{dy}{dx}$
+needs to be adjusted in our context for two reasons: first, the derivative must be estimated with some
+numerical calculus, and second, the fraction $\frac{x}{y}$ is meaningless as there are no privileged points
+to base our analyses on. We propose the following formula as a candidate definition for the
+elasticity of $y$ in relation to $x$, evaluated with a stochastic procedure:
 
-Um exemplo muito utilizado pelo Caswell para ilustrar sensibilidade em modelos com 
-denso-dependencia \'e o modelo para o crescimento populacional do besouro {\em Tribolium}.
+\begin{equation}
+	\frac{\langle x \rangle}{ \langle y \rangle}s_{yx}
+\end{equation}
 
-A matriz de transi\c c\~ao desse modelo \'e:
+Here, the brackets $\langle \rangle$ represent the average of a function, and
+$s_{yx}$ \'e is the linear partial correlation coeficient of $y$ in relation to $x$.
+We stress that this is an arbitrary decision, but as we will show in the following subsection,
+it agrees with the analytical results for the investigated model.
+
+The transition matriz for the {\em Tribolium} model is given by:
 
 \begin{equation}
 	\mathbf{A}[\mathbf{\theta},\mathbf{n}]  = \left[
@@ -38,20 +48,21 @@ A matriz de transi\c c\~ao desse modelo \'e:
 		\label{TribLefMatrix}
 \end{equation}
 
-Aqui, $\mathbf{n}(t)$ \'e o vetor que representa a popula\c c\~ao de besouros dividida em
-tr\^es fases de vida, larva, pupa e adulto e $\mathbf{\theta}$ \'e o vetor de par\^ametros.
+Here, $\mathbf{n}(t)$ is the vector representing the beetle population, divided in three life stages:
+larva, pupae and adult. The vector $\mathbf{\theta}$ represents the model parameters, i.e., the vital rates
+used in the model.
 
-Os termos n\~ao nulos dessa matriz, lendo da esquerda para a direita e de cima para baixo, s\~ao:
+The non-zero elements of this matriz, from left to right and from top to bottom, are:
 \begin{itemize}
-	\item Fecundidade dos adultos, dada pelo tamanho da ninhada $b$ vezes um termo de redu\c c\~ao
-		devido a canibalismo dos ovos por adultos (a uma taxa $c_{ea}$) e por larvas (a uma taxa $c_{el}$);
-	\item Matura\c c\~ao das larvas, reduzida pela mortalidade natural das larvas $\mu_l$;
-	\item Eclos\~ao das pupas, reduzida pelo canibalismo por adultos a uma taxa $c_{pa}$ - a mortalidade
-		natural das pupas \'e efetivamente zero;
-	\item Perman\^encia na classe adulta, menos a mortalidade natural dos adultos $\mu_a$.
+	\item Adult fecundity, given by clutch size $b$ times a term of canibalism of eggs by
+		adults (at a rate $c_{ea}$) and by larvae (at a rate $c_{el}$);
+	\item Maturation of larvae, reduced by base death rate $\mu_l$;
+	\item Pupae eclosion, reduced by canibalism from adults at a rate $c_{pa}$ 
+		(base pupae death rate is effectively zero);
+	\item Permanence in the adult class, reduced by base adult mortality rate $\mu_a$.
 \end{itemize}
 
-Os par\^ametros estimados pelo paper original (por Costantino, 1997) s\~ao:
+The best estimator for the parameter values, given by the original paper\citep{Dennis1995}, is
 
 <<params, fig=FALSE, echo=TRUE>>=
 b = 6.598
@@ -113,15 +124,18 @@ TheModel <- function (x) {
 load("R/Triboliumpeq.Rdata")
 @
 
-O paper original se importa com o equivalente metab\'olico dos besouros nas diferentes fases de vida,
-que \'e dado pela express\~ao $N_m(t) = \mathbf{c}^T\mathbf{n}(t)$, onde $\mathbf{c}^T = ( 9, 1,  4.5)
-\mu l CO_2h^{-1}$. 
-Assim, em todos os c\'alculos abaixo, vamos nos focar em $N_m(t)$, que \'e uma quantidade escalar.
+Also, the original paper focuses on the metabolic equivalent of the beetle population from
+different life stages, which is given by $N_m(t) = \mathbf{c}^T\mathbf{n}(t)$, 
+with $\mathbf{c}^T = ( 9, 1,  4.5) \mu l CO_2h^{-1}$. Thus, we will focus on $N_m(t)$, 
+which is a scalar quantity.
 
-Com estes par\^ametros, o modelo converge para um ponto fixo est\'avel no qual $N_m(t) = 1952$.
+Using the parameters given above, the model converges to a stable fixed point in which
+$N_m(t) = 1952$.
 
-A an\'alise de elasticidade anal\'itica, seguindo Caswell 
-(e replicando a figura apresentada no trabalho de 2008), segue na figura \ref{analitico}:
+\subsection{Elasticity analyses}
+The results of analytical elasticity analysis, following \citep{Caswell08} (and replicating
+the figure displayed in that paper), are displayed on figure \ref{analitico}\footnote{
+The calculations are worked out step by step in the reference cited}.
 
 \begin{figure}[h!]
 <<caswell, fig=TRUE>>=
@@ -165,59 +179,49 @@ elas <- n.1 %*% dndtheta %*% Mtheta
 dNdtheta <- as.numeric(1/(ct %*% n)) * ct %*% dndtheta %*% Mtheta
 barplot(dNdtheta, names=c("b", "cea", "cel", "cpa", "mua", "mul"), ylim=c(-1,1))
 @
-	\caption{An\'alise de elasticidade anal\'itica para o modelo de
-	crescimento de besouros do g\^enero {\em Tribolium}. As barras
-	representam a elasticidade do equivalente metab\'olico da 
-	popula\c c\~ao aos par\^ametros.}
+	\caption{Analytical elasticity analysis for the structured population growth
+	model of {\em Tribolium} beetles. Bars represent the elasticity of the metabolic
+	equivalent of the equilibrium population in respect to each parameter.}
 	\label{analitico}
 \end{figure}
 
-Um aumento na fecundidade dos besouros causa uma altera\c c\~ao 
-positiva no valor de $N_m(t)$. Todos os outros par\^ametros levam
-a elasticidades negativas, com $c_{ea}$ tendo o maior impacto.
+A raise in the beetle's clutch size causes a positive change on
+the final value of $N_m(t)$. All other parameters have negative
+elasticities, with $c_{ea}$ having the greatest impact.
 
-Usando uma abordagem estoc\'astica de explora\c c\~ao de espa\c co
-de par\^ametros com o hipercubo latino, podemos recalcular essas
-elasticidades sorteando valores de uma matriz normal centrada na
-estimativa original e com baixa dispers\~ao. O resultado, apresentado
-na figura \ref{LHSpeq}, mostra que h\'a uma boa correspond\^encia entre os
-m\'etodos.
+After this analyses, we proceed to a stochastic exploration of the
+parameter space with the Latin Hypercube. All parameters are supposed to be
+normally distributed with a small dispersion (standard deviation of \Sexpr{commonsd}).
+The result, presented on figure \ref{LHSpeq}, shows that there is a good correspondence
+between both methods.
 
 \begin{figure}
 <<LHSpeq>>=
 plotelast(LHSpeq)
 @
-	\caption{An\'alise de elasticidade estoc\'astica para o modelo de
-	crescimento de besouros do g\^enero {\em Tribolium} assumindo
-	pequenos erros de medida. As barras
-	representam a elasticidade do equivalente metab\'olico da 
-	popula\c c\~ao aos par\^ametros.}
+	\caption{Stochastic elasticity analysis for the structured population growth
+	model of {\em Tribolium} beetles, assumind small perturbations. 
+	Bars represent the elasticity of the metabolic
+	equivalent of the equilibrium population in respect to each parameter.}
 	\label{LHSpeq}
 \end{figure}
 
-No entanto, o m\'etodo desenvolvido por Caswell se limita a uma 
-vizinhan\c ca muito pr\'oxima ao ponto correspondente aos 
-par\^ametros estimados. Caso o erro na estimativa seja suficientemente
-grande para que a aproxima\c c\~ao linear da matriz de transi\c c\~ao
-se torne inv\'alida, outros m\'etodos se fazem necess\'arios para
-estudar a sensibilidade do modelo. 
-O qu\~ao ``grande'' esse erro
-deve ser depende fortemente do modelo utilizado.
-Uma possibilidade anal\'itica para
-resolver seria a inclus\~ao de derivadas de segunda ordem nos c\'alculos,
-ou ordens maiores, o que levaria a um crescimento muito r\'apido
-na complexidade das contas realizadas.
+However, the analytical methods due to Caswell are limited to a very narrow neighbourhood
+of the estimated parameter vector. If the measurement error is large enough that
+the linear approximation of the matrix becomes invalid, other methods are needed in order
+to study the sensitivity of the model. A purely analytical possibility is to take into account
+higher order derivatives of the matrix terms; however, that leads to a very fast growth of the
+complexity of the calculations. The stochastic approach to estimate sensitivity and elasticity 
+of the parameters has the advantage of being performed in exactly the same way, regardless of 
+how large is the uncertainty of the input parameters. 
 
-A abordagem estoc\'astica para estimar a sensibilidade dos par\^ametros
-tem a vantagem de ser feita da mesma forma, n\~ao importando o tamanho
-da incerteza nos par\^ametros. Realizando a mesma an\'alise, mas agora com
-uma distribui\c c\~ao uniforme dos par\^ametros, 
-encontramos um cen\'ario de n\~ao-linearidade. A figura \ref{corPlot}
-mostra os gr\'aficos de dispers\~ao, mostrando uma forte resposta
-n\~ao linear ao par\^ametro $c_{ea}$ e poss\'iveis intera\c c\~oes 
-entre os par\^ametros. Para esta an\'alise, foram exclu\'idas as
-simula\c c\~oes na qual a popula\c c\~ao n\~ao convergiu para um
-ponto fixo ap\'os 2000 itera\c c\~oes.
+We have repeated the same analysis, but now with an uniform distribution of the parameters
+with very large ranges (from $0$ to $1$ in the rates, and from $2$ to $12$ in the clutch 
+size), and have found out a much more complex figure, including non-linear and interaction
+terms between the parameters. Figure \ref{corPlot} shows the scatter plots, presenting a 
+strong nonlinear response to the $c_{ea}$ parameter and possibly complex interactions 
+between parameters. In this analysis, we have excluded simulations where the population
+did not converge after 2000 time steps.
 
 \begin{figure}
 <<corPlot, echo=FALSE>>=
@@ -241,29 +245,14 @@ mud.elas <- round(100*(elast(LHSlge)-elast(LHSpeq))/elast(LHSpeq))
 	\label{corPlot}
 \end{figure}
 
-Ao fazer uma compara\c c\~ao sobre a elasticidade de modelos usando
-a abordagem estoc\'astica, \'e preciso lembrar que a elasticidade
-dos par\^ametro n\~ao pode ser calculada a partir da 
-f\'ormula $\frac{x}{y}\frac{dy}{dx}$. Em primeiro lugar, a estimativa
-da derivada precisa ser realizada numericamente, e em segundo lugar, 
-a fra\c c\~ao $\frac{x}{y}$ n\~ao faz sentido se n\~ao h\'a um ponto
-privilegiado ao redor do qual a an\'alise est\'a sendo feita. Portanto,
-propomos como elasticidade de $y$ em rela\c c\~ao a $x$ o produto
-$\frac{\langle x \rangle}{ \langle y \rangle}s_{yx}$, em que o sinal de $\langle \rangle$ representa 
-a m\'edia e $s_{yx}$ \'e o coeficiente linear da regress\~ao parcial
-de $y$ em fun\c c\~ao de $x$. % PI: qual a justificativa? C: é uma das extensões possíveis. 
+The corresponding elasticity analysis, now with a less restricted parameter space,
+are shown on figure \ref{LHSlge}. Even if no elasticity has changed its direction,
+all present a marked difference between the small and large perturbation scenarios.
+The biggest change occurs on parameter $\mu_l$, which raises by \Sexpr{mud.elas[6]}\%. 
 
-O resultado dessa an\'alise de elasticidade, sem restringir os par\^ametros
-a uma pequena regi\~ao no entorno da medida obtida, podem ser visualizados
-na figura \ref{LHSlge}. Embora n\~ao haja nenhum par\^ametro cuja elasticidade
-troca de sinal, todos apresentam uma diferen\c ca acentuada. A maior
-diferen\c ca \'e dada na elasticidade do par\^ametro $\mu_l$, que 
-sofre um aumento de \Sexpr{mud.elas[6]}\%. 
-
-Dada essa mudan\c ca importante nos valores, conv\'em lembrar que a
-contradi\c c\~ao entre a an\'alise anal\'itica e a estoc\'astica
-n\~ao significa que um dos m\'etodos est\'a mais correto do que outro, mas
-sim que eles representam respostas a diferentes quest\~oes.
+Given this marked difference between the values, it is necessary to remember that this
+contradiction does not mean that one method is right while the other is wrong:
+each method is answering a different question.
 
 \begin{figure}
 <<LHSlge>>=
@@ -276,46 +265,3 @@ plotelast(LHSlge)
 	popula\c c\~ao aos par\^ametros.}
 	\label{LHSlge}
 \end{figure}
-
-Após a definição de uma metodologia integrativa coerente com o verossimilhantismo,
-essa análise poderá ser aplicada ao modelo de {\em Tribolium}, a partir de dados
-originais em \cite{Desharnais87}.
-
-<<dadosDesharnais, fig=F>>=
-days <- seq(0, 266, by=14)
-adults <- c(64, 78, 78, 77, 61, 85, 102, 104, 120, 122, 132, 120, 113, 97, 136, 122, 117, 105, 120, 99)
-pupae <- c(35, 4, 109, 28, 77, 71, 36, 136, 35, 76, 28, 252, 5, 236, 20, 176, 7, 189, 12, 226)
-larvae <- c(70, 263, 75, 125, 203, 57, 182, 27, 265, 32, 309, 8, 360, 24, 357, 117, 373, 14, 404, 2)
-trib <- data.frame(adults, pupae, larvae)
-trib.conf <- as.vector(t(trib))
-rownames(trib) <- days
-#matplot(trib, type='l')
-# Nova funcao para calcular a serie temporal completa, e nao apenas o eq. metabolico da pop final
-Tribolium <- function(b, cea, cel, cpa, mua, mul, a, p, l, time) {
-		Np <- c(a, p, l) #Pop inicial!
-		myp <- Np
-		for(i in 1:time) {
-				L <- matrix(c(0, 0, abs(b)*exp(-abs(cel)*Np[1] - abs(cea)*Np[3]),
-							1-abs(mul), 0, 0,
-							0, exp(-abs(cpa)*Np[3]), 1-abs(mua)), nrow=3, byrow=TRUE)
-				myp <- L %*% myp
-				Np <- c(Np, myp)
-		}
-#	result <- ct %*% Np;
-	return (Np);
-}
-TheModel <- function (x) {
-	return(mapply(Tribolium, x[,1], x[,2],x[,3],x[,4],x[,5],x[,6], 64, 35, 70, 19))
-}
-### OTIMIZACAO NAO FUNCIONA!!!
-logistic <- function (p) exp(p)/(1+exp(p))
-logit <- function (p) log(p) - log(1-p)
-constrain <- function(x) c(exp(x[1]), logistic(x[2]), logistic(x[3]), logistic(x[4]), logistic(x[5]), logistic(x[6]))
-ssqres <- function (x) sum((Tribolium(x[1], x[2], x[3], x[4], x[5], x[6], 64, 35, 70, 19) - trib.conf)^2)
-cssqres <- function(x) ssqres(constrain(x))
-#a <- optim(par=c(log(b), logit(cea), logit(cel), logit(cpa), logit(mua), logit(mul)), fn=cssqres, method="SANN", control=list(maxit=2000))
-#print(a$par)
-#test <- Tribolium(exp(a$par[1]), logistic(a$par[2]), logistic(a$par[3]), logistic(a$par[4]), logistic(a$par[5]), logistic(a$par[6]), 64, 35, 70, 19)
-#test <- matrix(test, ncol=3, byrow=T)
-#matplot(test)
-@

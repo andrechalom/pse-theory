@@ -242,7 +242,4 @@ LL <- function (x)
 ##system.time(plue <- PLUE(model, factors, N, LL, start))
 plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10))
 plot(plue)
-
-get.results(plue)
-
 @

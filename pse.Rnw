@@ -166,8 +166,8 @@ Paulo Inácio de Knegt López de Prado}
 	  da probabilidade, situando o conceito da verossimilhança como componente central da inferência estatística.
 
 	  O capítulo 2 (em inglês) traz uma revisão bibliográfica sobre o estado da arte em análises
-	  de incerteza e sensibilidade, apresentando um exemplo de aplicação das técnicas descritas a um
-	  problema de crescimento populacional estruturado.
+	  de incerteza e sensibilidade, apresentando dois exemplos de aplicação das técnicas descritas a
+	  problemas de crescimento populacional estruturado.
 
 	  O capítulo 3 examina a proposta de uma metodologia baseada na verossimilhança dos dados
 	  como uma abordagem integrativa entre a estimação de parâmetros e a análise de incerteza, apresentando
@@ -243,6 +243,7 @@ http://cran.r-project.org/web/packages/pse.
 \input sampling.tex
 \input quantanal.tex
 \input leslie.tex
+\input tribolium.tex
 \input revlit.tex
 
 % CAPITULO 3
@@ -251,7 +252,6 @@ http://cran.r-project.org/web/packages/pse.
 \input integr.tex
 \input caveat.tex
 \input mini.tex
-\input tribolium.tex
 
 \appendix
 \selectlanguage{english}

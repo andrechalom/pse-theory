@@ -8,12 +8,6 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex intro.tex sampling.tex q
 	-pdflatex ${PROJ}
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 
-integr: integr.tex
-	pdflatex integr
-
-caveat:
-	pdflatex new/caveat
-
 leslie.tex: leslie.Rnw R/leslie.Rdata
 
 clean:
