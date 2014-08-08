@@ -1,5 +1,9 @@
 \SweaveOpts{fig=T,echo=F}
-\section{Estudo de caso 1: um modelo mínimo}
+\section{PLUE: uma proposta de perfilhamento de verossimilhança}
+
+
+
+\section{Estudo de caso 3: um modelo mínimo}
 
 Um modelo de população estruturada que pode ser considerado mínimo é o modelo
 com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por Hal Caswell \citep{Caswell08} 
@@ -67,7 +71,7 @@ calculado como o número de indivíduos observado menos $x_J$:
 
 Com o pressuposto forte de que as três variáveis são independentes, e escrevendo $n_t = n_3$ e 
 $\{x_A, x_J, x_S\} = \{x_1, x_2, x_3\}$
-para facilitar a notação\footnote{Importante frisar: $x_1$ não corresponde aqui ao número de juvenis observados após um ciclo}
+para facilitar a notação\footnote{Importante frisar: $x_1$ não corresponde aqui ao número de juvenis observados após um ciclo, etc.}
 a função de verossimilhança para o vetor de parâmetros $\boldsymbol\theta$ é:
 
 \begin{equation}
@@ -90,63 +94,39 @@ O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo
 
 <<load, fig=F>>=
 set.seed(42)
-# pop iniciail: juv, ad, total
+library(pse)
+# Helper functions for the model
+tr <- function (A) return(A[1,1]+A[2,2])
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+getlambda = function (sigma, f, gamma) {
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+}
+getlambda = Vectorize(getlambda)
+model <- function(x) getlambda(x[,1], x[,2], x[,3])
+
+factors = c("sigma", "f", "gamma")
+
+N = 10000
+
+# pop inicial: juv, ad, total
 n <- c(10, 15); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev
+# x obs: maturados, nascidos, sobrev.totais
 obs <- c(3, 2, 23)
-# NOVA observacao, coerente com as observacoes acima
-new.n <- c(round(obs[3]/n.t*(n[1]-obs[1]))+obs[2],round(obs[3]/n.t*n[2])+obs[1]) 
+# melhor chute para os parametros
 sigma <- obs[3]/n.t
 f <- obs[2]/n[2]
 gamma <- obs[1]/n[1]
-A <- matrix(c(sigma*(1-gamma),f,sigma*gamma,sigma),byrow=T, ncol=2)
-tr <- function (A) return(A[1,1]+A[2,2])
-A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
-lambda <- A.to.lambda(A)
-# Agora vamos brincar de Metropolis!
-# Ponto inicial:
-x = data.frame(sigma=sigma, f=f, gamma=gamma)
-atual <- as.numeric(x[1,])
-# jumping distribution
-Q <- function (x) rnorm (3, as.numeric(x), c(0.02,0.02, 0.02))
-# probability distribution
-Met.f <- function (x) {
-	t <- try(dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+start = c(sigma, f, gamma)
+# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+LL <- function (x) 
+{
+	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
 				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
-				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE))
-	if (is.nan(t)) return (-Inf)
-	return(t)
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+	if (is.nan(t)) return (-Inf);
+	return(t);
 }
-#
-#Iteration
-#
-#for (i in 1:9999) {
-#	novo <- Q(atual)
-#	alfa <- Met.f(novo) - Met.f(atual)
-#	if (is.nan(alfa)) alfa = -Inf
-#	if (alfa >= 0 || runif(1,0,1) < exp(alfa)) { #aceite
-#		x[nrow(x)+1,] <-  novo
-#		atual <- novo
-#	} else {
-#		x[nrow(x)+1,] <- atual
-#	}
-#}
-#dis <- x
-getlambda = function (sigma, f, gamma) A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
-getlambda = Vectorize(getlambda)
-#dis <- cbind(dis, lambda = getlambda(dis[,1], dis[,2], dis[,3]))
-#save(dis, file="R/mini.Rdata")
-load("R/mini.Rdata")
-d <- density(dis[,4])
-
-#ALTERNATIVA
-#library(mcmc)
-#atual <- as.numeric(x[1,])
-#m <- metrop(Met.f, atual, 99999, blen=5)
-#dis <- m$batch
-# Analise de incerteza sobre lambda
-# instabilidades numericas...
-#dis$lambda[dis$lambda<0] <- - dis$lambda[dis$lambda<0]
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10))
 @
 
 Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
@@ -179,67 +159,21 @@ Futuramente, serão realizadas análises mais aprofundadas sobre esse exemplo.
 
 \begin{figure}
 <<Case1>>=
-plot(density(dis[,4]))
+plot(plue)
 @
-	\caption{Distribuição dos resultados do modelo obtidos amostrando-se a função de verossimilhança dos parâmetros.}
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
 	\label{fig:lambda}
 \end{figure}
 \begin{figure}
 <<>>=
 # Analise de sensibilidade sobre lambda
-library(pse)
-library(sensitivity)
-#source("R/pse.R")
-plotscatter(dis[,c(1,2,3)], dis[,4])
+plotscatter(plue)
 @
 	\label{fig:lambdascatter}
 \end{figure}
 \begin{figure}
 <<>>=
-plot(pcc(dis[,c(1,2,3)], dis[,4], rank=TRUE))
-abline(h=0, lty=3)
+plotprcc(plue)
 @
 	\label{fig:lambdaprcc}
 \end{figure}
-
-<<>>=
-
-####################### END PLUE CODE 
-# An example of how to use it (see pse.pdf sec. 3.7)
-# Helper functions for the model
-tr <- function (A) return(A[1,1]+A[2,2])
-A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
-getlambda = function (sigma, f, gamma) {
-	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
-}
-getlambda = Vectorize(getlambda)
-model <- function(x) getlambda(x[,1], x[,2], x[,3])
-
-factors = c("sigma", "f", "gamma")
-
-N = 10000
-
-# pop iniciail: juv, ad, total
-n <- c(100, 150); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev.totais
-obs <- c(30, 20, 230)
-# melhor chute para os parametros
-sigma <- obs[3]/n.t
-f <- obs[2]/n[2]
-gamma <- obs[1]/n[1]
-start = c(sigma, f, gamma)
-# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
-LL <- function (x) 
-{
-	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
-				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
-				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
-	if (is.nan(t)) return (-Inf);
-	return(t);
-}
-
-# On a 3 GHz Pentium, N = 10000 takes 7 secs, N = 100000 takes 700, so growth seems to be quadratic
-##system.time(plue <- PLUE(model, factors, N, LL, start))
-plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10))
-plot(plue)
-@
