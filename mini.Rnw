@@ -117,6 +117,7 @@ sigma <- obs[3]/n.t
 f <- obs[2]/n[2]
 gamma <- obs[1]/n[1]
 start = c(sigma, f, gamma)
+lambda <- getlambda(sigma, f, gamma)
 # probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
 LL <- function (x) 
 {
@@ -126,7 +127,8 @@ LL <- function (x)
 	if (is.nan(t)) return (-Inf);
 	return(t);
 }
-plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10))
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
 @
 
 Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
@@ -146,16 +148,14 @@ curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 \end{figure}
 
 A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
-foram utilizadas para gerar \Sexpr{dim(dis)[1]} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
-de $\lambda$. A distribuição dos valores de $\lambda$ foi usada como aproximação para a função de suporte de $\lambda$,
-exibida na figura \ref{fig:lambda}. % PI: Isso é uma função de suporte ou uma distribuição a posteriori
-A máxima densidade dessa distribuição é atingida em 
-$\lambda = $ \Sexpr{round(d$x[which(d$y == max(d$y))],2)}. As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
-resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas.
-% PI: O significado desses resultados ainda não estão claros para mim.
-% C: Nem pra mim, pra falar a verdade. Mas não acho q eu possa ser tão sincero por escrito :P
+foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
+de $\lambda$. Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
+input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
+$\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
 
-Futuramente, serão realizadas análises mais aprofundadas sobre esse exemplo.
+As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
+resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
+discutidas no capítulo \ref{cap:pse}.
 
 \begin{figure}
 <<Case1>>=
@@ -169,11 +169,15 @@ plot(plue)
 # Analise de sensibilidade sobre lambda
 plotscatter(plue)
 @
+	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
+	mínimo, gerados a partir de uma abordagem de verossimilhança.  }
 	\label{fig:lambdascatter}
 \end{figure}
 \begin{figure}
 <<>>=
 plotprcc(plue)
 @
+	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
+	estruturado mínimo de crescimento populacional}
 	\label{fig:lambdaprcc}
 \end{figure}
