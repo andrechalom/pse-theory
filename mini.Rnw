@@ -119,6 +119,7 @@ gamma <- obs[1]/n[1]
 start = c(sigma, f, gamma)
 lambda <- getlambda(sigma, f, gamma)
 # probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+# NOTE: LL function uses GLOBAL obs and n!!!
 LL <- function (x) 
 {
 	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
@@ -181,3 +182,31 @@ plotprcc(plue)
 	estruturado mínimo de crescimento populacional}
 	\label{fig:lambdaprcc}
 \end{figure}
+
+<<largerSample, fig=FALSE>>=
+Mult=3
+n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
+largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+@
+
+A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
+É importante notar que esses resultados são para uma única amostra, e um tamanho amostral decididamente pequeno. 
+Considerando uma amostra \Sexpr{Mult} vezes maior, na qual todas as proporções se mantenham as mesmas (ou seja,
+o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por \Sexpr{Mult}), a análise resulta em
+um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
+
+\begin{figure}
+<<>>=
+plot(largePlue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
+	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
+	\label{fig:lambda2}
+\end{figure}
+\begin{figure}
+
