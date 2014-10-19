@@ -215,9 +215,10 @@ We will present the general case of prescribing a correlation matrix, and will
 also present results for the trivial case of zero correlation terms. Other
 methods have been proposed to address this problem \citep{Ye98, Steinberg06, Florian92}, 
 including methods that deal with higher-order correlation terms \citep{Tang98}
-using orthogonal designs. These methods, however, either impose severe 
+using orthogonal designs and methods that resort to stochastic optimisation based on 
+simulated annealing \citep{Vovrechovsky09}. These methods, however, either impose severe 
 restrictions on the number of samples that must be chosen or are too
-computationally intensive. 
+computationally intensive.
 
 In order to obtain the samples with prescribed correlation terms, we define 
 as $C_{i,j}$ the 

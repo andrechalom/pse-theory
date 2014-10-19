@@ -1,8 +1,4 @@
 \SweaveOpts{fig=T,echo=F}
-\section{PLUE: uma proposta de perfilhamento de verossimilhança}
-
-
-
 \section{Estudo de caso 3: um modelo mínimo}
 
 Um modelo de população estruturada que pode ser considerado mínimo é o modelo
@@ -208,5 +204,4 @@ plot(largePlue)
 	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
 	\label{fig:lambda2}
 \end{figure}
-\begin{figure}
 

@@ -276,5 +276,5 @@ Despite the widespread use and recognition that the GLUE method has received,
 it is subject to criticisms by not being formally Bayesian, and
 formal Bayesian approaches have been developed\citep{Vrugt09}.
 Another approach, based on the Metropolis algorithm, is provided by 
-Kuczera\citep{Kuczera98}. %TODO
+\cite{Kuczera98}. %TODO
 

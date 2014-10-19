@@ -1,0 +1,32 @@
+\SweaveOpts{fig=T,echo=F}
+\section{PLUE: uma proposta de perfilhamento de verossimilhança}
+
+Nesta seção, vamos descrever uma metodologia inédita para a realização de análises de incerteza
+baseada no perfilhamento da verossimilhança dos parâmetros. Argumentamos que essa metodologia é
+intuitivamente atraente dentro de um paradigma de verossimilhança, além de ser coerente com a 
+Lei Geral da Verossimilhança (GLL) enunciada acima, para uma dada escolha de hipóteses.
+
+Vamos também retomar neste momento a descrição do GLUE - Generalized Likelihood Uncertainty Estimation,
+proposto por Beven \& Binley \citep{Beven92} e discutido brevemente no capítulo \ref{cap:pse}, juntamente
+com críticas feitas a esta metodologia. Nosso objetivo é argumentar que o procedimento de 
+perfilhamento de verossimilhança tem convergências com o GLUE. Por este motivo, vamos nos referir ao nosso
+procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
+
+\subsection{Motivação}
+
+Suponha que temos em mãos um modelo de crescimento populacional estruturado como aqueles discutidos
+nas seções \ref{Leslie} e \ref{Tribolium}, e um conjunto de dados a partir dos quais podemos calcular
+as taxas de sobrevivência, crescimento e fertilidade para a espécie. 
+
+De posse desses dados, gostaríamos de fazer as seguintes perguntas:
+
+{\em ``Qual o suporte que os dados dão para a afirmação de que a população está estável {\em versus} 
+em declínio? Qual o suporte que os dados dão para a afirmação de que a população vai se extinguir em menos 
+de 10 anos {\em versus} em mais de dez anos?''}
+
+Essas perguntas não podem ser respondidas de um ponto de vista verossimilhantista clássico, por corresponderem
+a hipóteses compostas sobre os parâmetros. No entanto, 
+
+\subsection{Método}
+
+Seja $y = F(\bu{x})$ o resultado escalar de um modelo $\

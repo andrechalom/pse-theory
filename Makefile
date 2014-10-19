@@ -2,7 +2,7 @@ PROJ=pse
 
 all: ${PROJ}.pdf
 
-${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex intro.tex sampling.tex quantanal.tex leslie.tex preamble.tex prob.tex caveat.tex  integr.tex mini.tex tribolium.tex pse_tutorial.tex multiple.tex 
+${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex intro.tex sampling.tex quantanal.tex leslie.tex preamble.tex prob.tex caveat.tex  integr.tex mini.tex tribolium.tex pse_tutorial.tex multiple.tex plue.tex
 	-pdflatex ${PROJ}
 	-bibtex ${PROJ}
 	-pdflatex ${PROJ}
