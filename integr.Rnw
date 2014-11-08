@@ -267,7 +267,7 @@ Weak Law of Likelihood), tal que aceitar LL implique em aceitar WLL, mas a conve
 
 Talvez a generalização mais óbvia para a lei da verossimilhança para hipóteses compostas seja tomar o máximo (ou supremo,
 no casos em que o máximo não existe) da verossimilhança de suas hipóteses simples. Esse é o caminho perseguido por
-\cite{Zhang09} e \cite{Bickel10}, por exemplo. Zhang considera duas hipóteses, $H_1 : \theta \in \Theta_1 \subset \Theta$
+\cite{Zhang09, Zhang13} e \cite{Bickel10}, por exemplo. Zhang considera duas hipóteses, $H_1 : \theta \in \Theta_1 \subset \Theta$
 versus $H_2 : \theta \in \Theta_2 \subset \Theta$, e postula os seguintes axiomas (levemente modificados para coerência
 com a notação):
 

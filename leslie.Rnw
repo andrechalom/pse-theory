@@ -405,7 +405,7 @@ obtain the total number of simulations executed. Notice that, while the main eff
 converge for both model, the total order $D_t$ indices are still variable with large sample sizes.
 This difference in the results for several eFAST analyses, together with 
 the differences between the eFAST and Sobol' results, hint at a numerical instability of this method.
-Sobol' indexes results are dislayed on Fig. \ref{fig:sobol}.
+Sobol' indexes results are displayed on Fig. \ref{fig:sobol}.
 
 <<table2, fig=FALSE, results=tex>>=
 print(xtable(tabfast, caption='Comparison of eFAST analyses by sample size for both models', label='tabfast'), sanitize.text.function = identity)

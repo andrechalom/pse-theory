@@ -29,4 +29,4 @@ a hipóteses compostas sobre os parâmetros. No entanto,
 
 \subsection{Método}
 
-Seja $y = F(\bu{x})$ o resultado escalar de um modelo $\
+Seja $y = F(\bu{x})$ o resultado escalar de um modelo 

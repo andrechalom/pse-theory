@@ -240,6 +240,34 @@ dimension $l$, what would be the error in the correlation if they were switched.
 The pair that corresponds to the greater error reduction is then switched, and
 the procedure is repeated iteratively until the error is acceptably small.
 
+\subsubsection{Note on the existence of solutions}
+The problem of generating a sample with specified marginal distributions and correlation
+terms is tighly connected to the problem of generating samples from a multivariate
+distribution. This class of problems is very complex, and has received limited
+attention from the probabilist community, with the recent paper describing the
+exact construction of all feasible bivariate exponential distributions being considered
+a significant theoretical advance \citep{Bladt10}.
+
+One surprising result by \cite{Hoeffding1940} ({\em apud} \citep{Dukic13}) is that
+the specified distribution function need not exist. For any pair of marginal distributions
+$D_1$ and $D_2$, there exist a maximum and a minimum correlation coefficients,
+$\rho^{+}$ and $\rho^{-}$ such that there exists a joint probability distribution $\bu{D}$
+with specified marginal distributions and correlation. For some marginal distributions,
+such as the Gaussian, these values are $\rho^+=1$ and $\rho^-=-1$, so that any correlation
+term results in a valid distribution. On the other hand, if both $D_1$ and $D_2$ are
+exponential distributions with parameter $\lambda=1$, the values change to $\rho^+=1$ and
+$\rho^-=1-\pi^2/6 \approx -0.65$. 
+
+In short, finding a Latin Hypercube with exponential marginal distributions and
+at least one correlation term of, for example, $-0.9$ is impossible, no matter which 
+algorithm is employed. 
+However important this result is for the theory of probability,
+it may not have strong consequences in practical applications. If the marginal distributions
+and correlation terms are chosen after theoretical considerations or real world data, the
+impossible probability distributions will not be attempted.
+
+For recent developments in this area, see the work of \cite{Dukic13} and \cite{Huber14}.
+
 \subsection{Stochastic models} %TODO menos handwaving
 When dealing with stochastic models, like several relevant individual based 
 models (IBM), the questions presented become complicated by the fact that 
