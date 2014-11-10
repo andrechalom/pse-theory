@@ -25,7 +25,39 @@ em declínio? Qual o suporte que os dados dão para a afirmação de que a popul
 de 10 anos {\em versus} em mais de dez anos?''}
 
 Essas perguntas não podem ser respondidas de um ponto de vista verossimilhantista clássico, por corresponderem
-a hipóteses compostas sobre os parâmetros. No entanto, 
+a hipóteses compostas sobre os parâmetros. No entanto, podemos tomar o ponto de máxima verossimilhança
+como um ponto privilegiado, e restringir nossa pergunta à forma:
+
+{\em ``Qual o suporte que os dados dão para o ponto de máxima verossimilhança {\em versus} qualquer ponto
+cuja taxa de crescimento populacional seja negativa?''}
+
+Esquematicamente, podemos ver na figura \ref{fig:esquema} que estamos comparando a verossimilhança
+do ponto de máximo global ($x_{max}$) com o máximo obtido em uma região distinta ($x_{lim}$). 
+
+\begin{figure}[htb]
+<<>>=
+L <- function(x) {
+	x = x + 3
+	((x)*(x-2)*(x-6)*(x-9)+100)/20
+}
+x = seq(-3,5, length.out=200)
+plot(x, L(x), type="l", xaxs = "i", yaxs = "i", ylim=c(0, 10))
+# regioes shaded
+x = seq(-3,0, length.out=200)
+polygon(c(-3,x,0), c(0,L(x),0), col="cadetblue1")
+x = seq(0,5, length.out=200)
+polygon(c(0,x,5), c(0,L(x),0), col="darkolivegreen2")
+# pontos de "interesse"
+lines(c(0,0), c(7.7,8.3), lty=2)
+text(0, 8.5, expression(x[lim]))
+lines(c(1.08,1.08), c(9,9.5), lty=2)
+text(1.08, 9.7, expression(x[max]))
+arrows(1.08, 7.7, 1.08, 9, angle=90, code=3, length=0.15)
+text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
+@
+	\caption{Representação esquemática de uma função de verossimilhança, veja detalhes no texto.} 
+	\label{fig:esquema}
+\end{figure}
 
 \subsection{Método}
 
