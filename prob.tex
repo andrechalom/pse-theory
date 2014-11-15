@@ -14,7 +14,8 @@ ingenious and profound rules no doubt, with which mathematicians amuse themselve
 \citep{Venn1866}
 \end{quote}
 
-No século e meio que se passou desde esta publicação, a aplicação da estatística se tornou uma obrigatoriedade no meio científico.
+No século e meio que se passou desde esta publicação, o uso da ciência da probabilidade
+se tornou uma obrigatoriedade no meio científico, sob a forma da inferência estatística.
 Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não 
 mencione alguma propriedade
 estatística a respeito das amostras coletadas ou de resultados experimentais obtidos. 
@@ -75,6 +76,36 @@ não se encaixam em nenhuma das alternativas, como a lógica probabilística de 
 foram deixados de fora para que o texto não se tornasse proibitivamente longo. É um lugar comum afirmar que cada 
 seção aqui poderia ser expandida para um livro; algumas delas na verdade são esforços para resumir livros já escritos.
 
+\section{Critérios de avaliação}
+
+Probabilidade é um conceito ubíquo no nosso dia-a-dia, presente desde previsão do tempo, passando por 
+jogos e loterias, até questões fundamentais sobre a ciência - genética, física quântica, economia.
+Ao buscar uma interpretação para a palavra {\em probabilidade}, estamos buscando uma conexão entre nossas
+idéias intuitivas sobre o uso cotidiano de probabilidade e um sistema formal no qual possamos demonstrar
+teoremas. Vamos ver abaixo que nem todas as interpretações candidatas permitem que nossas idéias intuitivas
+se apliquem: algumas interpretações irão proibir o uso formal de probabilidades para determinados eventos
+(``qual a probabilidade que meu próximo lançamento de moeda dê coroa'' ou ``qual a probabilidade de que
+a testemunha esteja mentindo?''). Para outras candidatas, a avaliação da probabilidade depende do sujeito,
+e não existe uma probabilidade única para cada evento. Para poder comparar as tentativas históricas de 
+definir probabilidade, precisamos então de uma série de critérios que nos permitam julgar cada interpretação.
+
+Em primeiro lugar, vamos exigir que uma interpretação de probabilidade seja precisa em seus termos,
+não ambígua, dependa apenas de conceitos primitivos, e não seja circular\citep{Hajek12}. Como veremos 
+nas próximas seções, nem todas as interpretações propostas atendem a estes critérios, motivo pelo qual 
+elas são rejeitadas por cientistas e filósofos atuais.
+
+Em segundo lugar, vamos buscar interpretações admissíveis, determináveis, e aplicáveis, seguindo
+as definições de \cite{Salmon66}:
+
+\begin{description}
+	\item[Admissível] Blá
+	\item[Determinável] Blá
+	\item[Aplicável] Blá
+\end{description}
+
+
+<TODO>
+
 \section{Contra uma teoria axiomática}\label{sec:axiomatica}
 O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey Kolmogorov, matemático
 soviético muito prolífico em diversas áreas da ciência. Os axiomas da probabilidade podem ser escritos como \citep{Morettin09}:
@@ -110,6 +141,10 @@ aceito. No entanto, tome um sorteio de um número racional aleatório entre 0 e 
 já que existem infinitos números racionais em qualquer intervalo intervalo,
 a probabilidade de sortear cada número racional individualmente é zero; logo a probabilidade do evento certo, que é 1, 
 pelo axioma da unitariedade, deve ser também 0, pois é a soma de infinitos termos iguais a zero.
+
+Há outro ponto relevante contra uma interpretação puramente axiomática: nem toda quantidade que satisfaz
+os axiomas de Kolmogorov pode ser tratada como uma probabilidade. Massa e volume normalizados (ou seja,
+medidos em uma escala de 0 a 1) satisfazem os axiomas, mas não podem ser considerados probabilidades.
 
 Para encontrar uma definição de probabilidade que permita conectar os axiomas a questões práticas do uso de probabilidades na
 ciência, vamos repassar a opinião de alguns dos grandes pensadores sobre o tema nas próximas sessões.
@@ -330,26 +365,37 @@ making a hypothesis which may not be altogether consistent with fact, but which 
 precision of statement and definition.''\citep{Venn1866}
 \end{quote}
 
-Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo idealizado no qual fosse
-possível repetir o experimento infinitas vezes, sem haver variações alheias ao fenômeno estudado. Dentro dessa idealização,
-a probabilidade medida se torna algo tangível e objetivo. No entanto, para qualquer problema real, essa objetividade
-apenas se concretiza dentro da idealização de um dado modelo, para o qual temos que presumir uma certa regularidade. 
+Desta forma, o pesquisador que decide medir uma probabilidade à partir de dados reais precisa, 
+necessariamente, supor que haja certa regularidade no fenômeno medido dentro da escala de tempo e espaço 
+na qual o estudo é levado a cabo. Essa suposição não deixa de ser uma idealização do mundo real: ou seja,
+para a visão frequentista, a probabilidade só corresponde a uma entidade tangível e objetiva dentro de um
+mundo idealizado no qual seja possível realizar exatamente o mesmo experimento repetidas vezes.
+
+Essa percepção levará críticos do frequentismo a considerar que essa visão não é tão objetiva quanto se
+pretende, ao que os frequentistas respondem que a abstração é inescapável na ciência. Nas palavras
+de Edwards,
+
+%Assim, para a visão frequentista a probabilidade que queremos medir é algo que existiria em um mundo 
+%idealizado no qual fosse possível repetir o experimento infinitas vezes, sem haver variações alheias ao 
+%fenômeno estudado. Dentro dessa idealização, a probabilidade medida se torna algo tangível e objetivo.
+%No entanto, para qualquer problema real, essa objetividade apenas se concretiza dentro da idealização de um 
+%dado modelo, para o qual temos que presumir uma certa regularidade. 
 % PI: Aqui há dois elementos importantíssimos da noção freuqentista:
 % modelo de variável aleatória e a suposição de que este modelo é o
 % mesmo na escala de tempo e espaço de um estudo. Isso implica na
 % concepção de parâmetro e estimativa frequentistas.
 
-Em sua monografia Likelihood, de 1972, A.W.F. Edwards, escreve:
-
 \begin{quote}
-``Though the notion of a random choice is not devoid of philosophical difficulties, I have a fairly clear idea of what I mean
-by `drawing a card at random'. That the population may exist only in the mind, an abstraction possibly infinite in extent,
-raises no more (and no less) alarm than the infinite straight line of Euclid. I am only prepared to use probability to describe
-a situation if there is an analogy between the situation and the concept of random choice from a defined population.''
+``Though the notion of a random choice is not devoid of philosophical difficulties, I have a fairly clear 
+idea of what I mean by `drawing a card at random'. That the population may exist only in the mind, an 
+abstraction possibly infinite in extent, raises no more (and no less) alarm than the infinite straight line 
+of Euclid. I am only prepared to use probability to describe a situation if there is an analogy between the 
+situation and the concept of random choice from a defined population.''
 \citep{Edwards72}
 \end{quote}
 
-Finalmente, a concepção frequentista, apesar de ter pontos de contato com o pensamento laplaciano, apresenta
+Para finalizar a seção, 
+a concepção frequentista, apesar de ter pontos de contato com o pensamento laplaciano, apresenta
 uma ruptura com a metodologia de probabilidades inversas. Para um frequentista, uma probabilidade é algo objetivo
 e mensurável, de forma que não faz sentido atribuir uma probabilidade a uma hipótese. 
 Tampouco faz sentido tratar uma hipótese estatística como uma sentença escolhida aleatoriamente 
@@ -361,7 +407,8 @@ proposição do conceito de verossimilhança.
 
 \section{Interpretação por propensões}
 
-Uma terceira interpretação para a natureza da probabilidade é dada pelo cientista e lógico norte-americano C.S. Peirce,
+Uma terceira interpretação para a natureza da probabilidade é dada pelo cientista e lógico norte-americano 
+C.S. Peirce,
 cuja obra prolífica se estende sobre vários ramos da estatística moderna. 
 O interesse de Peirce no estudo de probabilidades
 deve ser traçado na sua visão indeterminista, segundo a qual eventos não 
@@ -379,8 +426,9 @@ grau de conhecimento da onisciência - quando então a probabilidade deixaria de
 de uma ciência que deve lidar constantemente com a incerteza.
 
 Se a experiência no mundo natural é intrinsecamente atormentada pela sorte, ela não pode ser base para um sistema de
-conhecimento baseado estritamente na dedução. Peirce irá desenvolver
-portanto um sistema de argumentação baseada em probabilidades, como o argumento de Dedução Provável Simples \citep{Fetzer93}:
+conhecimento baseado estritamente na dedução. Portanto Peirce irá desenvolver
+um sistema de argumentação baseada em probabilidades, incluindo o argumento de Dedução Provável 
+Simples \citep{Fetzer93}:
 
 \begin{enumerate}
 	\item Uma proporção $p$ de As são Bs
@@ -391,12 +439,15 @@ portanto um sistema de argumentação baseada em probabilidades, como o argument
 Peirce é certamente um objetivista, rejeitando qualquer utilidade para probabilidades pessoais; mas sua visão sobre a conexão entre o
 mundo físico e a probabilidade é uma questão que o afastará da visão frequentista.
  
-Peirce observa ainda um descompasso entre a concordância da frequência de ocorrência
-de uma série de experimentos e sua probabilidade com a {\em definição} da probabilidade como sendo essa frequência. Para
-essa visão, a probabilidade de um evento específico não pode ser definida. ``Qual a probabilidade de que um lance qualquer
+Peirce ataca ainda o argumento frequentista segundo o qual a probabilidade é definida como sendo a frequência
+de ocorrência porque, em larga escala, os dois coincidem. Para Peirce, a concordância entre essas duas 
+medidas, que ocorre em uma escala muito grande, não pode ser usada como argumento para {\em definir}
+probabilidade como uma frequência em todos os casos. Para contrastar as duas visões, note que, para
+um frequentista, a probabilidade de um evento específico não pode ser definida. ``Qual a probabilidade de que um lance qualquer
 de moeda dê cara?'' é uma pergunta que tem resposta no paradigma frequentista, enquanto ``qual a probabilidade de que 
 {\em o próximo lance de moeda que eu fizer} dê cara?'' (e qualquer outra pergunta sobre probabilidades de caso único)
-é uma pergunta que não pode ser respondida. Peirce, portanto, lança
+é uma pergunta que não pode ser respondida, já que a probabilidade só é definida sobre uma série infinita
+de experimentos. Para poder responder perguntas como esta, Peirce, lança
 mão de uma propriedade física intrínseca descrita como ``would-be'':
 
 \begin{quote}
@@ -427,7 +478,7 @@ Nessa linha, ele vai argumentar contra o uso de ferramentas estatísticas desenv
 hipótese de randomização em estudos que não a apresentem, como estudos observacionais \citep{Stigler78}.
 
 Uma interpretação mais recente, de surpreendente similaridade com a dada por Peirce, é proposta independentemente por Karl Popper, sob o nome
-de {\em propensão}, o que irá fazer com que filósofos contemporâneos passem a se referir à interpretação de Peirce pelo mesmo
+de {\em propensão} \citep{Popper59}, o que irá fazer com que filósofos contemporâneos passem a se referir à interpretação de Peirce pelo mesmo
 nome \citep{Miller75}.
 A visão de probabilidades como propensões, advogada por Peirce ou Popper é, 
 no entanto, criticada por não prover nenhuma base operacional para o cálculo de probabilidades à partir
@@ -444,7 +495,7 @@ qualquer teoria de probabilidades objetiva e não baseada em frequências observ
 Desta forma, embora a visão de propensões tenha recebido pouca atenção em meios científicos
 ela tem tido novo interesse nos últimos anos em círculos filosóficos \citep{Gillies2000}. 
 O interesse continuado em interpretações de probabilidade que permitam a probabilidade do caso único
-está ligado ao estudo da física quântica, o que é natural por dois motivos.
+está, desde o trabalho de Popper, ligado ao estudo da física quântica, o que é natural por dois motivos.
 O primeiro é que há evidências de que a natureza da física quântica é intrinsecamente probabilística \citep{Gudder88}, 
 ao contrário de fenômenos
 macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
@@ -504,7 +555,7 @@ Presumindo uma escolha adequada de modelo, ou seja,	de função matemática que 
 a tarefa da inferência estatística se concentra em estudar o pequeno número de parâmetros desse modelo que a descrevem
 completamente. Esse estudo corresponde aos problemas de estimação e distribuição.
 
-Fisher descreve ainda as seguintes propriedades desejáveis para um estimador. Embora as suas definições tenham sido
+Fisher descreve as seguintes propriedades desejáveis para um estimador. Embora as suas definições tenham sido
 melhor formalizadas posteriormente, as idéias presentes ainda são de grande valia:
 \begin{enumerate}
 	\item Consistência: ``when applied to the whole population the derived statistic should be equal to the parameter''
@@ -518,12 +569,15 @@ a média amostral se mostra uma estatística suficiente. Por outro lado, se a di
 é uma distribuição gama, de parâmetros $\alpha$ e $\beta$ desconhecidos, a média amostral {\em não é} uma estatística
 suficiente.
 
-Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma quantidade conhecida como
-verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Embora já identificada por C.S.
-Peirce, a exposição de Fisher sobre verossimilhança é um passo fundamental para sua aceitação entre estatísticos europeus.
-Fisher define essa quantidade,
-cujo uso mais imediato é identificar as hipóteses sobre determinado parâmetro que encontram maior suporte das evidências,
-como:
+Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma 
+quantidade conhecida como
+verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Embora 
+a verossimilhança já tivesse sido identificada por C.S.
+Peirce, a exposição de Fisher sobre ela é considerada um passo fundamental para sua aceitação entre 
+estatísticos europeus. 
+
+Fisher reconhece a necessidade de definir uma nova quantidade - que não seja uma probabilidade - para
+identificar dentre um conjunto de hipóteses, quais encontram maior suporte das evidências:
 
 \begin{quote}
 ``The likelihood that any parameter (or set of parameters) should have
@@ -538,11 +592,11 @@ do que meninas em uma proporção de $22$ para $21$. Coletando a
 informação de que houve $393386$ nascimentos de meninos e $377555$
 nascimentos de meninas no período, e presumindo o modelo binomial para os nascimentos, a verossimilhança da hipótese levantada
 por Laplace é dada pela probabilidade atribuída ao valor $393386$ pelo modelo binomial com tamanho $393386 + 377555 = 770941$
-e probabilidade de sucesso $22/(21+22) \sim 0.511$. Essa probabilidade é um número da ordem de $10^{-5}$. Ao calcular a 
+e parâmetro $22/(21+22) \sim 0.511$. Essa probabilidade é um número da ordem de $10^{-5}$. Ao calcular a 
 verossimilhança da hipótese de que não há preponderância de nenhum gênero, ou seja, a probabilidade de sucesso é de $0.5$, 
 encontramos o valor de $10^{-74}$, muitas ordens de grandeza inferior ao anterior. Portanto, os dados indicados por Laplace
 fornecem uma evidência mais forte para a hipótese de que os nascimentos de meninos são mais prováveis na proporção de $22$
-para $21$. % PI: em relação à outra hipótese. C: essa frase depende da interpretação do que é evidência, vide seção sobre Carnap
+para $21$. 
 
 Laplace não formaliza esse argumento em seu livro, sem dúvida pela dificuldade de realizar as contas indicadas acima sem
 a ajuda de computadores. Mas é importante notar que, enquanto Laplace poderia desenvolver esse raciocínio em termos das 
@@ -562,7 +616,7 @@ probabilidade (veja na seção \ref{sec:axiomatica}).
 \section{Abordagens para testes de hipóteses}
 A estrutura mental desenvolvida por Fisher durante a década de 1920 vai levar também a um procedimento conhecido como teste de 
 significância, e que será alvo de uma intensa controvérsia entre ele e a dupla formada por Jerzy Neyman e Egon Pearson, 
-durante a década de 1930. Em um terminologia que vai influenciar muito do pensamento em inferência estatística do século XX,
+durante a década de 1930. Em uma terminologia que vai influenciar muito do pensamento em inferência estatística do século XX,
 Fisher usa as expressões {\em modelo estatístico} como uma função que descreve a população de interesse, sendo definida 
 por um conjunto de parâmetros; e {\em hipótese} como uma afirmação a respeito do valor desses parâmetros. O modelo contém, 
 assim, todas as suposições sobre o problema a respeito das quais os dados não irão discriminar, enquanto a hipótese
@@ -584,7 +638,7 @@ exatamente 10, mesmo para uma moeda justa. Como o resultado de cada lançamento 
 e a probabilidade de cada lançamento é suposta constante e independente, o modelo escolhido para representar o problema
 pode ser uma binomial (Determinar que o modelo binomial é adequado corresponde ao problema da especificação,
 segundo Fisher).
-A hipótese nula é a de que a probabilidade da binomial é de 0.5. Nesse caso, podemos calcular a 
+A hipótese nula é a de que o parâmetro da binomial é de 0.5. Nesse caso, podemos calcular a 
 distribuição esperada do número de caras, e veremos que em 82\% dos experimentos realizados, a diferença entre o valor esperado
 de dez caras e o resultado obtido será de 1 ou mais; em 26\%, de 3 ou mais; e em 4\%, de 5 ou mais. Ao examinar o resultado 
 de um experimento, podemos então {\em rejeitar} a hipótese nula, ou seja, entendemos que a moeda não é justa, ou {\em deixar
@@ -654,7 +708,7 @@ de pensamento irá retornar à partir da década de 1960, com o trabalho dos cha
 pensamento tem pontos importantes de contato com uma escola independente: a probabilidade necessária de
 W.E. Johnson e Rudolf Carnap.
 
-\section{Probabilidade necessária}
+\section{Lógica indutiva}
 
 Tanto de Morgan como Boole, contados entre os fundadores da interpretação subjetivista e frequentista da probabilidade,
 se ocuparam do estudo da probabilidade como um subconjunto da lógica formal, que constituía um interesse mais amplo para
@@ -662,7 +716,7 @@ ambos. No mesmo espírito, o trabalho de Rudolph Carnap, à partir da década de
 às suas raízes dentro da lógica. A notação usada originalmente por Carnap favoreceu sua comunicação com filósofos e logicistas,
 mas dificultou seu acesso por estatísticos, de forma que vamos adaptar alguns termos e notações seguindo textos mais
 modernos (\citep{Zabell09} e \citep{Fitelson07}), que combinam a notação de Carnap com a de W.E. Johnson, que forneceu
-resultados semelhantes de forma independente 20 anos antes de Carnap. 
+resultados semelhantes de forma independente 20 anos antes de Carnap.
 
 A questão da definição da palavra ``probabilidade'' não deve ser a de decidir quais acepções dessa palavra são
 corretas ou incorretas, mas sim quais são satisfatórias, e se existe alguma definição mais satisfatória que as demais.
@@ -685,7 +739,7 @@ de pensamento vão conectar esses conceitos de forma menos direta.
 
 Seguindo o trabalho de Wittgenstein, Carnap trabalha 
 com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
-e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora uma hipótese $h$ \citep{Zabell09}.
+e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora uma hipótese $h$ \citep{Zabell09}\footnote{Não se deve confundir o símbolo usado para evidência com o número neperiano $e = 2.7182...$}.
 Essa visão será desenvolvida de forma a construir uma visão de probabilidade como uma necessidade lógica:
 
 \begin{quote}
@@ -700,9 +754,9 @@ quantitativa (com qual intensidade a evidência suporta a hipótese) e relaciona
 outra)\citep{Carnap62}. Vamos retornar a essa tipologia de confirmação na seção \ref{sec:likelihood} para contrastar
 a abordagem de verossimilhança com a abordagem Bayesiana.
 
-Johnson e Carnap desenvolvem um argumento segundo o qual observações passadas de um processo multinomial embasam a probabilidade
-de observações futuras, baseados nos postulados da permutação e da combinação; 
-provendo assim uma base para regras de sucessão como a 
+O argumento de Johnson e Carnap é que observações passadas de um processo multinomial embasam a probabilidade
+de observações futuras, baseados nos postulados da permutação e da combinação. 
+Assim, temos uma base para regras de sucessão como a 
 desenvolvida por Laplace sem a necessidade de invocar uma ignorância {\em a priori} sobre o valor de um parâmetro. 
 No entanto, a aplicação desses princípios para problemas gerais em inferência necessita de uma extensão desses resultados
 para considerar não apenas observações futuras idênticas, mas observações {\em similares}. A definição dessa similaridade
@@ -725,7 +779,7 @@ Harold Jeffreys, Bruno de Finetti e Leonard J. Savage
 podem ser apontados como os principais responsáveis por um interesse continuado na interpretação subjetiva, que, próximo à
 década de 1960, passou a ser o principal embasamento para uma classe de métodos de inferência conhecidos como Bayesianos. 
 Para Ramsey e Savage, a probabilidade surge como um sistema de preferência racional, enquanto para de Finetti, ela representa
-uma chance justa em uma aposta; embora as visões sejam razoavelmente intercambiáveis, e difiram pouco 
+uma chance justa em uma aposta. As visões são razoavelmente intercambiáveis, e embora difiram
 no grau de empiricismo advogado,
 ambas levam logicamente aos axiomas padrão da probabilidade\footnote{Para uma visão mais aprofundada das diferenças
 filosóficas entre de Finetti e os demais subjetivistas, veja \citep{Galavotti89}.}
@@ -1002,10 +1056,10 @@ either they deny the significance of probability assertions about individuals, c
 or they open the door the whole way, and say that an individual may be regarded as a member of any number of classes, 
 that each of these classes may properly give rise to a probability statement, and that, so far as the theory is concerned,
 each of these probabilities is as good as another. (...)
-\end{quote}
 
 Some philosophers have argued that this is a merely pragmatic problem, rather than a theoretical one (...). But calling
 a problem practical or pragmatic is no way to solve it.'' \citep{Kyburg74}
+\end{quote}
 
 Essa questão, então, perpassa a formulação do problema de inferência para ambas as principais escolas. De certa forma,
 podemos ver que os problemas de ambas as escolas se concentram não na interpretação do dado observado, mas sim
@@ -1068,7 +1122,7 @@ suporte para uma certa hipótese,
 mas isso não deve ser considerado evidência a favor ou contra essa hipótese sem
 que hipóteses alternativas sejam igualmente escrutinizadas. É sobre o uso da razão entre verossimilhanças de diferentes hipóteses,
 e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
-programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é famoso
+programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é célebre
 pela frase ``How often have I said to you that when you have eliminated the impossible, whatever remains, {\em however 
 improbable}, must be the truth?''.
 
@@ -1163,8 +1217,9 @@ sobre uma areia movediça filosófica.
 
 \section{A abordagem por seleção de modelos} 
 
-A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento de escolha de
-modelos geral, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a
+A escola de verossimilhança vai ganhar especial força devido ao desenvolvimento de um procedimento geral
+de escolha de
+modelos, baseado no resultado de Akaike relacionando o número de parâmetros livres em um modelo e a
 log-verossimilhança com a perda de informação de cada modelo \citep{Akaike74}. O procedimento de escolha de modelos
 vai retomar o problema da especificação de Fisher (conforme descrito na seção \ref{sec:infer}) como um problema
 possível de ser tratado dentro da metodologia estatística. 
