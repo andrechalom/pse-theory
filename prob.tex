@@ -80,7 +80,7 @@ seção aqui poderia ser expandida para um livro; algumas delas na verdade são 
 O ensino moderno da probabilidade é, em larga escala, baseado na axiomatização proposta por Andrey 
 Kolmogorov, matemático soviético muito prolífico em diversas áreas da ciência. 
 Uma primeira visão dos axiomas da probabilidade, difundida em livros-textos e outros textos introdutórios, 
-pode ser escrita como \citep{LeBlanc04, Morettin09}:
+pode ser escrita como \citep{LeBlanc04, Freedman07, Morettin09}:
 
 \begin{description}
 	\item[Não-negatividade] A probabilidade de um evento é um número real não-negativo: $P(E) \geq 0$.
@@ -695,7 +695,7 @@ de pensamento irá retornar à partir da década de 1960, com o trabalho dos cha
 pensamento tem pontos importantes de contato com uma escola independente: a probabilidade necessária de
 W.E. Johnson e Rudolf Carnap.
 
-\section{Lógica indutiva}
+\section{Lógica indutiva}\label{sec:Carnap}
 
 Tanto de Morgan como Boole, contados entre os fundadores da interpretação subjetivista e frequentista da probabilidade,
 se ocuparam do estudo da probabilidade como um subconjunto da lógica formal, que constituía um interesse mais amplo para
@@ -1177,7 +1177,7 @@ ele utiliza a razão das verossimilhanças como meio para construir quantias abs
 verá na razão das verossimilhanças
 o objeto final do seu estudo. O paradigma da verossimilhança, dessa forma, se opõe à transformação de uma quantidade de 
 suporte relacional entre $A$ e $B$ em quantidades não-relacionais de
-suporte para cada hipótese \citep{Fitelson07}. %perfeito!
+suporte para cada hipótese \citep{Fitelson07}. 
 Embora Royall e Edwards forneçam razões fortes para aceitar essa lei como premissa, ela não é uma necessidade lógica,
 e não decorre de princípios mais básicos - ao contrário do princípio da verossimilhança.
 Note-se aqui que o texto de Royall não provê nenhuma definição do que seja evidência ou suporte estatístico,
@@ -1194,13 +1194,6 @@ formulada por razões de verossimilhança, e não por probabilidades. No entanto
 ter uma interpretação para a verossimilhança.
 A teoria verossimilhantista corre, portanto, o risco de se assentar
 sobre uma areia movediça filosófica.
-% A verossimilhança é uma função
-% proporcional à probabilidade, o que não é o mesmo. Ainda assim
-% compro o ponto de que se o suporte é proporcional à probabilidade
-% que o modelo atribui aos dados não se escapa de definir que
-% probabilidade é esta. Mas suspeito que um verossimilhantista se
-% justificaria que isso já foi feito na escolha do modelo. Podemos
-% testar chamando o João para sua banca.
 
 \section{A abordagem por seleção de modelos} 
 
@@ -1295,7 +1288,8 @@ o nível metodológico, como costuma acontecer em círculos mais inclinados à c
 e sim nos seus fundamentos, em cada suposição elementar feita sobre os
 elementos constituintes da teoria probabilística e de inferência. Possivelmente, essas suposições devem ser
 mapeadas em
-distintos elementos da filosofia da ciência.
+distintos elementos da filosofia da ciência. Esta seção não pretende trazer nenhuma resposta sobre isso,
+mas apenas elencar algumas das principais questões que devem ser consideradas.
 
 Ao discutir as correntes objetivistas e subjetivistas de interpretação, deixamos de lado dois pontos muito
 importantes (mas cujo tratamento adequado é vasto demais para esta nota): o que significa ``objetividade'', e
@@ -1306,21 +1300,34 @@ ser mensurável de formas que independam do observador) da objetividade estrutur
 comunicável a partir de estruturas invariantes - leis, relações lógicas, equações). No início do século XX,
 surge a figura do julgamento treinado, que pode ser entendido como a idéia de que os dados científicos
 precisam do julgamento de um profissional treinado para fazerem sentido. Apesar de usar a mesma
-palavra, Venn, Fisher, Neyman e cientistas contemporâneos podem estar se apoiando em conceitos muito diversos.
+palavra, Venn, Fisher, Neyman e Savage podem estar se apoiando em conceitos muito diversos.
 
-Outra divergência entre os diversos autores diz respeito à construção de conhecimento através da observação.
+Outra divergência entre os diversos autores diz respeito à construção de conhecimento através da observação,
+frequentemente conhecido como o problema da indução.
 Se observamos que o sol sempre nasce no leste,
 isso pode ser usado para estabelecer como fato que o sol nascerá sempre no leste? A conexão feita entre ``eu observei esse
 fato no passado'' e ``eu prevejo que esse fato se repetirá no futuro'' não encontra justificativa lógica. Nossa própria convicção
 de que a indução deve funcionar para estabelecer fatos é baseada em uma indução. 
 Um argumento geralmente associado a esse problema é o problema das esmeraldas ``verzuis''\footnote{Traduzido 
-livremente a partir do termo {\em grue}}, proposto por Nelson Goodman em 1954, e extensamente debatido por 
+livremente a partir do termo {\em grue}}, proposto por Nelson Goodman em 54 \cite{Goodman83}, 
+e extensamente debatido por 
 \cite{Hacking65}, \cite{Kyburg74}, W.C. Salmon, B. Fitelson, entre outros: um objeto é verzul se ele
-é verde antes de um determinado tempo {\em t} e azul após esse instante. Então, pergunta Goodman, como
-podemos separar a evidência a favor da hipótese de que todas as esmeraldas são verdes da evidência
-a favor de que todas as esmeraldas são verzuis?
+é verde antes de um determinado tempo {\em t} e azul após esse instante\footnote{Mas veja \citep{Quine70}
+para uma definição diferente do problema, junto com uma proposta de solução.}. Supondo que {\em t} seja
+o presente momento, as duas frases a seguir devem ser igualmente justificadas:
+\begin{enumerate}
+	\item Todas as esmeraldas que eu observei até agora são verdes, logo a próxima esmeralda que eu observar
+		deve ser verde
+	\item Todas as esmeraldas que eu observei até agora são verzuis, logo a próxima esmeralda que eu observar
+		deve ser verzul (ou seja, azul!)
+\end{enumerate}
 
+O problema de confirmar uma hipótese a partir de observações experimentais não se trata apenas de decidir
+quais formas de confirmação são adequadas\footnote{Vide seção \ref{sec:Carnap} para uma primeira tipologia
+das formas de confirmação}, mas também de decidir como construir as hipóteses - Goodman propõe uma divisão
+entre predicados {\em projetáveis} e {\em não-projetáveis}. <TODO>
 
+Finalmente, 
 %\begin{quote}
 %``It is easy to obtain confirmations, or verifications, for nearly every theory - if we look for confirmations.
 %
