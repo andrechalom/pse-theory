@@ -24,7 +24,9 @@
 \newenvironment{remark}[1][Remark]{\begin{trivlist}
 	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 \newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
-\newcommand{\R}{{\sf \,R\,}} % padrao para representar o R, segundo algumas listas
+\usepackage{xspace}
+\newcommand{\R}{\textnormal{\sffamily\bfseries R}\xspace}
+% alterado pq \sf é obsoleto, ver http://tex.stackexchange.com/questions/74478/latex-command-incantation-for-r
 
 % Cabeçalho e rodapé
 % Controlar os cabeçalhos e rodapés
@@ -174,8 +176,8 @@ Paulo Inácio de Knegt López de Prado}
 	  resultados preliminares.
 
 	  Durante o progresso do presente trabalho, um pacote de funções na linguagem \R foi desenvolvido
-	  para facilitar o uso funcional das ferramentas teóricas expostas acima. Os apêndices deste texto
-	  trazem um tutorial e exemplos de uso deste pacote, pensado para ser ao mesmo tempo prático e de
+	  para facilitar o emprego na prática das ferramentas teóricas expostas acima. Os apêndices deste texto
+	  trazem um tutorial e exemplos de uso deste pacote, pensado para ser ao mesmo tempo conveniente e de
 	  fácil extensão, e disponível livremente na internet, no endereço
 	  http://cran.r-project.org/web/packages/pse.
 

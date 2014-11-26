@@ -12,7 +12,7 @@ com críticas feitas a esta metodologia. Nosso objetivo é argumentar que o proc
 perfilhamento de verossimilhança tem convergências com o GLUE. Por este motivo, vamos nos referir ao nosso
 procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
 
-\subsection{Motivação}
+\subsection{Intuição}
 
 Suponha que temos em mãos um modelo de crescimento populacional estruturado como aqueles discutidos
 nas seções \ref{Leslie} e \ref{Tribolium}, e um conjunto de dados a partir dos quais podemos calcular

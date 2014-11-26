@@ -11,7 +11,7 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex intro.tex sampling.tex q
 leslie.tex: leslie.Rnw R/leslie.Rdata
 
 clean:
-	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc intro.tex leslie.tex quantanal.tex sampling.tex mini.tex tribolium.tex pse_tutorial.tex mydata.csv multiple.tex integr.tex pse.tex Rplots.pdf
+	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc intro.tex leslie.tex quantanal.tex sampling.tex mini.tex tribolium.tex pse_tutorial.tex mydata.csv multiple.tex integr.tex pse.tex Rplots.pdf plue.tex
 
 %.tex: %.Rnw
 	R --vanilla <<< "library(utils); Sweave(\"$<\", encoding=\"utf8\")"
