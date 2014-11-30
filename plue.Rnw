@@ -3,14 +3,15 @@
 
 Nesta seção, vamos descrever uma metodologia inédita para a realização de análises de incerteza
 baseada no perfilhamento da verossimilhança dos parâmetros. Argumentamos que essa metodologia é
-intuitivamente atraente dentro de um paradigma de verossimilhança, além de ser coerente com a 
-Lei Geral da Verossimilhança (GLL) enunciada acima, para uma dada escolha de hipóteses.
-
-Vamos também retomar neste momento a descrição do GLUE - Generalized Likelihood Uncertainty Estimation,
-proposto por Beven \& Binley \citep{Beven92} e discutido brevemente no capítulo \ref{cap:pse}, juntamente
-com críticas feitas a esta metodologia. Nosso objetivo é argumentar que o procedimento de 
-perfilhamento de verossimilhança tem convergências com o GLUE. Por este motivo, vamos nos referir ao nosso
+intuitivamente atraente dentro de um paradigma de verossimilhança.
+Vamos nos referir ao nosso
 procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
+
+%Vamos também retomar neste momento a descrição do GLUE - Generalized Likelihood Uncertainty Estimation,
+%proposto por Beven \& Binley \citep{Beven92} e discutido brevemente no capítulo \ref{cap:pse}, juntamente
+%com críticas feitas a esta metodologia. Nosso objetivo é argumentar que o procedimento de 
+%perfilhamento de verossimilhança tem convergências com o GLUE. Por este motivo, vamos nos referir ao nosso
+%procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
 
 \subsection{Intuição}
 
@@ -24,7 +25,7 @@ De posse desses dados, gostaríamos de fazer as seguintes perguntas:
 em declínio? Qual o suporte que os dados dão para a afirmação de que a população vai se extinguir em menos 
 de 10 anos {\em versus} em mais de dez anos?''}
 
-Essas perguntas não podem ser respondidas de um ponto de vista verossimilhantista clássico, por corresponderem
+Essas perguntas não podem ser respondidas de um ponto de vista verossimilhantista, por corresponderem
 a hipóteses compostas sobre os parâmetros. No entanto, podemos tomar o ponto de máxima verossimilhança
 como um ponto privilegiado, e restringir nossa pergunta à forma:
 
@@ -32,7 +33,19 @@ como um ponto privilegiado, e restringir nossa pergunta à forma:
 cuja taxa de crescimento populacional seja negativa?''}
 
 Esquematicamente, podemos ver na figura \ref{fig:esquema} que estamos comparando a verossimilhança
-do ponto de máximo global ($x_{max}$) com o máximo obtido em uma região distinta ($x_{lim}$). 
+do ponto de máximo global ($x_{max}$) com o máximo obtido em uma região distinta ($x_{lim}$). Esta pergunta
+compara uma hipótese simples, a que corresponde à máxima verossimilhança, com uma hipótese composta.
+Esse tipo de comparação evita os problemas e peculiaridades que surgem em propostas de leis gerais de 
+verossimilhança devido à sobreposição entre a verossimilhança de hipóteses diferentes. Em termos dos axiomas
+de Zhang\footnote{vide seção \ref{sec:GLL}}, estamos aceitando uma forma fraca do primeiro, mas não o segundo.
+
+Esse raciocínio pode ser expandido para perguntarmos:
+
+{\em ``Quais são os pontos do espaço de parâmetros para os quais o suporte é maior do que uma certa distância
+$\delta$ em relação ao ponto de máxima verossimilhança?''}
+
+Ao fazer essa pergunta para uma série de valores de $\delta$, estamos efetivamente perfilhando a 
+verossimilhançao de cada ponto do espaço de parâmetros.
 
 \begin{figure}[htb]
 <<>>=
@@ -61,4 +74,40 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 
 \subsection{Método}
 
-Seja $y = F(\bu{x})$ o resultado escalar de um modelo 
+Seja $y = F(\bu{x})$ o resultado escalar de um modelo $F$.
+
+# Use PLUE to perform a Profile Likelihood Uncertainty Analysis
+PLUE <- function(model=NULL, factors, N, LL, start, res.names=NULL,
+				 method=c("internal", "mcmc"), opts = list(), nboot=0, 
+				 repetitions=1, cl=NULL) {
+	# Input validation for common errors and "default" value handling:
+	my.opts = list(Q=NULL, blen=1, nspac=1, scale=1)
+
+	if (method=="internal") {
+		data = MCMC.internal(LL, start, N, my.opts)
+	# Apply the model to the input data
+	colnames(data\$L) <- factors
+	res <- internal.run(cl, model, data\$L, repetitions)
+	prcc <- internal.prcc(data\$L, res, nboot)
+	if (is.null(res.names) && ! is.na(res)) res.names <- paste("O", 1:dim(res)[2], sep="")
+
+	# Now we profile the results to find out 
+	# "what are the lower/upper limits to the 0.1-Delta nLL region?"
+	# "what are the lower/upper limits to the 0.2-Delta nLL region?"
+	# and so on and so on
+	
+	mmin <- min(data\$nLL[valid(data\$nLL) ])
+	mmax <- max(data\$nLL[valid(data\$nLL)])
+	myN <-round(N/100)
+	prof <- seq(mmin, mmax, length.out=myN)
+	lower = c(); upper = c();
+	for (i in 1:myN)
+	{
+		search <- res[data\$nLL <= prof[i]]
+		search <- search[valid(search)] #throw away NA, NaN, Inf, etc
+		lower[i] <- min(search); upper[i] <- max(search)
+	}
+	# finally, we subtract the minimum LL to normalize the profile to 0
+	prof = prof - mmin
+	profile <- rbind(data.frame(limit = lower[myN:1], ll = prof[myN:1]), data.frame(limit=upper, ll = prof))
+}

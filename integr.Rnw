@@ -263,7 +263,7 @@ para hipóteses simples, mas que extenda seu domínio para hipóteses compostas.
 propõe utilizar uma definição mais fraca de evidência, baseada em uma lei fraca da verossimilhança (WLL, do inglês
 Weak Law of Likelihood), tal que aceitar LL implique em aceitar WLL, mas a conversa não seja verdadeira.
 
-\section{Uma lei geral de verossimilhança}
+\section{Uma lei geral de verossimilhança}\label{sec:GLL}
 
 Talvez a generalização mais óbvia para a lei da verossimilhança para hipóteses compostas seja tomar o máximo (ou supremo,
 no casos em que o máximo não existe) da verossimilhança de suas hipóteses simples. Esse é o caminho perseguido por
