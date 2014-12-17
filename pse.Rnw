@@ -49,7 +49,7 @@
 % Omitir linha de separação entre rodapé e conteúdo
 \renewcommand{\footrulewidth}{0pt}
 % Altura do cabeçalho
-\headheight 13.6pt
+\headheight 28pt
 
 \SweaveOpts{fig=T,echo=F}
 \begin{document}

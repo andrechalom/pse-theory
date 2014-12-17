@@ -183,14 +183,18 @@ a ciência da probabilidade deve se basear em leis físicas do mundo natural, e 
 sobre o mundo. A probabilidade é, desta forma, algo que existe objetivamente.
 Esta interpretação faz com que as leis da probabilidade, estritamente, só possam ser aplicadas para 
 sistemas simples, para os quais leis simples e com poucas premissas possam ser formuladas,
-como é o caso de baralhos bem embaralhados ou dados perfeitos.
+como é o caso de baralhos bem embaralhados ou dados perfeitos\footnote{Considere, por exemplo, uma moeda
+viciada que dá coroas com 75\% de frequência. A definição de probabilidade de Laplace ainda sugere que 
+a probabilidade de coroa desta moeda deve ser um caso sobre dois casos possíveis, ou seja, $\frac{1}{2}$.}.
 Laplace, no entanto, não parece ter levado essa 
 definição à suas últimas consequências, já que ele discute no tratado citado acima problemas referentes a fazer inferências 
 sobre testemunhos judiciais, nos 
-quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivocado, com outra probabilidade. 
-Presumindo que as probabilidades estão corretas, o método usado por Laplace é conhecido como ``método das probabilidades
-inversas'', e tem uma alta importância na história da estatística.  No entanto, 
+quais a testemunha poderia mentir, com uma certa probabilidade, ou ter se equivocado, com outra probabilidade.
+No entanto, 
 nenhuma explicação convincente é dada sobre como medir essas probabilidades dentro do paradigma clássico.
+
+Presumindo que as probabilidades estão corretas, o método usado por Laplace é conhecido como ``método das probabilidades
+inversas'', e tem uma alta importância na história da estatística. 
 %% PI: Se o método de probabilidade inversa é importante para seu
 %% argumento aqui é preciso explicar melhor e deixar mais clara a
 %% antítese com a concepção de probabilidade apres netada no trecho anterior. <TODO>
@@ -579,7 +583,7 @@ do que meninas em uma proporção de $22$ para $21$. Coletando a
 informação de que houve $393386$ nascimentos de meninos e $377555$
 nascimentos de meninas no período, e presumindo o modelo binomial para os nascimentos, a verossimilhança da hipótese levantada
 por Laplace é dada pela probabilidade atribuída ao valor $393386$ pelo modelo binomial com tamanho $393386 + 377555 = 770941$
-e parâmetro $22/(21+22) \sim 0.511$. Essa probabilidade é um número da ordem de $10^{-5}$. Ao calcular a 
+e parâmetro $22/(21+22) \approx 0.511$. Essa probabilidade é um número da ordem de $10^{-5}$. Ao calcular a 
 verossimilhança da hipótese de que não há preponderância de nenhum gênero, ou seja, a probabilidade de sucesso é de $0.5$, 
 encontramos o valor de $10^{-74}$, muitas ordens de grandeza inferior ao anterior. Portanto, os dados indicados por Laplace
 fornecem uma evidência mais forte para a hipótese de que os nascimentos de meninos são mais prováveis na proporção de $22$
@@ -725,15 +729,17 @@ de pensamento vão conectar esses conceitos de forma menos direta.
 %é irrelevante para o resultado de um experimento físico, como a mistura entre dois gases. 
 
 Seguindo o trabalho de Wittgenstein, Carnap trabalha 
-com a {\em probabilidade condicional} de uma proposição lógica $h$ dada uma proposição $e$, $c(h, e)$, 
-e interpreta essa grandeza como a medida com a qual a evidência $e$ corrobora uma hipótese $h$ \citep{Zabell09}\footnote{Não se deve confundir o símbolo usado para evidência com o número neperiano $e = 2.7182...$}.
+com a {\em probabilidade condicional} de uma proposição lógica $H$ dada uma proposição $E$, $c(H, E)$, 
+e interpreta essa grandeza como a medida com a qual a evidência $E$ corrobora uma hipótese $H$ 
+\citep{Zabell09}\footnote{Embora Carnap e Zabell usem $h$ e $e$ em minúsculo, a notação foi alterada para 
+não haver confusão com o número neperiano $e = 2.7182...$}.
 Essa visão será desenvolvida de forma a construir uma visão de probabilidade como uma necessidade lógica:
 
 \begin{quote}
 ``The truth conditions for a probability statement are logical or semantic: they are built into the language in the same
 way that the truth conditions for logical entailment are built into the language. Given the statement `It will rain tomorrow',
-and given a body of evidence $e$, there is exactly one real number $r$, determined by logical conditions alone, such
-that the probability of `It will rain tomorrow', relative to the body of evidence $e$, is $r$.'' \citep{Kyburg74}
+and given a body of evidence $E$, there is exactly one real number $r$, determined by logical conditions alone, such
+that the probability of `It will rain tomorrow', relative to the body of evidence $E$, is $r$.'' \citep{Kyburg74}
 \end{quote}
 
 Carnap provê ainda uma distinção entre três formas de confirmação: classificatória (a evidência confirma ou não a hipótese),
@@ -754,8 +760,7 @@ mais completo).
 Ainda, o uso de uma medida de confirmação para embasar a construção de conhecimento será contestada por filósofos
 da ciência, a começar por Karl Popper \citep{Popper63}. Popper aponta que algumas teorias pseudocientíficas, como
 a astrologia, podem ser confirmadas pela experiência, mas nunca falsificadas. Ele propõe, então, que apenas a 
-falsificação de hipóteses pode ser utilizada para o avanço do conhecimento científico (um ponto que será retomado
-na seção \ref{sec:ciencia}).
+falsificação de hipóteses pode ser utilizada para o avanço do conhecimento científico.
 
 \section{Probabilidade Bayesiana moderna}\label{sec:bayes}
 
@@ -939,8 +944,8 @@ intervals or by the rules of fuzzy logic are inadmissible. Only probability is a
 A escola Bayesiana também é criticada ao assumir uma postura subjetivista, que não seria compatível com o desenvolvimento
 da ciência, definida como a construção de conhecimento racional objetivo. Essa oposição, a bem da verdade, é mais reveladora
 de uma visão sobre a natureza da ciência do que uma crítica propriamente ao paradigma Bayesiano:
-para um Bayesiano, o julgamento treinado de um especialista treinado, permite uma relação confiável com natureza, 
-ainda que não objetiva.. Frise-se que mesmo avaliações de probabilidade pessoais e subjetivas podem estar abertas 
+para um Bayesiano, o julgamento de um especialista treinado permite uma relação confiável com natureza, 
+ainda que não objetiva. Frise-se que mesmo avaliações de probabilidade pessoais e subjetivas podem estar abertas 
 ao estudo objetivo, uma posição que remonta ao trabalho
 de C.S. Peirce \citep{Stigler78}.  Outro fator importante para responder essa crítica é a maior percepção moderna
 de que a escola frequentista, ao ser obrigada a escolher um modelo mental de referência, é menos objetiva do que se propõe.
@@ -1073,8 +1078,7 @@ mas não foram são irrelevantes para a inferência". Desses princípios, Birnba
 informalmente, "resultados amostrais possíveis mas não observados são irrelevantes para a inferência", de forma 
 que questões como o desenho amostral não podem influenciar a inferência realizada: 
 
-\begin{description}
-\item[L]
+\begin{quote}
 ``The likelihood principle: If $E$ and $E\prime$ are any two experiments with the same parameter space,
  represented respectively by density functions $f(x, \theta)$ and $g(y, \theta)$; and if $x$ and $y$ are
  any respective outcomes determining the same likelihood function; then $Ev(E, x) = Ev(E\prime, y)$.
@@ -1082,7 +1086,7 @@ que questões como o desenho amostral não podem influenciar a inferência reali
  the likelihood function $cf(x, \theta)$ (which need be described only up to an arbitrary positive constant
  factor), without other reference to the structure of $E$.''
 \citep{Birnbaum62}
-\end{description}
+\end{quote}
 
 Já a lei da verossimilhança é enunciada por Hacking como:
 
@@ -1096,9 +1100,8 @@ $A$ over $B$ if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)
 
 A divergência entre a escola da verossimilhança e a inferência frequentista se dá pois esta última rejeita o
 princípio da verossimilhança (embora aceite tanto a lei da verossimilhança quanto os princípios da suficiência
-e condicionalidade). Por outro lado, a escola da verossimilhança vai divergir da inferência Bayesiana, que aceita
-o princípio da verossimilhança, pela interpretação da lei da verossimilhança (um  ponto
-que vai ser retomado mais adiante nesta seção).
+e condicionalidade). Por outro lado, a escola da verossimilhança vai divergir da inferência Bayesiana (que aceita
+o princípio da verossimilhança) pela interpretação da lei da verossimilhança.
 
 A escola da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
 para atacar o teste de significância de Fisher foi reconhecer a
@@ -1111,7 +1114,8 @@ que hipóteses alternativas sejam igualmente escrutinizadas. É sobre o uso da r
 e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
 programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é célebre
 pela frase ``How often have I said to you that when you have eliminated the impossible, whatever remains, {\em however 
-improbable}, must be the truth?''.
+improbable}, must be the truth?''. Ou seja, a probabilidade ou improbabilidade de uma única hipótese, vista
+isoladamente, não deve ser usada para concluir sobre sua veracidade.
 
 A divergência entre as abordagens se dá fundamentalmente com a {\em ação} que o cientista deve tomar após examinar a 
 razão de verossimilhanças. Neyman-Pearson argumentam que esse valor deve nortear um processo de teste de hipóteses, que
@@ -1122,8 +1126,8 @@ Bayesiana vai relacionar a força de evidência (2) com o grau de certeza (1), e
 identificar a força de evidência (2) com o curso de ação (3), a proposta dos verossimilhantistas é de que a inferência
 estatística se concentra {\em apenas} na força da evidência. O curso de ação tomado
 pode levar em conta uma multiplicidade de outros fatores, representados por {\em priors} e funções de perda na teoria de 
-decisões: Laplace já havia separado esses conceitos com o problema do 
-número de juízes necessário para condenar um prisioneiro. A decisão, além de levar em conta as probabilidades de
+decisões. Laplace já havia separado esses conceitos com o problema do 
+número de juízes necessário para condenar um prisioneiro: A decisão, além de levar em conta as probabilidades de
 condenar um inocente ou perdoar um culpado, deve levar em conta se a
 pena será uma multa ou a morte.
 
@@ -1248,7 +1252,11 @@ sejam usados para a realização de inferências ou previsões (veja uma descri�
 
 O uso do número de parâmetros $K$ para ``penalizar'' modelos com mais parâmetros é intuitivamente atraente, por
 se aproximar de um princípio de parcimônia. Proponentes anteriores da abordagem de verossimilhança já haviam notado
-que o modelo com melhor verossimilhança para qualquer conjunto de dados é o de criação individual: o uso do AIC
+que o modelo com melhor verossimilhança para qualquer conjunto de dados é o de criação individual\footnote{
+Intuitivamente, é muito fácil ajustar perfeitamente 150 pontos de dados usando um modelo com 150 parâmetros 
+livres. Este modelo é conhecido como ``modelo de criação individual'', pois ele é equivalente a supor que 
+cada ponto amostral foi gerado independentemente, ou ``alternativa de verossimilhança maximal''.}, i
+mas o uso do AIC
 fornece um motivo sólido e teoricamente bem embasado para preferir os modelos com menos parâmetros livres.
 Ainda, o uso de seleção de modelos permite que cada modelo comparado se relacione com uma hipótese biologicamente
 interpretável, ao contrário do uso de testes de significância, nos quais a hipótese nula dificilmente tem relevância
@@ -1303,7 +1311,7 @@ precisam do julgamento de um profissional treinado para fazerem sentido. Apesar 
 palavra, Venn, Fisher, Neyman e Savage podem estar se apoiando em conceitos muito diversos.
 
 Outra divergência entre os diversos autores diz respeito à construção de conhecimento através da observação,
-frequentemente conhecido como o problema da indução.
+o que podemos enquadrar dentro da classe de problemas da indução.
 Se observamos que o sol sempre nasce no leste,
 isso pode ser usado para estabelecer como fato que o sol nascerá sempre no leste? A conexão feita entre ``eu observei esse
 fato no passado'' e ``eu prevejo que esse fato se repetirá no futuro'' não encontra justificativa lógica. Nossa própria convicção
@@ -1324,8 +1332,12 @@ o presente momento, as duas frases a seguir devem ser igualmente justificadas:
 
 O problema de confirmar uma hipótese a partir de observações experimentais não se trata apenas de decidir
 quais formas de confirmação são adequadas\footnote{Vide seção \ref{sec:Carnap} para uma primeira tipologia
-das formas de confirmação}, mas também de decidir como construir as hipóteses - Goodman propõe uma divisão
-entre predicados {\em projetáveis} e {\em não-projetáveis}. <TODO>
+das formas de confirmação}, mas também de decidir como construir as hipóteses - Goodman, por exemplo, 
+propõe uma divisão entre predicados {\em projetáveis} e {\em não-projetáveis}. Embora seja possível descartar
+exemplos construídos artificialmente como tolos, o problema de determinar se hipóteses científicas seriamente 
+propostas são ou não projetáveis pode ser muito complexo. Vários trabalhos científicos publicados em 
+periódicos são informalmente criticados por serem análogos à anedota do atirador texano, que primeiro atira
+várias vezes na lateral do estábulo, e depois desenha um alvo no maior agrupamento de acertos.
 
 Finalmente, 
 %\begin{quote}
