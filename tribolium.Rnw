@@ -77,8 +77,19 @@ mul = 2.055e-1
 #library(sensitivity)
 library(MASS)
 library(pse)
-source("R/pse.R")
 library(msm) # Para a funcao qtnorm
+elast <- function (LHS) {
+	s <- pic(LHS)
+	f <- apply (get.data(LHS), 2, mean, na.rm=T)
+	m <- apply(get.results(LHS),2, mean, na.rm=T)
+	return(s[[1]]$pic$original * f / m)
+}
+plotelast <- function (LHS) { # função para plotar a "elasticidade"
+	s <- pic(LHS)
+	f <- apply (get.data(LHS), 2, mean, na.rm=T)
+	m <- apply(get.results(LHS),2, mean, na.rm=T)
+	barplot((s[[1]]$pic * f / m)[,1], ylim=c(-1,1))
+}
 # Entradas da matriz:
 # Vindos de Costantino et al., 1997
 factors <- c("b", "cea", "cel", "cpa", "mua", "mul");
@@ -200,7 +211,7 @@ between both methods.
 plotelast(LHSpeq)
 @
 	\caption{Stochastic elasticity analysis for the structured population growth
-	model of {\em Tribolium} beetles, assumind small perturbations. 
+	model of {\em Tribolium} beetles, assuming small perturbations. 
 	Bars represent the elasticity of the metabolic
 	equivalent of the equilibrium population in respect to each parameter.}
 	\label{LHSpeq}
@@ -239,9 +250,9 @@ load("R/Triboliumlge.Rdata")
 plotscatter(LHSlge) ->ign
 mud.elas <- round(100*(elast(LHSlge)-elast(LHSpeq))/elast(LHSpeq))
 @
-	\caption{Diagramas de dispers\~ao do equivalente metab\'olico
-	do besouro {\em Tribolium} em rela\c c\~ao a mudan\c cas
-	de larga magnitude nos par\^ametros de entrada do modelo}
+	\caption{Scatterplots of the metabolic equivalent of the {\em Tribolium}
+	beetle as a function of large changes in the input parameters for the population
+	growth model}
 	\label{corPlot}
 \end{figure}
 
@@ -258,10 +269,9 @@ each method is answering a different question.
 <<LHSlge>>=
 plotelast(LHSlge)
 @
-	\caption{An\'alise de elasticidade estoc\'astica para o modelo de
-	crescimento de besouros do g\^enero {\em Tribolium} para par\^ametros
-	distribu\'idos uniformemente. As barras
-	representam a elasticidade do equivalente metab\'olico da 
-	popula\c c\~ao aos par\^ametros.}
+	\caption{Stochastic elasticity analysis for the structured population growth
+	model of {\em Tribolium} beetles, assuming large perturbations. 
+	Bars represent the elasticity of the metabolic
+	equivalent of the equilibrium population in respect to each parameter.}
 	\label{LHSlge}
 \end{figure}

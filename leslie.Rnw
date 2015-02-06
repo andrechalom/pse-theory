@@ -219,9 +219,66 @@ barplot(dNdtheta, names=c("s1","F7","s2","g2","s3","g3","s4","g4","s5","g5","s6"
 <<load, fig=FALSE>>=
 library(sensitivity)
 library(pse)
-source("R/pse.R")
 library(xtable)
 load('R/leslie.Rdata')
+# Para PRCC
+nodeplot <- function(x, labels = TRUE, col = par("col"), pch = 21, bg = "white", ...) {
+		n <- nrow(x)
+		xlim <- c(1, n)
+		ylim <- c(min(x), max(x))
+		at <- 1 : n
+		plot(0, xlim = xlim, ylim = ylim, axes = FALSE,
+			 xlab = "", ylab = "", type = "n", ...)
+		if (class(labels) == "logical") {
+				if (labels) {
+						axis(side = 1, at = at, labels = rownames(x))
+				} else {
+						axis(side = 1, at = at, labels = FALSE, tick = FALSE)
+				}
+		} else if (class(labels) == "character") {
+				axis(side = 1, at = at, labels = labels)
+		}
+		axis(side = 2)
+		box()
+		if ("bias" %in% colnames(x)) {
+				xx <- x[["original"]] - x[["bias"]]
+		} else {
+				xx <- x[["original"]]
+		}
+		if (("min. c.i." %in% colnames(x)) & "max. c.i." %in% colnames(x)) {
+				for (i in 1 : n) {
+						lines(c(at[i], at[i]), c(x[["min. c.i."]][i], x[["max. c.i."]][i]),
+							  col = col)
+				}
+		}
+		points(at, xx, col = col, pch = pch, bg = bg)
+}
+sobolplot <- function(x, ylim = c(0, 1), ...) { # for plotting FAST and Sobol results
+		bar.col <- c("white","orange")          # (prettier than plots from sensitivity)
+		if(class(x)=="fast99") {
+				if (! is.null(x$y)) {
+						S <- rbind(x$D1 / x$V, 1 - x$Dt / x$V - x$D1 / x$V)
+						colnames(S) <- colnames(x$X)
+						barplot(S, ylim = ylim, col = bar.col)
+				}
+		}
+		if (class(x)=="sobol2007") {
+				S <- rbind(x$S$original, x$T$original - x$S$original)
+				S[S<0] <- 0;
+				colnames(S) <- colnames(x$X)
+				b<-barplot(S, ylim= ylim, col=bar.col)
+				smin <- x$S$"min. c.i."
+				smax <- x$S$"max. c.i."
+				tmin <- x$T$"min. c.i."
+				tmax <- x$T$"max. c.i."
+				for (i in 1:length(colnames(S))) {
+						lower <- min(smin[i], tmin[i])
+						upper <- max(smax[i], tmax[i])
+						arrows(b[i],lower, b[i], upper, angle=90, code=3, length=0.1) #, lty=2)
+				}
+		}
+		legend("topright", c("main effect", "interactions"), fill = bar.col)
+}
 @
 First, we have generated Latin Hypercubes consisting of all relevant variables
 for each model. Then, the models were run for each combination of parameters. 
@@ -340,6 +397,12 @@ surprises, as now the survival parameter for the smallest and largest size class
 jumped to occupy the second and third largest positive PRCCs. The remaining parameters
 follow the new parameters $a$ and $z$, which are strongly negatively correlated with the output.
 
+It is interesting to contrast these results with the analytical analyses, presented on fig. 
+\ref{fig:analytical}. While all the elasticities have the same sign, and a comparable order, the most
+conspicous difference between the two is the high importance given to $s_7$ (the survival of adults)
+given by the analytical analysis. This might be interpreted by noticing that this parameter is the one 
+for which the collected data leaves the smallest margin of uncertainty.
+
 \begin{figure}[htpb]
 		\begin{center}
 <<PRCC>>=
@@ -359,9 +422,9 @@ mtext('(b)', at=1)
 		\begin{center}
 <<fast>>=
 par(mfrow=c(2,1), cex.axis=0.7, mar=c(3,2,1,1))
-myplot(fast8); 
+sobolplot(fast8); 
 mtext('(a)', at=0)
-myplot(dfast8); 
+sobolplot(dfast8); 
 mtext('(b)', at=0)
 @
 		\end{center}
@@ -375,9 +438,9 @@ mtext('(b)', at=0)
 		\begin{center}
 <<sobol>>=
 par(mfrow=c(2,1), cex.axis=0.7, mar=c(3,2,1,1))
-myplot(sobol6); 
+sobolplot(sobol6); 
 mtext('(a)', at=0)
-myplot(dsobol); 
+sobolplot(dsobol); 
 mtext('(b)', at=0)
 @
 		\end{center}
@@ -435,7 +498,7 @@ from which we were able to point out the similarities and discrepancies between 
 Analyses based on matrix elasticities are also unable to investigate the role played by
 parameters not directly present on the matrix, as the size of the adult trees canopy $z$
 in our case.
-Finally, our approach permits the identification and quantifiation of relative importance
+Finally, our approach allows the identification and quantifiation of relative importance
 of non-linearities and interactions between
 the input parameters in determining the model's outcome, and allows us to incorporate
 our previous knowledge about the system in specifying the range and distribution 

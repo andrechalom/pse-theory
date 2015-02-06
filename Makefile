@@ -8,7 +8,9 @@ ${PROJ}.pdf: ${PROJ}.tex chalom.bib Makefile revlit.tex intro.tex sampling.tex q
 	-pdflatex ${PROJ}
 	-pdflatex ${PROJ} | grep --color='auto' 'Warning\|Error'
 
-leslie.tex: leslie.Rnw R/leslie.Rdata
+leslie.tex: leslie.Rnw R/leslie.Rdata R/leslie.csv
+
+tribolium.tex: tribolium.Rnw R/Triboliumpeq.Rdata R/Triboliumlge.Rdata
 
 clean:
 	rm -rf *.bbl *.blg *.log *.aux *~ *-*.pdf *.toc intro.tex leslie.tex quantanal.tex sampling.tex mini.tex tribolium.tex pse_tutorial.tex mydata.csv multiple.tex integr.tex pse.tex Rplots.pdf plue.tex
