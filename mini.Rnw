@@ -38,11 +38,18 @@ proporção de juvenis que se tornam adultos por ciclo, de forma que os três pa
 distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número de tentativas dados, respectivamente, por
 $n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
 
+
 \begin{align}
 	\gamma & \sim \operatorname{binom}(\theta_1, n_1) \\
 	f      & \sim \operatorname{binom}(\theta_2, n_2) \\
 	\sigma & \sim \operatorname{binom}(\theta_3, n_t = n_1+n_2)
 \end{align}
+
+%%PI: a partir daqui avaliar o que vai para um apêndice. A informação
+%%essencial a reter é que lambda é um parametro derivado obtido pela
+%%maximização das somas das log-verossimilhanças 
+%% (detalhe técnico: sob a forte premissa de que os parâmetros são
+%% independentes neste exemplo, para simplficar, acho que isso vai apêndice).
 
 Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
 a função de log-verossimilhança para $\gamma$ é dada por
@@ -130,7 +137,9 @@ minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
 
 Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
 populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
-adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver que a melhor estimativa para
+adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver 
+%% Pi: agora que omitiu as expressões será fácil ver na figura, o que muda o início do parágrafo seguinte.
+que a melhor estimativa para
 cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
 Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
 
@@ -146,7 +155,13 @@ curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 
 A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
 foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
-de $\lambda$. Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
+de $\lambda$. 
+%% PI: este é segundo passo crucial do método, uma vez definida a função de verossimilhança
+%% Com isso geramos uma distribuição empírica de lambda que ...
+%% Seria pq o MCMC explora o epaço de parametros proporcional ao suporte?
+%% Um mérito importante é que o PLUE pode ser visto como uma análise de sensibilidade
+%% em uma vizinhança não infinetesimal e não arbitrária, e de uma quantidade derivadas de uma função não monotônica dos mles
+Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
 input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
 $\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
 
