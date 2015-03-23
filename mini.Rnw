@@ -38,7 +38,6 @@ proporção de juvenis que se tornam adultos por ciclo, de forma que os três pa
 distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número de tentativas dados, respectivamente, por
 $n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
 
-
 \begin{align}
 	\gamma & \sim \operatorname{binom}(\theta_1, n_1) \\
 	f      & \sim \operatorname{binom}(\theta_2, n_2) \\

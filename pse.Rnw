@@ -252,7 +252,6 @@ http://cran.r-project.org/web/packages/pse.
 \selectlanguage{brazilian}
 \chapter{Uma abordagem integrativa para análises de incerteza}\label{cap:integr}
 \input integr.tex
-\input caveat.tex
 \input plue.tex
 \input mini.tex
 

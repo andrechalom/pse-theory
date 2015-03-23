@@ -22,14 +22,14 @@ validação do modelo.
 Durante o desenvolvimento e a análise de modelos matemáticos em ecologia, é comum separar a calibração por 
 estimativa dos parâmetros (EP)
 da análise de incerteza e sensibilidade (AIS) do modelo. Os dois passos são feitos em seções diferentes dos artigos, discutidos
-em capítulos diferentes dos livros \citep{Caswell89}, e frequentemente realizados por equipes diferentes. Em estudos que 
+em capítulos diferentes dos livros \citep{Caswell89}, e chegam até a ser realizados por equipes diferentes. Em estudos que 
 empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
 de parâmetros considerada ótima durante as estimativas de parâmetros \citep{SilvaMatos99}, e a análise de incerteza é apresentada
 como um procedimento separado e posterior à análise do resultado considerado como principal. 
 Até mesmo a abordagem estatística usada em ambos os procedimentos pode ser incoerente.
 
-Outro problema que surge nessa abordagem é o fato de que, muitas vezes, o conjunto de parâmetros usados na calibração do modelo
-tem pouca relação com as entradas individuais da matriz de projeção. Isso ocorre, por exemplo, quando séries temporais
+Além disso, o conjunto de parâmetros usados na calibração do modelo pode ter
+pouca relação com as entradas individuais da matriz de projeção. Isso ocorre, por exemplo, quando séries temporais
 da população são utilizadas para estimar as taxas vitais: nesse caso, o responsável pela calibração vê o sistema como
 contagens de indivíduos, enquanto o responsável pela análise de incerteza tipicamente realiza a análise sobre as taxas vitais.
 Desta forma, a AIS é incapaz de apontar rumos para o planejamento de novos experimentos, apontando quais parâmetros 
@@ -48,7 +48,7 @@ tomar um modelo já parametrizado da forma ótima, e estudar as derivadas de pri
 em relação a cada um dos parâmetros de entrada. Nessa formulação, a quantidade e a qualidade dos dados de entrada
 para o modelo são ignorados, a menos de suas médias, e medidas de sensibilidade são tomadas exclusivamente sobre
 a variação da resposta de interesse a perturbações infinitesimais. Desta forma, modelos parametrizados com dados
-com grande incerteza não apresentarão grandes medidas de sensibilidade, assim como aumentar o esforço amostral não
+com grande incerteza não apresentarão maiores medidas de sensibilidade que modelos feitos sobre dados robustos, assim como aumentar o esforço amostral não
 reduzirá necessariamente as medidas de incerteza. A análise de sensibilidade analítica, em última análise, diz
 respeito à estrutura do modelo matricial, e não ao procedimento completo desde a tomada de dados em campo até
 a formulação e execução do modelo. Isso pode levar a uma falsa confiança em estudos que apresentem
@@ -122,7 +122,7 @@ parâmetro desconhecido. Estatísticos frequentistas tratam o problema de hipót
 verossimilhança obtido por qualquer de suas hipóteses simples componentes. Muito do trabalho nessa área se concentrará
 em encontrar aproximações para a distribuição dessa estatística \citep{Wilks38}.
 
-Sob esta inspiração, vamos construir uma função tentativa de suporte $\Psi^\delta (\gamma | \bu{x})$, definida por:
+Sob esta inspiração, podemos construir uma função tentativa de suporte $\Psi^\delta (\gamma | \bu{x})$, definida por:
 
 \begin{equation}
 	\Psi^\delta ( \gamma | \bu{x} ) = \sup\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
@@ -131,8 +131,8 @@ Sob esta inspiração, vamos construir uma função tentativa de suporte $\Psi^\
 
 Essa função pode ser intuitivamente interpretada no sentido de equiparar a verossimilhança da hipótese composta com
 a da sua melhor hipótese simples componente.
-Para clarificar nossa operação, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$ que 
-\textbf{não} é função de verossimilhança: $\Psi^\star (\gamma | \bu{x})$, definida por:
+Alternativamente, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$:
+$\Psi^\star (\gamma | \bu{x})$, definida por:
 \begin{equation}
 \Psi^\star ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
 \label{eqn:Psistar}
@@ -141,16 +141,7 @@ Para clarificar nossa operação, vamos construir uma outra função a partir de
 Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
 nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$.
 Enquanto a função \ref{eqn:Psidelta} tem uma forte inspiração nos trabalhos frequentistas, a função \ref{eqn:Psistar}
-vem de uma inspiração Bayesiana. No entanto, a 
-verossimilhança, ao contrário da probabilidade, não é necessariamente aditiva em relação ao parâmetro, 
-de forma de a função $\Psi^\star$ não é uma função de verossimilhança:
-
-\begin{quote}
-``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
-hypotheses (...).
-Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
-represent a statistical distribution in any sense.'' \citep{Edwards72}
-\end{quote}
+vem de uma inspiração Bayesiana. 
 
 Em geral, ao determinar regras para combinar o suporte de hipóteses simples para construir uma função de suporte
 para hipóteses compostas, estamos considerando funções da forma:
@@ -161,10 +152,8 @@ para hipóteses compostas, estamos considerando funções da forma:
 \end{equation}
 % PI: isto é MUITO legal! C: Agradeça a Mali, que me ajudou a montar esse quebra-cabeça =D
 Onde a função $\Psi^\star$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
-no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Precisamos examinar as propriedades dessa classe
-de funções; examinar se elas se adequam aos requerimentos de uma função de suporte; e investigar a relação entre
-a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
-\cite{Edwards72} enumera as seguintes propriedades desejáveis em uma função de medida de suporte:
+no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Essa classe de funções não corresponde
+necessariamente a funções de suporte, que devem possuir as seguintes propriedades desejáveis\citep{Edwards72}:
 
 \begin{enumerate}
 	\item {\em Transitividade}: Se $H_1$ tem melhor suporte que $H_2$ e $H_2$ tem melhor suporte que $H_3$, então
@@ -181,6 +170,83 @@ a adoção dessas funções e as bases lógicas da inferência, em especial o pr
 	\item {\em Compatibilidade}: uma medida de suporte deve ser facilmente usada para atualizar informações na forma de
 		{\em prioris}, nos casos nos quais elas existam.
 \end{enumerate}
+
+Assim, é fácil ver que a função $\Psi^\star$, por exemplo, não é uma função de suporte - já que esta não é 
+aditiva em relação ao parâmetro:
+
+\begin{quote}
+``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
+hypotheses (...).
+Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
+represent a statistical distribution in any sense.'' \citep{Edwards72}
+\end{quote}
+
+Trabalhos futuros podem examinar as propriedades desta classe de funções; examinar se elas se adequam aos 
+requerimentos de uma função de suporte - e caso contrário, se existe uma formulação alternativa desses 
+requisitos que as contemple; e investigar a relação entre
+a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
+No presente trabalho, vamos nos concentrar na complexa relação entre a lei da verossimilhança e o problema
+das hipóteses compostas.
+
+\section{{\em Caveat} sobre o uso de estatísticas}
+
+O uso de amostras de uma função de suporte para embasar um procedimento de análise de incerteza, como proposto
+nas sessões anteriores, deve ser feito de forma a levar em consideração a natureza das grandezas envolvidas.
+Vamos fornecer aqui um exemplo de aplicação ingênua e equivocada desse procedimento, que busca usar a média
+da função como uma medida da tendência central dos resultados do modelo.
+
+Considere o modelo simples\footnote{Segundo a notação desenvolvida na seção \ref{Introduction}}
+
+\begin{equation}
+	y = x
+\end{equation}
+
+Onde o par\^ametro $x$ \'e estimado, a partir da realiza\c c\~ao de um
+processo Poisson, como tendo o valor $\hat x$. Para estudar a incerteza
+do resultado do modelo $y$, vamos utilizar a fun\c c\~ao de verossimilhan\c ca
+de $x$, normalizada de forma a representar uma probabilidade. Lembremos que
+a fun\c c\~ao de verossimilhan\c ca de uma distribui\c c\~ao Poisson
+\'e:
+
+\begin{equation}
+	L \left( \lambda | \hat x \right) = C \lambda^{\hat x} \mathrm{e}^{-\lambda}
+\end{equation}
+
+Onde $C$ \'e uma constante multiplicativa que deve ser ajustada de forma
+que a integral de $L(\lambda | \hat x)$ seja igual a 1:
+
+\begin {eqnarray*}
+\int_0^\infty C \lambda^{\hat x} \mathrm{e}^{-\lambda} & = & 1 \\
+C & = & \left( \int_0^\infty  \lambda^{\hat x} \mathrm{e}^{-\lambda} \right)^{-1} \\
+C & = & \Gamma(\hat x +1)^{-1}
+\end{eqnarray*}
+
+O m\'aximo da fun\c c\~ao $L(\lambda | \hat x)$, descrita acima, ocorre em $\lambda = \hat x$.
+Logo, o valor de $\hat x$ deve ser usado como estimador pontual do valor mais prov\'avel
+do par\^ametro $x$. Da mesma forma, intervalos de confian\c ca para o par\^ametro $x$ devem
+ser constru\'idos ao redor de $\hat x$.
+
+Ap\'os tomar amostras desta distribui\c c\~ao, construimos a distribui\c c\~ao
+de resultados:
+\begin{equation}
+	D(y) = C y^{\hat x} \mathrm{e}^{-y}
+\end{equation}
+
+Cuja m\'edia \'e dada por
+
+\begin{eqnarray*}
+	<D(y)> & = & \int_0^\infty y C y^{\hat x} \mathrm{e}^{-y} dy \\
+	       & = & \int_0^\infty C y^{\hat x+1} \mathrm{e}^{-y} dy \\
+		   & = & \Gamma(\hat x +2) C\\
+	       & = & \frac{\Gamma(\hat x +2)}{\Gamma(\hat x + 1)} \\
+		   & = & \hat x + 1
+\end{eqnarray*}
+
+Note ent\~ao que, se escolhemos representar a distribui\c c\~ao dos resultados pela sua m\'edia,
+vamos estar usando $\hat x + 1$, enquanto que o valor mais verossímil para $y$ \'e $\hat x$, o mesmo
+que para o par\^ametro $x$. Da mesma forma, ao construir intervalos de confian\c ca para o resultado
+$y$, estes devem ser feitos considerando valores de maior verossimilhança, e n\~ao valores ao redor 
+da m\'edia $\hat x + 1$. 
 
 \section{Hipóteses compostas}
 Como exposto na seção \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
@@ -252,11 +318,8 @@ ser comparadas sejam dadas por pares $(\mu = \mu_0, \sigma = \sigma_0)$
 representando um valor fixo para a média e desvio padrão dessa normal, 
 é possível comparar uma aproximação para suporte relativo para diferentes valores para a média, com o desvio padrão livre
 - portanto, caracterizando a hipótese composta $(\mu = \mu_0, \sigma \geq 0)$.
-Para alguns casos de hipóteses compostas, é possível descrever uma transformação de parâmetros que permita essa abordagem;
-no entanto uma teoria geral para tratar hipóteses compostas baseada nessas técnicas parece improvável.
+Vamos retomar esta proposta na sessão \ref{sec:plue}.
 
-% PI: Ainda não está claro para mim que analisar a função de verossimilhança com muito parâmetros (e.g. por meio de perfilhamento) é o mesmo problema que construir hipóteses compostas. Lembre-se de me explicar esta parte.
-% C: Na verdade, eh um caso particular que funciona bem para algumas hipoteses compostas, dei uma explicada acima.
 A proposta \ref{i:alt} se baseia na formulação axiomática de uma lei geral, GLL (do inglês Generalized Law of Likelihood),
 que seja compatível com a lei da verossimilhança LL
 para hipóteses simples, mas que extenda seu domínio para hipóteses compostas. Em contraste, a proposta \ref{i:ext} 
@@ -343,8 +406,6 @@ $L(\theta_2, \sim\!\! \theta_2) = 0.44$,
 $L(\theta_3, \sim\!\! \theta_3) = 2.25$, oferecendo suporte apenas para $H_3$. No entanto, não há como combinar essa
 evidência com a apresentada acima: as quantidades derivadas do supremo da verossimilhança não são multiplicativas para conjuntos
 de dados distintos, ao contrário da verossimilhança. 
-% PI: Intuição: se o problema é apenas esse pode existir uma outra operação de conjuntos que faça o papel da multiplicação para as hipóteses simples. Faz sentido?
-% C: O problema "basal" é que não dá pra descrever essa operação em relação ao *resultado* da verossimilhança. Pra poder combinar os dados sob nova evidência, é preciso ter acesso a função de verossimilhança de theta
 A força de evidência absoluta para $\theta_1$ tomando o conjunto completo 
 de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
 Essa constatação, no entanto, não invalida o teorema da GLL, embora
@@ -356,17 +417,20 @@ alternativa para a lei da verossimilhança em 1975:
 ``{\em The strong law of likelihood}: For any two subsets $A$ and $B$ of $\Theta$, the data supports the 
 hypothesis $\omega \in A$ better than the hypothesis $\omega in B$ if
 \begin{equation}
-\sum_{\omega \in A} \mathcal{L}(\omega) > \sum_{\omega \in A} \mathcal{L}(\omega)
+\sum_{\omega \in A} \mathcal{L}(\omega) > \sum_{\omega \in B} \mathcal{L}(\omega)
 \end{equation}
 Let us recall the [assertion] that all our sets (the sample space, the parameter space, etc.) are finite.''
 \end{quote}\citep{Basu75}
+
+Novamente, o grande problema ao aceitar esta generalização é encontrar uma medida de força de evidência 
+compatível.
 
 \section{Uma lei fraca de verossimilhança}
 
 Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
 de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
 consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
-e é o caminho que vamos seguir nesta seção. % PI: isso é o mesmo que fomular uma lei fraca?
+e é o caminho que vamos seguir nesta seção.
 
 Um exemplo devido a Branden Fitelson \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
 tome um baralho de 52 cartas bem embaralhado, e considere as hipóteses (simples) 
@@ -412,47 +476,7 @@ poderia embasar uma escola de inferência intermediária, sem o uso de {\em prio
 nem a restrição
 arbitrária ao tratamento de hipóteses compostas.
 
-%O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
-%nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
-%Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
-%essa singularidade.
-
-% PI: Faz sentido esta especulação
-
-% \section{Proposta de aplicação}
-% PI: A proposta faz sentido para mim, mas depois de ler as seções anteriores fiquei em dúvida sobre a interpretação. Creio que isso acontece porque ainda não há uma ligação clara entre a teoria das seções anteriores a aplicação e exemplos que começma aqui, confere?
-% C: Verdade. Fiquei mto em dúvida sobre colocar ou não essa seção aqui; estou retirando ela para a quali, depois volto a inseri-la qndo tiver a teoria mais clara. Vou tb deixar mais claro que as aplicações nas proximas sessoes NÃO foram feitas dentro desse  paradigma ainda.
-
-%Uma metodologia de análise de incerteza baseada em uma função de suporte, após a escolha de uma determinada forma para
-%a equação de suporte $\Psi(\gamma|\bu{x})$ deve ser dada por:
-
-%\begin{enumerate}
-%	\item Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de crescimento 
-%		constante ou descrescente com a classe de tamanho, modelo com 4 ou com 5 classes de tamanho, etc). Escreva a 
-%		função de verossimilhança $L_i(\bu{\theta}|\bu{x})$ para cada modelo $i \in 1,...,n$.
-%	\item Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo. 
-%	\item Determine o valor de AIC para cada modelo. 
-%	\item Caso haja um modelo cujo desempenho é inequivocamente superior, use o método de Metropolis (forma de Monte Carlo) 
-%		para gerar amostras a partir da função de verossimilhança do modelo, e combine
-%		esses valores para gerar uma função de suporte de acordo com a equação \ref{eqn:Psi}. 
-%	\item Caso haja um empate entre modelos, gere amostras a partir de todos os modelos vencedores e as combine usando 
-%		os pesos designados pela diferença de informação.
-%	\item Realize as análises de incerteza e sensibilidade a partir dos resultados gerados.
-%\end{enumerate}
-
-% PI: Tive dificuldades de identificar estes passos nos exemplos. No
-% modelo mínimo me parece que há um só modelo, portanto os passos 1, 3
-% e 5 não se aplicam? Ainda assim, me parece ter sentido após o ajuste
-% fazer a análise de incerteza e sensisbilidade amostrando-se a
-% superfície de verossimilhança como você fez. No caso do Tribolium vc
-% não usou este procedimento, apenas o hipercubo para investigar numa
-% vizinhança definida por uma distribuiçãod e probabilidades, correto?
-% Novamente faz sentido, mas falta conectar teoria com exemplos de
-% alguma maneira. Um caminho é separar a proposta em duas partes:
-% exploração estocástica (contra análise local por aproximação linear,
-% no caso de modelos matriciais); e exploração estocástica baseada na
-% inceerteza das estimativas, expressa pela função de
-% verossmilhança. Me lembre de discutirmos isso.
-
-% C: Fato, os passos 1 3 e 5 desaparecem caso só haja um modelo para a geração dos dados.
-% O Tribolium estah feito como descrito no cap. 2, ainda nao consegui montar a pse verossim. pra ele
+O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
+nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
+Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
+essa singularidade.
