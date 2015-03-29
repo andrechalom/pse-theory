@@ -1,7 +1,7 @@
 \SweaveOpts{fig=T,echo=F}
 \section{PLUE: uma proposta de perfilhamento de verossimilhança}\label{sec:plue}
 
-Nesta seção, vamos descrever uma metodologia inédita para a realização de análises de incerteza
+Nesta seção, vamos descrever uma metodologia tentativa para a realização de análises de incerteza
 baseada no perfilhamento da verossimilhança dos parâmetros. Argumentamos que essa metodologia é
 intuitivamente atraente dentro de um paradigma de verossimilhança.
 Vamos nos referir ao nosso
@@ -45,7 +45,32 @@ Esse raciocínio pode ser expandido para perguntarmos:
 $\delta$ em relação ao ponto de máxima verossimilhança?''}
 
 Ao fazer essa pergunta para uma série de valores de $\delta$, estamos efetivamente perfilhando a 
-verossimilhançao de cada ponto do espaço de parâmetros.
+verossimilhança de cada ponto do espaço de parâmetros. Neste ponto, precisamos apontar que procedimentos
+de perfilhamento vêm sendo utilizados na inferência por verossimilhança há decadas para reduzir a 
+dimensionalidade do espaço de parâmetros - seja na forma de uma simples eliminação de ``{\em nuisance
+parameters}'', seja de forma elaborada através de análises de componentes principais. 
+Considere, por exemplo, o caso típico em que desejamos ajustar uma distribuição normal a uma série de dados,
+e ao invés de compararmos pares da forma $(\mu = \mu_0, \sigma = \sigma_0)$ representando um valor fixo para 
+a média e desvio padrão dessa normal, desejamos fazer afirmações apenas sobre a média $\mu$ desta normal.
+Já apontamos que este raciocínio corresponde a encarar hipóteses compostas da forma 
+$(\mu = \mu_0, \sigma \geq 0)$. Agora, vamos notar que isto é equivalente a considerar a função 
+$g(\mu, \sigma) = \mu$ - ou seja, estamos projetando o espaço bidimensional formado por $\mu$ e $\sigma$
+em um espaço unidimensional. Nossa proposta pode ser considerada uma generalização deste
+procedimento: ao invés de considerar apenas funções que removam um dos parâmetros, estamos considerando
+qualquer função não-inversível.
+
+Há que se considerar, no entanto, que técnicas de remoção de ``{\em nuisance parameters}'' dentro do paradigma
+de verossimilhança no caso geral se assentam sobre questões que não estão totalmente resolvidas - e que
+se situam na fronteira entre o pensamento verossimilhantista e a inferência fiducial \citep{Kalbfleisch70,
+Edwards72}. Se estes métodos não podem ser, em geral, encarados como forma de inferência tão rigorosa quanto
+a inferência pela função de verossimilhança, é bem aceito que esta é uma análise exploratória válida. Nossa
+generalização se encontra no mesmo estado: embora ela não possa ser vista como uma forma rigorosa de 
+inferência, ela pode ser usada de forma exploratória sem incorrer em problemas mais profundos que a perfilhagem
+tradicional.
+
+Lembramos que, se do ponto de vista da análise de verossimilhança, nossa proposta não apresenta grande 
+inovação, na literatura de análise de sensibilidade ela é única em propor uma metodologia que utilize toda
+a informação contida nas amostras coletadas. 
 
 \begin{figure}[htb]
 <<>>=
@@ -150,3 +175,5 @@ Seja $y = F(\bu{x})$ o resultado escalar de um modelo $F$.
 %	prof = prof - mmin
 %	profile <- rbind(data.frame(limit = lower[myN:1], ll = prof[myN:1]), data.frame(limit=upper, ll = prof))
 %}
+
+
