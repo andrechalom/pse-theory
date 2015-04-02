@@ -94,11 +94,20 @@ arrows(1.08, 7.7, 1.08, 9, angle=90, code=3, length=0.15)
 text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 @
 	\caption{Representação esquemática de uma função de verossimilhança, mostrando dois pontos de interesse:
-	o máximo global $x_max$ e o máximo de uma região distinta $x_lim$. Veja detalhes no texto.} 
+	o máximo global $x_{max}$ e o máximo de uma região distinta $x_{lim}$. Veja detalhes no texto.} 
 	\label{fig:esquema}
 \end{figure}
 
 \subsection{Método}
+\begin{description}
+	\item[Definições]
+		Considere um modelo de interesse biológico qualquer - vamos chamá-lo de modelo biológico, para
+		diferenciar do modelo estatístico que será apresentado abaixo. Vamos considerar o caso simples
+		de um resultado escalar $y$ de um modelo com um vetor de entradas $\bu{x}$: $y = F(\bu{x})$ 
+	\item[Amostragem]
+
+	\item[Agregação]
+\end{description}
 % \section{Proposta de aplicação}
 % PI: A proposta faz sentido para mim, mas depois de ler as seções anteriores fiquei em dúvida sobre a interpretação. Creio que isso acontece porque ainda não há uma ligação clara entre a teoria das seções anteriores a aplicação e exemplos que começma aqui, confere?
 % C: Verdade. Fiquei mto em dúvida sobre colocar ou não essa seção aqui; estou retirando ela para a quali, depois volto a inseri-la qndo tiver a teoria mais clara. Vou tb deixar mais claro que as aplicações nas proximas sessoes NÃO foram feitas dentro desse  paradigma ainda.
