@@ -44,11 +44,133 @@ $n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n
 	\sigma & \sim \operatorname{binom}(\theta_3, n_t = n_1+n_2)
 \end{align}
 
-%%PI: a partir daqui avaliar o que vai para um apêndice. A informação
-%%essencial a reter é que lambda é um parametro derivado obtido pela
-%%maximização das somas das log-verossimilhanças 
-%% (detalhe técnico: sob a forte premissa de que os parâmetros são
-%% independentes neste exemplo, para simplficar, acho que isso vai apêndice).
+Vamos utilizar ainda a suposição de que os parâmetros são independentes neste exemplo, para chegar às 
+funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sobre a construção dessa função
+podem ser vistos na sessão \ref{apmat}).
+
+<<load, fig=F>>=
+set.seed(42)
+library(pse)
+# Helper functions for the model
+tr <- function (A) return(A[1,1]+A[2,2])
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+getlambda = function (sigma, f, gamma) {
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+}
+getlambda = Vectorize(getlambda)
+model <- function(x) getlambda(x[,1], x[,2], x[,3])
+
+factors = c("sigma", "f", "gamma")
+
+N = 10000
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+# melhor chute para os parametros
+sigma <- obs[3]/n.t
+f <- obs[2]/n[2]
+gamma <- obs[1]/n[1]
+start = c(sigma, f, gamma)
+lambda <- getlambda(sigma, f, gamma)
+# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+# NOTE: LL function uses GLOBAL obs and n!!!
+LL <- function (x) 
+{
+	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+	if (is.nan(t)) return (-Inf);
+	return(t);
+}
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
+@
+
+Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
+populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
+adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver na figura \ref{fig:LikFunc}
+que a melhor estimativa para
+cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
+Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
+
+\begin{figure}
+<<LikFunc>>=
+curve(dbinom(obs[3], n.t, x))
+curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
+curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
+@
+	\caption{Função de verossimilhança para cada parâmetro do modelo. Preto = $\sigma$, vermelho = $f$ e verde = $\gamma$.}
+	\label{fig:LikFunc}
+\end{figure}
+
+As funções de verossimilhança de cada parâmetro
+foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais 
+geramos uma distribuição empírica para $\lambda$, de forma proporcional à verossimilhança dos parâmetros.
+Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
+input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
+$\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
+
+As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
+resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
+discutidas no capítulo \ref{cap:pse}. É importante ressaltar que estas análises foram realizadas sobre uma
+vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária (como seriam as análises descritas
+no cap. \ref{cap:pse}), centrada no ponto de máxima verossimilhança.
+
+\begin{figure}
+<<Case1>>=
+plot(plue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
+	\label{fig:lambda}
+\end{figure}
+\begin{figure}
+<<>>=
+# Analise de sensibilidade sobre lambda
+plotscatter(plue)
+@
+	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
+	mínimo, gerados a partir de uma abordagem de verossimilhança.}
+	\label{fig:lambdascatter}
+\end{figure}
+\begin{figure}
+<<>>=
+plotprcc(plue)
+@
+	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
+	estruturado mínimo de crescimento populacional}
+	\label{fig:lambdaprcc}
+\end{figure}
+
+<<largerSample, fig=FALSE>>=
+Mult=3
+n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
+largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+@
+
+A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
+É importante notar que esses resultados são para uma única amostra, e um tamanho amostral decididamente pequeno. 
+Considerando uma amostra \Sexpr{Mult} vezes maior, na qual todas as proporções se mantenham as mesmas (ou seja,
+o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por \Sexpr{Mult}), a análise resulta em
+um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
+
+\begin{figure}
+<<>>=
+plot(largePlue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
+	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
+	\label{fig:lambda2}
+\end{figure}
+
+\subsection{Detalhes matemáticos}\label{apmat}
+Nesta seção, vamos desenvolver alguns detalhes matemáticos sobre o exemplo acima.
 
 Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
 a função de log-verossimilhança para $\gamma$ é dada por
@@ -93,129 +215,3 @@ O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo
 \begin{align}
 	\lambda = \frac{1}{2} \left(\operatorname{tr}(A) + \sqrt{\operatorname{tr}^2(A) - 4 \operatorname{det}(A)} \right)
 \end{align}
-
-<<load, fig=F>>=
-set.seed(42)
-library(pse)
-# Helper functions for the model
-tr <- function (A) return(A[1,1]+A[2,2])
-A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
-getlambda = function (sigma, f, gamma) {
-	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
-}
-getlambda = Vectorize(getlambda)
-model <- function(x) getlambda(x[,1], x[,2], x[,3])
-
-factors = c("sigma", "f", "gamma")
-
-N = 10000
-
-# pop inicial: juv, ad, total
-n <- c(10, 15); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev.totais
-obs <- c(3, 2, 23)
-# melhor chute para os parametros
-sigma <- obs[3]/n.t
-f <- obs[2]/n[2]
-gamma <- obs[1]/n[1]
-start = c(sigma, f, gamma)
-lambda <- getlambda(sigma, f, gamma)
-# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
-# NOTE: LL function uses GLOBAL obs and n!!!
-LL <- function (x) 
-{
-	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
-				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
-				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
-	if (is.nan(t)) return (-Inf);
-	return(t);
-}
-plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
-minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
-@
-
-Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
-populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
-adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver 
-%% Pi: agora que omitiu as expressões será fácil ver na figura, o que muda o início do parágrafo seguinte.
-que a melhor estimativa para
-cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
-Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
-
-\begin{figure}
-<<LikFunc>>=
-curve(dbinom(obs[3], n.t, x))
-curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
-curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
-@
-	\caption{Função de verossimilhança para cada parâmetro do modelo. Preto = $\sigma$, vermelho = $f$ e verde = $\gamma$.}
-	\label{fig:LikFunc}
-\end{figure}
-
-A função de verossimilhança para cada parâmetro individualmente pode ser vista na figura \ref{fig:LikFunc}. Essas funções
-foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais calculou-se o valor
-de $\lambda$. 
-%% PI: este é segundo passo crucial do método, uma vez definida a função de verossimilhança
-%% Com isso geramos uma distribuição empírica de lambda que ...
-%% Seria pq o MCMC explora o epaço de parametros proporcional ao suporte?
-%% Um mérito importante é que o PLUE pode ser visto como uma análise de sensibilidade
-%% em uma vizinhança não infinetesimal e não arbitrária, e de uma quantidade derivadas de uma função não monotônica dos mles
-Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
-input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
-$\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
-
-As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
-resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
-discutidas no capítulo \ref{cap:pse}.
-
-\begin{figure}
-<<Case1>>=
-plot(plue)
-@
-	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
-	\label{fig:lambda}
-\end{figure}
-\begin{figure}
-<<>>=
-# Analise de sensibilidade sobre lambda
-plotscatter(plue)
-@
-	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
-	mínimo, gerados a partir de uma abordagem de verossimilhança.  }
-	\label{fig:lambdascatter}
-\end{figure}
-\begin{figure}
-<<>>=
-plotprcc(plue)
-@
-	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
-	estruturado mínimo de crescimento populacional}
-	\label{fig:lambdaprcc}
-\end{figure}
-
-<<largerSample, fig=FALSE>>=
-Mult=3
-n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
-largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
-
-# pop inicial: juv, ad, total
-n <- c(10, 15); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev.totais
-obs <- c(3, 2, 23)
-@
-
-A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
-É importante notar que esses resultados são para uma única amostra, e um tamanho amostral decididamente pequeno. 
-Considerando uma amostra \Sexpr{Mult} vezes maior, na qual todas as proporções se mantenham as mesmas (ou seja,
-o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por \Sexpr{Mult}), a análise resulta em
-um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
-
-\begin{figure}
-<<>>=
-plot(largePlue)
-@
-	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
-	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
-	\label{fig:lambda2}
-\end{figure}
-

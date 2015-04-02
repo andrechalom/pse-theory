@@ -1339,284 +1339,45 @@ propostas são ou não projetáveis pode ser muito complexo. Vários trabalhos c
 periódicos são informalmente criticados por serem análogos à anedota do atirador texano, que primeiro atira
 várias vezes na lateral do estábulo, e depois desenha um alvo no maior agrupamento de acertos.
 
-Finalmente, 
-%\begin{quote}
-%``It is easy to obtain confirmations, or verifications, for nearly every theory - if we look for confirmations.
-%
-%Confirmations should count only if they are the result of {\em risky predictions}; that is to say, if, unenlightened by 
-%the theory in question, we should have expected an event which was incompatible with the theory - an 
-%event which would have refuted the theory.
-%
-%Every {\em good} scientific theory is a prohibition: it forbids certain things to happen. The more a theory forbids, the 
-%better it is.
-%
-%A theory which is not refutable by any conceivable event is non-scientific. Irrefutability is not a virtue of a 
-%theory (as people often think) but a vice.'' \citep{Popper63}
-%\end{quote}
-%
-%O paradigma de testes de significância de Fisher talvez seja inspirado em uma versão dessa visão de falseabilidade: uma
-%teoria científica é aceitável enquanto a evidência contrária não é
-%suficiente para refutá-la; 
-%% Vejo diferenças fundamentais: Para Popper nunca se prova
-%% a validade de uma hipótese, portanto o conhecimento será sempre
-%% provisório. O que se prova é a invalidade de uma hipótese a qual,
-%% deixa de ter importância como explicação científica. O número de
-%% hipóteses candidatas é ilimitado e a ciência avança por tenativa e
-%% erro.
-%%Já no teste de
-%% significância o que se coloca à prova é uma hipótese nula, e a
-%% hipótese de interesse não é diretamente testada. Mais importante, a
-%% hipótese de interesse é aceita porque definida como a única
-%% alternativa à nula. O universo de hipóteses restringe-se a duas e a
-%% refutaçãod a nula implica em aceitação da alternativa, o que não é o
-%% mesmo que ter inúmeras candidatas e nem que submeter a hipótese de
-%% interesse a um teste direto. 
-%a escola da verossimilhança
-%parece estender essa noção ao apresentar um conceito de evidência mais geral do que o Fisheriano, que permite o ataque apenas
-%sobre uma hipótese nula privilegiada. O verossimilhantista, assim, enxerga que uma teoria científica não tem mérito absoluto:
-%ela só pode ser julgada adequada ou inadequada frente a explicações comparáveis vindas de outras teorias.
-%% Vejo paralelo com as ideias de Lakatos, que propôs que teorias são
-%% sempre conforntadas com outras, e que nenhuma revolução científica é
-%% motivada simplesmente para derrubar uma teoria vigente, mas sim para
-%% colocar uma concorrente no lugar.
-%
-%Em contraste, Thomas Kuhn defende que o progresso da ciência não se dá por
-%simples acúmulo de evidência, e sim por um processo não-linear e episódico, no qual períodos de acumulação de evidência se
-%intercalam com períodos revolucionários \citep{Kuhn62}. 
-%Seu exemplo mais famoso é a recordação do modelo Copernicano de movimentação planetária:
-%Kuhn aponta que não apenas as observações astronômicas da época não eram capazes de refutar o modelo Ptolomaico de epiciclos,
-%como o modelo original proposto por Copérnico não trazia nenhuma melhora em poder preditivo. A preferência de alguns cientistas
-%a favor do modelo Copernicano se dava simplesmente por uma maior simplicidade deste. A premissa de que modelos mais simples
-%são preferíveis vai encontrar eco nas formulações de inferência baseadas na teoria da informação. Kuhn, no entanto, vai além
-%e propõe que diferentes paradigmas científicos são incomensuráveis, de forma que o ferramental e a linguagem desenvolvidos
-%em um não pode ser usado para refutar o outro. Essa visão, controversa entre filósofos da ciência, colocaria em cheque o uso da
-%inferência estatística como procedimento de arbitragem entre teorias.
-%% O que não é o mesmo que ser um procedimento de avaliação de
-%% suporte empírico no âmbito de cada corpo teórico. Novamente uma
-%% questãod e qual o papel da estatística na produção de conhecimento científico.
-%
-%Já em relação ao problema da indução, Popper propõe que ele não tem uma solução aceitável porque a pergunta, em si, está
-%equivocada:
-%
-%\begin{quote}
-%``The actual procedure of science is to operate with conjectures: to jump to conclusions — often after one single observation.
-%(...) Tests proceed partly by way of observation, and observation is thus very important; but its function is not that of 
-%producing theories. It plays its role in rejecting, eliminating, and criticizing theories'' \citep{Popper63}
-%\end{quote}
-%
-%Vamos adotar neste trabalho uma visão essencialmente Popperiana, e propor que toda teoria estatística, para poder ser
-%usada na ciência, deve prover uma forma de testar teorias conflitantes (e comensuráveis)
-%e de rejeitar teorias incompatíveis com as observações experimentais. Como as teorias relevantes para problemas práticos costumam
-%realizar previsões sobrepostas, % o que é isso?
-%sem que testes conclusivos possam ser feitos, esse requisito tem dupla função: garantir
-%que toda teoria científica é testável pelos procedimentos estatísticos é também garantir que o procedimento estatístico escolhido
-%permite o teste de qualquer teoria científica relevante. Este requisito terá importância central no problema de testar
-%teorias cuja própria formulação é estatística:
-%
-%\begin{quote}
-%``Those theories which are under a probabilistic form (thermodynamics, statistical [mechanics?], etc.) can never be refuted (...):
-%after all, even an event with probability 0 can well occur. According to Popper we then have to take a methodological decision
-%and consider a probabilistic theory {\em T} refuted if a certain event occurred which, as far as {\em T} is concerned, would 
-%otherwise be extremely unlikely.'' \citep{deFinetti2010}
-%\end{quote}
-%
-%Reforçamos que a discussão metodológica na aplicação da estatística às ciências práticas deve se fazer lado a lado
-%com a uma discussão
-%epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a proposição de
-%métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese 
-%e procedimentos frequentistas em
-%bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
-%adequados ao uso na ciência, norteada na discussão acima sobre indução e demarcação.
-%% Minha observação mais importante  para esta parte: 
-%% Cotejar epistemologia e inferência estatística é muito difícil e cheio de
-%% armadilhas. Uma das primeiras armadilhas é a da correspondência
-%% fácil e direta.  Um exemplo artificial seria: há teste em
-%% epistemologia e em estatística, logo os testes devem
-%% partilhar a mesma lógica.  Um caso real é o argumento Bayesiano que
-%% todo cientista tem conhecimento a priori e que o progresso
-%% científico é o aperfeiçoamento de conhecimento legado pelos nossos
-%% antecessores. Em primeiro lugar, já se impõe aí uma certa concepção
-%% de progresso científico. Fica a pergunta: esta concepção foi uma
-%% premissa da construção da inferência Bayesiana ou uma vez
-%% estabelecida esta escola buscou a prosteriori a concepção que melhor
-%% se adequava aos seus procedimentos?
-%% De uma forma ou de outra, há mais de uma possibilidade. No caso, a concepção Popperiana de avanço por aproximação,
-%% mas não com as interpretações de Khun ou Lakatos, para citar apenas
-%% os dois críticos de primeira hora de Popper, e os dois mais
-%% conhecidos por cinetistas naturais. O problema é que por outros
-%% critérios talvez as visões de Khun e Lakatos se adequem mais.
-%% Mas siga adianta e suponha que se aceite esta
-%% concepção de progresso. Isso não implica necessariamente em aceitar que todas as
-%% ações do cientista rumo ao progresso devam ser formalizadas em
-%% procedimentos estatísticos. Este é o ponto do Royal: a estatística
-%% não é todo o processo de pesquisa, e precisa delimitar seu papel
-%% apropriadamente para melhor cumprí-lo. Ainda neste exemplo do
-%% argumento Bayesiano, incorporar na estatística um procedimento de
-%% atualização de visão de mundo (ao invés de restringir-se a
-%% informar o suporte que os dados dão a uma visão em detrimento da
-%% outra, como defende Royal) pode dar uma falsa noção de objetividade
-%% ou normatização a um procedimento que sempre contem um certo grau de
-%% subjetividade.
-%% Por fim, as diferentes escolas de epistemologia analisam níveis
-%% diferentes da produção de conhecimento científico. Apelando a
-%% Lakatos, há procedimentos
-%% de manutenção de um núcleo duro de teoria que não é testada, e
-%% outros que são os testes de hipóteses derivadas. Cada uma dessas
-%% camadas tem lógicas e princípios distintos, e há ainda princípios
-%% gerais que os integram. Sabemos que a estatística liga dados a
-%% teoria. Mas em qual camada se situa, e de que maneira?
-%% Em resumo, a pergunta geral que começou meu comentário e que parece
-%% ser a sua é interessante, e como você acredito que devem existir
-%% alguns princípios lógicos comuns entre inferência estatística e
-%% epistemologia.  Mas é terreno muito traiçoeiro, precisamos da ajuda de filósofos da
-%% ciência para fazer avanços fundamentados.
-% 
+Finalmente, há paralelos entre as diferentes abordagens de inferência estatística e questões ligadas ao
+problema da demarcação de Karl Popper:
+\begin{quote}
+``It is easy to obtain confirmations, or verifications, for nearly every theory - if we look for confirmations.
 
+Confirmations should count only if they are the result of {\em risky predictions}; that is to say, if, unenlightened by 
+the theory in question, we should have expected an event which was incompatible with the theory - an 
+event which would have refuted the theory.
 
-%%%%%%%%%%%%%% TEXTO "ORIGINAL"
-%Embora essa discussão seja muito vasta, acredito que dois pontos da filosofia - e suas conexões com o uso de
-%estatística -
-%não podem ser evadidos por cientistas naturais: o problema da indução e o problema da demarcação.
-%O primeiro diz respeito à construção de conhecimento através da observação: se observamos que o sol sempre nasce no leste,
-%isso pode ser usado para estabelecer como fato que o sol nascerá sempre no leste? A conexão feita entre ``eu observei esse
-%fato no passado'' e ``eu prevejo que esse fato se repetirá no futuro'' não encontra justificativa lógica. Nossa própria convicção
-%de que a indução deve funcionar para estabelecer fatos é baseada em uma indução. O segundo problema pode ser formulado como
-%``o que distingue uma teoria científica?'' % e qual é o problema com isto?
-%
-%Embora ambos os problemas possam ser considerados abertos ainda nos dias de hoje,
-%as respostas dadas a ambas as perguntas por Karl Popper desfrutam de grande aceitação na comunidade científica, em particular
-%nas ciências naturais. 
-%Enquanto autores anteriores consideravam o mérito de teorias científicas associado à sua {\em verificação}, Popper
-%contradiz essa visão com a idéia de que uma teoria científica deve ser {\em falseável}:
-%
-%\begin{quote}
-%``It is easy to obtain confirmations, or verifications, for nearly every theory - if we look for confirmations.
-%
-%Confirmations should count only if they are the result of {\em risky predictions}; that is to say, if, unenlightened by 
-%the theory in question, we should have expected an event which was incompatible with the theory - an 
-%event which would have refuted the theory.
-%
-%Every {\em good} scientific theory is a prohibition: it forbids certain things to happen. The more a theory forbids, the 
-%better it is.
-%
-%A theory which is not refutable by any conceivable event is non-scientific. Irrefutability is not a virtue of a 
-%theory (as people often think) but a vice.'' \citep{Popper63}
-%\end{quote}
-%
-%O paradigma de testes de significância de Fisher talvez seja inspirado em uma versão dessa visão de falseabilidade: uma
-%teoria científica é aceitável enquanto a evidência contrária não é
-%suficiente para refutá-la; 
-%% Vejo diferenças fundamentais: Para Popper nunca se prova
-%% a validade de uma hipótese, portanto o conhecimento será sempre
-%% provisório. O que se prova é a invalidade de uma hipótese a qual,
-%% deixa de ter importância como explicação científica. O número de
-%% hipóteses candidatas é ilimitado e a ciência avança por tenativa e
-%% erro.
-%%Já no teste de
-%% significância o que se coloca à prova é uma hipótese nula, e a
-%% hipótese de interesse não é diretamente testada. Mais importante, a
-%% hipótese de interesse é aceita porque definida como a única
-%% alternativa à nula. O universo de hipóteses restringe-se a duas e a
-%% refutaçãod a nula implica em aceitação da alternativa, o que não é o
-%% mesmo que ter inúmeras candidatas e nem que submeter a hipótese de
-%% interesse a um teste direto. 
-%a escola da verossimilhança
-%parece estender essa noção ao apresentar um conceito de evidência mais geral do que o Fisheriano, que permite o ataque apenas
-%sobre uma hipótese nula privilegiada. O verossimilhantista, assim, enxerga que uma teoria científica não tem mérito absoluto:
-%ela só pode ser julgada adequada ou inadequada frente a explicações comparáveis vindas de outras teorias.
-%% Vejo paralelo com as ideias de Lakatos, que propôs que teorias são
-%% sempre conforntadas com outras, e que nenhuma revolução científica é
-%% motivada simplesmente para derrubar uma teoria vigente, mas sim para
-%% colocar uma concorrente no lugar.
-%
-%Em contraste, Thomas Kuhn defende que o progresso da ciência não se dá por
-%simples acúmulo de evidência, e sim por um processo não-linear e episódico, no qual períodos de acumulação de evidência se
-%intercalam com períodos revolucionários \citep{Kuhn62}. 
-%Seu exemplo mais famoso é a recordação do modelo Copernicano de movimentação planetária:
-%Kuhn aponta que não apenas as observações astronômicas da época não eram capazes de refutar o modelo Ptolomaico de epiciclos,
-%como o modelo original proposto por Copérnico não trazia nenhuma melhora em poder preditivo. A preferência de alguns cientistas
-%a favor do modelo Copernicano se dava simplesmente por uma maior simplicidade deste. A premissa de que modelos mais simples
-%são preferíveis vai encontrar eco nas formulações de inferência baseadas na teoria da informação. Kuhn, no entanto, vai além
-%e propõe que diferentes paradigmas científicos são incomensuráveis, de forma que o ferramental e a linguagem desenvolvidos
-%em um não pode ser usado para refutar o outro. Essa visão, controversa entre filósofos da ciência, colocaria em cheque o uso da
-%inferência estatística como procedimento de arbitragem entre teorias.
-%% O que não é o mesmo que ser um procedimento de avaliação de
-%% suporte empírico no âmbito de cada corpo teórico. Novamente uma
-%% questãod e qual o papel da estatística na produção de conhecimento científico.
-%
-%Já em relação ao problema da indução, Popper propõe que ele não tem uma solução aceitável porque a pergunta, em si, está
-%equivocada:
-%
-%\begin{quote}
-%``The actual procedure of science is to operate with conjectures: to jump to conclusions — often after one single observation.
-%(...) Tests proceed partly by way of observation, and observation is thus very important; but its function is not that of 
-%producing theories. It plays its role in rejecting, eliminating, and criticizing theories'' \citep{Popper63}
-%\end{quote}
-%
-%Vamos adotar neste trabalho uma visão essencialmente Popperiana, e propor que toda teoria estatística, para poder ser
-%usada na ciência, deve prover uma forma de testar teorias conflitantes (e comensuráveis)
-%e de rejeitar teorias incompatíveis com as observações experimentais. Como as teorias relevantes para problemas práticos costumam
-%realizar previsões sobrepostas, % o que é isso?
-%sem que testes conclusivos possam ser feitos, esse requisito tem dupla função: garantir
-%que toda teoria científica é testável pelos procedimentos estatísticos é também garantir que o procedimento estatístico escolhido
-%permite o teste de qualquer teoria científica relevante. Este requisito terá importância central no problema de testar
-%teorias cuja própria formulação é estatística:
-%
-%\begin{quote}
-%``Those theories which are under a probabilistic form (thermodynamics, statistical [mechanics?], etc.) can never be refuted (...):
-%after all, even an event with probability 0 can well occur. According to Popper we then have to take a methodological decision
-%and consider a probabilistic theory {\em T} refuted if a certain event occurred which, as far as {\em T} is concerned, would 
-%otherwise be extremely unlikely.'' \citep{deFinetti2010}
-%\end{quote}
-%
-%Reforçamos que a discussão metodológica na aplicação da estatística às ciências práticas deve se fazer lado a lado
-%com a uma discussão
-%epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a proposição de
-%métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese 
-%e procedimentos frequentistas em
-%bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
-%adequados ao uso na ciência, norteada na discussão acima sobre indução e demarcação.
-%% Minha observação mais importante  para esta parte: 
-%% Cotejar epistemologia e inferência estatística é muito difícil e cheio de
-%% armadilhas. Uma das primeiras armadilhas é a da correspondência
-%% fácil e direta.  Um exemplo artificial seria: há teste em
-%% epistemologia e em estatística, logo os testes devem
-%% partilhar a mesma lógica.  Um caso real é o argumento Bayesiano que
-%% todo cientista tem conhecimento a priori e que o progresso
-%% científico é o aperfeiçoamento de conhecimento legado pelos nossos
-%% antecessores. Em primeiro lugar, já se impõe aí uma certa concepção
-%% de progresso científico. Fica a pergunta: esta concepção foi uma
-%% premissa da construção da inferência Bayesiana ou uma vez
-%% estabelecida esta escola buscou a prosteriori a concepção que melhor
-%% se adequava aos seus procedimentos?
-%% De uma forma ou de outra, há mais de uma possibilidade. No caso, a concepção Popperiana de avanço por aproximação,
-%% mas não com as interpretações de Khun ou Lakatos, para citar apenas
-%% os dois críticos de primeira hora de Popper, e os dois mais
-%% conhecidos por cinetistas naturais. O problema é que por outros
-%% critérios talvez as visões de Khun e Lakatos se adequem mais.
-%% Mas siga adianta e suponha que se aceite esta
-%% concepção de progresso. Isso não implica necessariamente em aceitar que todas as
-%% ações do cientista rumo ao progresso devam ser formalizadas em
-%% procedimentos estatísticos. Este é o ponto do Royal: a estatística
-%% não é todo o processo de pesquisa, e precisa delimitar seu papel
-%% apropriadamente para melhor cumprí-lo. Ainda neste exemplo do
-%% argumento Bayesiano, incorporar na estatística um procedimento de
-%% atualização de visão de mundo (ao invés de restringir-se a
-%% informar o suporte que os dados dão a uma visão em detrimento da
-%% outra, como defende Royal) pode dar uma falsa noção de objetividade
-%% ou normatização a um procedimento que sempre contem um certo grau de
-%% subjetividade.
-%% Por fim, as diferentes escolas de epistemologia analisam níveis
-%% diferentes da produção de conhecimento científico. Apelando a
-%% Lakatos, há procedimentos
-%% de manutenção de um núcleo duro de teoria que não é testada, e
-%% outros que são os testes de hipóteses derivadas. Cada uma dessas
-%% camadas tem lógicas e princípios distintos, e há ainda princípios
-%% gerais que os integram. Sabemos que a estatística liga dados a
-%% teoria. Mas em qual camada se situa, e de que maneira?
-%% Em resumo, a pergunta geral que começou meu comentário e que parece
-%% ser a sua é interessante, e como você acredito que devem existir
-%% alguns princípios lógicos comuns entre inferência estatística e
-%% epistemologia.  Mas é terreno muito traiçoeiro, precisamos da ajuda de filósofos da
-%% ciência para fazer avanços fundamentados.
-% 
+Every {\em good} scientific theory is a prohibition: it forbids certain things to happen. The more a theory forbids, the 
+better it is.
+
+A theory which is not refutable by any conceivable event is non-scientific. Irrefutability is not a virtue of a 
+theory (as people often think) but a vice.'' \citep{Popper63}
+\end{quote}
+
+O paradigma de testes de significância de Fisher tem paralelos com esta visão: uma teeoria científica é 
+aceitável enquanto a evidência contrária não é suficiente para refutá-la. Uma dada hipótese, para Fisher,
+nunca é comprovada - portanto nos situamos de maneira análoga à posição de Popper, para quem o conhecimento
+é sempre provisório. No entanto, na forma como teste de hipóteses Fisheriano é frequentemente utilizado,
+a hipótese de interesse não é diretamente testada - para investigar a existência de um fenômeno {\em X},
+testamos a hipótese nula de inexistência de {\em X}. Neste paradigma, rejeitar a inexistência de {\em X} 
+não implica em aceitar a existência de {\em X}.
+
+Uma abordagem Bayesiana ou verossimilhantista, por outro lado, provê uma forma de testar diretamente
+teorias conflitantes e de rejeitar teorias incompatíveis com as observações experimentais.
+Isso tem importância central no problema de testar teorias cuja própria formulação é estatística:
+
+\begin{quote}
+``Those theories which are under a probabilistic form (thermodynamics, statistical [mechanics?], etc.) can never be refuted (...):
+after all, even an event with probability 0 can well occur. According to Popper we then have to take a methodological decision
+and consider a probabilistic theory {\em T} refuted if a certain event occurred which, as far as {\em T} is concerned, would 
+otherwise be extremely unlikely.'' \citep{deFinetti2010}
+\end{quote}
+
+Reforçamos que a discussão metodológica na aplicação da estatística às ciências práticas deve se fazer lado a lado
+com a uma discussão
+epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a proposição de
+métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese 
+e procedimentos frequentistas em
+bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
+adequados ao uso na ciência, norteada na discussão acima.
