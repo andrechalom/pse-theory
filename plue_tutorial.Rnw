@@ -1,0 +1,713 @@
+\SweaveOpts{fig=F,echo=T}
+<<seed, echo=F>>=
+set.seed(42)
+@
+
+This document presents a brief introduction to a proposed methodology for the likelihood profiling of
+of the results from a computational model. This methodology is nicknamed PLUE, for 
+Profiled Likehood Uncertainty Estimation, and is implemented in the {\em pse} package by the PLUE function.
+A paper describing the theoretical background for this proposal is under preparation for publication.
+The present document presumes you are familiar with general concepts from parameter space exploration. If
+you are not, please refer to our work in \citep{Chalom12}.
+The PLUE methodology is useful if you are interested in analysing a computational model and if you have
+already gathered some data from which you can estimate likelihood distributions for your input parameters.
+If you are interested in conducting an exploratory analysis and you don't have any data collected, you 
+should use the tools described in the ``pse\_tutorial'' vignette in this package.
+You should have installed \R 
+\footnote{This tutorial was written and tested with \R version 
+3.0.1, but it should work with newer versions}
+along with an interface and 
+text editor of your liking, and the package ``pse''
+(available on http://cran.r-project.org/web/packages/pse).
+
+The general question we are attempting to answer here is: {\em how much support does the data give to 
+alternative hypothesis concerning the result of a (non-invertible) model?} It should be noted that while this
+question may not be always answered under a likehoodist approach to statistical inference, it does have
+an answer when we restrict one of the alternative hypothesis to being the maximum likehood estimator for the
+parameters. This answer is given by profiling the likelihood of the model parameters, and while this procedure
+leads to a function that is not a true likelihood function (thus not possessing many desirable properties),
+it is generally accepted as a valid exploratory analysis.
+
+\section{Definitions}
+First, we should define our interest model. We will refer to this model as the biological model\footnote{
+Or physical model} to distinguish this from the statistical model we will be using to estimate likelihoods.
+
+		Considere um modelo de interesse biológico qualquer - vamos chamá-lo de modelo biológico, para
+		diferenciar do modelo estatístico que será apresentado abaixo. Vamos considerar o caso simples
+		de um resultado escalar $y$ de um modelo com um vetor de entradas $\bu{\theta}$: $y = F(\bu{\theta})$.
+		Vamos representar por $\chi$ o conjunto de dados coletados. Se temos $n$ parâmetros e $m$ 
+		observações, $\chi$ é uma tabela de $n$ colunas por $m$ linhas.
+
+		Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de 
+		crescimento constante ou descrescente com a classe de tamanho, modelo com 4 ou com 5 classes de 
+		tamanho, etc) - este vai ser designado o modelo estatístico.
+		Escreva a função de verossimilhança $\mathcal{L}(\bu{\theta}|\chi)$ para cada modelo. 
+		Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo e 
+		determine o valor de AIC para cada modelo estatístico. 
+
+\section{Sampling}
+		De posse do modelo estatístico de melhor AIC\footnote{É possível que uma abordagem de inferência
+		multi-modelo possa ser utilizada em casos de empate de AIC, como discutido por Burnham e Anderson
+		\cite{Burnham02}}, utilize um método de Monte Carlo para gerar um grande número de amostras com
+		densidade proporcional a $\mathcal{L}(\bu{\theta}|\chi)$. Vamos chamar esta amostra discreta de 
+		$\bu{A}$. À cada amostra $A_{i \cdot}$ da função $\mathcal{L}(\bu{\theta}|\chi)$, associamos 
+		$L_i = \mathcal{L}(A_{i \cdot} | \chi)$, o valor de verossimilhança desta amostra, e 
+		$Y_i = F(A_{i \cdot})$, o resultado do modelo biológico quando executado sobre esta amostra.
+		Normalize $L_i$ de forma que o mínimo de verossimilhança seja no $0$.
+\section{Aggregation}
+		A partir dos valores resultantes do modelo $Y_i$ e seus valores de verossimilhança $L_i$ associados,
+		construa o perfil superior para a verossimilhança de $y$ da seguinte forma: 
+		para cada incremento $z$, encontre o maior valor $\bar y$ em $Y_i$ tal que $L_i \leq z$. 
+		Anote este valor como $P_{sup}(z) = \bar y$ e repita para um valor maior de $z$.
+
+		Proceda de forma análoga para construir o perfil inferior de verossimilhança. Os dois perfis, em 
+		conjunto, podem ser utilizados para investigar as regiões de plausibilidade para $y$.
+
+\end{description}
+<<params>>=
+factors <- c("r", "K", "X0")
+q <- c("qnorm", "qnorm", "qunif")
+q.arg <- list( list(mean=1.7, sd=0.3), list(mean=40, sd=1), 
+	list(min=1, max=50) )
+@
+
+\begin{shaded}
+A fundamental question in this stage is to determine whether, inside the
+ascribed parameter ranges, {\em every parameter combination} is meaningful.
+See the next examples on this:
+
+\textbf{Example 1:}
+
+We would like to run a model for a species abundance distribution (SAD),
+and we decided to examine the effect of $N$, the total number of individuals
+in the community, and $S$, the total number of species. We can run the model with
+$N=100$ and $S=50$ or with $N=15$ and $S=3$, so there is nothing wrong with these
+values. However, the {\em combination} $N=15$, $S=50$ is meaningless, as it would
+imply that there are more species than individuals. One solution to this problem
+is to run the models with the parameters modified as following: $N$ is the total
+number of individuals, and $\hat{s}$ is the average number of individuals for
+each species. So, $\hat{s} * N = S$, and now every combination of $N$ and $\hat{s}$
+is meaningful.
+
+\textbf{Example 2:}
+
+In a model of structured population growth, we have estimated independently
+two parameters for each class: $S$, the probability that a given individual
+survives and does not move into the next size class, and $G$, the probability
+that a given individual survives and grows into the next class. We can run the
+model with $S=0.2$ and $G=0.7$, or $S=0.8$ and $G=0.1$. However, if we try to
+run the model with $S=0.8$ and $G=0.7$, we arrive at the conclusion that, for
+every individual in the original size class, in the next time step we will have 
+0.8 individuals in the same class and more 0.7 in the next, giving a total of 1.5
+individuals! The problem is that the sum of $S$ and $G$ must be smaller than 1.
+One way to solve this is to define new parameters $\hat{s}$ and $\hat{g}$ such 
+that $\hat{s}$ is the survival probability, independently of the individual growing,
+and $\hat{g}$ is the growth probability for each surviving individual.
+We can relate these parameters to the former ones, as $G = \hat{s}*\hat{g}$ and
+$S = \hat{s} * (1-\hat{g})$.
+
+\textbf{Note:}
+
+When transforming parameters like done on the above examples, it is important
+to remember that the new parameters may not have the same probability density
+functions as the original ones. 
+
+\end{shaded}
+
+\subsection{Optional: More details about the quantiles}
+
+The quantile functions used can be any of the built-in quantile functions as
+\textbf{qnorm} for normal, \textbf{qbinom} for binomial,
+\textbf{qpois} for poison, \textbf{qunif} for uniform, etc; 
+less common distributions can be found on other packages, like the
+truncated normal distribution on package ``msm''. You can even define
+other quantile functions, given that their first argument is the probability,
+and that they are able to work on a vector of probabilities.
+For example:
+
+The quantiles of an empirical data set can be used by creating
+a wrapper function for the \textbf{quantile} function:
+<<qdata>>=
+qdata <- function(p, data) quantile(x=data, probs=p)
+@
+
+A discrete uniform density function, usefull for parameters that
+must be integer numbers, can be given by
+<<qdunif>>=
+qdunif<-function(p, min, max) floor(qunif(p, min, max))
+@
+
+\section{Your model}
+The model that you wish to analyse must be formulated as an \R function that
+receives a {\em data.frame}, in which every column represent a different
+parameter, and every line represents a different combination of values
+for those parameters. The function must return an array with the same
+number of elements as there were lines in the original data frame,
+and each entry in the array should correspond to the result of running
+the model with the corresponding parameter combination. We will cover
+the case in which a model outputs more than a single number in section
+\ref{multiple}.
+
+If your model is already written in R, and accepts a single combination
+of values, it is easy to write a ``wrapper'' using the function
+\textbf{mapply} to your model. In the example below, the function
+\textbf{oneRun} receives three numbers, corresponding to $r$, $K$ and $X_0$,
+and returns a single value corresponding to the final population.
+The function \textbf{modelRun} encapsulates this function, in a manner to
+receive a data.frame containing all parameter combinations and returning
+the results in one array.
+
+Make \textbf{SURE} that the order in which the parameters are defined above
+is the same in which they are being passed to the function.
+
+<<model>>=
+oneRun <- function (r, K, Xo) {
+    X <- Xo
+    for (i in 0:20) {
+       X <- X+r*X*(1-X/K)
+    }   
+    return (X) 
+}
+modelRun <- function (my.data) {
+	return(mapply(oneRun, my.data[,1], my.data[,2], my.data[,3]))
+}
+@
+
+If your model is written in a different language, as C or Fortran,
+it is possible to write an interface with \R by compiling your model as a 
+shared library, and dynamically loading this library \citep{Geyer}.
+Also, you should consider uncoupling the simulation and the analyses (see
+section \ref{uncouple}).
+
+\section{Uncertainty and sensibility analyses}
+We first use the \textbf{LHS} function to generate a hypercube for your model.
+The mandatory arguments for this function are: {\em model}, the function that
+represents your model; {\em factors}, an array with the parameter names; 
+{\em N}, the number of parameter combinations to be generated; {\em q},
+the names of the PDF functions to generate the parameter values; and {\em q.arg},
+a list with the arguments of each pdf. We have already constructed suitable objects
+to pass to this function above, so now we simply call the \textbf{LHS} function:
+
+<<LHS>>=
+library(pse)
+myLHS <- LHS(modelRun, factors, 200, q, q.arg, nboot=50)
+@
+
+The extra parameter {\em nboot} is used to bootstrap the correlation coefficients 
+(see below).
+
+To access the values of the parameters used in the model, use the function
+\textbf{get.data(myLHS)}. To access the results, use \textbf{get.results(myLHS)}.
+
+With the object returned by the function \textbf{LHS}, we will exemplify in this section
+four techniques that can be used: the uncertainty analysis using the \textbf{ecdf},
+scatterplots of the correlation between each parameter and the result using the function
+\textbf{plotscatter}, partial rank correlation using the function \textbf{plotprcc} and
+agreement between different hypercube sizes with the function \textbf{sbma}.
+
+\newpage
+\subsection{ECDF}
+The ecdf, short for empirical cumulative distribution function, may be used to 
+illustrate the distribution of the model results, in our case the final population.
+With this graph, we can see that the final population for our species is, with
+high probability, between 35 and 45.
+<<ecdf, fig=T>>=
+plotecdf(myLHS)
+@
+
+\newpage
+\subsection{Scatterplots}
+Here, we can see a scatterplot of the result as a function of each parameter. As
+all the parameters are being changed for each run of the model, the scatterplots
+look like they were randomly generated, even if the underlying model is 
+deterministic.
+Actually, what scatterplots show is the distribution of values returned by the model
+in the parameter space sampled by the hypercube and how
+sensible are these model responses to the variation of each parameter.
+
+Note that population sizes bifurcate above a given value of parameter $r$. 
+This is a well known behaviour of many population models
+and will ultimately lead to chaotic solutions \citep{May1976, Murray02}.
+<<corplot, fig=T>>=
+plotscatter(myLHS)
+@
+
+\newpage
+\subsection{Partial correlation}
+The partial (rank) correlation coefficient (pcc or prcc) measures how strong are
+the linear associations between the result and each input parameter, after 
+removing the linear effect of the other parameters.
+
+The confidence intervals shown in this plot are generated by bootstraping.
+
+<<prcc, fig=T>>=
+plotprcc(myLHS)
+@
+
+In the ecological literature, it is usual to refer to the partial derivatives
+of the model response in respect to each parameter as ``the sensitivity'' of 
+the model response in respect to each parameter. One analog measure in stochastic
+models is the Partial Inclination Coefficient (pic) of the model response in respect
+to each parameter. 
+
+<<pic>>=
+pic(myLHS, nboot=40)
+@
+
+\subsection{Agreement between runs}
+In order to decide whether our sample size was adequate or insufficient, we 
+calculate the Symmetric Blest Measure of Agreement (SBMA) between the PRCC
+coeffients of two runs with different sample sizes. 
+<<sbma>>=
+newLHS <- LHS(modelRun, factors, 250, q, q.arg)
+(mySbma <- sbma(myLHS, newLHS))
+@
+
+A value of -1 indicates complete disagreement between the runs, and a value
+of 1 indicates total agreement.	As the SBMA seldom reaches 1 for realistic models,
+some criterion must be used to indicate when the agreement should be considered
+good enough. More details about how the SBMA is calculated can be found on 
+\citep{Chalom12}.
+
+It should be stressed that there is no ``magical'' number for deciding how close
+to unity the SBMA should be. It is reasonable to expect agreements around 0.7 to 0.9
+in well-behaved models, but two cases require attention. If the total number of factors
+is very low, the SBMA may converge slowly. Also, if none of the model parameters happen
+to be monotonically correlated with the output, the agreement between runs may stay as
+low as 0.2 even for very large hypercubes. 
+
+\newpage
+\section{Multiple response variables}\label{multiple}
+In the previous section, we have examined a model that 
+returned a single number,
+namely, the final population. However, we might be interested 
+in examining the effects of the parameters in several distinct
+responses from the model. The responses may be (1) different variables,
+like ``total population'' and ``species richness'', (2) the same
+variable in different time points, or (3) the same variable 
+calculated by different methods.
+
+In our example, we are interested
+in determining the effect of the parameters to the population
+in each of the first 6 time steps. The theory and tools for 
+this analysis remain mostly the same. We will write our
+model to return an array now, as:
+
+<<p2>>=
+<<params>>
+Time <- 6
+oneRun <- function (r, K, Xo) {
+	X <- array();
+	X[1] <- Xo; # Caution, X1 gets overwritten
+	for (i in 1:Time) {
+		Xl <- X[length(X)]
+		X[i] <- Xl + r*Xl*(1-Xl/K)
+	}
+	return (X)
+}
+modelRun <- function (dados) {
+	mapply(oneRun, dados[,1], dados[,2], dados[,3])
+}
+@
+
+The hypercube is generated exactly in the same way. However,
+now we have the option to give names (which will be used
+in the plots below) to each response variable.
+
+<<multiLHS>>=
+res.names <- paste("Time",1:Time)
+myLHS <- LHS(modelRun, factors, 100, q, q.arg, res.names, nboot=50)
+@
+
+\newpage
+\subsection{ECDF}
+The first plot we will produce will, again, be the ECDF.
+We may produce several plots using the parameter 
+``stack=FALSE'', or stack all the plots in the same graph,
+using ``stack=TRUE'':
+
+<<ecdf2, fig=T>>=
+plotecdf(myLHS, stack=TRUE)
+@
+
+We may notice that the population values are spread over a 
+wider range in the first time steps, but converge to a narrow
+distribution on time 6.
+
+\newpage
+\subsection{Scatterplots}
+Next, we investigate the correlation plots for the variables
+with each input parameter. To reduce the number of plots, we
+will present results just for the time steps 1, 3 and 6, 
+using the ``index.res'' parameter, and supress the
+linear model from being ploted with the parameter ``add.lm'':
+<<corplot2, fig=T>>=
+plotscatter(myLHS, index.res=c(1,3,6), add.lm=FALSE)
+@
+
+\newpage
+\subsection{Partial correlation}
+The partial correlation plots also accept the ``index.res''
+argument:
+<<prcc2, fig=T>>=
+plotprcc(myLHS, index.res=c(1,3,6))
+@
+
+\newpage
+\subsection{Agreement between runs}
+We have seen how the function \textbf{sbma} measures the agreement
+between two runs in the previous section. Now, we will use
+the function \textbf{target.sbma} to run several hypercubes until
+a pair of runs provides us with an agreement equal to or 
+better than a limit specified in its first argument.
+<<target>>=
+targetLHS <- target.sbma (target=0.3, modelRun, factors, 
+	q, q.arg, res.names, FUN=min) 
+@
+
+As the SBMA is calculated for each response variable 
+independently, we must decide how to combine these values. The
+argument ``FUN=\textbf{min}'' is telling the function to consider only
+the minimum value, and may be ignored for models that return a single
+response variable.
+
+\section{Uncoupling simulation and analysis}\label{uncouple}
+In many scenarios, it is necessary to run the simulation and the analyses
+at different times, and even in different computers. It may be the case,
+for example, that your lab computer is not fast enough to run the simulations,
+but that the high-performance cluster in which the simulations 
+are to be run does not have \R installed.  In order to do this, however, you 
+must generate the Latin Hypercube in the lab computer, transfer this information
+to the cluster, run the simulations there, transfer the results back to the
+lab computer, and then run the analyses.
+
+In order to generate the samples without running a model, use
+the function \textbf{LHS} with the parameter {\em model=NULL} and
+save the samples in the desired format:
+<<>>=
+uncoupledLHS <- LHS(model=NULL, factors, 50, q, q.arg)
+write.csv(get.data(uncoupledLHS), file="mydata.csv")
+@
+
+Then run the model using the data. To incorporate the results into the LHS
+object, use the function \textbf{tell}:
+\footnote{Please note that the \textbf{tell} method implemented in the 
+sensitivity package alters its argument. This is \textbf{not} the case
+with the LHS \textbf{tell} method.}
+
+<<echo=F>>=
+myresults <- apply(get.data(uncoupledLHS), 1, mean)
+@
+
+<<>>=
+coupledLHS <- tell(uncoupledLHS, myresults)
+@
+
+Then you may proceed with the analyses using prcc, ecdf, etc.
+\section{A simple example}
+\label{sec:simple-example}
+
+We will show the use of multiple runs in the ``pse'' package with a very simple model described by:
+
+<<model>>=
+oneRun <- function (x1, x2, x3, x4)
+    10 * x1 + 5 * x2 + 3 * rnorm(1, x3, x4)
+modelRun <- function (my.data){
+    mapply(oneRun, 
+           my.data[,1], my.data[,2], my.data[,3], my.data[,4])
+}
+@
+
+We then generate a Latin Hypercube where parameters $x_i$ will be varied uniformly between 0 and 1.
+The code for a hypercube with a single run at each point and resulting partial correlation plot is:
+
+<<LHS1, fig=T>>=
+library(pse)
+LHS1 <- LHS(modelRun, N=300, factors=4, nboot=50)
+plotprcc(LHS1)
+@
+
+Now, we take a look at the same model, but {\em repeating} the simulation
+several times for each data point and averaging the results. The
+{\em repetitions} argument sets the number of evaluations for each
+combination of parameters. Note that the
+total number of model evaluations ($N \cdot repetitions$) is the same,
+in our case, as the LHS1 defined above: 
+
+<<LHS2, fig=T>>=
+LHS2 <- LHS(modelRun, N=60, factors=4, repetitions=5, nboot=50)
+plotprcc(LHS2)
+@
+
+It should be clear from the graphs that the results we get from both schemes
+(which we will call single-run and repetition schemes) are different, even
+for a simple model like this. The repetition scheme usually results in larger
+values of PRCC for variables which are actually correlated to the model 
+output, by mitigating the aleatory uncertainty in each data point. 
+However, this comes at a cost of having less samples to use in
+statistical inference (resulting in loss of the power of significance tests, 
+or in our case, an increase in the bootstraped confidence intervals).
+
+The repetition scheme also has the advantage that it permits a crude estimate of the
+aleatory uncertainty by means of the {\em coefficients of variation} (cv).
+The \textbf{cv} and \textbf{plotcv} functions can be used
+to identify whether the aleatory variability is comparable to the total model
+variability. This plot presents an empirical cumulative distribution function
+(ecdf) of the variation of the model responses obtained for each parameter
+combination (pointwise cv). The dotted vertical line corresponds to the 
+variation of the average model response through all combinations (global
+cv). If the global cv is far greater than all of the pointwise cvs, this means
+that the epistemic variability is far greater than the aleatory variation for
+any point. In contrast, if the global cv appears to the left of the graph,
+thus being smaller than most pointwise cvs, this is probably a sign that
+the aleatory variation may be masking the effect of the parameter variation,
+and so the sensitivity analyses will probably be compromised.
+
+In our example, the cv of the whole result set is comparatively
+larger than most of the pointwise cvs. It is then reasonable to assume that the 
+uncertainty and sensitivity analyses done with average responses are robust.
+
+<<cv, fig=T>>=
+cv(get.results(LHS2)) # global CV
+plotcv(LHS2)
+@
+
+One caveat of using the \textbf{cv} is that it is only meaningful if the distribution
+of results for a given point in the parameter space is unimodal. It is strongly 
+recommended that you check the model behaviour for multimodality before applying
+any of the uncertainty and sensitivity analyses discussed here. Strong multimodality
+is often evident from the scatterplots generated for single-run hypercubes.
+
+\section{Uncoupling analyses}
+The \textbf{tell} method of the LHS package can be used several times to add repetitions
+to an object. This can be done to uncouple the generation of the LHS and the running 
+of the model, or even to provide more data points to a hypercube. For example, to add
+a repetition to the LHS2 object, simply execute:
+
+<<LHS3>>=
+newdata <- modelRun(get.data(LHS2))
+LHS3 <- tell(LHS2, newdata)
+@
+
+This can be used to iteratevely add repetitions until the PRCC is stable. In this example,
+the PRCC scores show very little change after 6 to 7 repetitions. This procedure can be coupled
+with SMBA evaluations between different hypercube sizes to find an acceptable bound for
+the number of total model evaluations.
+
+\SweaveOpts{fig=T,echo=F}
+\section{Estudo de caso 3: um modelo mínimo}
+
+Um modelo de população estruturada que pode ser considerado mínimo é o modelo
+com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por Hal Caswell \citep{Caswell08} 
+como um exemplo simples da aplicação da análise de sensibilidade analítica. 
+O modelo é associado à seguinte matriz:
+
+\begin{equation}
+ A = \left[
+ \begin{array}{ll}
+	 \sigma_1 (1-\gamma) &   f \\
+     \sigma_1 \gamma & \sigma_2
+ \end{array}
+ \right]
+\end{equation}
+
+Aqui, $\sigma_1$ é a probabilidade de sobrevivência de juvenis, $\sigma_2$ é a probabilidade de sobrevivência de adultos, 
+$\gamma$ é a probabilidade de maturação, e $f$ é a fertilidade dos adultos. Vamos representar por $\lambda$ o maior
+autovalor dessa matriz.
+
+Vamos primeiramente presumir que a sobrevivência independe do estágio ($\sigma_1=\sigma_2=\sigma$). Também vamos fazer
+a suposição de que é possível marcar inequivocamente quais dos juvenis nasceram no último ciclo, e quais adultos
+passaram pelo processo de maturação no último ciclo, para chegar ao modelo:
+
+\begin{equation}
+ A = \left[
+ \begin{array}{ll}
+	 \sigma (1-\gamma) &   f \\
+     \sigma \gamma & \sigma
+ \end{array}
+ \right]
+\end{equation}
+
+Para animais de tamanho grande, com um filhote por estação reprodutiva, $f$ pode ser aproximado pela proporção de
+adultos que gera prole, $\sigma$ é dado pela proporção de indivíduos que sobrevivem por um ciclo e $\gamma$ pela
+proporção de juvenis que se tornam adultos por ciclo, de forma que os três parâmetros podem ser modelados por
+distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número de tentativas dados, respectivamente, por
+$n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
+
+\begin{align}
+	\gamma & \sim \operatorname{binom}(\theta_1, n_1) \\
+	f      & \sim \operatorname{binom}(\theta_2, n_2) \\
+	\sigma & \sim \operatorname{binom}(\theta_3, n_t = n_1+n_2)
+\end{align}
+
+Vamos utilizar ainda a suposição de que os parâmetros são independentes neste exemplo, para chegar às 
+funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sobre a construção dessa função
+podem ser vistos na sessão \ref{apmat}).
+
+<<load, fig=F>>=
+set.seed(42)
+library(pse)
+# Helper functions for the model
+tr <- function (A) return(A[1,1]+A[2,2])
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+getlambda = function (sigma, f, gamma) {
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+}
+getlambda = Vectorize(getlambda)
+model <- function(x) getlambda(x[,1], x[,2], x[,3])
+
+factors = c("sigma", "f", "gamma")
+
+N = 10000
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+# melhor chute para os parametros
+sigma <- obs[3]/n.t
+f <- obs[2]/n[2]
+gamma <- obs[1]/n[1]
+start = c(sigma, f, gamma)
+lambda <- getlambda(sigma, f, gamma)
+# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+# NOTE: LL function uses GLOBAL obs and n!!!
+LL <- function (x) 
+{
+	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+	if (is.nan(t)) return (-Inf);
+	return(t);
+}
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
+@
+
+Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
+populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
+adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver na figura \ref{fig:LikFunc}
+que a melhor estimativa para
+cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
+Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
+
+\begin{figure}
+<<LikFunc>>=
+curve(dbinom(obs[3], n.t, x))
+curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
+curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
+@
+	\caption{Função de verossimilhança para cada parâmetro do modelo. Preto = $\sigma$, vermelho = $f$ e verde = $\gamma$.}
+	\label{fig:LikFunc}
+\end{figure}
+
+As funções de verossimilhança de cada parâmetro
+foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais 
+geramos uma distribuição empírica para $\lambda$, de forma proporcional à verossimilhança dos parâmetros.
+Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
+input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
+$\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
+
+As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
+resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
+discutidas no capítulo \ref{cap:pse}. É importante ressaltar que estas análises foram realizadas sobre uma
+vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária (como seriam as análises descritas
+no cap. \ref{cap:pse}), centrada no ponto de máxima verossimilhança.
+
+\begin{figure}
+<<Case1>>=
+plot(plue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
+	\label{fig:lambda}
+\end{figure}
+\begin{figure}
+<<>>=
+# Analise de sensibilidade sobre lambda
+plotscatter(plue)
+@
+	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
+	mínimo, gerados a partir de uma abordagem de verossimilhança.}
+	\label{fig:lambdascatter}
+\end{figure}
+\begin{figure}
+<<>>=
+plotprcc(plue)
+@
+	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
+	estruturado mínimo de crescimento populacional}
+	\label{fig:lambdaprcc}
+\end{figure}
+
+<<largerSample, fig=FALSE>>=
+Mult=3
+n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
+largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+@
+
+A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
+É importante notar que esses resultados são para uma única amostra, e um tamanho amostral decididamente pequeno. 
+Considerando uma amostra \Sexpr{Mult} vezes maior, na qual todas as proporções se mantenham as mesmas (ou seja,
+o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por \Sexpr{Mult}), a análise resulta em
+um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
+
+\begin{figure}
+<<>>=
+plot(largePlue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
+	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
+	\label{fig:lambda2}
+\end{figure}
+
+\subsection{Detalhes matemáticos}\label{apmat}
+Nesta seção, vamos desenvolver alguns detalhes matemáticos sobre o exemplo acima.
+
+Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
+a função de log-verossimilhança para $\gamma$ é dada por
+
+\begin{equation}
+\mathcal{L} \left( \theta_1 | x_A \right) 
+= \log \left( {n_1 \choose x_A} \theta_1^{x_A} (1-\theta_1) ^{n_1-x_A} \right)
+\end{equation}
+
+Da mesma forma, a função de log-verossimilhança para $f$ é dada em função do número de juvenis nascidos no último ciclo, $x_J$:
+\begin{equation}
+\mathcal{L} \left( \theta_2 | x_J \right) 
+= \log \left( {n_2 \choose x_J} \theta_2^{x_J} (1-\theta_2) ^{n_2-x_J} \right)
+\end{equation}
+
+Por fim, a função de log-verossimilhança referente a $\sigma$ é dada em função do número de indivíduos sobreviventes, $x_S$,
+calculado como o número de indivíduos observado menos $x_J$:
+\begin{equation}
+\mathcal{L} \left( \theta_3 | x_S \right) 
+= \log \left( {n_t \choose x_S} \theta_3^{x_S} (1-\theta_3) ^{n_t-x_S} \right)
+\end{equation}
+
+Com o pressuposto forte de que as três variáveis são independentes, e escrevendo $n_t = n_3$ e 
+$\{x_A, x_J, x_S\} = \{x_1, x_2, x_3\}$
+para facilitar a notação\footnote{Importante frisar: $x_1$ não corresponde aqui ao número de juvenis observados após um ciclo, etc.}
+a função de verossimilhança para o vetor de parâmetros $\boldsymbol\theta$ é:
+
+\begin{equation}
+\mathcal{L} \left( \boldsymbol{\theta} | \mathbf{x} \right) 
+= \sum_i \log \left( {n_i \choose x_i} \theta_i^{x_i} (1-\theta_i) ^{n_i-x_i} \right) \label{eqn:loglik}
+\end{equation}
+
+O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo 
+\begin{equation}
+	\det \left[ 
+	\begin{array}{ll} \lambda - \sigma(1-\gamma) & -f \\
+		-\sigma \gamma &         \lambda - d 
+	\end{array}
+	\right]
+	= \lambda^2 - \lambda \operatorname{tr}(A) + \operatorname{det}(A) = 0
+\end{equation}
+\begin{align}
+	\lambda = \frac{1}{2} \left(\operatorname{tr}(A) + \sqrt{\operatorname{tr}^2(A) - 4 \operatorname{det}(A)} \right)
+\end{align}

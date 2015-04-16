@@ -261,6 +261,8 @@ http://cran.r-project.org/web/packages/pse.
 \input pse_tutorial.tex
 \chapter{Multiple runs of the same parameter combination with \R package pse}
 \input multiple.tex
+\chapter{PLUE: a suggested methodology for likehood profiling of model results}
+\input plue_tutorial.tex
 
 % FIM
 \cleardoublepage
