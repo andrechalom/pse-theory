@@ -10,39 +10,39 @@ One way of exploring the parameter space is by discretizing every distribution
 and running the model for every
 possible combination of values for all parameters. 
 This is called full parameter space exploration, as done 
-in \citep{Turchin97}, and altough it 
+by \cite{Turchin97}, and although it 
 possesses many advantages, it may become very costly in terms of computer time. 
 In addition, the number of possible combinations increases exponentially with 
 the number of parameter dimensions considered.
 
 To circumvent the exponential increase in the number of samples, it is usual
 to explore the parameter space in the following fashion: holding all but one
-parameter constant, we analyse how the output of a model is affected by one
-parameter dimension at a time (as done in \citep{Yang08}). This analysis is
-refered to as individual parameter perturbance.
+parameter constant, we analyze how the output of a model is affected by one
+parameter dimension at a time (as done by \cite{Yang08}). This analysis is
+referred to as individual parameter disturbance.
 This kind of analysis
 is, however, limited by the fact that the combinations of changed parameters
-may give rise to complex and unexpected behaviours. 
-Often, algorithms based on individual parameter perturbance are used as a first 
+may give rise to complex and unexpected behaviors. 
+Often, algorithms based on individual parameter disturbance are used as a first 
 step in order to discriminate between parameters
 that may have a substantial impact on the output, and parameters that are less
 relevant (but see \citep{Morris91} for an alternative). 
 
 Another viable option would be to
-chose $N$ random samples from the entire space, in order to analyse both
+chose $N$ random samples from the entire space, in order to analyze both
 the effect of each parameter and the combined effect of changing any
 combined number of parameters. This sampling scheme is called random 
 sampling, or Monte Carlo sampling,
 and has been applied to many biological models \citep{Letcher96}.
 One important feature of the Monte Carlo sampling is that its accuracy
-does not depend on the number of dimensions of the problem,
-as shown in \citep{MacKay03}.
+does not depend on the number of dimensions of the problem
+\citep{MacKay03}.
 
 Stratified sampling strategies, which are a special case of Monte 
-Carlo sampling, consist in strategies for chosing these random samples while,
+Carlo sampling, consist in strategies for choosing these random samples while,
 at the same, making sure that each of the subdivisions (or {\em strata}) of
 the distribution are well represented.
-As shown on \citep{McKay79}, the estimatives of statistical properties (such
+As shown by \cite{McKay79}, the estimates of statistical properties (such
 as the mean or the variance) of the model output are better represented by 
 stratified random sampling than by simple random sampling
 (see figure \ref{fig:SamplingMethods} for examples). As we shall see in the
@@ -86,7 +86,7 @@ for (i in (seq(0,1,0.1))) {abline(h=i); abline(v=i) }
 	clearly cannot take into account interactions between 
 	parameters. The random sampling uses information about the
 	whole parameter space with a small number of samples, but
-	can oversample some regions while undersampling others. The
+	can oversample some regions while under sampling others. The
 	Latin Hypercube (section \ref {LHS}) samples all the 
 	intervals with equal intensity.}
 	\label{fig:SamplingMethods}
@@ -125,21 +125,21 @@ or experiments are unfeasible (see fig. \ref{fig:Di}).
 
 In possession of the distribution function $D_i$, we must sample one point
 from each equally probable interval. There are two approaches used here:
-it is possible to choose a random value from within the interval (as proposed
-by \citep{McKay79}), or instead, we can use the midpoint from each interval 
+it is possible to choose a random value from within the interval 
+\citep{McKay79}, or instead, we can use the midpoint from each interval 
 \citep{Huntington98}. As the statistical properties of the generated samples
 are very similar, we will use the second approach here.
 
-The integral of the distribution function is called the cummulative distribution
+The integral of the distribution function is called the cumulative distribution
 function $F_i(x)$. This function relates the values $x$ that the parameter may assume
 with the probability $p$ that the parameter is less than or equal to $x$.
-We will refer to the inverse of the cummulative distribution function, $F_i^{-1}$,
+We will refer to the inverse of the cumulative distribution function, $F_i^{-1}$,
 as the quantile function of the parameter $x_i$, as it associates every probability
 value $p$ in the range $(0,1)$ to the value $x$ such that $P(x_i \leq x) = p$.
 We divide the range $(0,1)$ in $N$ intervals of size $1/N$, and use this quantile
 function to determine the $x$ values as the midpoints of each interval. 
 Summarizing, we take the $N$ points, represented as $x_{i,k}$, $k \in [1,N]$, 
-from the inverse cummulative distribution $F_i^{-1}(x)$ as\footnote{This formula is
+from the inverse cumulative distribution $F_i^{-1}(x)$ as\footnote{This formula is
 given for simplicity; see \citep{Huntington98} for an alternative with better numerical
 properties}:
 
@@ -196,7 +196,7 @@ symbol, as represented in figure \ref{fig:glassLS}.
 		\includegraphics[width=200 pt]{glassLS.png}
 	\end{center}
 	\caption{A stained glass window at the Caius College, Cambridge, 
-	showing a full Latin Square. Notice how there is only one occurence 
+	showing a full Latin Square. Notice how there is only one occurrence 
 	of each color in each row and in each column.}
 	\label{fig:glassLS}
 \end{figure}
@@ -205,7 +205,7 @@ symbol, as represented in figure \ref{fig:glassLS}.
 As described above, the LH sampling generates an uniform distribution of samples 
 in each parametric dimension. However, there is no guarantee that the correlation 
 between two or more parameters will be zero, and the classical algorithm
-from McKay \citep{McKay79}, described in the previous section,
+from McKay, described in the previous section,
 usually produces correlations as high as 0.3 between
 pairs of factors, which can difficult or even compromise further analyses. In this
 section, we will present one algorithm designed to take into
@@ -215,7 +215,7 @@ We will present the general case of prescribing a correlation matrix, and will
 also present results for the trivial case of zero correlation terms. Other
 methods have been proposed to address this problem \citep{Ye98, Steinberg06, Florian92}, 
 including methods that deal with higher-order correlation terms \citep{Tang98}
-using orthogonal designs and methods that resort to stochastic optimisation based on 
+using orthogonal designs and methods that resort to stochastic optimization based on 
 simulated annealing \citep{Vovrechovsky09}. These methods, however, either impose severe 
 restrictions on the number of samples that must be chosen or are too
 computationally intensive.
@@ -242,7 +242,7 @@ the procedure is repeated iteratively until the error is acceptably small.
 
 \subsubsection{Note on the existence of solutions}
 The problem of generating a sample with specified marginal distributions and correlation
-terms is tighly connected to the problem of generating samples from a multivariate
+terms is tightly connected to the problem of generating samples from a multivariate
 distribution. This class of problems is very complex, and has received limited
 attention from the probabilist community, with the recent paper describing the
 exact construction of all feasible bivariate exponential distributions being considered
@@ -273,14 +273,14 @@ When dealing with stochastic models, like several relevant individual based
 models (IBM), the questions presented become complicated by the fact that 
 running the same model with exactly the same parameters might wield largely 
 different results, both quantitative and qualitatively. In this scenario,
-we must be able to diferentiate the variation in responses due to the variation
+we must be able to differentiate the variation in responses due to the variation
 of the parameters with the variation in response due to stochastic effects.
 
 We will refer to the variation due to the input parameters as
 the epistemic uncertainty. This uncertainty arises from the fact that we do
 now know what are the correct values for a given parameter in a given natural
 system, and is related to the probability distributions $D_i$, presented 
-in section \ref{PSE}. The variation in the behaviour of the model which is
+in section \ref{PSE}. The variation in the behavior of the model which is
 caused by stochastic effects, for a fixed set of parameters,
 is called stochastic uncertainty, and is inherent
 to the model. 
@@ -294,7 +294,7 @@ averaging the output \citep{Segovia04}, given that
 the following conditions are respected:
 
 \begin{itemize}
-	\item Sample sizes should be large, relative to the aleatory
+	\item Sample sizes should be large, relative to the stochastic
 		uncertainty.
 	\item The output values should be unimodal, that is, the output values
 		for a given parameter choice should be clustered around a 
@@ -308,7 +308,7 @@ the following conditions are respected:
 We will now turn our attention to the problem of determining the optimal
 number of model runs we should apply in order to provide a good estimate
 of which are the relevant parameters for a given model.
-One way of proceeding is by sistematically increasing the number $N$ of
+One way of proceeding is by systematically increasing the number $N$ of
 model runs and applying any of the sensitivity analysis techniques, which
 will be discussed on the following section. If the analyses indicate 
 similar results for consecutive runs, we can presume that 

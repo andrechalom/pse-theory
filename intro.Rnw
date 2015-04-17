@@ -1,10 +1,10 @@
 \SweaveOpts{fig=T,echo=F}
 \section{Introduction}\label{Introduction}
-There is a growing trend in the use of mathematical modelling tools in the
-study of many areas of the biological sciences. The use of models is essencial
+There is a growing trend in the use of mathematical modeling tools in the
+study of many areas of the biological sciences. The use of models is essential
 as they present an opportunity to address questions that are impossible or
 impractical to answer in either in purely theoretical analyses or in field 
-or laboratory experiments, and to identify the most important proccesses which
+or laboratory experiments, and to identify the most important processes which
 should then be investigated by experiments. One compelling example is made by the
 Individual Based
 Models (IBM), which represent individuals that move and interact in space,
@@ -35,7 +35,7 @@ sensitivity of parameters\citep{Caswell89}. In the general case, however, there
 is no possible formulation of the model in a closed equation, so analytical 
 methods are not possible.
 
-The disciplines of uncertainty and sensivity analysis have been developed in
+The disciplines of uncertainty and sensitivity analysis have been developed in
 the context of the physical sciences and engineering, and have been greatly
 developed in the 1980 and 1990 decades \citep{McKay79, Saltelli04, Florian92,
 Helton03, Helton05, Archer97, Huntington98, Ye98, Kleijnen99, Smith02, 
@@ -52,15 +52,15 @@ prior to using the model in management decisions \citep{Bart95}.
 
 One approach to the parameter space exploration, which will be described here,
 is to generate samples from the parameter space, run the model with these 
-samples, and analyse the qualitative or quantitative differences in the
+samples, and analyze the qualitative or quantitative differences in the
 model output. In this context, the sampling of the parameter space may 
 be regarded as a bridge between the modeling of the system and the inference
-problem of aquiring information about the whole parameter space, having only
+problem of acquiring information about the whole parameter space, having only
 access to a subset of that information. This inference can be done in the light
 of any of the statistical schools.
 
 Section \ref{Sampling} will present the sampling techniques,
-with empashis on the Latin Hypercube method, while section 
+with emphasis on the Latin Hypercube method, while section 
 \ref{QuantAnal} will present some tools for the quantitative analyses.
 We should emphasize that the analyses tools are not coupled with the sampling
 techniques used: one can, in principle, use the sampling techniques described
@@ -85,7 +85,7 @@ fit a model to the available data, which is the subject of linear and
 nonlinear estimation.
 
 However, the same model may be
-parametrized in different ways, as discussed by Ross \citep{Ross90}. For
+parametrized in different ways, as discussed by \cite{Ross90}. For
 example, in population ecology, 
 the logistic growth equation may be represented with two
 parameters $r$ and $K$ as:
@@ -185,7 +185,7 @@ mtext('b',adj=0, cex=1.5)
 	\caption{a. The constrained parameter space considered, 
 	with the line representing $a_1+a_2=180$. The symbols represent 
 	a uniform sample taken from the space. b. The transformed parameter 
-	space $\hat{a_1}, a_2$ (see eq. \ref{hata1}), showing the same sampled
+	space $\hat{a_1}, a_2$ (see Eq. \ref{hata1}), showing the same sampled
 	points.}
 	\label{fig:Trans}
 \end{figure}
@@ -208,7 +208,7 @@ spaces in section \ref{ext}.
 Next, we turn our attention to the kind of problems we might want to address
 with the exploration of the parameter space. First, the simplest case is asking
 ``is there a region of my parameter space where condition X holds?'' This 
-condition might be, for example, the extinction or coexistance of species, 
+condition might be, for example, the extinction or coexistence of species, 
 some pattern of distribution or abundance of species. We also might be 
 interested in mapping where are these regions. In complex models, where several 
 different regions might exist where the qualitative results of the models are 
@@ -217,7 +217,7 @@ the frontiers between them. For a detailed discussion of this approach, see
 the PSExplorer software\citep{Tung10}.
 
 Another class of problems arises when the model produces some quantitative 
-response, and we are interessed in determining the dependency of this response 
+response, and we are interested in determining the dependency of this response 
 to the input parameters. For example, when modeling the dynamics of a 
 population, we might want to know how the final population varies with each 
 of the input parameters. In this context of quantitative analysis, the 
@@ -229,7 +229,7 @@ variation of each individual parameter, which is the topic of sensitivity
 analysis \citep{Helton03, Helton05}. We will present the techniques and results
 from both uncertainty and sensitivity analysis in section \ref{QuantAnal}.
 
-Also, the model which we wish to analyse can be any function of the input parameters.
+Also, the model which we wish to analyze can be any function of the input parameters.
 In particular, there are three classes of models that can be used. First,
 the model may be a complex mathematical function (for example, defined
 by a differential equation). Second, the model may be a simulation model, like
@@ -251,7 +251,7 @@ response as a single value $y$, without loss of generality.
 
 Each of the input parameters $x_i$ is associated with a probability distribution
 $D_i(x)$, which represent our degree of knowledge about the values that $x_i$ may
-assume (see figure \ref{fig:Di} for examples); Berger \citep{Berger85} provides
+assume (see figure \ref{fig:Di} for examples); \cite{Berger85} provides
 a more detailed discussion).
 
 Taken together, all the distributions $D_i$ form the {\em joint probability
@@ -262,10 +262,10 @@ noted that the joint probability distribution is {\em not} used explicitly
 in the methods discussed here. Only the marginal distributions and correlation
 terms, if necessary, are explicitly used.}. 
 
-In very simple models, it may be possible to analitically deduce the behaviour
+In very simple models, it may be possible to analytically deduce the behavior
 of the model response taken at each point of the joint distribution of parameters.
 In the general case, however, this is impossible, and a way of investigating the
-model is to choose some points from the joint distribution and analysing the 
+model is to choose some points from the joint distribution and analyzing the 
 model at each point. Section \ref{Sampling} will present some strategies for
 choosing these points.
 
@@ -285,13 +285,13 @@ curve(dunif,xlab=expression(x[i]),ylab=expression(D[i](x[i])),main='Proportion o
 mtext('d', line=-1)
 @
 	\end{center}
-	\caption{Four different possibilities for chosing the distributions $D_i$. Pannel ``a'' shows 
+	\caption{Four different possibilities for choosing the distributions $D_i$. Panel ``a'' shows 
 	the exponential distribution of life expectancy, which can be deduced
-	from theory \citep{Cole54}. Pannel ``b'' shows a gamma distribution,
+	from theory \citep{Cole54}. Panel ``b'' shows a gamma distribution,
 	which can be used to model the number of parasites per host, but has
-	no theoretical derivation \citep{Bolker08}. Pannel ``c'' shows data 
+	no theoretical derivation \citep{Bolker08}. Panel ``c'' shows data 
 	from an empirical study on the $CO_2$ uptake from plants 
-	\citep{Potvin90}, and pannel ``d'' shows an example where no prior
+	\citep{Potvin90}, and panel ``d'' shows an example where no prior
 	information can be used.}
 	\label{fig:Di}
 \end{figure}

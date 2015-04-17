@@ -15,7 +15,7 @@ ingenious and profound rules no doubt, with which mathematicians amuse themselve
 \end{quote}
 
 No século e meio que se passou desde esta publicação, o uso da ciência da probabilidade
-se tornou uma obrigatoriedade no meio científico, sob a forma da inferência estatística.
+se tornou uma obrigatoriedade no meio científico, principalmente sob a forma da inferência estatística.
 Em qualquer periódico renomado da área, é virtualmente impossível publicar um artigo experimental que não 
 mencione alguma propriedade
 estatística a respeito das amostras coletadas ou de resultados experimentais obtidos. 
@@ -112,9 +112,10 @@ veja \citep{Shafer03}}:
 \end{description}
 
 Esse axioma é uma generalização natural do axioma de aditividade a conjuntos infinitos (contáveis) de eventos, e é amplamente
-aceito por algumas escolas de probabilidade. No entanto, tome um sorteio de um número racional aleatório entre 0 e 1, com distribuição uniforme. É fácil ver que,
-já que existem infinitos números racionais em qualquer intervalo intervalo,
-a probabilidade de sortear cada número racional individualmente é zero; logo a probabilidade do evento certo, que é 1, 
+aceito por algumas escolas de probabilidade. No entanto, tome um sorteio de um número racional aleatório entre 0 e 1, com distribuição uniforme. 
+Já que existem infinitos números racionais em qualquer intervalo intervalo,
+a probabilidade de sortear cada número racional individualmente é zero. Por outro lado, a probabilidade 
+de sortear {\em qualquer} número (ou seja, a probabilidade do evento certo), que é 1, 
 pelo axioma da unitariedade, deve ser também 0, pois é a soma de infinitos termos iguais a zero.
 
 Há outro ponto relevante contra uma interpretação puramente axiomática: nem toda quantidade que satisfaz
@@ -122,7 +123,7 @@ os axiomas de Kolmogorov pode ser tratada como uma probabilidade. Massa e volume
 medidos em uma escala de 0 a 1) satisfazem os axiomas, mas não podem ser considerados probabilidades.
 
 Para encontrar uma definição de probabilidade que permita conectar os axiomas a questões práticas do uso de probabilidades na
-ciência, vamos repassar a opinião de alguns dos grandes pensadores sobre o tema nas próximas sessões.
+ciência, vamos repassar a opinião de alguns dos grandes pensadores sobre o tema nas próximas seções.
 
 \section{Interpretação clássica}
 A teoria matemática da probabilidade remonta aos séculos XVI e XVII, nos quais Girolamo Cardano, Galileu Galilei, Blaise Pascal
@@ -135,7 +136,7 @@ destes exemplos ajude a transmitir os conceitos de probabilidade com facilidade,
 as regras da probabilidade servem apenas para os casos simples, e que estas não se aplicam, ou não se adequam totalmente aos 
 problemas de natureza complexa com os quais a biologia e a ecologia têm de enfrentar. De fato, é muito difícil justificar que
 questões como ``qual a chance de que uma população de jararaca-ilhoa entre em extinção nos próximos dez anos?'' sejam embasadas
-nas mesmas idéias que ``qual a chance de uma moeda jogada para cima dar coroa?''. É mais natural tratar a primeira pergunta como
+nas mesmas ideias que ``qual a chance de uma moeda jogada para cima dar coroa?''. É mais natural tratar a primeira pergunta como
 um questionamento sobre o nosso conhecimento atual dos processos biológicos e da condição de vida dos indivíduos dessa espécie
 do que um questionamento sobre um processo físico simples que pode ser repetido um grande número de vezes. 
 
@@ -157,13 +158,13 @@ com o trabalho de Pierre Simon de Laplace\footnote{
 possibles, c'est-à-dire tels que nous soyons également indécis sue leur existence, et à determiner le nombre de cas
 favorables à l'évènement dont on cherche la probabilité. Le rapport de ce nombre à celui de tous les cas possibles,
 est la mesure de cette probabilité'' 
-\citep{Laplace1814}
-\end{quote}
 
 (``A teoria da probabilidade consiste em reduzir todos os eventos de um mesmo tipo a um certo número de casos igualmente
 possíveis, isso é, tal que sejamos igualmente indecisos sobre a sua ocorrência, e a determinar o número de casos
 favoráveis ao evento ao qual buscamos a probabilidade. A razão deste número para o número de todos os casos possíveis
 é a medida desta probabilidade'')
+\citep{Laplace1814}
+\end{quote}
 
 Para Laplace, todos os eventos que presenciamos seriam resultados de leis físicas
 imutáveis, e uma inteligência superior, dotada do conhecimento do estado do universo em um dado instante, poderia prever
@@ -173,7 +174,7 @@ probabilidades se coloca, então, como um apoio ao nosso poder de realizar previ
 enquanto não possuímos o conhecimento das leis e estados necessária para realizar previsões certeiras. 
 
 Uma dificuldade com essa definição de Laplace é que a demarcação de ``eventos igualmente prováveis'' deve ser feita
-com base em argumentos que não partam da idéia de probabilidade; caso contrário, podemos incorrer em raciocínios
+com base em argumentos que não partam da ideia de probabilidade; caso contrário, podemos incorrer em raciocínios
 circulares. Por exemplo, se uma moeda tem 2 lados perfeitamente simétricos, e a lançamos de forma a não privilegiar um dos lados,
 podemos dizer que o número de eventos totais é dois, e o número de eventos favoráveis a tirar coroa é um. Não há qualquer motivo
 para supor que um dos lados seja mais propenso a cair para cima que o outro, visto a moeda ser perfeitamente simétrica; logo,
@@ -252,7 +253,7 @@ nessa ordenação a frase ``ao escolher uma letra aleatória da obra completa de
 a probabilidade de que o signo zodiacal
 de uma pessoa afete
 suas características, como sociabilidade ou perseverança?'', embora perfeitamente válidas para a visão de de Morgan, apresentam
-grande dificuldade em ser respondidas nesse paradigma.
+grande dificuldade para serem respondidas nesse paradigma.
 
 A visão subjetiva de probabilidades permite ainda que frases cotidianas, como ``é provável que chova hoje'' ou ``existe uma grande
 chance de encontrarmos o José hoje'', sejam tratadas pelo mesmo ponto de vista que os jogos de azar. Mas
@@ -393,7 +394,7 @@ de uma população de sentenças, algumas das quais são verdadeiras.
 Desta forma, a escolha da definição frequentista de probabilidade implica abandonar o método
 das probabilidades inversas para comparar o mérito de diferentes hipóteses.
 Essa percepção vai levar ao desenvolvimento da escola de testes de significância e à 
-proposição do conceito de verossimilhança.
+proposição do conceito de verossimilhança, como será descrito na seção \ref{sec:infer}.
 
 \section{Interpretação por propensões}
 
@@ -406,7 +407,7 @@ se sucedem de maneira estritamente causal, mas são
 influenciados por um elemento de chance. Peirce baseia essa visão 
 na constatação de que ``the mind is not subject to `law'
 in the same rigid sense that matter is (...). There always remains 
-a certain ammount of arbitrary spontaneity in its action''
+a certain amount of arbitrary spontaneity in its action''
 \citep{Peirce1892}. 
 
 A oposição de Peirce a às outras escolas filosóficas ocorre, então, em um nível mais fundamental do que dicotomia entre
@@ -491,7 +492,7 @@ O primeiro é que há evidências de que a natureza da física quântica é intr
 ao contrário de fenômenos
 macroscópicos para os quais a descrição probabilística pode ser vista como uma aproximação dada a falta de informações completas.
 O segundo é que o estudo de problemas quânticos leva naturalmente a estruturas matemáticas semelhantes às probabilidades, mas
-com propriedades distintas, como as quasiprobabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
+com propriedades distintas, como as quasi-probabilidades, úteis no estudo de ótica quântica, as quais podem não satisfazer o
 axioma de aditividade de Kolmogorov e ter regiões de probabilidade
 negativa \citep{Mandel95}.
 
@@ -509,7 +510,7 @@ to the true value which we should like to know, but can only estimate, and to th
 to arrive by our methods of estimation.''\citep{Fisher1922}
 \end{quote}
 
-Nesta perspectiva, precisamos diferenciar uma {\em população}, hipoteticamente infinita, na qual os objetos se dividam em duas
+Nesta perspectiva, Fisher propõe que precisamos diferenciar uma {\em população}, hipoteticamente infinita, na qual os objetos se dividam em duas
 classes de acordo com uma característica de interesse, de uma {\em amostra} finita, que será nossa base para tirar conclusões.
 Por exemplo, examinando o lançamento de um dado, a população de interesse se constitui numa sequência infinita de rolagens
 de dado, na qual distinguimos uma característica, como o fato de uma rolagem resultar no número 5. O valor da probabilidade de que
@@ -547,24 +548,25 @@ a tarefa da inferência estatística se concentra em estudar o pequeno número d
 completamente. Esse estudo corresponde aos problemas de estimação e distribuição.
 
 Fisher descreve as seguintes propriedades desejáveis para um estimador. Embora as suas definições tenham sido
-melhor formalizadas posteriormente, as idéias presentes ainda são de grande valia:
+melhor formalizadas posteriormente, as ideias presentes ainda são de grande valia:
 \begin{enumerate}
 	\item Consistência: ``when applied to the whole population the derived statistic should be equal to the parameter''
 	\item Eficiência: ``that statistic is to be chosen which has the least probable error''
-	\item Suficiência: ``the statistic chosen should summarise the whole of the relevant information supplied by the sample''
+	\item Suficiência: ``the statistic chosen should summarize the whole of the relevant information supplied by the sample''
 \end{enumerate}
 
-É importante frisar que estas definições se dão em relação a um problema de estimação bem posto. Quando coletamos
+É importante frisar que estas definições se dão em relação a um único problema de estimação. Quando coletamos
 uma amostra de uma população, de distribuição normal e variância conhecida e perguntamos ``qual é o melhor estimador para a média populacional'', 
 a média amostral se mostra uma estatística suficiente. Por outro lado, se a distribuição da qual estamos amostrando
 é uma distribuição gama, de parâmetros $\alpha$ e $\beta$ desconhecidos, a média amostral {\em não é} uma estatística
-suficiente.
+suficiente. Desta forma, não é possível responder a pergunta ``a média amostral é uma estatística suficiente?'' sem a especificação 
+do modelo que está sendo utilizado.
 
 Para este estudo, no entanto, o ponto mais importante do trabalho de Fisher é a descrição de uma 
 quantidade conhecida como
 verossimilhança (likelihood), que será fundamental para contrastar as teorias de inferência. Embora 
 a verossimilhança já tivesse sido identificada por C.S.
-Peirce, a exposição de Fisher sobre ela é considerada um passo fundamental para sua aceitação entre 
+Peirce \citep{Peirce1883}, a exposição de Fisher sobre ela é considerada um passo fundamental para sua aceitação entre 
 estatísticos europeus. 
 
 Fisher reconhece a necessidade de definir uma nova quantidade - que não seja uma probabilidade - para
@@ -709,7 +711,7 @@ mas dificultou seu acesso por estatísticos, de forma que vamos adaptar alguns t
 modernos (\citep{Zabell09} e \citep{Fitelson07}), que combinam a notação de Carnap com a de W.E. Johnson, que forneceu
 resultados semelhantes de forma independente 20 anos antes de Carnap.
 
-A questão da definição da palavra ``probabilidade'' não deve ser a de decidir quais acepções dessa palavra são
+Para esta linha de pensadores, a questão da definição da palavra ``probabilidade'' não deve ser a de decidir quais acepções dessa palavra são
 corretas ou incorretas, mas sim quais são satisfatórias, e se existe alguma definição mais satisfatória que as demais.
 A pergunta ``o que é a probabilidade?''
 vai receber diferentes respostas dependendo de para quem for formulada, assim como a pergunta ``baleias são peixes?''
@@ -731,7 +733,7 @@ de pensamento vão conectar esses conceitos de forma menos direta.
 Seguindo o trabalho de Wittgenstein, Carnap trabalha 
 com a {\em probabilidade condicional} de uma proposição lógica $H$ dada uma proposição $E$, $c(H, E)$, 
 e interpreta essa grandeza como a medida com a qual a evidência $E$ corrobora uma hipótese $H$ 
-\citep{Zabell09}\footnote{Embora Carnap e Zabell usem $h$ e $e$ em minúsculo, a notação foi alterada para 
+\citep{Zabell09}\footnote{Embora os autores citados usem $h$ e $e$ em minúsculo, a notação foi alterada para 
 não haver confusão com o número neperiano $e = 2.7182...$}.
 Essa visão será desenvolvida de forma a construir uma visão de probabilidade como uma necessidade lógica:
 
@@ -798,7 +800,7 @@ A contribuição relativa de Bayes e Laplace aos sucessos
 e fracassos da teoria Bayesiana é um tópico controverso	entre os que estudam a história da probabilidade \citep{Zabell09}.
 Fisher, por exemplo, considera o argumento com o qual Bayes estabelece uma {\em priori} uniforme como um comentário
 a respeito do problema específico que Bayes estava estudando, enquanto Laplace verá esse argumento
-como aplicável a outras classes de problemas \cite{Laplace1814} - em particular, Laplace argumenta que podemos
+como aplicável a outras classes de problemas \citep{Laplace1814} - em particular, Laplace argumenta que podemos
 introduzir probabilidades iguais a hipóteses sobre as quais não conhecemos nada. 
 Assim, enquanto o Teorema de Bayes é aceito por todas as escolas de interpretação, o argumento de Laplace
 é, em essência, aceito pela escola subjetivista \citep{Aldrich08} e completamente
@@ -866,7 +868,7 @@ Essa exposição é reminiscente das palavras de de Morgan:
 
 \begin{quote}
 ``I throw away objective probability altogether, and consider the word as meaning the state of the mind with respect to an 
-assertion (...). `It is more probable than improbable' means in this chapter 'I believe that it will happen more than I 
+assertion (...). `It is more probable than improbable' means in this chapter `I believe that it will happen more than I 
 believe that it will not happen. Or rather `I {\em ought} to believe, \&c.', for it may happen that the state of mind which {\em
 is}, is not the state of mind which should be. 
 D'Alembert believed that it was {\em two} to {\em one} that the first head which the throw of a halfpenny was to give would occur
@@ -980,14 +982,14 @@ at his target level (...). Finding that the early partial results represent evid
 the possibility that the evidence in the final results might be quite strong. Does this make sense?'' \citep{Royall97}
 \end{quote}
 
-Alguns estatísticos vêem neste problema ``um uso ingênuo de p-valores'' \citep{Good92}, ao lembrar que, sob um
+Alguns estatísticos veem neste problema ``um uso ingênuo de p-valores'' \citep{Good92}, ao lembrar que, sob um
 ponto de vista Fisheriano, um valor p de 7.3\% não leva a qualquer juízo sobre a validade ou não da hipótese nula.
 Outros, como Richard Royall,
 consideram esta situação uma indicação clara de que o paradigma frequentista leva a contradições inerentes, e portanto 
 deve ser abandonado. A discordância entre as conclusões frequentistas e a inferência julgada aceitável por seus opositores 
 pode ser traçada na incoerência entre
-o procedimento de teste de hipóteses e o princípio da verossimilhança. Utilizado já por Neyman e Pearson\citep{Neyman1933},
-em caráter razoavelmente intuitivo, o princípio é demonstrado por Allan Birnbaum em 1962, 
+o procedimento de teste de hipóteses e o princípio da verossimilhança. Utilizado desde a década de 1930 
+em caráter razoavelmente intuitivo \cite{Neyman1933}, o princípio é demonstrado por Allan Birnbaum em 1962, 
 e afirma que toda a inferência feita a partir de um experimento deve ser baseada na função de verossimilhança,
 sendo portanto irrelevante o desenho experimental \citep{Birnbaum62}. 
 No exemplo discutido acima, a função de verossimilhança do experimento é a mesma, não importando a intenção do pesquisador:
@@ -1171,7 +1173,7 @@ inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em
 \begin{quote}
 ``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
 hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is \textbf{evidence supporting $A$ over $B$}
-if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
 \citep{Hacking65}
 \end{quote}
 
@@ -1255,7 +1257,7 @@ se aproximar de um princípio de parcimônia. Proponentes anteriores da abordage
 que o modelo com melhor verossimilhança para qualquer conjunto de dados é o de criação individual\footnote{
 Intuitivamente, é muito fácil ajustar perfeitamente 150 pontos de dados usando um modelo com 150 parâmetros 
 livres. Este modelo é conhecido como ``modelo de criação individual'', pois ele é equivalente a supor que 
-cada ponto amostral foi gerado independentemente, ou ``alternativa de verossimilhança maximal''.}, i
+cada ponto amostral foi gerado independentemente, ou ``alternativa de verossimilhança maximal''.}, 
 mas o uso do AIC
 fornece um motivo sólido e teoricamente bem embasado para preferir os modelos com menos parâmetros livres.
 Ainda, o uso de seleção de modelos permite que cada modelo comparado se relacione com uma hipótese biologicamente
@@ -1306,7 +1308,7 @@ um panorama das diferentes visões sobre objetividade que a comunidade científi
 \citep{Daston07}. Em particular, é importante a distinção entre a objetividade mecânica (a natureza deve 
 ser mensurável de formas que independam do observador) da objetividade estrutural (a ciência deve ser
 comunicável a partir de estruturas invariantes - leis, relações lógicas, equações). No início do século XX,
-surge a figura do julgamento treinado, que pode ser entendido como a idéia de que os dados científicos
+surge ainda a figura do julgamento treinado, que pode ser entendido como a idéia de que os dados científicos
 precisam do julgamento de um profissional treinado para fazerem sentido. Apesar de usar a mesma
 palavra, Venn, Fisher, Neyman e Savage podem estar se apoiando em conceitos muito diversos.
 
@@ -1317,7 +1319,7 @@ isso pode ser usado para estabelecer como fato que o sol nascerá sempre no lest
 fato no passado'' e ``eu prevejo que esse fato se repetirá no futuro'' não encontra justificativa lógica. Nossa própria convicção
 de que a indução deve funcionar para estabelecer fatos é baseada em uma indução. 
 Um argumento geralmente associado a esse problema é o problema das esmeraldas ``verzuis''\footnote{Traduzido 
-livremente a partir do termo {\em grue}}, proposto por Nelson Goodman em 54 \cite{Goodman83}, 
+livremente a partir do termo {\em grue}}, proposto por Nelson Goodman em 54 \citep{Goodman83}, 
 e extensamente debatido por 
 \cite{Hacking65}, \cite{Kyburg74}, W.C. Salmon, B. Fitelson, entre outros: um objeto é verzul se ele
 é verde antes de um determinado tempo {\em t} e azul após esse instante\footnote{Mas veja \citep{Quine70}
@@ -1355,7 +1357,7 @@ A theory which is not refutable by any conceivable event is non-scientific. Irre
 theory (as people often think) but a vice.'' \citep{Popper63}
 \end{quote}
 
-O paradigma de testes de significância de Fisher tem paralelos com esta visão: uma teeoria científica é 
+O paradigma de testes de significância de Fisher tem paralelos com esta visão: uma teoria científica é 
 aceitável enquanto a evidência contrária não é suficiente para refutá-la. Uma dada hipótese, para Fisher,
 nunca é comprovada - portanto nos situamos de maneira análoga à posição de Popper, para quem o conhecimento
 é sempre provisório. No entanto, na forma como teste de hipóteses Fisheriano é frequentemente utilizado,
@@ -1378,6 +1380,7 @@ Reforçamos que a discussão metodológica na aplicação da estatística às ci
 com a uma discussão
 epistemológica e filosófica sobre a verdadeira base do pensamento estatístico. Nesse sentido, a proposição de
 métodos baseados na verossimilhança no presente trabalho não trata de rejeitar o uso de testes de hipótese 
-e procedimentos frequentistas em
-bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que sejam
-adequados ao uso na ciência, norteada na discussão acima.
+e procedimentos frequentistas e bayesianos em
+bases pragmáticas, e sim na construção de ferramentas e na aparelhagem do pesquisador com métodos que não
+encontrem as dificuldades filosóficas às quais o frequentismo leva, nem pressuponham as escolhas 
+nas quais a escolha o bayesianismo implica.

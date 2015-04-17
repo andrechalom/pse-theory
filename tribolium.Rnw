@@ -31,11 +31,11 @@ elasticity of $y$ in relation to $x$, evaluated with a stochastic procedure:
 \end{equation}
 
 Here, the brackets $\langle \rangle$ represent the average of a function, and
-$s_{yx}$ \'e is the linear partial correlation coeficient of $y$ in relation to $x$.
+$s_{yx}$ is the linear partial correlation coefficient of $y$ in relation to $x$.
 We stress that this is an arbitrary decision, but as we will show in the following subsection,
 it agrees with the analytical results for the investigated model.
 
-The transition matriz for the {\em Tribolium} model is given by:
+The transition matrix for the {\em Tribolium} model is given by:
 
 \begin{equation}
 	\mathbf{A}[\mathbf{\theta},\mathbf{n}]  = \left[
@@ -49,15 +49,15 @@ The transition matriz for the {\em Tribolium} model is given by:
 \end{equation}
 
 Here, $\mathbf{n}(t)$ is the vector representing the beetle population, divided in three life stages:
-larva, pupae and adult. The vector $\mathbf{\theta}$ represents the model parameters, i.e., the vital rates
+larvae, pupae and adult. The vector $\mathbf{\theta}$ represents the model parameters, I.e., the vital rates
 used in the model.
 
-The non-zero elements of this matriz, from left to right and from top to bottom, are:
+The non-zero elements of this matrix, from left to right and from top to bottom, are:
 \begin{itemize}
-	\item Adult fecundity, given by clutch size $b$ times a term of canibalism of eggs by
+	\item Adult fecundity, given by clutch size $b$ times a term of cannibalism of eggs by
 		adults (at a rate $c_{ea}$) and by larvae (at a rate $c_{el}$);
 	\item Maturation of larvae, reduced by base death rate $\mu_l$;
-	\item Pupae eclosion, reduced by canibalism from adults at a rate $c_{pa}$ 
+	\item Pupae eclosion, reduced by cannibalism from adults at a rate $c_{pa}$ 
 		(base pupae death rate is effectively zero);
 	\item Permanence in the adult class, reduced by base adult mortality rate $\mu_a$.
 \end{itemize}
@@ -217,7 +217,7 @@ plotelast(LHSpeq)
 	\label{LHSpeq}
 \end{figure}
 
-However, the analytical methods due to Caswell are limited to a very narrow neighbourhood
+However, the analytical methods due to Caswell are limited to a very narrow neighborhood
 of the estimated parameter vector. If the measurement error is large enough that
 the linear approximation of the matrix becomes invalid, other methods are needed in order
 to study the sensitivity of the model. A purely analytical possibility is to take into account

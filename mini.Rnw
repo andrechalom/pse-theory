@@ -2,7 +2,7 @@
 \section{Estudo de caso 3: um modelo mínimo}
 
 Um modelo de população estruturada que pode ser considerado mínimo é o modelo
-com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por Hal Caswell \citep{Caswell08} 
+com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por \cite{Caswell08} 
 como um exemplo simples da aplicação da análise de sensibilidade analítica. 
 O modelo é associado à seguinte matriz:
 
@@ -46,7 +46,7 @@ $n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n
 
 Vamos utilizar ainda a suposição de que os parâmetros são independentes neste exemplo, para chegar às 
 funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sobre a construção dessa função
-podem ser vistos na sessão \ref{apmat}).
+podem ser vistos na seção \ref{apmat}).
 
 <<load, fig=F>>=
 set.seed(42)

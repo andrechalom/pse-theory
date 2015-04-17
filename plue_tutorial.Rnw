@@ -80,7 +80,7 @@ LL <- function (x)
 	return(t);
 }
 @
-Please note that this function uses the global variable {\em obs}, and that it return minus infitiny instead
+Please note that this function uses the global variable {\em obs}, and that it return minus infinity instead
 of not-a-number in cases where the likelihood is not properly defined. This can happen, for instance, if
 any of the values of {\em x} is negative.
 Also, notice that this function converts the third element of {\em x} to integer, as the {\em dbinom} function does not accept a fractional value for the {\em size} parameter.

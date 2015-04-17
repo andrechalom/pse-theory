@@ -83,7 +83,7 @@ values of PRCC for variables which are actually correlated to the model
 output, by mitigating the aleatory uncertainty in each data point. 
 However, this comes at a cost of having less samples to use in
 statistical inference (resulting in loss of the power of significance tests, 
-or in our case, an increase in the bootstraped confidence intervals).
+or in our case, an increase in the bootstrapped confidence intervals).
 
 The repetition scheme also has the advantage that it permits a crude estimate of the
 aleatory uncertainty by means of the {\em coefficients of variation} (cv).
@@ -91,7 +91,7 @@ The \textbf{cv} and \textbf{plotcv} functions can be used
 to identify whether the aleatory variability is comparable to the total model
 variability. This plot presents an empirical cumulative distribution function
 (ecdf) of the variation of the model responses obtained for each parameter
-combination (pointwise cv). The dotted vertical line corresponds to the 
+combination (point wise cv). The dotted vertical line corresponds to the 
 variation of the average model response through all combinations (global
 cv). If the global cv is far greater than all of the pointwise cvs, this means
 that the epistemic variability is far greater than the aleatory variation for
@@ -111,7 +111,7 @@ plotcv(LHS2)
 
 One caveat of using the \textbf{cv} is that it is only meaningful if the distribution
 of results for a given point in the parameter space is unimodal. It is strongly 
-recommended that you check the model behaviour for multimodality before applying
+recommended that you check the model behavior for multimodality before applying
 any of the uncertainty and sensitivity analyses discussed here. Strong multimodality
 is often evident from the scatterplots generated for single-run hypercubes.
 
@@ -126,7 +126,7 @@ newdata <- modelRun(get.data(LHS2))
 LHS3 <- tell(LHS2, newdata)
 @
 
-This can be used to iteratevely add repetitions until the PRCC is stable. In this example,
+This can be used to iteratively add repetitions until the PRCC is stable. In this example,
 the PRCC scores show very little change after 6 to 7 repetitions. This procedure can be coupled
 with SMBA evaluations between different hypercube sizes to find an acceptable bound for
 the number of total model evaluations.

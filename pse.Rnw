@@ -193,11 +193,11 @@ Paulo Inácio de Knegt López de Prado}
 		  \vspace{2pt}
 	  \end{center}
 	  \noindent
-There is a growing trend in the use of mathematical modelling tools in the
+There is a growing trend in the use of mathematical modeling tools in the
 study of many areas of the biological sciences. 
 
 The use of computer models in science is increasing, specially in fields where laboratory
-experiments are too complex or to costly, like ecology.
+experiments are too complex or too costly, like ecology.
 
 Questions of efficient, systematic and error-proof exploration of parameter spaces are
 are of great importance to better understand, estimate confidences and make use of the 
@@ -208,11 +208,11 @@ on the Latin Hypercube Sampling and focusing on quantitative analysis of the res
 compare analytical results for sensitivity and uncertainty, where relevant, to LHS results.
 Finally, we examine the proposal of a methodology based on the likelihood statistical paradigm.
 
-Chapter 1 introduces a brief investigation about the historical visions about the nature of
+Chapter 1 introduces a brief investigation about the historical views about the nature of
 probability, in order to situate the concept of likelihood as a central component in statistical inference.
 
-Chapter 2 (in english) shows a revision about the state-of-art uncertainty and sensitivity analyses,
-with a practical example of applying the described techniques to a model of structured population growth.
+Chapter 2 (in English) shows a revision about the state-of-art uncertainty and sensitivity analyses,
+with a practical example of applying the described techniques to two models of structured population growth.
 
 Chapter 3 examines the proposal of a likelihood based approach as an integrative procedure between
 parameter value estimation and uncertainty analyses, with preliminary results.

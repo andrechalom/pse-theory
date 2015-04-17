@@ -21,13 +21,13 @@ variable $y$ should present in nature. This functions may be used, for example,
 to provide confidence intervals on the model responses.
 
 However, this is only the case when the input variables are uncorrelated or
-when enough correlation terms have been taken into account. Smith (\citep{Smith02})
+when enough correlation terms have been taken into account. \cite{Smith02}
 provides an example where ignoring the correlation terms 
 leads to inaccuracies on the estimation of confidence intervals.
 
 The next reasonable step is to construct and interpret scatterplots relating
 the result to each input parameter. These scatterplots may aid in the visual
-identification of patterns, and altough they cannot be used to prove 
+identification of patterns, and although they cannot be used to prove 
 any relationship between the model response and input, they may direct the
 research effort to the correct analyses. There are extensive reviews of the
 use of scatterplots to identify the important factors and emerging patterns
@@ -51,22 +51,22 @@ the result and some parameter, partial correlation coefficients should
 be used, which
 discount the effect of all other parameters. 
 
-The classical approach to the sensitivy analysis, based on the frequentist
+The classical approach to the sensitivity analysis, based on the frequentist
 school of hypothesis testing, consists in classifying the relations
 between the results and the input parameters, in order of increasing complexity, as:
 
 \begin{itemize}
-	\item Linear relation, which can be tested with the Pearson partial correlation coefficient,
+	\item Linear relation, which can be tested with the Pearson partial correlation coefficient.
 		Is is usual to test the significance of this linear relation by a t-test 
 		\citep{Freedman07}.
 	\item Monotonic relation, which can be tested with the Spearman partial correlation coefficient,
-		also refered to as Partial Rank Correlation Coefficient, or PRCC.
+		also referred to as Partial Rank Correlation Coefficient, or PRCC.
 		This measure is a robust
 		indicator of monotonic interactions between $y$ and $x_i$, and is subject
-		to significance testing as described in \citep{Marino08}.
-	\item Trends in central location, for which the Kruskal-Wallis test may be applied (\citep{Kleijnen99}).
-	\item Trends in variability, for which the FAST method and Sobol' indices may be used in order to partition
-		the model variability (\citep{Archer97, Saltelli99, Saltelli04}).
+		to significance testing \citep{Marino08}.
+	\item Trends in central location, for which the Kruskal-Wallis test may be applied \citep{Kleijnen99}.
+	\item Trends in variability, for which the FAST method and Sobol' indexes may be used in order to partition
+		the model variability \citep{Archer97, Saltelli99, Saltelli04}.
 \end{itemize}
 
 Subsections \ref{linear} to \ref{FAST} will provide some
@@ -75,7 +75,7 @@ will present examples of use of those tests. We should stress here that
 the application of one method is not enough to draw conclusions about 
 the relations between the input and output variables, as these techniques
 test different hypotheses, and have different statistical powers. Instead,
-every model should be analysed by a combination of techniques, preferably
+every model should be analyzed by a combination of techniques, preferably
 one for each category outlined here.
 
 \subsubsection{Linear relation}\label{linear}
@@ -83,7 +83,7 @@ Under the hypothesis of independence between the central location and
 dispersion of the model responses, 
 the most straightforward relationship between $y$ and $x_i$ is the linear, 
 represented by $y \sim x_i$. This is case if, every time $x_i$ is increased, 
-$y$ increases by aproximately the same ammount.
+$y$ increases by approximately the same amount.
 The Pearson correlation coefficient is the commonly used measure to test for
 a linear correlation:
 
@@ -149,7 +149,7 @@ $r(x_{ik})$, can be found in a similar way.
 
 If there exists a strictly monotonic relation between $y$ and $x_i$, that is,
 if every time $x_i$ increases, $y$ either always increase or always decreases
-by any positive ammount, it should
+by any positive amount, it should
 be clear that the ranks of $y$ and $x_i$ present a linear relationship: 
 $r(y) \sim r(x_i)$.
 
@@ -164,7 +164,7 @@ data, that is, if $y$ and $x_i$ are rank transformed and fitted as linear models
 of the remaining parameters, the correlation between the residuals is called
 PRCC, or Partial Rank Correlation Coefficient. This measure is a robust
 indicator of monotonic interactions between $y$ and $x_i$, and is subject
-to significance testing as described in \citep{Marino08}. This measure will 
+to significance testing \citep{Marino08}. This measure will 
 perform better with increasing $N$.
 
 \subsubsection{Trends in central location}\label{Kruskal}
@@ -178,7 +178,7 @@ sum test may be used to indicate the presence of such relations
 In order to perform the test, the distribution of $x_i$ must be divided 
 into a number $N_{test}$ of disjoint intervals. The model response $y$ is then
 grouped with respect to these intervals, and the Kruskal-Wallis test is used
-to investigate if the $y$ values have aproximately the same distribution
+to investigate if the $y$ values have approximately the same distribution
 in each of those intervals. A low p-value for this test indicates that the
 mean and median of $y$ is likely to be different for each interval considered,
 and thus that the parameter $x_i$ have a (possibly non monotonic) relationship
@@ -227,10 +227,10 @@ $y$ with respect to these intervals, as done on the Kruskal-Wallis test.
 In this case, the ANOVA F statistic can be used to test for equality 
 between the $y$ conditional to each class \citep{Kleijnen99}.
 
-A similar approach, which we will use, is to employ the eFAST indices
+A similar approach, which we will use, is to employ the eFAST indexes
 \citep{Saltelli99, Saltelli04},
 which is a variance decomposition method based on the FAST and
-Sobol' indices. While the Sobol' indices were described in 1969, in Russian,
+Sobol' indexes. While the Sobol' indexes were described in 1969, in Russian,
 FAST was developed by Cukier et al. in 1973, and both are identical in all
 but one computation \citep{Archer97}. 
 
@@ -242,7 +242,7 @@ the higher-order interactions between $x_i$ and all other parameters.
 The sum of all terms related to $x_i$ is called the {\em total-order
 sensitivity of $x_i$}. 
 
-The eFAST method estimates the main effect of each parameter by chosing 
+The eFAST method estimates the main effect of each parameter by choosing 
 a periodic function $f_i(x_i)$ for each parameter, where the 
 frequency $\phi_i$ of
 each function is distinct, and should, in theory, be incommensurable.
@@ -253,7 +253,7 @@ order sensitivity of $x_i$ is then calculated as the fraction of the
 variation which is not explained by the complimentary of $x_i$ (that is,
 all parameters but this one).
 
-There are two things that should be noted here about eFAST indices. The
+There are two things that should be noted here about eFAST indexes. The
 first one is that the eFAST calculation does not involve the LHS sampling
 scheme, and may require more model evaluations. Also, this method produces
 small positive total-order sensitivity estimates even for parameters 
@@ -276,5 +276,5 @@ Despite the widespread use and recognition that the GLUE method has received,
 it is subject to criticisms by not being formally Bayesian, and
 formal Bayesian approaches have been developed\citep{Vrugt09}.
 Another approach, based on the Metropolis algorithm, is provided by 
-\cite{Kuczera98}. %TODO
+\cite{Kuczera98}. 
 

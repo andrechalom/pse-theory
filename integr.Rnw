@@ -5,7 +5,7 @@ verificação, validação, calibração, análise de incerteza e análise de se
 As duas primeiras etapas estão historicamente 
 muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
 computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
-reproduzir os fênomenos reais desejados. Outra forma de pensar em V \& V é que a validação se ocupa em determinar
+reproduzir os fenômenos reais desejados. Outra forma de pensar em V \& V é que a validação se ocupa em determinar
 que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
 resolvendo as equações corretamente \citep{ASC2010}.
 Questões relacionadas a verificação de modelos não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
@@ -117,7 +117,7 @@ O problema de definição de uma verossimilhança para análise de incerteza em 
 de hipóteses estatísticas compostas. O trabalho fundamental de Neyman e Pearson \citep{Neyman1933}
 estabelece uma justificativa matemática para o princípio da verossimilhança em problemas envolvendo hipóteses simples.
 O problema de hipóteses compostas é resolvido dentro do paradigma frequentista para alguns casos particulares, como 
-o teste {\em t de Student}, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
+o teste {\em t} de Student, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
 parâmetro desconhecido. Estatísticos frequentistas tratam o problema de hipóteses compostas através do máximo de
 verossimilhança obtido por qualquer de suas hipóteses simples componentes. Muito do trabalho nessa área se concentrará
 em encontrar aproximações para a distribuição dessa estatística \citep{Wilks38}.
@@ -158,8 +158,8 @@ necessariamente a funções de suporte, que devem possuir as seguintes proprieda
 \begin{enumerate}
 	\item {\em Transitividade}: Se $H_1$ tem melhor suporte que $H_2$ e $H_2$ tem melhor suporte que $H_3$, então
 		$H_1$ deve ter melhor suporte que $H_3$.
-	\item {\em Aditividade em relação aos dados}: o suporte relativo entre duas hipóteses deprendido de uma
-		observação deve ser facilmente combinável com o suporte relativo para as mesmas hipóteses deprendido
+	\item {\em Aditividade em relação aos dados}: o suporte relativo entre duas hipóteses depreendido de uma
+		observação deve ser facilmente combinável com o suporte relativo para as mesmas hipóteses depreendido
 		de uma observação diferente.\footnote{Edwards usa ``aditividade'' sobre a log-verossimilhança, equivalentemente medidas
 		de verossimilhança podem ser combinadas de forma multiplicativa.}
 	\item {\em Invariância a transformações injetoras dos dados}.
@@ -177,7 +177,7 @@ aditiva em relação ao parâmetro:
 \begin{quote}
 ``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
 hypotheses (...).
-Altough the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
+Although the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
 represent a statistical distribution in any sense.'' \citep{Edwards72}
 \end{quote}
 
@@ -191,7 +191,7 @@ das hipóteses compostas.
 \section{{\em Caveat} sobre o uso de estatísticas}
 
 O uso de amostras de uma função de suporte para embasar um procedimento de análise de incerteza, como proposto
-nas sessões anteriores, deve ser feito de forma a levar em consideração a natureza das grandezas envolvidas.
+nas seções anteriores, deve ser feito de forma a levar em consideração a natureza das grandezas envolvidas.
 Vamos fornecer aqui um exemplo de aplicação ingênua e equivocada desse procedimento, que busca usar a média
 da função como uma medida da tendência central dos resultados do modelo.
 
@@ -226,7 +226,7 @@ Logo, o valor de $\hat x$ deve ser usado como estimador pontual do valor mais pr
 do par\^ametro $x$. Da mesma forma, intervalos de confian\c ca para o par\^ametro $x$ devem
 ser constru\'idos ao redor de $\hat x$.
 
-Ap\'os tomar amostras desta distribui\c c\~ao, construimos a distribui\c c\~ao
+Ap\'os tomar amostras desta distribui\c c\~ao, construímos a distribui\c c\~ao
 de resultados:
 \begin{equation}
 	D(y) = C y^{\hat x} \mathrm{e}^{-y}
@@ -256,7 +256,7 @@ enunciada por Ian Hacking, se refere a hipóteses simples:
 \item[LL]
 ``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
 hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
-if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strenght of that evidence.''
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
 \citep{Hacking65}
 \end{description}
 
@@ -318,7 +318,7 @@ ser comparadas sejam dadas por pares $(\mu = \mu_0, \sigma = \sigma_0)$
 representando um valor fixo para a média e desvio padrão dessa normal, 
 é possível comparar uma aproximação para suporte relativo para diferentes valores para a média, com o desvio padrão livre
 - portanto, caracterizando a hipótese composta $(\mu = \mu_0, \sigma \geq 0)$.
-Vamos retomar esta proposta na sessão \ref{sec:plue}.
+Vamos retomar esta proposta na seção \ref{sec:plue}.
 
 A proposta \ref{i:alt} se baseia na formulação axiomática de uma lei geral, GLL (do inglês Generalized Law of Likelihood),
 que seja compatível com a lei da verossimilhança LL
@@ -432,11 +432,11 @@ de uma medida absoluta de confirmação, os principais defensores da lei da vero
 consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
 e é o caminho que vamos seguir nesta seção.
 
-Um exemplo devido a Branden Fitelson \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
+Um exemplo devido a \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
 tome um baralho de 52 cartas bem embaralhado, e considere as hipóteses (simples) 
 $H_1$: a primeira carta é o ás de espadas {\em versus}
 $H_2$: a primeira carta é preta. A observação de uma carta de espadas leva às seguintes verossimilhanças: 
-$\mathcal{L} ( H_1 | \spadesuit ) = k 1 > \mathcal{L} ( H_2 | \spadesuit ) = k \frac{1}{2}$, sendo $k$ uma constante de 
+$\mathcal{L} ( H_1 | \spadesuit ) =  1 k> \mathcal{L} ( H_2 | \spadesuit ) =  \frac{1}{2} k$, sendo $k$ uma constante de 
 proporcionalidade, e a lei da verossimilhança nos leva a declarar o suporte para $H_1$ sobre $H_2$. Mas a evidência apresentada
 sobre $H_1$ é inconclusiva, mas garante $H_2$. Fitelson traça essa discordância na relação entre os chamados ``{\em catch-alls}'',
 $P(E | \sim\!\!H_1)$ e $P(E|\sim\!\!H_2)$\footnote{Em casos de cartas de baralhos, os {\em catch-alls} estão bem definidos;
@@ -476,7 +476,8 @@ poderia embasar uma escola de inferência intermediária, sem o uso de {\em prio
 nem a restrição
 arbitrária ao tratamento de hipóteses compostas.
 
-O paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
+Concluímos esta seção ponderando que
+o paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
 nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
 Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
 essa singularidade.
