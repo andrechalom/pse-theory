@@ -1,0 +1,73 @@
+\documentclass[twoside,12pt,a4paper]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[twoside,margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[square,sort]{natbib}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+\usepackage{xspace}
+\newcommand{\R}{\textnormal{\sffamily\bfseries R}\xspace}
+
+\usepackage{Sweave}
+\begin{document}
+\setkeys{Gin}{width=0.8\textwidth}
+
+\begin{center}
+  {\Large Parameter space exploration of ecological models}
+
+\begin{table}[hbt]{\small
+\begin{tabular}{ll}
+Authors        & Andre Chalom \\
+               & Paulo Inacio Prado \\
+Date           & 06/30/2015 \\
+Affiliation    & Department of Ecology, \\
+	       & University of Sao Paulo 
+\end{tabular} }
+\end{table}
+\end{center}
+
+\mbox{}\vspace{-14mm}\mbox{}
+
+\input abstract.tex
+
+\newpage
+\tableofcontents
+\newpage
+
+\input intro.tex
+\input sampling.tex
+\input quantanal.tex
+\input leslie.tex
+\input tribolium.tex
+\newpage
+\input revlit.tex
+
+\section*{Acknowledgements}
+We would like to thank Camila Castanho, Charbel El-Hani, Jo\~ao Luis Ferreira Batista, Alexandre Adalardo,
+Marina C. Salles and several others for the insightful comments.
+
+This work was supported by a CAPES scholarship.
+
+\newpage
+\bibliographystyle{apalike}
+\bibliography{chalom}
+
+\end{document}
