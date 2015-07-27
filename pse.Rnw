@@ -98,7 +98,7 @@ Programa Interunidades de Pós-Graduação em Bioinformática - Universidade de 
 \vfill
 \begin{center}
 	\textbf{{\large São Paulo}\\
-	{\large 2014}}
+	{\large 2015}}
 \end{center}
 
 \newpage
