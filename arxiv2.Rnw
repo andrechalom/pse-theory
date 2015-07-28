@@ -54,28 +54,32 @@ Affiliation    & Department of Ecology, \\
 \tableofcontents
 \newpage
 
-%%% MAIN TEXT
+\section{Motivation}
 
-\section{Motivação}
-O desenvolvimento e utilização de modelos matemáticos e computacionais deve compreender as seguintes etapas: 
-verificação, validação, calibração, análise de incerteza e análise de sensibilidade.
+The use of mathematical and computational models is now widespread in several fields of the biological 
+sciences. However, several applications of these models lack one or more steps that should be taken in
+order to correctly understand and interpret its results \citep{Bart95}. Though seldomly discussed together,
+five steps can be seen as fundamental in this process: {\em verification, validation, calibration, 
+uncertainty analysis} and {\em sensitivity analysis}. 
 
-As duas primeiras etapas estão historicamente 
-muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
-computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
-reproduzir os fenômenos reais desejados. Outra forma de pensar em V \& V é que a validação se ocupa em determinar
-que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
-resolvendo as equações corretamente \citep{ASC2010}.
-Questões relacionadas a verificação de modelos não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
+The two first steps are very tighly correlated, both in historical terms and in the common practice,
+so it's common to refer to the set of validation and verification as ``V \& V''. We can think of verification
+as trying to ensure that the computer code is correctly implementing the desired model, while validation
+is trying to ensure that the theoretical model is capable of reproduce the actual phenomena of interest.
+Another way to see it is to think that validation is determining that the model is solving the right 
+equations, while verification is determining that the model is solving the equations right \citep{ASC2010}.
 
-A calibração consiste em ajustar os parâmetros implementados no código para melhorar a concordância entre o resultado
-obtido pelo modelo e aquele observado em uma determinada situação. A correta calibração de um modelo é considerada
-essencial para que o modelo possa ser considerado para fins preditivos \citep{ASC2010}.
+The third step, calibration, consists in determining the right values for the input parameters of a model
+in order to enhance the correspondency between a model run and one observed situation. An appropriate
+calibration of the model is then essential for the model to be used in a predictive fashion \citep{ASC2010}.
 
-As duas últimas etapas já foram extensamente discutidas no capítulo \ref{cap:pse}, mas é importante frisar que
-é geralmente aceito que a
-calibração e as análises de incerteza e sensibilidade dependem fortemente da realização prévia de verificação e 
-validação do modelo.
+The last steps consist in determining how much the variation of the input parameters is translated into
+the total variation of the results, which is called uncertainty analysis, and how much of the variation
+of the results can be ascribed to the variation of each individual parameter, which is called sensitivity
+analysis \citep{Helton03, Helton05}. These two have been extensively reviewed in another text 
+(\citep{Chalom12}), so we will just highlight the fact that these analyses, together with model calibration,
+strongly depend on previously and correctly executing the model verification and validation.
+
 
 Durante o desenvolvimento e a análise de modelos matemáticos em ecologia, é comum separar a calibração por 
 estimativa dos parâmetros (EP)
