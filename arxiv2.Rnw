@@ -1,0 +1,1033 @@
+\documentclass[twoside,12pt,a4paper]{article}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[twoside,margin=1.2in]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[square,sort]{natbib}
+\usepackage{framed, color}
+\definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
+\setlength{\topmargin}{0cm}
+
+% Create friendly environments for theorems, propositions, &c.
+\newtheorem{axiom}{Axioma}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
+\usepackage{xspace}
+\newcommand{\R}{\textnormal{\sffamily\bfseries R}\xspace}
+
+\usepackage{Sweave}
+\begin{document}
+\SweaveOpts{fig=T,echo=F}
+\setkeys{Gin}{width=0.8\textwidth}
+
+\begin{center}
+  {\Large Profile likelihood uncertainty estimation}
+
+\begin{table}[hbt]{\small
+\begin{tabular}{ll}
+Authors        & Andre Chalom \\
+               & Paulo Inacio Prado \\
+Date           & 07/28/2015 \\
+Affiliation    & Department of Ecology, \\
+               & University of Sao Paulo 
+\end{tabular} }
+\end{table}
+\end{center}
+
+\mbox{}\vspace{-14mm}\mbox{}
+
+%%% ABSTRACT
+
+\newpage
+\tableofcontents
+\newpage
+
+%%% MAIN TEXT
+
+\section{Motivação}
+O desenvolvimento e utilização de modelos matemáticos e computacionais deve compreender as seguintes etapas: 
+verificação, validação, calibração, análise de incerteza e análise de sensibilidade.
+
+As duas primeiras etapas estão historicamente 
+muito interligadas, e costumam ser referidas como V \& V: a verificação consiste em garantir que o código 
+computacional implemente o modelo desejado, enquanto a validação consiste em garantir que o modelo teórico é capaz de 
+reproduzir os fenômenos reais desejados. Outra forma de pensar em V \& V é que a validação se ocupa em determinar
+que o modelo está resolvendo as equações certas, enquanto a verificação se ocupa em determinar se o modelo está
+resolvendo as equações corretamente \citep{ASC2010}.
+Questões relacionadas a verificação de modelos não costumam ser formuladas estatisticamente, então não serão tratadas aqui.
+
+A calibração consiste em ajustar os parâmetros implementados no código para melhorar a concordância entre o resultado
+obtido pelo modelo e aquele observado em uma determinada situação. A correta calibração de um modelo é considerada
+essencial para que o modelo possa ser considerado para fins preditivos \citep{ASC2010}.
+
+As duas últimas etapas já foram extensamente discutidas no capítulo \ref{cap:pse}, mas é importante frisar que
+é geralmente aceito que a
+calibração e as análises de incerteza e sensibilidade dependem fortemente da realização prévia de verificação e 
+validação do modelo.
+
+Durante o desenvolvimento e a análise de modelos matemáticos em ecologia, é comum separar a calibração por 
+estimativa dos parâmetros (EP)
+da análise de incerteza e sensibilidade (AIS) do modelo. Os dois passos são feitos em seções diferentes dos artigos, discutidos
+em capítulos diferentes dos livros \citep{Caswell89}, e chegam até a ser realizados por equipes diferentes. Em estudos que 
+empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
+de parâmetros considerada ótima durante as estimativas de parâmetros \citep{SilvaMatos99}, e a análise de incerteza é apresentada
+como um procedimento separado e posterior à análise do resultado considerado como principal. 
+Até mesmo a abordagem estatística usada em ambos os procedimentos pode ser incoerente.
+
+Além disso, o conjunto de parâmetros usados na calibração do modelo pode ter
+pouca relação com as entradas individuais da matriz de projeção. Isso ocorre, por exemplo, quando séries temporais
+da população são utilizadas para estimar as taxas vitais: nesse caso, o responsável pela calibração vê o sistema como
+contagens de indivíduos, enquanto o responsável pela análise de incerteza tipicamente realiza a análise sobre as taxas vitais.
+Desta forma, a AIS é incapaz de apontar rumos para o planejamento de novos experimentos, apontando quais parâmetros 
+devem ser alvo de maior esforço de coleta.
+
+Essa falta de integração entre os passos necessários para o estudo de um modelo tem suas raízes no 
+desenvolvimento das teorias de EP e AIS. Enquanto a estimação de parâmetros sempre foi tratada sob o ponto de vista
+de uma teoria estatística, a análise de sensibilidade de modelos matriciais foi desenvolvida como 
+uma ferramenta analítica, baseada em expansões lineares das funções de interesse em torno de um ponto privilegiado. 
+Dependendo do tipo de experimento utilizado para obter estimativas das taxas vitais, diferentes abordagens 
+podem ser utilizadas para encontrar um conjunto de valores que melhor represente o estado de conhecimento
+que temos de uma população, entre abordagens frequentistas, bayesianas ou baseadas em verossimilhança.
+Já a teoria analítica de AIS, devida em grande parte aos trabalhos de Hal Caswell (por exemplo \citep{Caswell89}), 
+procede rotineiramente por
+tomar um modelo já parametrizado da forma ótima, e estudar as derivadas de primeira ordem da resposta de interesse
+em relação a cada um dos parâmetros de entrada. Nessa formulação, a quantidade e a qualidade dos dados de entrada
+para o modelo são ignorados, a menos de suas médias, e medidas de sensibilidade são tomadas exclusivamente sobre
+a variação da resposta de interesse a perturbações infinitesimais. Desta forma, modelos parametrizados com dados
+com grande incerteza não apresentarão maiores medidas de sensibilidade que modelos feitos sobre dados robustos, assim como aumentar o esforço amostral não
+reduzirá necessariamente as medidas de incerteza. A análise de sensibilidade analítica, em última análise, diz
+respeito à estrutura do modelo matricial, e não ao procedimento completo desde a tomada de dados em campo até
+a formulação e execução do modelo. Isso pode levar a uma falsa confiança em estudos que apresentem
+uma estrutura matricial estável, portanto de baixas sensibilidades, mas dados tomados com muita incerteza.
+
+Por outro lado, questões de validação dos modelos são frequentemente menosprezadas pela literatura da área,
+apesar de estarem intimamente conectadas com as questões relevantes de incerteza. Podemos dividir a incerteza
+de um modelo em três fontes principais: incerteza estrutural, incerteza de parâmetros (ou epistêmica) 
+e incerteza estocástica. Enquanto a maioria das técnicas de AIS se concentram na segunda componente, 
+a validação de modelos pode apontar qual o nível de confiança que podemos ter de que um dado modelo é
+o modelo correto para reproduzir o fenômeno visto.
+
+A formulação estocástica da teoria de análise de incerteza e sensibilidade global, como descrita no capítulo \ref{cap:pse}, 
+e interpretada dentro de uma
+abordagem pautada pelo princípio da verossimilhança, é capaz de contemplar da mesma forma todas as fontes de 
+incerteza descritas acima, gerando como resultado um quadro completo do nosso conhecimento a respeito de 
+um sistema. 
+Embora para sistemas muito simples as abordagens possam convergir, isso não se verifica para problemas
+e sistemas de maior complexidade. As principais vantagens de usar a formulação estocástica são:
+
+\begin{enumerate}
+	\item A abordagem analítica é local (portanto, responde ao que acontece com perturbações infinitesimais) 
+		e depende das funções serem "suaves" na vizinhança, a estocástica é global e não tem essa limitação.
+	\item Uma abordagem estocástica (baseada ou não na verossimilhança) permite que a informação contida na 
+		variabilidade amostral seja utilizada para representar a incerteza sobre os parâmetros (veja seção \ref{Sampling}).
+	\item O princípio de verossimilhança afirma que toda a informação contida nas amostras coletadas está contida 
+		na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de 
+		verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela 
+		amostra - enquanto a abordagem analítica e outras formulações estocásticas
+		podem, alternadamente, desperdiçar informações coletadas ou 
+		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite. 
+\end{enumerate}
+
+\section{Uma função de suporte}
+Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
+fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
+modelo, a partir de um conjunto de dados coletados?''. Em um modelo de crescimento populacional, por exemplo, a pergunta
+se torna ``qual o suporte que os dados coletados fornecem para a hipótese de que a população está crescendo ou estável,
+{\em versus} a hipótese de que a população está em declínio?''.
+
+Vamos considerar problemas onde $\bu{x}$ representa um vetor de dados obtidos de forma independente
+em um ou mais experimentos a partir de uma variável aleatória $\bu{X}$, tal que $P(\bu{X}\!=\!\bu{x}) = f(\bu{x};\theta)$. 
+O parâmetro
+(ou vetor de parâmetros) $\theta$ é desconhecido e pode assumir valores em $\Theta$. A verossimilhança de $\theta$
+dadas as observações $\bu{x}$ é dada por $\mathcal{L} (\theta | \bu{x}) = f(\bu{x}; \theta)$. A razão de verossimilhanças
+sob o mesmo conjunto de dados pode ser abreviada como $L(\theta_1, \theta_2) = \frac{\mathcal{L}(\theta_1|\bu{x})}
+{\mathcal{L}(\theta_2|\bu{x})}$. 
+
+Sabemos que essa pergunta, se formulada sobre os parâmetros
+de uma distribuição de probabilidade, é respondida através da função de verossimilhança. Também sabemos que
+transformações injetoras sobre parâmetros preservam as propriedades da função de verossimilhança, isso é: 
+se um parâmetro $\theta$ está associado a uma função de verossimilhança $\mathcal{L}(\theta|\bu{x})$ e 
+$\phi = f(\theta)$ é dada por uma função $f(\cdot)$ injetora, a verossimilhança de $\phi$ é dada simplesmente por
+$\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\citep{Edwards72}, sec. 2.5).
+
+Nosso trabalho, então, é o de estender esse resultado para uma função genérica. 
+Nosso argumento se baseia em uma função de um argumento, $\gamma = g(\theta)$, sendo que a generalização 
+para mais dimensões é trivial.\footnote{A notação usada aqui é mais compatível com a literatura estatística,
+enquanto na seção \ref{PSE}, definimos as entradas, resultados e o modelo em si como $x$, $y$ e $f$, relacionados
+como $y = f(x)$, aqui podemos pensar nesses objetos como $\theta$, $\gamma$ e $g$, respectivamente.}
+
+O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
+de hipóteses estatísticas compostas. O trabalho fundamental de Neyman e Pearson \citep{Neyman1933}
+estabelece uma justificativa matemática para o princípio da verossimilhança em problemas envolvendo hipóteses simples.
+O problema de hipóteses compostas é resolvido dentro do paradigma frequentista para alguns casos particulares, como 
+o teste {\em t} de Student, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
+parâmetro desconhecido. Estatísticos frequentistas tratam o problema de hipóteses compostas através do máximo de
+verossimilhança obtido por qualquer de suas hipóteses simples componentes. Muito do trabalho nessa área se concentrará
+em encontrar aproximações para a distribuição dessa estatística \citep{Wilks38}.
+
+Sob esta inspiração, podemos construir uma função tentativa de suporte $\Psi^\delta (\gamma | \bu{x})$, definida por:
+
+\begin{equation}
+	\Psi^\delta ( \gamma | \bu{x} ) = \sup\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
+\label{eqn:Psidelta}
+\end{equation}
+
+Essa função pode ser intuitivamente interpretada no sentido de equiparar a verossimilhança da hipótese composta com
+a da sua melhor hipótese simples componente.
+Alternativamente, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$:
+$\Psi^\star (\gamma | \bu{x})$, definida por:
+\begin{equation}
+\Psi^\star ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
+\label{eqn:Psistar}
+\end{equation}
+
+Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
+nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$.
+Enquanto a função \ref{eqn:Psidelta} tem uma forte inspiração nos trabalhos frequentistas, a função \ref{eqn:Psistar}
+vem de uma inspiração Bayesiana. 
+
+Em geral, ao determinar regras para combinar o suporte de hipóteses simples para construir uma função de suporte
+para hipóteses compostas, estamos considerando funções da forma:
+
+\begin{equation}
+\Psi ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \kappa(\theta) \,d\theta
+\label{eqn:Psi}
+\end{equation}
+Onde a função $\Psi^\star$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
+no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Essa classe de funções não corresponde
+necessariamente a funções de suporte, que devem possuir as seguintes propriedades desejáveis\citep{Edwards72}:
+
+\begin{enumerate}
+	\item {\em Transitividade}: Se $H_1$ tem melhor suporte que $H_2$ e $H_2$ tem melhor suporte que $H_3$, então
+		$H_1$ deve ter melhor suporte que $H_3$.
+	\item {\em Aditividade em relação aos dados}: o suporte relativo entre duas hipóteses depreendido de uma
+		observação deve ser facilmente combinável com o suporte relativo para as mesmas hipóteses depreendido
+		de uma observação diferente.\footnote{Edwards usa ``aditividade'' sobre a log-verossimilhança, equivalentemente medidas
+		de verossimilhança podem ser combinadas de forma multiplicativa.}
+	\item {\em Invariância a transformações injetoras dos dados}.
+	\item {\em Invariância a transformações injetoras dos parâmetros}. 
+	\item {\em Relevância e consistência}: se uma hipótese for verdadeira, ela deve receber mais suporte do que hipóteses
+		concorrentes no longo termo. O suporte relativo deve ser coerente entre diversos problemas: o mesmo valor de
+		suporte relativo deve ter o mesmo significado.
+	\item {\em Compatibilidade}: uma medida de suporte deve ser facilmente usada para atualizar informações na forma de
+		{\em prioris}, nos casos nos quais elas existam.
+\end{enumerate}
+
+Assim, é fácil ver que a função $\Psi^\star$, por exemplo, não é uma função de suporte - já que esta não é 
+aditiva em relação ao parâmetro:
+
+\begin{quote}
+``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
+hypotheses (...).
+Although the likelihood function, and hence the curve, has the mathematical form of a [known] distribution, it does not
+represent a statistical distribution in any sense.'' \citep{Edwards72}
+\end{quote}
+
+Trabalhos futuros podem examinar as propriedades desta classe de funções; examinar se elas se adequam aos 
+requerimentos de uma função de suporte - e caso contrário, se existe uma formulação alternativa desses 
+requisitos que as contemple; e investigar a relação entre
+a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
+No presente trabalho, vamos nos concentrar na complexa relação entre a lei da verossimilhança e o problema
+das hipóteses compostas.
+
+\section{{\em Caveat} sobre o uso de estatísticas}
+
+O uso de amostras de uma função de suporte para embasar um procedimento de análise de incerteza, como proposto
+nas seções anteriores, deve ser feito de forma a levar em consideração a natureza das grandezas envolvidas.
+Vamos fornecer aqui um exemplo de aplicação ingênua e equivocada desse procedimento, que busca usar a média
+da função como uma medida da tendência central dos resultados do modelo.
+
+Considere o modelo simples\footnote{Segundo a notação desenvolvida na seção \ref{Introduction}}
+
+\begin{equation}
+	y = x
+\end{equation}
+
+Onde o par\^ametro $x$ \'e estimado, a partir da realiza\c c\~ao de um
+processo Poisson, como tendo o valor $\hat x$. Para estudar a incerteza
+do resultado do modelo $y$, vamos utilizar a fun\c c\~ao de verossimilhan\c ca
+de $x$, normalizada de forma a representar uma probabilidade. Lembremos que
+a fun\c c\~ao de verossimilhan\c ca de uma distribui\c c\~ao Poisson
+\'e:
+
+\begin{equation}
+	L \left( \lambda | \hat x \right) = C \lambda^{\hat x} \mathrm{e}^{-\lambda}
+\end{equation}
+
+Onde $C$ \'e uma constante multiplicativa que deve ser ajustada de forma
+que a integral de $L(\lambda | \hat x)$ seja igual a 1:
+
+\begin {eqnarray*}
+\int_0^\infty C \lambda^{\hat x} \mathrm{e}^{-\lambda} & = & 1 \\
+C & = & \left( \int_0^\infty  \lambda^{\hat x} \mathrm{e}^{-\lambda} \right)^{-1} \\
+C & = & \Gamma(\hat x +1)^{-1}
+\end{eqnarray*}
+
+O m\'aximo da fun\c c\~ao $L(\lambda | \hat x)$, descrita acima, ocorre em $\lambda = \hat x$.
+Logo, o valor de $\hat x$ deve ser usado como estimador pontual do valor mais prov\'avel
+do par\^ametro $x$. Da mesma forma, intervalos de confian\c ca para o par\^ametro $x$ devem
+ser constru\'idos ao redor de $\hat x$.
+
+Ap\'os tomar amostras desta distribui\c c\~ao, construímos a distribui\c c\~ao
+de resultados:
+\begin{equation}
+	D(y) = C y^{\hat x} \mathrm{e}^{-y}
+\end{equation}
+
+Cuja m\'edia \'e dada por
+
+\begin{eqnarray*}
+	<D(y)> & = & \int_0^\infty y C y^{\hat x} \mathrm{e}^{-y} dy \\
+	       & = & \int_0^\infty C y^{\hat x+1} \mathrm{e}^{-y} dy \\
+		   & = & \Gamma(\hat x +2) C\\
+	       & = & \frac{\Gamma(\hat x +2)}{\Gamma(\hat x + 1)} \\
+		   & = & \hat x + 1
+\end{eqnarray*}
+
+Note ent\~ao que, se escolhemos representar a distribui\c c\~ao dos resultados pela sua m\'edia,
+vamos estar usando $\hat x + 1$, enquanto que o valor mais verossímil para $y$ \'e $\hat x$, o mesmo
+que para o par\^ametro $x$. Da mesma forma, ao construir intervalos de confian\c ca para o resultado
+$y$, estes devem ser feitos considerando valores de maior verossimilhança, e n\~ao valores ao redor 
+da m\'edia $\hat x + 1$. 
+
+\section{Hipóteses compostas}
+Como exposto na seção \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
+enunciada por Ian Hacking, se refere a hipóteses simples:
+
+\begin{description}
+\item[LL]
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
+\citep{Hacking65}
+\end{description}
+
+Como, então, trabalhar com hipóteses compostas? A resposta tradicional de verossimilhantistas para essa questão é uma
+simples negativa: Edwards descarta hipóteses compostas como ``desinteressantes para a ciência'' \citep{Edwards72},
+enquanto Royall enxerga na requisição de que as hipóteses sejam simples um benefício, e não uma falha, da abordagem
+por verossimilhança \citep{Royall97}, exemplificado no problema a seguir:
+
+Suponha que um grupo de pesquisadores da área médica realizam um experimento para determinar a probabilidade de sucesso
+de um certo tratamento. Eles estão particularmente interessados em descobrir se o novo tratamento tem mais probabilidade de 
+sucesso do que 0.2, que representa a probabilidade de sucesso de um tratamento concorrente. Após aplicar o novo tratamento
+em 17 pacientes, eles encontram sucesso em 9. O que esse resultado pode dizer sobre as hipóteses?
+
+Uma análise frequentista vai confrontar a hipótese nula $H_0: \theta = 0.2$, e concluir que a probabilidade de encontrar
+9 ou mais sucessos em 17 realizações de um processo Bernoulli com $p=0.2$ é de aproximadamente 0.04\%, rejeitando a hipótese.
+
+Uma análise Bayesiana vai considerar as hipóteses $H_1:\theta \leq 0.2$ versus $H_2: \theta > 0.2$. O estatístico Bayesiano
+deve escolher uma forma para representar seu conhecimento prévio, e pode, por exemplo,
+usar a {\em priori} uniforme, dada por $B(1,1)$, como feito por Bayes, encontrando uma {\em posteriori}
+igual a $B(10,9)$, ou uma {\em priori} de Jeffreys, dada por $B(\frac{1}{2},\frac{1}{2})$, encontrando uma {\em posteriori}
+de $B(9.5, 8.5)$. Ambas as análises levam a probabilidades muito baixas para $H_1$: 0.09\% e 0.11\%, respectivamente.
+
+Ainda, a razão de verossimilhança entre o estimador de máxima verossimilhança para $\theta = 0.52$ e qualquer hipótese
+simples $H_p:\theta=p , \, p \leq 0.2$ é de no mínimo 91.5. Todos esses cálculos sugerem que os dados sejam coerentes com
+a hipótese de maior suporte ser aquela que considera que o novo tratamento tem probabilidade de sucesso maior do que 0.2.
+
+No entanto, a lei da verossimilhança de Hacking não permite essa afirmação, pois $H_1$ e $H_2$ não são hipóteses que
+atribuam um único valor de probabilidade às observações da variável aleatória sob consideração. Royall aponta que, embora
+algumas hipóteses simples componentes de $H_1$ sejam melhor suportadas do que as componentes de $H_2$, isso não é válido em
+geral: a hipótese $\theta = 0.2$ é mais suportada do que $\theta=0.9$ por um fator de 22.
+
+É importante notar que
+isso não é uma consequência da formulação das hipóteses envolvendo desigualdades, de fato as hipóteses $H^\dagger_1 : \gamma = 0$
+e $H^\dagger_2 : \gamma = 1$ são equivalentes, e tão intratáveis quanto, as hipóteses $H_1$ e $H_2$, com $\gamma$ sendo dado por
+
+\begin{equation}
+	\gamma = \left\{ 
+	\begin{array}{c c}
+		0, & \theta \leq 0.2 \\
+		1, & \theta > 0.2 
+	\end{array}
+	\right.
+\end{equation}
+
+Embora o uso de hipóteses compostas seja necessário para tratar hipóteses formuladas a respeito do resultado de modelos,
+pouco progresso se fez na elaboração de uma lei da verossimilhança que se aplique a hipóteses compostas. Os caminhos que podem
+ser trilhados aqui são:
+
+\begin{enumerate}
+	\item Tratar a questão através da modelagem de {\em nuisance parameters}; \label{i:prof}
+	\item Formular uma lei da verossimilhança que seja aplicável a hipóteses compostas;\label{i:alt}
+	\item Apresentar uma metodologia baseada em uma extensão lógica da lei da verossimilhança.\label{i:ext}
+\end{enumerate}
+
+A proposta \ref{i:prof} se baseia em métodos como a verossimilhança perfilhada e a verossimilhança condicional, que são
+propostas {\em ad hoc} usadas para reduzir o estudo de modelos estatísticos multiparamétricos a um parâmetro por vez.
+Um uso típico é dado ao ajustar uma distribuição normal a uma série de dados: embora, estritamente, as hipóteses que possam
+ser comparadas sejam dadas por pares $(\mu = \mu_0, \sigma = \sigma_0)$ 
+representando um valor fixo para a média e desvio padrão dessa normal, 
+é possível comparar uma aproximação para suporte relativo para diferentes valores para a média, com o desvio padrão livre
+- portanto, caracterizando a hipótese composta $(\mu = \mu_0, \sigma \geq 0)$.
+Vamos retomar esta proposta na seção \ref{sec:plue}.
+
+A proposta \ref{i:alt} se baseia na formulação axiomática de uma lei geral, GLL (do inglês Generalized Law of Likelihood),
+que seja compatível com a lei da verossimilhança LL
+para hipóteses simples, mas que extenda seu domínio para hipóteses compostas. Em contraste, a proposta \ref{i:ext} 
+propõe utilizar uma definição mais fraca de evidência, baseada em uma lei fraca da verossimilhança (WLL, do inglês
+Weak Law of Likelihood), tal que aceitar LL implique em aceitar WLL, mas a conversa não seja verdadeira.
+
+\section{Uma lei geral de verossimilhança}\label{sec:GLL}
+
+Talvez a generalização mais óbvia para a lei da verossimilhança para hipóteses compostas seja tomar o máximo (ou supremo,
+no casos em que o máximo não existe) da verossimilhança de suas hipóteses simples. Esse é o caminho perseguido por
+\cite{Zhang09, Zhang13} e \cite{Bickel10}, por exemplo. Zhang considera duas hipóteses, $H_1 : \theta \in \Theta_1 \subset \Theta$
+versus $H_2 : \theta \in \Theta_2 \subset \Theta$, e postula os seguintes axiomas (levemente modificados para coerência
+com a notação):
+
+\begin{axiom}
+	Se $\inf \mathcal{L}(\Theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, então a observação $\bu{x}$ 
+	é uma evidência a favor de $\Theta_1$.\label{ax:inf}
+\end{axiom}
+
+\begin{axiom}
+	Se $\bu{x}$ é evidência a favor de $H_1^*$ em relação a $H_2$ e $H_1^*$ implica em $H_1$, então $\bu{x}$ é evidência de 
+	$H_1$ sobre $H_2$.\label{ax:coh}
+\end{axiom}
+
+O primeiro axioma estabelece que se a imagem de $\mathcal{L} (\Theta_1|\bu{x})$ e $\mathcal{L} (\Theta_2|\bu{x})$ são intervalos
+disjuntos, portanto, se toda hipótese simples que implica em $H_1$ é suportada {\em versus} toda hipótese simples que implica
+em $H_2$, então $H_1$ é suportada {\em versus} $H_2$. Não parece haver motivo para rejeitar esse axioma, além de uma
+indisposição prévia a tratar hipóteses compostas. Já o segundo axioma é uma forma de estabelecer coerência lógica.
+É importante clarificar que esse requisito de coerência {\em não é} equivalente a supor que a estrutura lógica das hipóteses
+deve ser usada como base para justificar um grau de crença sobre $H_1^*$ ou $H_1$: se $H_1^*$ implica em $H_1$ e a recíproca
+não é verdadeira, o axioma \ref{ax:coh} {\em não} justifica que $H_1^*$ seja melhor suportada que $H_1$ por qualquer evidência.
+Destes axiomas, deriva-se uma lei geral da verossimilhança:
+
+\begin{theorem}
+	\textbf{(GLL)} Se $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, então existe evidência
+	a favor de $H_1$ sobre $H_2$.
+\end{theorem}
+
+\begin{proof}
+	Seja $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. Então existe $\theta_1 \in \Theta_1$
+	tal que $\mathcal{L} (\theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. Do axioma \ref{ax:inf}, a hipótese
+	$H_1^* : \theta = \theta_1$ é suportada em relação a $H_2$. Mas $H_1^*$ implica $H_1$, e a conclusão segue do axioma
+	\ref{ax:coh}.
+\end{proof}
+
+Embora não decorra dos axiomas, o uso de uma razão de verossimilhança generalizada $\sup \mathcal{L}(\Theta_1 | \bu{x}) / 
+\sup \mathcal{L} (\Theta_2 | \bu{x}) $ parece natural para quantificar a força da evidência. É trivial que GLL é 
+compatível com LL no caso de hipóteses simples, e com alguns casos particulares expostos por \citep{Royall97}. Essa formulação
+da GLL pode ser usada para apresentar questões de análise de incerteza e para formalizar o uso de verossimilhanças perfilhadas
+em alguns casos de modelos com {\em nuisance parameters}. 
+
+No entanto, a implicação mais surpreendente da GLL é que ela permite uma medida de confirmação {\em absoluta} de hipóteses.
+Uma hipótese  $H_1: \theta \in \Theta_1$ possui evidência favorável se $\sup \mathcal{L}(\Theta_1|\bu{x}) > 
+\sup \mathcal{L} (\Theta_1^c|\bu{x}$, onde $^c$ representa o conjunto complementar, ou $L(\Theta_1, \Theta_1^c) > 1$.
+Embora esse suporte seja nulo no caso
+de hipóteses simples sobre parâmetros contínuos, esse não é caso quando $\Theta$ é finito.
+
+Considere um exemplo, dado por \cite{Royall97}: 
+
+Existem três urnas com bolas brancas em diferentes proporções: um quarto ($\theta_1$), metade ($\theta_2$) e 
+três quartos ($\theta_3$); identificamos como $H_i$ as três urnas possíveis.
+Se nenhuma bola branca for observada após 5 sorteios com reposição, essa observação, $\bu{x}$, implica que
+$\mathcal{L} (\theta_1 | \bu{x} ) \propto (\frac{3}{4})^5$,
+$\mathcal{L} (\theta_2 | \bu{x} ) \propto (\frac{1}{2})^5$ e
+$\mathcal{L} (\theta_3 | \bu{x} ) \propto (\frac{1}{4})^5$.
+
+A LL nos permite afirmar que $L(\theta_1, \theta_2) = 7.6$ é evidência mediana a favor de $H_1$ sobre $H_2$, e 
+$L(\theta_2, \theta_3) = 32$ é evidência forte de $H_2$ sobre $H_3$. No entanto, a LL não permite inferências sobre a hipótese
+composta $H_c : \theta=\theta_1 \lor \theta=\theta_3$ em comparação com $H_2$; equivalentemente, LL não permite
+inferências sobre a evidência absoluta $H_2$ sobre $\sim\!\! H_2$.
+
+Por outro lado, a GLL permite a afirmação de que $L(\theta_1 \lor \theta_3, \theta_2) = 7.6$ representa suporte para $H_c$ em
+relação a $H_2$, e ainda que
+o suporte absoluto para as três hipóteses é de 
+$L(\theta_1, \sim\!\! \theta_1) = 7.6$,
+$L(\theta_2, \sim\!\! \theta_2) = 0.13$,
+$L(\theta_3, \sim\!\! \theta_3) = 0.004$, confirmando que apenas a hipótese 1 tem força de evidência superior a 1.
+
+Uma desvantagem em aceitar a GLL é que o suporte a hipóteses compostas não se comporta da mesma forma que a razão
+de verossimilhanças para hipóteses simples. Suponha que o pesquisador, no mesmo problema das urnas, retira agora duas
+bolas brancas. Essa nova observação leva aos resultados 
+$L(\theta_1, \sim\!\! \theta_1) = 0.11$,
+$L(\theta_2, \sim\!\! \theta_2) = 0.44$,
+$L(\theta_3, \sim\!\! \theta_3) = 2.25$, oferecendo suporte apenas para $H_3$. No entanto, não há como combinar essa
+evidência com a apresentada acima: as quantidades derivadas do supremo da verossimilhança não são multiplicativas para conjuntos
+de dados distintos, ao contrário da verossimilhança. 
+A força de evidência absoluta para $\theta_1$ tomando o conjunto completo 
+de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
+Essa constatação, no entanto, não invalida o teorema da GLL, embora
+lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
+
+Em um desenvolvimento independente, o estatístico indiano Debabrata Basu propôs uma generalização
+alternativa para a lei da verossimilhança em 1975:
+\begin{quote}
+``{\em The strong law of likelihood}: For any two subsets $A$ and $B$ of $\Theta$, the data supports the 
+hypothesis $\omega \in A$ better than the hypothesis $\omega in B$ if
+\begin{equation}
+\sum_{\omega \in A} \mathcal{L}(\omega) > \sum_{\omega \in B} \mathcal{L}(\omega)
+\end{equation}
+Let us recall the [assertion] that all our sets (the sample space, the parameter space, etc.) are finite.''
+\end{quote}\citep{Basu75}
+
+Novamente, o grande problema ao aceitar esta generalização é encontrar uma medida de força de evidência 
+compatível.
+
+\section{Uma lei fraca de verossimilhança}
+
+Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
+de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
+consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
+e é o caminho que vamos seguir nesta seção.
+
+Um exemplo devido a \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
+tome um baralho de 52 cartas bem embaralhado, e considere as hipóteses (simples) 
+$H_1$: a primeira carta é o ás de espadas {\em versus}
+$H_2$: a primeira carta é preta. A observação de uma carta de espadas leva às seguintes verossimilhanças: 
+$\mathcal{L} ( H_1 | \spadesuit ) =  1 k> \mathcal{L} ( H_2 | \spadesuit ) =  \frac{1}{2} k$, sendo $k$ uma constante de 
+proporcionalidade, e a lei da verossimilhança nos leva a declarar o suporte para $H_1$ sobre $H_2$. Mas a evidência apresentada
+sobre $H_1$ é inconclusiva, mas garante $H_2$. Fitelson traça essa discordância na relação entre os chamados ``{\em catch-alls}'',
+$P(E | \sim\!\!H_1)$ e $P(E|\sim\!\!H_2)$\footnote{Em casos de cartas de baralhos, os {\em catch-alls} estão bem definidos;
+objetivistas podem ter problemas em aceitar a formulação de {\em catch-alls} em problemas mais gerais, como "essa observação
+provê suporte à teoria da evolução"}. Uma formulação mais geral sobre a lei da verossimilhança, apelidada por J. Joyce de
+lei fraca da verossimilhança (WLL) é dada por:
+
+\begin{description}
+\item[WLL]
+``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ {\em if} $P(E|H_1) > P(E|H_2)$ {\em and}
+$P(E|\sim\!\!H_1) \leq P(E|\sim\!\!H_2)$.''
+\citep{Fitelson07}
+\end{description}
+
+É evidente que LL $\implies$ WLL. No entanto, as principais correntes de Bayesianismo moderno {\em também} aceitam WLL: dada uma
+medida de confirmação $c(H,E)$, a expressão Bayesiana equivalente a LL é:
+
+\begin{description}
+\item[$\dagger_c$]
+``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ according to measure $c$ {\em iff} $c(H_1,E) > c(H_2,E)$.''
+\citep{Fitelson07}
+\end{description}
+
+Três possíveis formas para a medida de confirmação são:
+\begin{description}
+\item[Diferença] $d(H,E) = P(H|E)-P(H)$
+\item[Razão] $r(H,E) = \frac{P(H|E)}{P(H)}$
+\item[Razão de verossimilhanças] $l(H,E) = \frac{P(E|H)}{P(E|\sim\!\!H)}$
+\end{description}
+
+É importante relembrar que a confirmação Bayesiana dada por $c(H,E)$ 
+tem um caráter não-relacional, à partir do qual se {\em deriva} uma 
+medida de confirmação relacional; verossimilhantistas enxergam na lei da verossimilhança uma relação primitiva.
+E enquanto a construção da medida de confirmação não-relacional depende da especificação de {\em prioris}, a WLL não faz uso 
+direto deles, mas apenas da especificação de {\em catch-alls}. Uma teoria que utilizasse a WLL sem invocar {\em prioris}
+poderia embasar uma escola de inferência intermediária, sem o uso de {\em prioris} ao qual objetivistas objetam, 
+nem a restrição
+arbitrária ao tratamento de hipóteses compostas.
+
+Concluímos esta seção ponderando que
+o paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
+nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
+Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
+essa singularidade.
+:
+\section{PLUE: uma proposta de perfilhamento de verossimilhança}\label{sec:plue}
+
+Nesta seção, vamos descrever uma metodologia tentativa para a realização de análises de incerteza
+baseada no perfilhamento da verossimilhança dos parâmetros. Argumentamos que essa metodologia é
+intuitivamente atraente dentro de um paradigma de verossimilhança.
+Vamos nos referir ao nosso
+procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
+
+\subsection{Intuição}
+
+Suponha que temos em mãos um modelo de crescimento populacional estruturado como aqueles discutidos
+nas seções \ref{Leslie} e \ref{Tribolium}, e um conjunto de dados a partir dos quais podemos calcular
+as taxas de sobrevivência, crescimento e fertilidade para a espécie. 
+
+De posse desses dados, gostaríamos de fazer as seguintes perguntas:
+
+{\em ``Qual o suporte que os dados dão para a afirmação de que a população está estável {\em versus} 
+em declínio? Qual o suporte que os dados dão para a afirmação de que a população vai se extinguir em menos 
+de 10 anos {\em versus} em mais de dez anos?''}
+
+Essas perguntas não podem ser respondidas de um ponto de vista verossimilhantista, por corresponderem
+a hipóteses compostas sobre os parâmetros. No entanto, podemos tomar o ponto de máxima verossimilhança
+como um ponto privilegiado, e restringir nossa pergunta à forma:
+
+{\em ``Qual o suporte que os dados dão para o ponto de máxima verossimilhança {\em versus} qualquer ponto
+cuja taxa de crescimento populacional seja negativa?''}
+
+Esquematicamente, podemos ver na figura \ref{fig:esquema} que estamos comparando a verossimilhança
+do ponto de máximo global ($x_{max}$) com o máximo obtido em uma região distinta ($x_{lim}$). Esta pergunta
+compara uma hipótese simples, a que corresponde à máxima verossimilhança, com uma hipótese composta.
+Esse tipo de comparação evita os problemas e peculiaridades que surgem em propostas de leis gerais de 
+verossimilhança devido à sobreposição entre a verossimilhança de hipóteses diferentes. Em termos dos axiomas
+de Zhang\footnote{vide seção \ref{sec:GLL}}, estamos aceitando uma forma fraca do primeiro, mas não o segundo.
+
+Esse raciocínio pode ser expandido para perguntarmos:
+
+{\em ``Quais são os pontos do espaço de parâmetros para os quais o suporte é maior do que uma certa distância
+$\delta$ em relação ao ponto de máxima verossimilhança?''}
+
+Ao fazer essa pergunta para uma série de valores de $\delta$, estamos efetivamente perfilhando a 
+verossimilhança de cada ponto do espaço de parâmetros. Neste ponto, precisamos apontar que procedimentos
+de perfilhamento vêm sendo utilizados na inferência por verossimilhança há décadas para reduzir a 
+dimensionalidade do espaço de parâmetros - seja na forma de uma simples eliminação de ``{\em nuisance
+parameters}'', seja de forma elaborada através de análises de componentes principais. 
+Considere, por exemplo, o caso típico em que desejamos ajustar uma distribuição normal a uma série de dados,
+e ao invés de compararmos pares da forma $(\mu = \mu_0, \sigma = \sigma_0)$ representando um valor fixo para 
+a média e desvio padrão dessa normal, desejamos fazer afirmações apenas sobre a média $\mu$ desta normal.
+Já apontamos que este raciocínio corresponde a encarar hipóteses compostas da forma 
+$(\mu = \mu_0, \sigma \geq 0)$. Agora, vamos notar que isto é equivalente a considerar a função 
+$g(\mu, \sigma) = \mu$ - ou seja, estamos projetando o espaço bidimensional formado por $\mu$ e $\sigma$
+em um espaço unidimensional. Nossa proposta pode ser considerada uma generalização deste
+procedimento: ao invés de considerar apenas funções que removam um dos parâmetros, estamos considerando
+qualquer função não-inversível.
+
+Há que se considerar, no entanto, que técnicas de remoção de ``{\em nuisance parameters}'' dentro do paradigma
+de verossimilhança no caso geral se assentam sobre questões que não estão totalmente resolvidas - e que
+se situam na fronteira entre o pensamento verossimilhantista e a inferência fiducial \citep{Kalbfleisch70,
+Edwards72}. Se estes métodos não podem ser, em geral, encarados como forma de inferência tão rigorosa quanto
+a inferência pela função de verossimilhança, é bem aceito que esta é uma análise exploratória válida. Nossa
+generalização se encontra no mesmo estado: embora ela não possa ser vista como uma forma rigorosa de 
+inferência, ela pode ser usada de forma exploratória sem incorrer em problemas mais profundos que a perfilhagem
+tradicional.
+
+Lembramos que, se do ponto de vista da análise de verossimilhança, nossa proposta não apresenta grande 
+inovação, na literatura de análise de sensibilidade ela é única em propor uma metodologia que utilize toda
+a informação contida nas amostras coletadas. 
+
+\begin{figure}[htb]
+<<>>=
+L <- function(x) {
+	x = x + 3
+	((x)*(x-2)*(x-6)*(x-9)+100)/20
+}
+x = seq(-3,5, length.out=200)
+plot(x, L(x), type="l", xaxs = "i", yaxs = "i", ylim=c(0, 10))
+# regioes shaded
+x = seq(-3,0, length.out=200)
+polygon(c(-3,x,0), c(0,L(x),0), col="gray20")
+x = seq(0,5, length.out=200)
+polygon(c(0,x,5), c(0,L(x),0), col="gray60")
+# pontos de "interesse"
+lines(c(0,0), c(7.7,8.3), lty=2)
+text(0, 8.5, expression(x[lim]))
+lines(c(1.08,1.08), c(9,9.5), lty=2)
+text(1.08, 9.7, expression(x[max]))
+arrows(1.08, 7.7, 1.08, 9, angle=90, code=3, length=0.15)
+text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
+@
+	\caption{Representação esquemática de uma função de verossimilhança, mostrando dois pontos de interesse:
+	o máximo global $x_{max}$ e o máximo de uma região distinta $x_{lim}$. Veja detalhes no texto.} 
+	\label{fig:esquema}
+\end{figure}
+
+\subsection{Método}
+\begin{description}
+	\item[Definições]
+		Considere um modelo de interesse biológico qualquer - vamos chamá-lo de modelo biológico, para
+		diferenciar do modelo estatístico que será apresentado abaixo. Vamos considerar o caso simples
+		de um resultado escalar $y$ de um modelo com um vetor de entradas $\bu{\theta}$: $y = F(\bu{\theta})$.
+		Vamos representar por $\chi$ o conjunto de dados coletados. Se temos $n$ parâmetros e $m$ 
+		observações, $\chi$ é uma tabela de $n$ colunas por $m$ linhas.
+
+		Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de 
+		crescimento constante ou decrescente com a classe de tamanho, modelo com 4 ou com 5 classes de 
+		tamanho, etc) - este vai ser designado o modelo estatístico.
+		Escreva a função de verossimilhança $\mathcal{L}(\bu{\theta}|\chi)$ para cada modelo. 
+		Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo e 
+		determine o valor de AIC para cada modelo estatístico. 
+	\item[Amostragem]
+		De posse do modelo estatístico de melhor AIC\footnote{É possível que uma abordagem de inferência
+		multi-modelo possa ser utilizada em casos de empate de AIC
+		\citep{Burnham02}}, utilize um método de Monte Carlo para gerar um grande número de amostras com
+		densidade proporcional a $\mathcal{L}(\bu{\theta}|\chi)$. Vamos chamar esta amostra discreta de 
+		$\bu{A}$. À cada amostra $A_{i \cdot}$ da função $\mathcal{L}(\bu{\theta}|\chi)$, associamos 
+		$L_i = \mathcal{L}(A_{i \cdot} | \chi)$, o valor de verossimilhança desta amostra, e 
+		$Y_i = F(A_{i \cdot})$, o resultado do modelo biológico quando executado sobre esta amostra.
+		Normalize $L_i$ de forma que o mínimo de verossimilhança seja no $0$.
+	\item[Agregação]
+		A partir dos valores resultantes do modelo $Y_i$ e seus valores de verossimilhança $L_i$ associados,
+		construa o perfil superior para a verossimilhança de $y$ da seguinte forma: 
+		para cada incremento $z$, encontre o maior valor $\bar y$ em $Y_i$ tal que $L_i \leq z$. 
+		Anote este valor como $P_{sup}(z) = \bar y$ e repita para um valor maior de $z$.
+
+		Proceda de forma análoga para construir o perfil inferior de verossimilhança. Os dois perfis, em 
+		conjunto, podem ser utilizados para investigar as regiões de plausibilidade para $y$.
+\end{description}
+
+\section{Estudo de caso 3: um modelo mínimo}
+
+Um modelo de população estruturada que pode ser considerado mínimo é o modelo
+com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por \cite{Caswell08} 
+como um exemplo simples da aplicação da análise de sensibilidade analítica. 
+O modelo é associado à seguinte matriz:
+
+\begin{equation}
+ A = \left[
+ \begin{array}{ll}
+	 \sigma_1 (1-\gamma) &   f \\
+     \sigma_1 \gamma & \sigma_2
+ \end{array}
+ \right]
+\end{equation}
+
+Aqui, $\sigma_1$ é a probabilidade de sobrevivência de juvenis, $\sigma_2$ é a probabilidade de sobrevivência de adultos, 
+$\gamma$ é a probabilidade de maturação, e $f$ é a fertilidade dos adultos. Vamos representar por $\lambda$ o maior
+autovalor dessa matriz.
+
+Vamos primeiramente presumir que a sobrevivência independe do estágio ($\sigma_1=\sigma_2=\sigma$). Também vamos fazer
+a suposição de que é possível marcar inequivocamente quais dos juvenis nasceram no último ciclo, e quais adultos
+passaram pelo processo de maturação no último ciclo, para chegar ao modelo:
+
+\begin{equation}
+ A = \left[
+ \begin{array}{ll}
+	 \sigma (1-\gamma) &   f \\
+     \sigma \gamma & \sigma
+ \end{array}
+ \right]
+\end{equation}
+
+Para animais de tamanho grande, com um filhote por estação reprodutiva, $f$ pode ser aproximado pela proporção de
+adultos que gera prole, $\sigma$ é dado pela proporção de indivíduos que sobrevivem por um ciclo e $\gamma$ pela
+proporção de juvenis que se tornam adultos por ciclo, de forma que os três parâmetros podem ser modelados por
+distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número de tentativas dados, respectivamente, por
+$n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
+
+\begin{align}
+	\gamma & \sim \operatorname{binom}(\theta_1, n_1) \\
+	f      & \sim \operatorname{binom}(\theta_2, n_2) \\
+	\sigma & \sim \operatorname{binom}(\theta_3, n_t = n_1+n_2)
+\end{align}
+
+Vamos utilizar ainda a suposição de que os parâmetros são independentes neste exemplo, para chegar às 
+funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sobre a construção dessa função
+podem ser vistos na seção \ref{apmat}).
+
+<<load, fig=F>>=
+set.seed(42)
+library(pse)
+# Helper functions for the model
+tr <- function (A) return(A[1,1]+A[2,2])
+A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+getlambda = function (sigma, f, gamma) {
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+}
+getlambda = Vectorize(getlambda)
+model <- function(x) getlambda(x[,1], x[,2], x[,3])
+
+factors = c("sigma", "f", "gamma")
+
+N = 10000
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+# melhor chute para os parametros
+sigma <- obs[3]/n.t
+f <- obs[2]/n[2]
+gamma <- obs[1]/n[1]
+start = c(sigma, f, gamma)
+lambda <- getlambda(sigma, f, gamma)
+# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+# NOTE: LL function uses GLOBAL obs and n!!!
+LL <- function (x) 
+{
+	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
+				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+	if (is.nan(t)) return (-Inf);
+	return(t);
+}
+LLs <- function(x) suppressWarnings(LL(x))
+plue <- PLUE(model, factors, N, LLs, start, method="mcmc", opts=list(blen=10), nboot=50)
+minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
+@
+
+Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
+populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
+adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver na figura \ref{fig:LikFunc}
+que a melhor estimativa para
+cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
+Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
+
+\begin{figure}
+<<LikFunc>>=
+curve(dbinom(obs[3], n.t, x))
+curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
+curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
+@
+	\caption{Função de verossimilhança para cada parâmetro do modelo. Preto = $\sigma$, vermelho = $f$ e verde = $\gamma$.}
+	\label{fig:LikFunc}
+\end{figure}
+
+As funções de verossimilhança de cada parâmetro
+foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais 
+geramos uma distribuição empírica para $\lambda$, de forma proporcional à verossimilhança dos parâmetros.
+Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
+input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
+$\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
+
+As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
+resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
+discutidas no capítulo \ref{cap:pse}. É importante ressaltar que estas análises foram realizadas sobre uma
+vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária (como seriam as análises descritas
+no cap. \ref{cap:pse}), centrada no ponto de máxima verossimilhança.
+
+\begin{figure}
+<<Case1>>=
+plot(plue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
+	\label{fig:lambda}
+\end{figure}
+\begin{figure}
+<<>>=
+# Analise de sensibilidade sobre lambda
+plotscatter(plue)
+@
+	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
+	mínimo, gerados a partir de uma abordagem de verossimilhança.}
+	\label{fig:lambdascatter}
+\end{figure}
+\begin{figure}
+<<>>=
+plotprcc(plue)
+@
+	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
+	estruturado mínimo de crescimento populacional}
+	\label{fig:lambdaprcc}
+\end{figure}
+
+<<largerSample, fig=FALSE>>=
+Mult=3
+n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
+largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+
+# pop inicial: juv, ad, total
+n <- c(10, 15); n.t <- sum(n)
+# x obs: maturados, nascidos, sobrev.totais
+obs <- c(3, 2, 23)
+@
+
+A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
+É importante notar que esses resultados são para uma única amostra, e um tamanho amostral decididamente pequeno. 
+Considerando uma amostra \Sexpr{Mult} vezes maior, na qual todas as proporções se mantenham as mesmas (ou seja,
+o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por \Sexpr{Mult}), a análise resulta em
+um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
+
+\begin{figure}
+<<>>=
+plot(largePlue)
+@
+	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
+	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
+	\label{fig:lambda2}
+\end{figure}
+
+\subsection{Detalhes matemáticos}\label{apmat}
+Nesta seção, vamos desenvolver alguns detalhes matemáticos sobre o exemplo acima.
+
+Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
+a função de log-verossimilhança para $\gamma$ é dada por
+
+\begin{equation}
+\mathcal{L} \left( \theta_1 | x_A \right) 
+= \log \left( {n_1 \choose x_A} \theta_1^{x_A} (1-\theta_1) ^{n_1-x_A} \right)
+\end{equation}
+
+Da mesma forma, a função de log-verossimilhança para $f$ é dada em função do número de juvenis nascidos no último ciclo, $x_J$:
+\begin{equation}
+\mathcal{L} \left( \theta_2 | x_J \right) 
+= \log \left( {n_2 \choose x_J} \theta_2^{x_J} (1-\theta_2) ^{n_2-x_J} \right)
+\end{equation}
+
+Por fim, a função de log-verossimilhança referente a $\sigma$ é dada em função do número de indivíduos sobreviventes, $x_S$,
+calculado como o número de indivíduos observado menos $x_J$:
+\begin{equation}
+\mathcal{L} \left( \theta_3 | x_S \right) 
+= \log \left( {n_t \choose x_S} \theta_3^{x_S} (1-\theta_3) ^{n_t-x_S} \right)
+\end{equation}
+
+Com o pressuposto forte de que as três variáveis são independentes, e escrevendo $n_t = n_3$ e 
+$\{x_A, x_J, x_S\} = \{x_1, x_2, x_3\}$
+para facilitar a notação\footnote{Importante frisar: $x_1$ não corresponde aqui ao número de juvenis observados após um ciclo, etc.}
+a função de verossimilhança para o vetor de parâmetros $\boldsymbol\theta$ é:
+
+\begin{equation}
+\mathcal{L} \left( \boldsymbol{\theta} | \mathbf{x} \right) 
+= \sum_i \log \left( {n_i \choose x_i} \theta_i^{x_i} (1-\theta_i) ^{n_i-x_i} \right) \label{eqn:loglik}
+\end{equation}
+
+O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo 
+\begin{equation}
+	\det \left[ 
+	\begin{array}{ll} \lambda - \sigma(1-\gamma) & -f \\
+		-\sigma \gamma &         \lambda - d 
+	\end{array}
+	\right]
+	= \lambda^2 - \lambda \operatorname{tr}(A) + \operatorname{det}(A) = 0
+\end{equation}
+\begin{align}
+	\lambda = \frac{1}{2} \left(\operatorname{tr}(A) + \sqrt{\operatorname{tr}^2(A) - 4 \operatorname{det}(A)} \right)
+\end{align}
+
+\section{\R code for performing the analyses}
+
+\SweaveOpts{fig=F,echo=T}
+<<seed>>=
+set.seed(42)
+@
+
+This document presents a brief introduction to a proposed methodology for the likelihood profiling of
+of the results from a computational model. This methodology is nicknamed PLUE, for 
+Profiled Likehood Uncertainty Estimation, and is implemented in the {\em pse} package by the PLUE function.
+A paper describing the theoretical background for this proposal is under preparation for publication.
+The present document presumes you are familiar with general concepts from parameter space exploration. If
+you are not, please refer to our work in \citep{Chalom12}.
+The PLUE methodology is useful if you are interested in analysing a computational model and if you have
+already gathered some data from which you can estimate likelihood distributions for your input parameters.
+If you are interested in conducting an exploratory analysis and you don't have any data collected, you 
+should use the tools described in the ``pse\_tutorial'' vignette in this package.
+You should have installed \R 
+\footnote{This tutorial was written and tested with \R version 
+3.0.1, but it should work with newer versions}
+along with an interface and 
+text editor of your liking, and the package ``pse''
+(available on http://cran.r-project.org/web/packages/pse).
+
+The general question we are attempting to answer here is: {\em how much support does the data give to 
+alternative hypothesis concerning the result of a (non-invertible) model?} It should be noted that while this
+question may not be always answered under a likehoodist approach to statistical inference, it does have
+an answer when we restrict one of the alternative hypothesis to being the maximum likehood estimator for the
+parameters. This answer is given by profiling the likelihood of the model parameters, and while this procedure
+leads to a function that is not a true likelihood function (thus not possessing many desirable properties),
+it is generally accepted as a valid exploratory analysis.
+
+\section{Biological and statistical models}
+First, we should define our interest model. We will refer to this model as the biological model\footnote{
+Because the models of interest in my research are biological. It can also be a physical model, 
+geochemical model, etc.} to distinguish this from the statistical model we will be using to 
+estimate likelihoods. This model 
+must be formulated as an \R function that
+receives a {\em data.frame}, in which every column represent a different
+parameter, and every line represents a different combination of values
+for those parameters. The function must return an array with the same
+number of elements as there were lines in the original data frame,
+and each entry in the array should correspond to the result of running
+the model with the corresponding parameter combination. For example, it can be this:
+
+<<model>>=
+oneRun <- function (r, K, Xo) {
+    X <- Xo
+    for (i in 0:20) {
+       X <- X+r*X*(1-X/K)
+    }   
+    return (X) 
+}
+modelVec <- Vectorize(oneRun) 
+model <- function(x) modelVec(x[,1], x[,2], x[,3])
+@
+
+Following the definition of the model, we should define the likelihood function for our parameters.
+To do this, we can formulate and test several statistical models. In order to fit competing models to the 
+data and select the best of them, we recommend using the \R package \textbf{bbmle}.
+Then, the best model should be written as a function receiving a numeric vector representing one realization
+of the parameter vector and returning the {\em positive} log-likelihood of that vector.
+
+For example, the best model may be that the parameters $r$, $K$ and $Xo$ are all independent from each other,
+coming from two exponentials and from the {\em size} parameter of one binomial distribution, 
+respectively, fitting the data in the {\em observations} data.frame below:
+<<>>=
+r <- c(1.4, 1.2, 1.8)
+K <- c(70, 85, 98)
+Xo <- c(50, 60, 45)
+obs = data.frame(r=r, K=K, Xo=Xo)
+@
+
+The likelihood function, in this case, should be:
+<<>>=
+LL <- function (x) 
+{
+	t <- sum(dexp(1/obs$r, as.numeric(x[1]), log=TRUE)) +
+		  sum(dexp(1/obs$K, as.numeric(x[2]), log=TRUE)) +
+		  sum(dbinom(obs$Xo, as.integer(x[3]), p=0.5, log=TRUE))
+	if (is.nan(t)) return (-Inf);
+	return(t);
+}
+@
+Please note that this function uses the global variable {\em obs}, and that it return minus infinity instead
+of not-a-number in cases where the likelihood is not properly defined. This can happen, for instance, if
+any of the values of {\em x} is negative.
+Also, notice that this function converts the third element of {\em x} to integer, as the {\em dbinom} function does not accept a fractional value for the {\em size} parameter.
+
+\section{Profiling: sampling and aggregating the results}
+After carefully constructing the model of interest and the likelihood function, as described in the 
+previous section, performing the PLUE analysis is simply a matter of calling the {\em PLUE} function.
+This function performs three steps. First, it performs a Monte Carlo sampling of the likelihood function
+in order to generate a large sample from the likelihood distribution. Then, the biological model is applied
+to this sample, and finally the model results are combined by means of profiling the likelihood function
+associated with each data point.
+
+The {\em pse} package implements a simple Metropolis sampling function that can be used
+by setting {\em method=`internal'} in the {\em PLUE} function call. For more elaborate sampling schemes, 
+and more control over the process, we recommend using {\em method=`mcmc'}, which uses the {\em mcmc} \R 
+package.
+
+<<>>=
+library(pse)
+factors = c("r", "K", "X0")
+set.seed(42)
+N = 10000
+# The starting point for the Monte Carlo sampling
+start = c(mean(obs$r), mean(obs$K), 2*max(obs$Xo))
+plue <- PLUE(model, factors, N, LL, start)
+@
+
+\textbf{Important note:} the example above uses a $N$ of 10.000, which is very low. For practical applications, always use larger samples and the `mcmc' method.
+
+In order to see the profiled likelihood of the model result, simply run:
+<<plot,fig=T>>=
+plot(plue)
+@
+
+The profile seen in this figure shows that the
+model result is very unreliable. It can be considered very plausible, from the data collected, that the result of the model lie anywhere in the $20 - 120$ interval.
+
+Additional plots may be seen by using the 
+{\em plotscatter} and {\em plotprcc} functions:
+<<scatter,fig=T>>=
+plotscatter(plue, add.lm=F)
+@
+<<prcc,fig=T>>=
+plotprcc(plue)
+@
+
+The interpretation of these graphs is analogous
+to the graphs generated by the Latin Hypercube
+Sampling, and described in the 
+``pse\_tutorial'' vignette. However, it is 
+important to notice that, instead of the 
+arbitrary region of the parameter space that
+is sampled in the LHS scheme, the plots 
+presented in this vignette are representing
+a discretization of the likelihood surfaces
+of the parameters, thus incorporating all the
+information about the data collected.
+
+\section*{Acknowledgements}
+This work was supported by a CAPES scholarship.
+
+\newpage
+\bibliographystyle{apalike}
+\bibliography{chalom}
+\end{document}
