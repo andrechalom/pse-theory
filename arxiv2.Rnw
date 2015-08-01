@@ -12,16 +12,9 @@
 % Create friendly environments for theorems, propositions, &c.
 \newtheorem{axiom}{Axioma}[section]
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
 \newenvironment{proof}[1][Proof]{\begin{trivlist}
 	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 \newenvironment{definition}[1][Definition]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{example}[1][Example]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{remark}[1][Remark]{\begin{trivlist}
 	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 \newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
 \usepackage{xspace}
@@ -46,7 +39,21 @@ Affiliation    & Department of Ecology, \\
 \end{table}
 \end{center}
 
-\mbox{}\vspace{-14mm}\mbox{}
+\vfill
+\noindent
+``In an ideal world, all data would come from well-designed experiments
+and would be sufficient to simultaneously estimate all parameters using rigorous
+statistical procedures. The world is not ideal. One must often combine estimates
+from different experiments, or supplement high-quality data (...) with uncertain
+data, or even assumptions (...). Think carefully about whether your conclusions
+may be artifacts of your assumptions or calculations, and document those assumptions
+and calculations so that your reader can ask the same question, and then carry on.''
+\begin{flushright}
+(H. Caswell, Matrix Population Models)
+\end{flushright}
+
+\vfill
+\indent
 
 %%% ABSTRACT
 
@@ -80,69 +87,212 @@ analysis \citep{Helton03, Helton05}. These two have been extensively reviewed in
 (\citep{Chalom12}), so we will just highlight the fact that these analyses, together with model calibration,
 strongly depend on previously and correctly executing the model verification and validation.
 
+During the development and analysis of mathematical models in ecology, it is common to have completely 
+separated procedures for calibration by parameter estimation (which we will call CPE) and 
+sensitivity and uncertainty analyses (SUA) of a model. These steps are carried out in different sections of
+the research papers, discussed in different chapters of books (ie: \citep{Caswell89}), and sometimes are
+even performed by different people. In matrix models for population projections, the results discussion
+is focused on a single combination of parameters, considered to be an optimum for the CPE, and the
+SUA is presented as a separate step, being secondary to the main results (see, for example, 
+\citep{SilvaMatos99}. We have no guarantees that even the statistical schools of though considered for 
+both procedures will be coherent.
 
-Durante o desenvolvimento e a análise de modelos matemáticos em ecologia, é comum separar a calibração por 
-estimativa dos parâmetros (EP)
-da análise de incerteza e sensibilidade (AIS) do modelo. Os dois passos são feitos em seções diferentes dos artigos, discutidos
-em capítulos diferentes dos livros \citep{Caswell89}, e chegam até a ser realizados por equipes diferentes. Em estudos que 
-empregam modelos matriciais, a discussão dos resultados se concentra no ponto obtido por uma combinação 
-de parâmetros considerada ótima durante as estimativas de parâmetros \citep{SilvaMatos99}, e a análise de incerteza é apresentada
-como um procedimento separado e posterior à análise do resultado considerado como principal. 
-Até mesmo a abordagem estatística usada em ambos os procedimentos pode ser incoerente.
+Moreover, the parameter set used in the model calibration may have few to no relation to parameters that
+have biological relevance. In the case of matrix models, the former may be parameters related to a time 
+series, while the later might be the projection matrix entries. This way, the researcher responsible for
+the calibration may see the system as individual counts over time, while the researcher responsible for 
+the uncertainty analyses will only be interested in the vital rates, which are real valued. When developed
+in such disparate worlds, the SUA will be unable to point out directions for the planning of new experiments
+or to single out which parameters should be targeted for more sampling effort.
 
-Além disso, o conjunto de parâmetros usados na calibração do modelo pode ter
-pouca relação com as entradas individuais da matriz de projeção. Isso ocorre, por exemplo, quando séries temporais
-da população são utilizadas para estimar as taxas vitais: nesse caso, o responsável pela calibração vê o sistema como
-contagens de indivíduos, enquanto o responsável pela análise de incerteza tipicamente realiza a análise sobre as taxas vitais.
-Desta forma, a AIS é incapaz de apontar rumos para o planejamento de novos experimentos, apontando quais parâmetros 
-devem ser alvo de maior esforço de coleta.
+This lack of integration between these fundamental steps for model analysis may have its roots in the
+development of the CPE and SUA theories. While the parameter estimation has always been seen as belonging
+to a statistical theory, the sensitivity of biological models was developed as an analytical tool, based on
+the linear expansion of functions around a privileged point. Depending on the nature of the experiments
+designed to measure vital rates, there may be a plethora of methods that might be used to determine the
+set of values that best represent the status of knowledge that we have about a given natural system - and
+these methods may stem from frequentist, bayesian or likelihood-based approaches to the statistical theory.
+The analytical theory of SUA, on the other hand, is in great part due to the work of Hal 
+Caswell \citep{Caswell89}, and proceeds by taking a model that is already optimally parametrized, and studying
+the first order derivatives of the model answer in relation to each input parameter. This formulation 
+disregards completely the quantity and quality of collected data, except for their average, and sensitivity
+measures are taken exclusively over the variation of the model answer in response to infinitesimal changes.
+Thus, models that are parametrized by data with large uncertainties will not present larger sensitivity 
+indexes than models parametrized by data with great precision. Increasing the sampling effort to gather
+data about the system will not affect the uncertainty values. We can conclude that the analytical formulation
+of the SUA, ultimately, gives information about the structure of the model, but is silent about the more
+embracing questions from the collection of field data to the formulation and execution of the model. This might
+lead to a false sense of confidence being placed on studies that present a stable matrix structure, leading
+to small sensitivity indexes, but use data with large uncertainties.
 
-Essa falta de integração entre os passos necessários para o estudo de um modelo tem suas raízes no 
-desenvolvimento das teorias de EP e AIS. Enquanto a estimação de parâmetros sempre foi tratada sob o ponto de vista
-de uma teoria estatística, a análise de sensibilidade de modelos matriciais foi desenvolvida como 
-uma ferramenta analítica, baseada em expansões lineares das funções de interesse em torno de um ponto privilegiado. 
-Dependendo do tipo de experimento utilizado para obter estimativas das taxas vitais, diferentes abordagens 
-podem ser utilizadas para encontrar um conjunto de valores que melhor represente o estado de conhecimento
-que temos de uma população, entre abordagens frequentistas, bayesianas ou baseadas em verossimilhança.
-Já a teoria analítica de AIS, devida em grande parte aos trabalhos de Hal Caswell (por exemplo \citep{Caswell89}), 
-procede rotineiramente por
-tomar um modelo já parametrizado da forma ótima, e estudar as derivadas de primeira ordem da resposta de interesse
-em relação a cada um dos parâmetros de entrada. Nessa formulação, a quantidade e a qualidade dos dados de entrada
-para o modelo são ignorados, a menos de suas médias, e medidas de sensibilidade são tomadas exclusivamente sobre
-a variação da resposta de interesse a perturbações infinitesimais. Desta forma, modelos parametrizados com dados
-com grande incerteza não apresentarão maiores medidas de sensibilidade que modelos feitos sobre dados robustos, assim como aumentar o esforço amostral não
-reduzirá necessariamente as medidas de incerteza. A análise de sensibilidade analítica, em última análise, diz
-respeito à estrutura do modelo matricial, e não ao procedimento completo desde a tomada de dados em campo até
-a formulação e execução do modelo. Isso pode levar a uma falsa confiança em estudos que apresentem
-uma estrutura matricial estável, portanto de baixas sensibilidades, mas dados tomados com muita incerteza.
+Other than this, questions about model validation are not usually addressed by literature in this field,
+but they are also intimately connected to the relevant questions about uncertainty. We can
+divide the uncertainty about a model in three main sources: structural uncertainty, parameter uncertainty
+and stochastic uncertainty (see \citep{Marino08} for a review about the latter two). While most
+of the SUA techniques are focused on the second component, the validation of a model may point out
+how much confidence we can have about whether one model (or a set of models) is adequate at
+representing the desired phenomena.
 
-Por outro lado, questões de validação dos modelos são frequentemente menosprezadas pela literatura da área,
-apesar de estarem intimamente conectadas com as questões relevantes de incerteza. Podemos dividir a incerteza
-de um modelo em três fontes principais: incerteza estrutural, incerteza de parâmetros (ou epistêmica) 
-e incerteza estocástica. Enquanto a maioria das técnicas de AIS se concentram na segunda componente, 
-a validação de modelos pode apontar qual o nível de confiança que podemos ter de que um dado modelo é
-o modelo correto para reproduzir o fenômeno visto.
+A stochastic formulation for a theory of global uncertainty and sensitivity analyses, as described in 
+\citep{Chalom12}, and interpreted under the likelihood paradigm for statistics, is able to regard
+in the same way all of the uncertainty sources described above, generating a complete picture of our
+knowledge about a system. Although these formulations may converge for very simple systems, this is not
+the general case. 
 
-A formulação estocástica da teoria de análise de incerteza e sensibilidade global, como descrita no capítulo \ref{cap:pse}, 
-e interpretada dentro de uma
-abordagem pautada pelo princípio da verossimilhança, é capaz de contemplar da mesma forma todas as fontes de 
-incerteza descritas acima, gerando como resultado um quadro completo do nosso conhecimento a respeito de 
-um sistema. 
-Embora para sistemas muito simples as abordagens possam convergir, isso não se verifica para problemas
-e sistemas de maior complexidade. As principais vantagens de usar a formulação estocástica são:
+The main advantages of using a stochastic formulation are:
 
 \begin{enumerate}
-	\item A abordagem analítica é local (portanto, responde ao que acontece com perturbações infinitesimais) 
-		e depende das funções serem "suaves" na vizinhança, a estocástica é global e não tem essa limitação.
-	\item Uma abordagem estocástica (baseada ou não na verossimilhança) permite que a informação contida na 
-		variabilidade amostral seja utilizada para representar a incerteza sobre os parâmetros (veja seção \ref{Sampling}).
-	\item O princípio de verossimilhança afirma que toda a informação contida nas amostras coletadas está contida 
-		na função de verossimilhança. Dessa forma, a análise de sensibilidade feita a partir da função de 
-		verossimilhança contém toda a informação obtida pela amostra e nenhuma informação além da obtida pela 
-		amostra - enquanto a abordagem analítica e outras formulações estocásticas
-		podem, alternadamente, desperdiçar informações coletadas ou 
-		levar à falsa impressão de gerar respostas com maior precisão do que a informação coletada permite. 
+  \item The analytical procedures are local, thus responding only to what happens after infinitesimal
+    perturbations, and depends on the model functions being ``well-behaved'' in the chosen neighborhood.
+    The stochastical procedures are global and have no such limitation.
+  \item Any stochastic approach allows for the information contained in the sample variability to be used
+    to represent the uncertainty about the parameters.
+  \item By accepting the Likelihood Principle, we know that all relevant information on the samples is
+    contained in the associated likelihood function. This way, we can use the likelihood function alone
+    to proceed in the analysis, while the analytical procedures at times will disregard information, and
+    at times will lead to the false sensation of having more detailed information than the sample allows.
 \end{enumerate}
+
+\section{A escolha da verossimilhança}\label{sec:likelihood}
+
+A grandeza conhecida como verossimilhança, defendida por Fisher a partir de 1922, viu grande uso nas últimas páginas. Por um lado,
+ela é a base sobre a qual se assenta o teste de hipóteses de Neyman-Pearson. Por outro, ela é a ponte entre a {\em priori}
+e a {\em posteriori} Bayesianas. No final dos anos 1960, o uso da verossimilhança como base da inferência ganha vida 
+independente, e em grande parte devido ao livro de I. Hacking em 1965 sobre a lógica da inferência, 
+e ao trabalho de A.W.F. Edwards em 1972, é possível considerar essa postura como
+uma escola independente de pensamento, denominada às vezes Verossimilhantismo. Mais recentemente, essa escolha vai ser
+veementemente apoiada por Richard Royall e Elliott Sober. Esta escola de pensamento se baseia na conjunção do princípio da 
+verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhança, enunciada por Hacking.
+
+Birnbaum deriva o princípio da verossimilhança a partir de dois princípios mais facilmente aceitos\footnote{
+Essa derivação é controversa até o presente, sendo contestada por uma série de filósofos e estatísticos 
+e defendida por outros (veja \citep{Mayo10} e \citep{Gandenberger12}, respectivamente, para críticas e defesas
+atuais)}: o princípio da suficiência e o princípio da condicionalidade. Informalmente, estes princípios afirmam que
+"dados que não agregam informação são irrelevantes para a inferência", e "experimentos que poderiam ser realizados
+mas não foram são irrelevantes para a inferência". Desses princípios, Birnbaum deduz o princípio da verossimilhança,
+informalmente, "resultados amostrais possíveis mas não observados são irrelevantes para a inferência", de forma 
+que questões como o desenho amostral não podem influenciar a inferência realizada: 
+
+\begin{quote}
+``The likelihood principle: If $E$ and $E\prime$ are any two experiments with the same parameter space,
+ represented respectively by density functions $f(x, \theta)$ and $g(y, \theta)$; and if $x$ and $y$ are
+ any respective outcomes determining the same likelihood function; then $Ev(E, x) = Ev(E\prime, y)$.
+ That is, the evidential meaning of any outcome $x$ of any experiment $E$ is characterized fully by giving
+ the likelihood function $cf(x, \theta)$ (which need be described only up to an arbitrary positive constant
+ factor), without other reference to the structure of $E$.''
+\citep{Birnbaum62}
+\end{quote}
+
+Já a lei da verossimilhança é enunciada por Hacking como:
+
+\begin{quote}
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting 
+$A$ over $B$ if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength
+ of that evidence.''
+\citep{Hacking65}
+\end{quote}
+
+A divergência entre a escola da verossimilhança e a inferência frequentista se dá pois esta última rejeita o
+princípio da verossimilhança (embora aceite tanto a lei da verossimilhança quanto os princípios da suficiência
+e condicionalidade). Por outro lado, a escola da verossimilhança vai divergir da inferência Bayesiana (que aceita
+o princípio da verossimilhança) pela interpretação da lei da verossimilhança.
+
+A escola da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
+para atacar o teste de significância de Fisher foi reconhecer a
+necessidade lógica da comparação entre diferentes hipóteses.
+Enquanto o teste de significância privilegia uma hipótese nula, a abordagem de Neyman-Pearson, tal qual a de Edwards e Royall,
+vai refutar essa abordagem como incompleta. Os dados recolhidos por um experimento podem indicar um alto ou baixo
+suporte para uma certa hipótese, 
+mas isso não deve ser considerado evidência a favor ou contra essa hipótese sem
+que hipóteses alternativas sejam igualmente escrutinizadas. É sobre o uso da razão entre verossimilhanças de diferentes hipóteses,
+e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
+programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é célebre
+pela frase ``How often have I said to you that when you have eliminated the impossible, whatever remains, {\em however 
+improbable}, must be the truth?''. Ou seja, a probabilidade ou improbabilidade de uma única hipótese, vista
+isoladamente, não deve ser usada para concluir sobre sua veracidade.
+
+A divergência entre as abordagens se dá fundamentalmente com a {\em ação} que o cientista deve tomar após examinar a 
+razão de verossimilhanças. Neyman-Pearson argumentam que esse valor deve nortear um processo de teste de hipóteses, que
+leva ao {\em comportamento} de aceitar uma hipótese em detrimento das demais. Royall e Edwards realizam a separação
+conceitual entre (1) o grau de certeza que temos sobre a hipótese, (2) a força da evidência que um conjunto de dados confere
+a uma hipótese em detrimento de outras, e (3) o curso de ação tomado após verificar tais quantidades. Enquanto a escola
+Bayesiana vai relacionar a força de evidência (2) com o grau de certeza (1), e a proposição de Neyman e Pearson vai 
+identificar a força de evidência (2) com o curso de ação (3), a proposta dos verossimilhantistas é de que a inferência
+estatística se concentra {\em apenas} na força da evidência. O curso de ação tomado
+pode levar em conta uma multiplicidade de outros fatores, representados por {\em priors} e funções de perda na teoria de 
+decisões. Laplace já havia separado esses conceitos com o problema do 
+número de juízes necessário para condenar um prisioneiro: A decisão, além de levar em conta as probabilidades de
+condenar um inocente ou perdoar um culpado, deve levar em conta se a
+pena será uma multa ou a morte.
+
+Um exemplo que ilustra as diferentes concepções de inferência e suas consequências é dado pelo seguinte experimento
+mental: tome um baralho ordinário e vire a primeira carta,
+para encontrar um ás de espadas. Suponha agora duas hipóteses concorrentes: $H_N$ de que o baralho é normal e $H_A$
+de que o baralho é um engodo, composto por 52 ases de espadas. A verossimilhança de $H_N$ é 
+$\mathcal{L} (H_N|A \spadesuit) = \frac{1}{52}$, contra $\mathcal{L} (H_A | A \spadesuit) = 1 $. Enquanto o procedimento
+de Neyman-Pearson diz ``escolha a hipótese que leva à maior verossimilhança'', Royall e Edwards vêem nessa situação
+apenas uma {\em evidência} favorável a $H_A$ sobre $H_N$. Para transformar essa evidência em um curso de ação, é necessário
+incorporar mais informação ao problema. 
+Ainda, para transformar essa evidência em um grau de certeza,
+é necessário incorporar o nosso conhecimento {\em a priori} sobre a situação: enquanto nossa intuição diz
+que um baralho de engodo deve ser muito raro, e portanto o baralho examinado {\em provavelmente} é normal, um marciano,
+que não tem a mesma {\em priori}, deve achar muito natural que todas as cartas tenham a mesma figura, afinal todas tem o mesmo
+verso. 
+
+Em particular, 
+ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
+que divulgue seus dados na forma de razões de verossimilhança, não transformadas em valores-p ou {\em posterioris}, para que
+seus pares possam ter clareza de qual é a evidência apresentada. 
+Ao recuperar o papel do cientista como tomador de decisões subjetivas, a abordagem da verossimilhança volta a se encontrar
+com o pensamento de Fisher, que critica Neyman-Pearson por um programa que é adequado ao processamento industrial de lotes,
+mas não à produção de conhecimento científico. Neste aspecto, Royall e Edwards ecoam as palavras de Fisher e de I. J. Good:
+
+\begin{quote}
+``We have the duty of formulating, of summarizing, and of communicating our conclusions, in intelligible form, in
+recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher1955}
+\end{quote}
+
+\begin{quote}
+``If a Bayesian is a subjectivist, he will know that the initial probability density varies from person to person and
+so he will see the value of graphing the likelihood function for communication.'' \citep{Good76}
+\end{quote}
+
+Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
+probabilidade {\em a priori}, no que o paradigma da verossimilhança difere das escolas Bayesianas? Ou ainda: será que a 
+inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em prioris}''? Para responder isso,
+é importante retomar a formulação da lei da verossimilhança:
+
+\begin{quote}
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
+hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is \textbf{evidence supporting $A$ over $B$}
+if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
+\citep{Hacking65}
+\end{quote}
+
+Embora seja possível considerar o paradigma Bayesiano como um paradigma verossimilhantista {\em sensu lato}, 
+ele utiliza a razão das verossimilhanças como meio para construir quantias absolutas, a probabilidade 
+{\em a posteriori} de $A$ e a probabilidade {\em a posteriori} de $B$. Um verossimilhantista {\em sensu stricto}, ao contrário,
+verá na razão das verossimilhanças
+o objeto final do seu estudo. O paradigma da verossimilhança, dessa forma, se opõe à transformação de uma quantidade de 
+suporte relacional entre $A$ e $B$ em quantidades não-relacionais de
+suporte para cada hipótese \citep{Fitelson07}. 
+Embora Royall e Edwards forneçam razões fortes para aceitar essa lei como premissa, ela não é uma necessidade lógica,
+e não decorre de princípios mais básicos - ao contrário do princípio da verossimilhança.
+Note-se aqui que o texto de Royall não provê nenhuma definição do que seja evidência ou suporte estatístico,
+enquanto Edwards provê apenas uma lista de propriedades desejáveis a uma medida de suporte, demonstrando que
+a razão de verossimilhanças é coerente com estas propriedades. Hacking, por outro lado, usa os axiomas de 
+\citep{Koopman40} para embasar sua definição de suporte, à qual a lei da verossimilhança é adicionada
+axiomaticamente - e de forma coerente. A posição de todos estes autores indica que a aceitação da 
+lei da verossimilhança equivale a uma definição de evidência. 
+
+A interpretação verossimilhantista da evidência recebe diversas críticas. Uma, no entanto, é especialmente contundente:
+Edwards propõe que definir a natureza da probabilidade é um problema irrelevante, dado que a evidência estatística é
+formulada por razões de verossimilhança, e não por probabilidades. No entanto, a verossimilhança é, por definição,  
+{\em uma função proporcional a uma probabilidade}, de forma que sem uma interpretação para a probabilidade não podemos
+ter uma interpretação para a verossimilhança.
+A teoria verossimilhantista corre, portanto, o risco de se assentar
+sobre uma areia movediça filosófica.
 
 \section{Uma função de suporte}
 Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
