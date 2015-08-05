@@ -25,20 +25,20 @@
 \SweaveOpts{fig=T,echo=F}
 \setkeys{Gin}{width=0.8\textwidth}
 
-\begin{center}
-  {\Large Profile likelihood uncertainty estimation}
+\title{Uncertainty analysis and composite hypothesis under the likelihood paradigm}
+\author{Andre Chalom \and Paulo Inacio Prado,\\ 
+  Department of Ecology, Institute of Biosciences, University of São Paulo \\
+  \texttt{andrechalom@gmail.com}
+  }
+\date{07/28/2015}
+\maketitle
 
-\begin{table}[hbt]{\small
-\begin{tabular}{ll}
-Authors        & Andre Chalom \\
-               & Paulo Inacio Prado \\
-Date           & 07/28/2015 \\
-Affiliation    & Department of Ecology, \\
-               & University of Sao Paulo 
-\end{tabular} }
-\end{table}
-\end{center}
+\begin{abstract}
+%%% ABSTRACT
+  Abstract goes here
+\end{abstract}
 
+\newpage
 \vfill
 \noindent
 ``In an ideal world, all data would come from well-designed experiments
@@ -51,12 +51,8 @@ and calculations so that your reader can ask the same question, and then carry o
 \begin{flushright}
 (H. Caswell, Matrix Population Models)
 \end{flushright}
-
 \vfill
 \indent
-
-%%% ABSTRACT
-
 \newpage
 \tableofcontents
 \newpage
@@ -153,25 +149,29 @@ The main advantages of using a stochastic formulation are:
     at times will lead to the false sensation of having more detailed information than the sample allows.
 \end{enumerate}
 
-\section{A escolha da verossimilhança}\label{sec:likelihood}
+\section{Historical background}\label{sec:likelihood}
 
-A grandeza conhecida como verossimilhança, defendida por Fisher a partir de 1922, viu grande uso nas últimas páginas. Por um lado,
-ela é a base sobre a qual se assenta o teste de hipóteses de Neyman-Pearson. Por outro, ela é a ponte entre a {\em priori}
-e a {\em posteriori} Bayesianas. No final dos anos 1960, o uso da verossimilhança como base da inferência ganha vida 
-independente, e em grande parte devido ao livro de I. Hacking em 1965 sobre a lógica da inferência, 
-e ao trabalho de A.W.F. Edwards em 1972, é possível considerar essa postura como
-uma escola independente de pensamento, denominada às vezes Verossimilhantismo. Mais recentemente, essa escolha vai ser
-veementemente apoiada por Richard Royall e Elliott Sober. Esta escola de pensamento se baseia na conjunção do princípio da 
-verossimilhança, conforme demonstrado por Birnbaum, e na lei da verossimilhança, enunciada por Hacking.
+The statistical use of likelihoods is very widespread, starting from Fisher's definition on 1922, and
+spanning several schools of thought. 
+On the one hand, the framework for Neyman-Pearson's hypothesis testing is built upon it; on the other hand,
+it is a bridge between the {\em a priori} and {\em a posteriori} probabilities in Bayesian analysis. 
+Starting on the decade of 1960, the use of likelihoods as a basis for statistical inference started to be
+more widely advocated as an alternative to both frequentism and Bayesianism. The 1965 book by Ian Hacking 
+about the logic of inference and the 1972 book by A.W.F. Edwards on likelihoods can be seen as the starting
+points for this position to become an independent school of thought, sometimes called Likelihoodism.
+More recently, this position will be strongly supported by the works of Richard Royall and Elliott Sober.
 
-Birnbaum deriva o princípio da verossimilhança a partir de dois princípios mais facilmente aceitos\footnote{
-Essa derivação é controversa até o presente, sendo contestada por uma série de filósofos e estatísticos 
-e defendida por outros (veja \citep{Mayo10} e \citep{Gandenberger12}, respectivamente, para críticas e defesas
-atuais)}: o princípio da suficiência e o princípio da condicionalidade. Informalmente, estes princípios afirmam que
-"dados que não agregam informação são irrelevantes para a inferência", e "experimentos que poderiam ser realizados
-mas não foram são irrelevantes para a inferência". Desses princípios, Birnbaum deduz o princípio da verossimilhança,
-informalmente, "resultados amostrais possíveis mas não observados são irrelevantes para a inferência", de forma 
-que questões como o desenho amostral não podem influenciar a inferência realizada: 
+The likelihoodist school of thought is based on the conjunction of the likelihood principle, as demonstrated
+by Allan Birnbaum, and the law of likelihood, as enunciated by Ian Hacking.
+
+Birnbaum derived the likelihood principle in 1962, from two generally accepted principles\footnote{
+This demonstration is controversial to this date. See \citep{Mayo10} for a recent critique and 
+\citep{Gandenberger12} for a recent defense}: the sufficiency principle and the conditionality principle.
+Informally, we can think about the two first affirming that ``data that does not aggregate new information
+is irrelevant to the inference'', and ``experiments that could have been realized but were not are irrelevant
+to the inference''. From this principles, Birnbaum deduces the likelihood principle, which can informally
+be stated as ``experimental results which are possible but were not observed are irrelevant to the 
+inference''. Or, in Birnbaum's more formal terms:
 
 \begin{quote}
 ``The likelihood principle: If $E$ and $E\prime$ are any two experiments with the same parameter space,
@@ -183,74 +183,61 @@ que questões como o desenho amostral não podem influenciar a inferência reali
 \citep{Birnbaum62}
 \end{quote}
 
-Já a lei da verossimilhança é enunciada por Hacking como:
+The law of likelihood was formulated by Hacking as:
 
 \begin{quote}
-``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
-hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting 
-$A$ over $B$ if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength
- of that evidence.''
-\citep{Hacking65}
+``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ 
+is $p_A(x)$, while hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$
+is \textbf{evidence supporting $A$ over $B$} if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, 
+$p_A(x)/p_B(x)$, measures the strength of that evidence.''
+\citep{Hacking65}\footnote{Emphasis added}
 \end{quote}
 
-A divergência entre a escola da verossimilhança e a inferência frequentista se dá pois esta última rejeita o
-princípio da verossimilhança (embora aceite tanto a lei da verossimilhança quanto os princípios da suficiência
-e condicionalidade). Por outro lado, a escola da verossimilhança vai divergir da inferência Bayesiana (que aceita
-o princípio da verossimilhança) pela interpretação da lei da verossimilhança.
+The divergence between the likelihood school and frequentist school is due to the later rejecting the
+likelihood principle (although it accepts the principles of sufficiency and conditionality). On the other 
+hand, the Bayesian school generally disagrees with the likelihoodists by the interpretation of the law of
+likelihood.
 
-A escola da verossimilhança pode ser vista como herdeira intelectual da abordagem de Neyman-Pearson, cujo ponto de partida
-para atacar o teste de significância de Fisher foi reconhecer a
-necessidade lógica da comparação entre diferentes hipóteses.
-Enquanto o teste de significância privilegia uma hipótese nula, a abordagem de Neyman-Pearson, tal qual a de Edwards e Royall,
-vai refutar essa abordagem como incompleta. Os dados recolhidos por um experimento podem indicar um alto ou baixo
-suporte para uma certa hipótese, 
-mas isso não deve ser considerado evidência a favor ou contra essa hipótese sem
-que hipóteses alternativas sejam igualmente escrutinizadas. É sobre o uso da razão entre verossimilhanças de diferentes hipóteses,
-e não de qualquer estatística calculada sobre uma única hipótese, que Neyman, Pearson, Edwards e Royall vão assentar seu
-programa de inferência. O detetive Sherlock Holmes, personagem de Conan Doyle, famoso por seu raciocínio arguto, é célebre
-pela frase ``How often have I said to you that when you have eliminated the impossible, whatever remains, {\em however 
-improbable}, must be the truth?''. Ou seja, a probabilidade ou improbabilidade de uma única hipótese, vista
-isoladamente, não deve ser usada para concluir sobre sua veracidade.
+The likelihood school of thought can be seen as an intellectual heir to the Neyman-Pearson hypothesis
+testing framework, as its breaking point from Fisherian significance testing happens because of the
+logical necessity of comparing competing hypothesis. Fisher's tests give a special privileged position
+to the so-called {\em null hypothesis}, which Neyman and Pearson will see as incomplete\footnote{
+For a more complete and extremely didactic insight into their view, see the original paper from 
+\citep{Neyman1933}}. The data
+gathered by one experiment may indicate a small or a large support for one given hypothesis, but this alone
+should not be considered as evidence in favor of this hypothesis before the other alternatives have
+been also scrutinized. In other words, the probability or improbability of a single hypothesis should not
+be used to conclude about its veracity. As the fictional detective Sherlock Holmes, by Sir Arthur Conan
+Doyle famously said, ``How often have I said to you that when you have eliminated the impossible, 
+whatever remains, {\em however improbable}, must be the truth?''. 
 
-A divergência entre as abordagens se dá fundamentalmente com a {\em ação} que o cientista deve tomar após examinar a 
-razão de verossimilhanças. Neyman-Pearson argumentam que esse valor deve nortear um processo de teste de hipóteses, que
-leva ao {\em comportamento} de aceitar uma hipótese em detrimento das demais. Royall e Edwards realizam a separação
-conceitual entre (1) o grau de certeza que temos sobre a hipótese, (2) a força da evidência que um conjunto de dados confere
-a uma hipótese em detrimento de outras, e (3) o curso de ação tomado após verificar tais quantidades. Enquanto a escola
-Bayesiana vai relacionar a força de evidência (2) com o grau de certeza (1), e a proposição de Neyman e Pearson vai 
-identificar a força de evidência (2) com o curso de ação (3), a proposta dos verossimilhantistas é de que a inferência
-estatística se concentra {\em apenas} na força da evidência. O curso de ação tomado
-pode levar em conta uma multiplicidade de outros fatores, representados por {\em priors} e funções de perda na teoria de 
-decisões. Laplace já havia separado esses conceitos com o problema do 
-número de juízes necessário para condenar um prisioneiro: A decisão, além de levar em conta as probabilidades de
-condenar um inocente ou perdoar um culpado, deve levar em conta se a
-pena será uma multa ou a morte.
+However, while Neyman and Pearson will use the likelihood ratio from several hypothesis to guide the 
+{\em behavior} of the scientist in accepting or rejecting hypothesis, Royall and Edwards will separate
+the concepts of (1) the degree of certainty that we have about one hypothesis; (2) the strenght of evidence
+that some data confers to one hypothesis over the others and (3) the course of action that should be taken
+after examining such evidences. While Neyman and Pearson conflate the strenght of evidence (2) with the
+course of action (3), and Bayesian analysis conflate the degree of certainty (1) with the strenght of 
+evidence (2), the proposers of Likelihoodism propose that the role of statistical inference is to provide
+{\em only} the strenght of evidence \citep{Royall97}. 
+The degree of certainty and course of action should take into account
+a multiplicity of other factors, and should not be part of the inference. One of the greatest precursors 
+of the statistical thought, Marquis Pierre-Simon de Laplace, had already foreshadowed this position with
+the problem of the number of judges necessary to convict or acquit a prisioner: this decision, to Laplace,
+needs to take into account not only the probability of convicting an innocent of acquitting a guilty 
+prisioner, but also whether the punishment will be a fine or the death sentence\citep{Laplace1814}.
 
-Um exemplo que ilustra as diferentes concepções de inferência e suas consequências é dado pelo seguinte experimento
-mental: tome um baralho ordinário e vire a primeira carta,
-para encontrar um ás de espadas. Suponha agora duas hipóteses concorrentes: $H_N$ de que o baralho é normal e $H_A$
-de que o baralho é um engodo, composto por 52 ases de espadas. A verossimilhança de $H_N$ é 
-$\mathcal{L} (H_N|A \spadesuit) = \frac{1}{52}$, contra $\mathcal{L} (H_A | A \spadesuit) = 1 $. Enquanto o procedimento
-de Neyman-Pearson diz ``escolha a hipótese que leva à maior verossimilhança'', Royall e Edwards vêem nessa situação
-apenas uma {\em evidência} favorável a $H_A$ sobre $H_N$. Para transformar essa evidência em um curso de ação, é necessário
-incorporar mais informação ao problema. 
-Ainda, para transformar essa evidência em um grau de certeza,
-é necessário incorporar o nosso conhecimento {\em a priori} sobre a situação: enquanto nossa intuição diz
-que um baralho de engodo deve ser muito raro, e portanto o baralho examinado {\em provavelmente} é normal, um marciano,
-que não tem a mesma {\em priori}, deve achar muito natural que todas as cartas tenham a mesma figura, afinal todas tem o mesmo
-verso. 
-
-Em particular, 
-ao dissociar a {\em força de evidência} da {\em tomada de decisão}, Royall e Edwards estão solicitando ao cientista
-que divulgue seus dados na forma de razões de verossimilhança, não transformadas em valores-p ou {\em posterioris}, para que
-seus pares possam ter clareza de qual é a evidência apresentada. 
-Ao recuperar o papel do cientista como tomador de decisões subjetivas, a abordagem da verossimilhança volta a se encontrar
-com o pensamento de Fisher, que critica Neyman-Pearson por um programa que é adequado ao processamento industrial de lotes,
-mas não à produção de conhecimento científico. Neste aspecto, Royall e Edwards ecoam as palavras de Fisher e de I. J. Good:
+Moreover, by dissociating the strenght of evidence from the decision making, Royall and Edwards are asking
+the scientist to reveal the untransformed likelihood ratios derived from its data, instead of transforming
+it into p-values or {\em a posterioris}, so that her peers are able to assess clearly what is the presented
+evidence. By retaking the scientist role as a subjective decision maker, this proposition converges to
+Fisher's, who criticized Neyman-Pearsons programme as being useful for industrial processing, but useless
+to the scientific community. The likelihoodist proposal thus echos the words of Fisher, and also the words
+of the Bayesian probabilist I. J. Good:
 
 \begin{quote}
 ``We have the duty of formulating, of summarizing, and of communicating our conclusions, in intelligible form, in
-recognition of the right of other free minds to utilize them in making their own decisions.'' \citep{Fisher1955}
+recognition of the right of other free minds to utilize them in making their own decisions.'' 
+\citep{Fisher1955}
 \end{quote}
 
 \begin{quote}
@@ -258,129 +245,45 @@ recognition of the right of other free minds to utilize them in making their own
 so he will see the value of graphing the likelihood function for communication.'' \citep{Good76}
 \end{quote}
 
-Porém, se a tomada de decisão deve ser feita com base na razão de verossimilhanças e na especificação de uma 
-probabilidade {\em a priori}, no que o paradigma da verossimilhança difere das escolas Bayesianas? Ou ainda: será que a 
-inferência baseada em verossimilhanças é uma ``inferência Bayesiana sem {\em prioris}''? Para responder isso,
-é importante retomar a formulação da lei da verossimilhança:
+However, there is a very important difference between the Bayesian and the Likelihoodist paradigms:
+the {\em a posteriori} probabilities, constructed by the multiplication of the likelihood by an {\em a priori}
+probability under the Bayesian school, is a absolute quantity. It is thus possible to refer to the {\em
+a posteriori} probability of event $A$, or the {\em a posteriori} probability of an event $B$. In contrast,
+the Likelihoodist approach will see in the likelihood ratio the end point for the statistical analysis. 
+This is why the law of likelihood is expressed over {\bf evidence supporting $A$ over $B$}: because the
+likelihoodist approach does not allow for the transformation of the relational support of $A$ over $B$ to
+be translated into non-relational quantities of support for each hypothesis\footnote{See the text by
+\citep{Fitelson07} for more details on this matter, including Carnap's classification of confirmation}.
 
-\begin{quote}
-``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
-hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is \textbf{evidence supporting $A$ over $B$}
-if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
-\citep{Hacking65}
-\end{quote}
+\section{The challenge for uncertainty estimation}
+From this section, we will consider problems where $\bu{x}$ represent a vector of data obtained independently
+from one or more experiments from a vector-valued random variable $\bu{X}$, such that $P(\bu{X}\!=\!\bu{x}) = f(\bu{x};\theta)$. The parameter vector $\theta$ is unknown and may assume values in $\Theta$. We will
+refer to the likelihood of $\theta$ given the observed data $\bu{x}$ as 
+$\mathcal{L} (\theta | \bu{x}) = f(\bu{x}; \theta)$. The likelihood ratio over the same 
+data set can be abbreviated as
+$L(\theta_1, \theta_2) = \frac{\mathcal{L}(\theta_1|\bu{x})} {\mathcal{L}(\theta_2|\bu{x})}$. 
 
-Embora seja possível considerar o paradigma Bayesiano como um paradigma verossimilhantista {\em sensu lato}, 
-ele utiliza a razão das verossimilhanças como meio para construir quantias absolutas, a probabilidade 
-{\em a posteriori} de $A$ e a probabilidade {\em a posteriori} de $B$. Um verossimilhantista {\em sensu stricto}, ao contrário,
-verá na razão das verossimilhanças
-o objeto final do seu estudo. O paradigma da verossimilhança, dessa forma, se opõe à transformação de uma quantidade de 
-suporte relacional entre $A$ e $B$ em quantidades não-relacionais de
-suporte para cada hipótese \citep{Fitelson07}. 
-Embora Royall e Edwards forneçam razões fortes para aceitar essa lei como premissa, ela não é uma necessidade lógica,
-e não decorre de princípios mais básicos - ao contrário do princípio da verossimilhança.
-Note-se aqui que o texto de Royall não provê nenhuma definição do que seja evidência ou suporte estatístico,
-enquanto Edwards provê apenas uma lista de propriedades desejáveis a uma medida de suporte, demonstrando que
-a razão de verossimilhanças é coerente com estas propriedades. Hacking, por outro lado, usa os axiomas de 
-\citep{Koopman40} para embasar sua definição de suporte, à qual a lei da verossimilhança é adicionada
-axiomaticamente - e de forma coerente. A posição de todos estes autores indica que a aceitação da 
-lei da verossimilhança equivale a uma definição de evidência. 
+In order to perform an uncertainty analyses for a mathematical model under the likelihood paradigm, the 
+general question that we would like to answer can be written as: ``how much support does the collected data
+provide for the concurrent hypothesis over the model results?''. For example, in a population growth model,
+the question may become ``how much support the collected data provide for the hypothesis that
+the population is growing at the rate of 1 individual per year, {\em versus} the hypothesis that it is stable
+?''\footnote{As we will see, the question can become more general, such as ``how much support the collected
+data provide for the hypothesis that the population is growing or stable {\em versus} the hypothesis that is
+declining?''}
 
-A interpretação verossimilhantista da evidência recebe diversas críticas. Uma, no entanto, é especialmente contundente:
-Edwards propõe que definir a natureza da probabilidade é um problema irrelevante, dado que a evidência estatística é
-formulada por razões de verossimilhança, e não por probabilidades. No entanto, a verossimilhança é, por definição,  
-{\em uma função proporcional a uma probabilidade}, de forma que sem uma interpretação para a probabilidade não podemos
-ter uma interpretação para a verossimilhança.
-A teoria verossimilhantista corre, portanto, o risco de se assentar
-sobre uma areia movediça filosófica.
+This question, formulated over the parameters of a probability distribution, should be 
+answered by means of the likelihood function. It can be demonstrated that one-to-one functions over the
+parameters presenrve the likelihood function, such that if $\mathcal{L}(\theta|\bu{x})$ is the likelihood
+of $\theta$ and $\phi = f(\theta)$ is given by a one-to-one function $f(\cdot)$, the 
+likelihood of $\phi$ is given by 
+$\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ \citep{Edwards72}.
 
-\section{Uma função de suporte}
-Ao falar da análise de incerteza de um modelo matemático sob o paradigma da verossimilhança, a pergunta que estamos
-fazendo pode ser escrita como: ``qual o suporte que existe para hipóteses concorrentes a respeito do resultado de um
-modelo, a partir de um conjunto de dados coletados?''. Em um modelo de crescimento populacional, por exemplo, a pergunta
-se torna ``qual o suporte que os dados coletados fornecem para a hipótese de que a população está crescendo ou estável,
-{\em versus} a hipótese de que a população está em declínio?''.
-
-Vamos considerar problemas onde $\bu{x}$ representa um vetor de dados obtidos de forma independente
-em um ou mais experimentos a partir de uma variável aleatória $\bu{X}$, tal que $P(\bu{X}\!=\!\bu{x}) = f(\bu{x};\theta)$. 
-O parâmetro
-(ou vetor de parâmetros) $\theta$ é desconhecido e pode assumir valores em $\Theta$. A verossimilhança de $\theta$
-dadas as observações $\bu{x}$ é dada por $\mathcal{L} (\theta | \bu{x}) = f(\bu{x}; \theta)$. A razão de verossimilhanças
-sob o mesmo conjunto de dados pode ser abreviada como $L(\theta_1, \theta_2) = \frac{\mathcal{L}(\theta_1|\bu{x})}
-{\mathcal{L}(\theta_2|\bu{x})}$. 
-
-Sabemos que essa pergunta, se formulada sobre os parâmetros
-de uma distribuição de probabilidade, é respondida através da função de verossimilhança. Também sabemos que
-transformações injetoras sobre parâmetros preservam as propriedades da função de verossimilhança, isso é: 
-se um parâmetro $\theta$ está associado a uma função de verossimilhança $\mathcal{L}(\theta|\bu{x})$ e 
-$\phi = f(\theta)$ é dada por uma função $f(\cdot)$ injetora, a verossimilhança de $\phi$ é dada simplesmente por
-$\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ (\citep{Edwards72}, sec. 2.5).
-
-Nosso trabalho, então, é o de estender esse resultado para uma função genérica. 
-Nosso argumento se baseia em uma função de um argumento, $\gamma = g(\theta)$, sendo que a generalização 
-para mais dimensões é trivial.\footnote{A notação usada aqui é mais compatível com a literatura estatística,
-enquanto na seção \ref{PSE}, definimos as entradas, resultados e o modelo em si como $x$, $y$ e $f$, relacionados
-como $y = f(x)$, aqui podemos pensar nesses objetos como $\theta$, $\gamma$ e $g$, respectivamente.}
-
-O problema de definição de uma verossimilhança para análise de incerteza em modelos está, portanto, intimamente ligada à questão
-de hipóteses estatísticas compostas. O trabalho fundamental de Neyman e Pearson \citep{Neyman1933}
-estabelece uma justificativa matemática para o princípio da verossimilhança em problemas envolvendo hipóteses simples.
-O problema de hipóteses compostas é resolvido dentro do paradigma frequentista para alguns casos particulares, como 
-o teste {\em t} de Student, que avalia a hipótese nula de que a média de duas populações é igual, sendo a variância um 
-parâmetro desconhecido. Estatísticos frequentistas tratam o problema de hipóteses compostas através do máximo de
-verossimilhança obtido por qualquer de suas hipóteses simples componentes. Muito do trabalho nessa área se concentrará
-em encontrar aproximações para a distribuição dessa estatística \citep{Wilks38}.
-
-Sob esta inspiração, podemos construir uma função tentativa de suporte $\Psi^\delta (\gamma | \bu{x})$, definida por:
-
-\begin{equation}
-	\Psi^\delta ( \gamma | \bu{x} ) = \sup\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x})
-\label{eqn:Psidelta}
-\end{equation}
-
-Essa função pode ser intuitivamente interpretada no sentido de equiparar a verossimilhança da hipótese composta com
-a da sua melhor hipótese simples componente.
-Alternativamente, vamos construir uma outra função a partir de $\mathcal{L}(\theta|\bu{x})$:
-$\Psi^\star (\gamma | \bu{x})$, definida por:
-\begin{equation}
-\Psi^\star ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \,d\theta
-\label{eqn:Psistar}
-\end{equation}
-
-Intuitivamente, podemos considerar que se dois valores de $\theta$ levam a um mesmo valor de $\gamma$, a equação \ref{eqn:Psistar}
-nos diz que o suporte para esse valor de $\gamma$ seria a soma do suporte dado aos valores de $\theta$.
-Enquanto a função \ref{eqn:Psidelta} tem uma forte inspiração nos trabalhos frequentistas, a função \ref{eqn:Psistar}
-vem de uma inspiração Bayesiana. 
-
-Em geral, ao determinar regras para combinar o suporte de hipóteses simples para construir uma função de suporte
-para hipóteses compostas, estamos considerando funções da forma:
-
-\begin{equation}
-\Psi ( \gamma | \bu{x} ) = \int\limits_{g(\theta) = \gamma} \mathcal{L} (\theta | \bu{x}) \kappa(\theta) \,d\theta
-\label{eqn:Psi}
-\end{equation}
-Onde a função $\Psi^\star$ é obtida trivialmente com $\kappa(\theta)=1$, e a função $\Psi^\delta$ é um caso-limite
-no qual $\kappa(\theta)$ se aproxima de uma função Delta de Dirac. Essa classe de funções não corresponde
-necessariamente a funções de suporte, que devem possuir as seguintes propriedades desejáveis\citep{Edwards72}:
-
-\begin{enumerate}
-	\item {\em Transitividade}: Se $H_1$ tem melhor suporte que $H_2$ e $H_2$ tem melhor suporte que $H_3$, então
-		$H_1$ deve ter melhor suporte que $H_3$.
-	\item {\em Aditividade em relação aos dados}: o suporte relativo entre duas hipóteses depreendido de uma
-		observação deve ser facilmente combinável com o suporte relativo para as mesmas hipóteses depreendido
-		de uma observação diferente.\footnote{Edwards usa ``aditividade'' sobre a log-verossimilhança, equivalentemente medidas
-		de verossimilhança podem ser combinadas de forma multiplicativa.}
-	\item {\em Invariância a transformações injetoras dos dados}.
-	\item {\em Invariância a transformações injetoras dos parâmetros}. 
-	\item {\em Relevância e consistência}: se uma hipótese for verdadeira, ela deve receber mais suporte do que hipóteses
-		concorrentes no longo termo. O suporte relativo deve ser coerente entre diversos problemas: o mesmo valor de
-		suporte relativo deve ter o mesmo significado.
-	\item {\em Compatibilidade}: uma medida de suporte deve ser facilmente usada para atualizar informações na forma de
-		{\em prioris}, nos casos nos quais elas existam.
-\end{enumerate}
-
-Assim, é fácil ver que a função $\Psi^\star$, por exemplo, não é uma função de suporte - já que esta não é 
-aditiva em relação ao parâmetro:
+However, the application of a mathematical model is analogous to the application of a generic function, 
+and the reasoning above does not hold for arbitrary many-to-one functions. Thus, defining a methodology
+for uncertainty analyses of arbitrary models is closely related to the problem of composite statistical
+hypotheses. However, the law of likelihood is expressed in terms of simple statistical hypothesis, and there
+is no way of combining these values to form the ``likelihood of a composite hypothesis''. As Edwards writes:
 
 \begin{quote}
 ``No special meaning attaches to any part of the area under a likelihood curve, or to the sum of the likelihoods of two or more
@@ -389,152 +292,34 @@ Although the likelihood function, and hence the curve, has the mathematical form
 represent a statistical distribution in any sense.'' \citep{Edwards72}
 \end{quote}
 
-Trabalhos futuros podem examinar as propriedades desta classe de funções; examinar se elas se adequam aos 
-requerimentos de uma função de suporte - e caso contrário, se existe uma formulação alternativa desses 
-requisitos que as contemple; e investigar a relação entre
-a adoção dessas funções e as bases lógicas da inferência, em especial o princípio e a lei da verossimilhança. 
-No presente trabalho, vamos nos concentrar na complexa relação entre a lei da verossimilhança e o problema
-das hipóteses compostas.
-
-\section{{\em Caveat} sobre o uso de estatísticas}
-
-O uso de amostras de uma função de suporte para embasar um procedimento de análise de incerteza, como proposto
-nas seções anteriores, deve ser feito de forma a levar em consideração a natureza das grandezas envolvidas.
-Vamos fornecer aqui um exemplo de aplicação ingênua e equivocada desse procedimento, que busca usar a média
-da função como uma medida da tendência central dos resultados do modelo.
-
-Considere o modelo simples\footnote{Segundo a notação desenvolvida na seção \ref{Introduction}}
-
-\begin{equation}
-	y = x
-\end{equation}
-
-Onde o par\^ametro $x$ \'e estimado, a partir da realiza\c c\~ao de um
-processo Poisson, como tendo o valor $\hat x$. Para estudar a incerteza
-do resultado do modelo $y$, vamos utilizar a fun\c c\~ao de verossimilhan\c ca
-de $x$, normalizada de forma a representar uma probabilidade. Lembremos que
-a fun\c c\~ao de verossimilhan\c ca de uma distribui\c c\~ao Poisson
-\'e:
-
-\begin{equation}
-	L \left( \lambda | \hat x \right) = C \lambda^{\hat x} \mathrm{e}^{-\lambda}
-\end{equation}
-
-Onde $C$ \'e uma constante multiplicativa que deve ser ajustada de forma
-que a integral de $L(\lambda | \hat x)$ seja igual a 1:
-
-\begin {eqnarray*}
-\int_0^\infty C \lambda^{\hat x} \mathrm{e}^{-\lambda} & = & 1 \\
-C & = & \left( \int_0^\infty  \lambda^{\hat x} \mathrm{e}^{-\lambda} \right)^{-1} \\
-C & = & \Gamma(\hat x +1)^{-1}
-\end{eqnarray*}
-
-O m\'aximo da fun\c c\~ao $L(\lambda | \hat x)$, descrita acima, ocorre em $\lambda = \hat x$.
-Logo, o valor de $\hat x$ deve ser usado como estimador pontual do valor mais prov\'avel
-do par\^ametro $x$. Da mesma forma, intervalos de confian\c ca para o par\^ametro $x$ devem
-ser constru\'idos ao redor de $\hat x$.
-
-Ap\'os tomar amostras desta distribui\c c\~ao, construímos a distribui\c c\~ao
-de resultados:
-\begin{equation}
-	D(y) = C y^{\hat x} \mathrm{e}^{-y}
-\end{equation}
-
-Cuja m\'edia \'e dada por
-
-\begin{eqnarray*}
-	<D(y)> & = & \int_0^\infty y C y^{\hat x} \mathrm{e}^{-y} dy \\
-	       & = & \int_0^\infty C y^{\hat x+1} \mathrm{e}^{-y} dy \\
-		   & = & \Gamma(\hat x +2) C\\
-	       & = & \frac{\Gamma(\hat x +2)}{\Gamma(\hat x + 1)} \\
-		   & = & \hat x + 1
-\end{eqnarray*}
-
-Note ent\~ao que, se escolhemos representar a distribui\c c\~ao dos resultados pela sua m\'edia,
-vamos estar usando $\hat x + 1$, enquanto que o valor mais verossímil para $y$ \'e $\hat x$, o mesmo
-que para o par\^ametro $x$. Da mesma forma, ao construir intervalos de confian\c ca para o resultado
-$y$, estes devem ser feitos considerando valores de maior verossimilhança, e n\~ao valores ao redor 
-da m\'edia $\hat x + 1$. 
-
-\section{Hipóteses compostas}
-Como exposto na seção \ref{sec:likelihood}, a lei da verossimilhança (LL, do inglês Law of Likelihood),
-enunciada por Ian Hacking, se refere a hipóteses simples:
-
-\begin{description}
-\item[LL]
-``If hypothesis $A$ implies that the probability that a random variable $X$ takes the value $x$ is $p_A(x)$, while
-hypothesis $B$ implies that the probability is $p_B(x)$, then the observation $X=x$ is evidence supporting $A$ over $B$ 
-if and only if $p_A(x) > p_B(x)$, and the likelihood ratio, $p_A(x)/p_B(x)$, measures the strength of that evidence.''
-\citep{Hacking65}
-\end{description}
-
-Como, então, trabalhar com hipóteses compostas? A resposta tradicional de verossimilhantistas para essa questão é uma
-simples negativa: Edwards descarta hipóteses compostas como ``desinteressantes para a ciência'' \citep{Edwards72},
-enquanto Royall enxerga na requisição de que as hipóteses sejam simples um benefício, e não uma falha, da abordagem
-por verossimilhança \citep{Royall97}, exemplificado no problema a seguir:
-
-Suponha que um grupo de pesquisadores da área médica realizam um experimento para determinar a probabilidade de sucesso
-de um certo tratamento. Eles estão particularmente interessados em descobrir se o novo tratamento tem mais probabilidade de 
-sucesso do que 0.2, que representa a probabilidade de sucesso de um tratamento concorrente. Após aplicar o novo tratamento
-em 17 pacientes, eles encontram sucesso em 9. O que esse resultado pode dizer sobre as hipóteses?
-
-Uma análise frequentista vai confrontar a hipótese nula $H_0: \theta = 0.2$, e concluir que a probabilidade de encontrar
-9 ou mais sucessos em 17 realizações de um processo Bernoulli com $p=0.2$ é de aproximadamente 0.04\%, rejeitando a hipótese.
-
-Uma análise Bayesiana vai considerar as hipóteses $H_1:\theta \leq 0.2$ versus $H_2: \theta > 0.2$. O estatístico Bayesiano
-deve escolher uma forma para representar seu conhecimento prévio, e pode, por exemplo,
-usar a {\em priori} uniforme, dada por $B(1,1)$, como feito por Bayes, encontrando uma {\em posteriori}
-igual a $B(10,9)$, ou uma {\em priori} de Jeffreys, dada por $B(\frac{1}{2},\frac{1}{2})$, encontrando uma {\em posteriori}
-de $B(9.5, 8.5)$. Ambas as análises levam a probabilidades muito baixas para $H_1$: 0.09\% e 0.11\%, respectivamente.
-
-Ainda, a razão de verossimilhança entre o estimador de máxima verossimilhança para $\theta = 0.52$ e qualquer hipótese
-simples $H_p:\theta=p , \, p \leq 0.2$ é de no mínimo 91.5. Todos esses cálculos sugerem que os dados sejam coerentes com
-a hipótese de maior suporte ser aquela que considera que o novo tratamento tem probabilidade de sucesso maior do que 0.2.
-
-No entanto, a lei da verossimilhança de Hacking não permite essa afirmação, pois $H_1$ e $H_2$ não são hipóteses que
-atribuam um único valor de probabilidade às observações da variável aleatória sob consideração. Royall aponta que, embora
-algumas hipóteses simples componentes de $H_1$ sejam melhor suportadas do que as componentes de $H_2$, isso não é válido em
-geral: a hipótese $\theta = 0.2$ é mais suportada do que $\theta=0.9$ por um fator de 22.
-
-É importante notar que
-isso não é uma consequência da formulação das hipóteses envolvendo desigualdades, de fato as hipóteses $H^\dagger_1 : \gamma = 0$
-e $H^\dagger_2 : \gamma = 1$ são equivalentes, e tão intratáveis quanto, as hipóteses $H_1$ e $H_2$, com $\gamma$ sendo dado por
-
-\begin{equation}
-	\gamma = \left\{ 
-	\begin{array}{c c}
-		0, & \theta \leq 0.2 \\
-		1, & \theta > 0.2 
-	\end{array}
-	\right.
-\end{equation}
-
-Embora o uso de hipóteses compostas seja necessário para tratar hipóteses formuladas a respeito do resultado de modelos,
-pouco progresso se fez na elaboração de uma lei da verossimilhança que se aplique a hipóteses compostas. Os caminhos que podem
-ser trilhados aqui são:
+How can we work with composite hypothesis then? The traditional answer from the proposers of Likelihoodism is
+that we don't. Edwards puts off composite hypothesis as ``uninteresting to science'', while Royall sees
+this restriction to simple hypothesis as an advantage, not a limitation, to the likelihood approach.
+However, this is necessary if we want to derive an uncertainty estimation for model results.
+Here, we will present three paths that may be pursued for this end:
 
 \begin{enumerate}
-	\item Tratar a questão através da modelagem de {\em nuisance parameters}; \label{i:prof}
-	\item Formular uma lei da verossimilhança que seja aplicável a hipóteses compostas;\label{i:alt}
-	\item Apresentar uma metodologia baseada em uma extensão lógica da lei da verossimilhança.\label{i:ext}
+	\item Formulate a new law of likelihood, which can be applied for composite hypothesis;\label{i:alt}
+	\item Present a methodology based on a logical extension of the law of likelihood;\label{i:ext}
+	\item Address the issue using a model similar to the one applied for {\em nuisance parameters}. \label{i:prof}
 \end{enumerate}
 
-A proposta \ref{i:prof} se baseia em métodos como a verossimilhança perfilhada e a verossimilhança condicional, que são
-propostas {\em ad hoc} usadas para reduzir o estudo de modelos estatísticos multiparamétricos a um parâmetro por vez.
-Um uso típico é dado ao ajustar uma distribuição normal a uma série de dados: embora, estritamente, as hipóteses que possam
-ser comparadas sejam dadas por pares $(\mu = \mu_0, \sigma = \sigma_0)$ 
-representando um valor fixo para a média e desvio padrão dessa normal, 
-é possível comparar uma aproximação para suporte relativo para diferentes valores para a média, com o desvio padrão livre
-- portanto, caracterizando a hipótese composta $(\mu = \mu_0, \sigma \geq 0)$.
-Vamos retomar esta proposta na seção \ref{sec:plue}.
+Proposal \ref{i:alt} is based on the axiomatic formulation of a generalized law of likelihood (GLL) that
+is compatible with the law of likelihood (LL) for simple hypothesis for simple hypothesis, but able to extend
+its domain for composite hypothesis. And propostal \ref{i:ext} is based on the use of a weaker definition
+of statistical evidence, based on a weak law of likelihood (WLL). We will review some existing results related
+to these proposals in the following sections.
 
-A proposta \ref{i:alt} se baseia na formulação axiomática de uma lei geral, GLL (do inglês Generalized Law of Likelihood),
-que seja compatível com a lei da verossimilhança LL
-para hipóteses simples, mas que extenda seu domínio para hipóteses compostas. Em contraste, a proposta \ref{i:ext} 
-propõe utilizar uma definição mais fraca de evidência, baseada em uma lei fraca da verossimilhança (WLL, do inglês
-Weak Law of Likelihood), tal que aceitar LL implique em aceitar WLL, mas a conversa não seja verdadeira.
+Proposal \ref{i:prof} is based on methods such as profiled likelihood, which are {\em ad hoc} methods
+widely used to reduce the study of multiparametric statistical models to visualizing one parameter at a time.
+A typical use for these methods is exemplified by the problem of fitting a normal distribution over some data.
+While, strictly, the comparable hypothesis must be given by pairs $(\mu = \mu_0, \sigma = \sigma_0)$,
+representing one value for the mean and on for the variance of the distribution, it is possible to
+compare the approximate support for different values for the mean, while leaving the variance free to assume
+any viable value - thus treating the composite hypothesis $(\mu = \mu_0, \sigma \geq 0)$. We will get back
+to this proposal in section \ref{sec:plue}.
 
-\section{Uma lei geral de verossimilhança}\label{sec:GLL}
+\section{GLL: A general law of likelihood}\label{sec:GLL}
 
 Talvez a generalização mais óbvia para a lei da verossimilhança para hipóteses compostas seja tomar o máximo (ou supremo,
 no casos em que o máximo não existe) da verossimilhança de suas hipóteses simples. Esse é o caminho perseguido por
@@ -633,7 +418,7 @@ Let us recall the [assertion] that all our sets (the sample space, the parameter
 Novamente, o grande problema ao aceitar esta generalização é encontrar uma medida de força de evidência 
 compatível.
 
-\section{Uma lei fraca de verossimilhança}
+\section{WLL: A weak law of likelihood}
 
 Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
 de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
@@ -689,8 +474,8 @@ o paradigma da verossimilhança parece estar encravado dentro do pensamento Baye
 nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
 Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
 essa singularidade.
-:
-\section{PLUE: uma proposta de perfilhamento de verossimilhança}\label{sec:plue}
+
+\section{PLUE: a proposal for likelihood profiling}\label{sec:plue}
 
 Nesta seção, vamos descrever uma metodologia tentativa para a realização de análises de incerteza
 baseada no perfilhamento da verossimilhança dos parâmetros. Argumentamos que essa metodologia é
@@ -698,10 +483,10 @@ intuitivamente atraente dentro de um paradigma de verossimilhança.
 Vamos nos referir ao nosso
 procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
 
-\subsection{Intuição}
+\subsection{Intuition}
 
 Suponha que temos em mãos um modelo de crescimento populacional estruturado como aqueles discutidos
-nas seções \ref{Leslie} e \ref{Tribolium}, e um conjunto de dados a partir dos quais podemos calcular
+por \citep{Chalom12}, e um conjunto de dados a partir dos quais podemos calcular
 as taxas de sobrevivência, crescimento e fertilidade para a espécie. 
 
 De posse desses dados, gostaríamos de fazer as seguintes perguntas:
@@ -783,7 +568,7 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 	\label{fig:esquema}
 \end{figure}
 
-\subsection{Método}
+\subsection{Method}
 \begin{description}
 	\item[Definições]
 		Considere um modelo de interesse biológico qualquer - vamos chamá-lo de modelo biológico, para
@@ -817,7 +602,7 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 		conjunto, podem ser utilizados para investigar as regiões de plausibilidade para $y$.
 \end{description}
 
-\section{Estudo de caso 3: um modelo mínimo}
+\section[Case study]{Case study: a minimal model for population growth}
 
 Um modelo de população estruturada que pode ser considerado mínimo é o modelo
 com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por \cite{Caswell08} 
@@ -867,32 +652,34 @@ funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sob
 podem ser vistos na seção \ref{apmat}).
 
 <<load, fig=F>>=
+# First, we set the random seed to ensure reproducibility:
 set.seed(42)
+# Loads the pse package:
 library(pse)
-# Helper functions for the model
+# Helper functions for the model:
 tr <- function (A) return(A[1,1]+A[2,2])
 A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
 getlambda = function (sigma, f, gamma) {
-	A.to.lambda (matrix(c(sigma*(1-gamma), f, sigma*gamma, sigma), ncol=2, byrow=TRUE) )
+	A.to.lambda (matrix(c(sigma*(1-gamma), f, 
+                        sigma*gamma, sigma), 
+                      ncol=2, byrow=TRUE) )
 }
 getlambda = Vectorize(getlambda)
 model <- function(x) getlambda(x[,1], x[,2], x[,3])
 
 factors = c("sigma", "f", "gamma")
-
-N = 10000
-
-# pop inicial: juv, ad, total
+N = 50000
+# Initial population: juveniles, adults, total
 n <- c(10, 15); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev.totais
+# Observed quantities: matured, born, survival
 obs <- c(3, 2, 23)
-# melhor chute para os parametros
+# Best guess for the parameters
 sigma <- obs[3]/n.t
 f <- obs[2]/n[2]
 gamma <- obs[1]/n[1]
 start = c(sigma, f, gamma)
 lambda <- getlambda(sigma, f, gamma)
-# probability distribution. It's the POSITIVE LL, because I inverted it somewhere.
+# probability distribution. It's the POSITIVE LL.
 # NOTE: LL function uses GLOBAL obs and n!!!
 LL <- function (x) 
 {
@@ -902,8 +689,7 @@ LL <- function (x)
 	if (is.nan(t)) return (-Inf);
 	return(t);
 }
-LLs <- function(x) suppressWarnings(LL(x))
-plue <- PLUE(model, factors, N, LLs, start, method="mcmc", opts=list(blen=10), nboot=50)
+plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
 minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
 @
 
@@ -988,7 +774,7 @@ plot(largePlue)
 	\label{fig:lambda2}
 \end{figure}
 
-\subsection{Detalhes matemáticos}\label{apmat}
+\subsection{Mathematical details}\label{apmat}
 Nesta seção, vamos desenvolver alguns detalhes matemáticos sobre o exemplo acima.
 
 Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
@@ -1035,11 +821,12 @@ O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo
 	\lambda = \frac{1}{2} \left(\operatorname{tr}(A) + \sqrt{\operatorname{tr}^2(A) - 4 \operatorname{det}(A)} \right)
 \end{align}
 
-\section{\R code for performing the analyses}
+\subsection{\R code for performing the analyses}
 
 \SweaveOpts{fig=F,echo=T}
-<<seed>>=
-set.seed(42)
+Code for loading the package and creating the model objects:
+<<lload, echo=TRUE>>=
+<<load>>
 @
 
 This document presents a brief introduction to a proposed methodology for the likelihood profiling of
@@ -1067,7 +854,7 @@ parameters. This answer is given by profiling the likelihood of the model parame
 leads to a function that is not a true likelihood function (thus not possessing many desirable properties),
 it is generally accepted as a valid exploratory analysis.
 
-\section{Biological and statistical models}
+\subsubsection{Biological and statistical models}
 First, we should define our interest model. We will refer to this model as the biological model\footnote{
 Because the models of interest in my research are biological. It can also be a physical model, 
 geochemical model, etc.} to distinguish this from the statistical model we will be using to 
@@ -1118,13 +905,14 @@ LL <- function (x)
 	if (is.nan(t)) return (-Inf);
 	return(t);
 }
+LLs <- function(x) suppressWarnings(LL(x))
 @
 Please note that this function uses the global variable {\em obs}, and that it return minus infinity instead
 of not-a-number in cases where the likelihood is not properly defined. This can happen, for instance, if
 any of the values of {\em x} is negative.
 Also, notice that this function converts the third element of {\em x} to integer, as the {\em dbinom} function does not accept a fractional value for the {\em size} parameter.
 
-\section{Profiling: sampling and aggregating the results}
+\subsubsection{Profiling: sampling and aggregating the results}
 After carefully constructing the model of interest and the likelihood function, as described in the 
 previous section, performing the PLUE analysis is simply a matter of calling the {\em PLUE} function.
 This function performs three steps. First, it performs a Monte Carlo sampling of the likelihood function
@@ -1144,7 +932,7 @@ set.seed(42)
 N = 10000
 # The starting point for the Monte Carlo sampling
 start = c(mean(obs$r), mean(obs$K), 2*max(obs$Xo))
-plue <- PLUE(model, factors, N, LL, start)
+plue <- PLUE(model, factors, N, LLs, start)
 @
 
 \textbf{Important note:} the example above uses a $N$ of 10.000, which is very low. For practical applications, always use larger samples and the `mcmc' method.
