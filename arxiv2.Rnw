@@ -319,7 +319,8 @@ to this proposal in section \ref{sec:plue}.
 
 \section{GLL: A general law of likelihood}\label{sec:GLL}
 
-The most straightforward way to pursue a general law of likelihood is by considering the maximum of the
+The most straightforward way to pursue a general law of likelihood is by considering the maximum\footnote{
+Or more precisely, the {\em supremum}, as the set of likelihoods does not need to have a maximum} of the
 likelihoods of the simple hypothesis as the likelihood of the composite hypothesis. This is precisely the
 path followed by \cite{Zhang09, Zhang13} and \cite{Bickel10}. We will follow the more didactic approach by
 Zhang. Let us consider two hypothesis, $H_1 : \theta \in \Theta_1 \subset \Theta$ versus 
@@ -367,7 +368,6 @@ likelihood ratio is used to quantify the strenght of evidence under the law of l
 It is trivial to see that the GLL is compatible with LL in the case of simple hypothesis, and with some
 particular cases proposed by \citep{Royall97}. However, it is striking to see that this formulation of the 
 GLL allows for an {\em absolute} degree of hypothesis confirmations. One hypothesis 
-
 $H_1: \theta \in \Theta_1$ can be absolutely supported if $\sup \mathcal{L}(\Theta_1|\bu{x}) > 
 \sup \mathcal{L} (\Theta_1^c|\bu{x}$, where $^c$ represents the complimentary set.
 That is equivalent to $L(\Theta_1, \Theta_1^c) > 1$. This absolute likelihood will always be zero
@@ -428,56 +428,45 @@ vital rates of the population, such as survival, growth and fertility rates.
 
 With this data in hands, we would like to ask the following questions:
 
-{\em ``Qual o suporte que os dados dão para a afirmação de que a população está estável {\em versus} 
-em declínio? Qual o suporte que os dados dão para a afirmação de que a população vai se extinguir em menos 
-de 10 anos {\em versus} em mais de dez anos?''}
+{\em ``What is the support given by the data to the affirmation that the population is stable {\em versus}
+that it is declining? What is the support given by the data to the affirmation that the population will
+become extinct in up to 10 years {\em versus} more than 10 years?''}
 
-Essas perguntas não podem ser respondidas de um ponto de vista verossimilhantista, por corresponderem
-a hipóteses compostas sobre os parâmetros. No entanto, podemos tomar o ponto de máxima verossimilhança
-como um ponto privilegiado, e restringir nossa pergunta à forma:
+These questions cannot be answered under a strict Likelihoodist point of view, as they refer to
+composite hypothesis over the parameters. However, we can take the maximum likelihood point as 
+privileged and restrict the question to the form:
 
-{\em ``Qual o suporte que os dados dão para o ponto de máxima verossimilhança {\em versus} qualquer ponto
-cuja taxa de crescimento populacional seja negativa?''}
+{\em ``What is the support given by the data to point of maximum likelihood {\em versus} any point in which
+the population growth is negative?''}
 
-Esquematicamente, podemos ver na figura \ref{fig:esquema} que estamos comparando a verossimilhança
-do ponto de máximo global ($x_{max}$) com o máximo obtido em uma região distinta ($x_{lim}$). Esta pergunta
-compara uma hipótese simples, a que corresponde à máxima verossimilhança, com uma hipótese composta.
-Esse tipo de comparação evita os problemas e peculiaridades que surgem em propostas de leis gerais de 
-verossimilhança devido à sobreposição entre a verossimilhança de hipóteses diferentes. Em termos dos axiomas
-de Zhang\footnote{vide seção \ref{sec:GLL}}, estamos aceitando uma forma fraca do primeiro, mas não o segundo.
+Schematically, we can see in figure \ref{fig:esquema} that we are comparing the likelihood at the global
+maximum ($x_{max}$) with the maximum value attained at a distinct region ($x_{lim}$). This kind of question
+is now comparing one simple hypothesis, corresponding to the maximum likelihood, with a composite hypothesis.
+This kind of comparation avoids the problems and quirks that afflict the general laws of likelihood due to
+the superposition of likelihood intervals. In terms of the Zhang axioms (see section \ref{sec:GLL}),
+we are accepting a weak form of the first, but not the second.
 
-Esse raciocínio pode ser expandido para perguntarmos:
+This reasoning can be extended to the following:
 
-{\em ``Quais são os pontos do espaço de parâmetros para os quais o suporte é maior do que uma certa distância
-$\delta$ em relação ao ponto de máxima verossimilhança?''}
+{\em ``Which are the points in the parameter space for which the support given by the data 
+{\em versus} the point of maximum likelihood is greater than a certain threshold $\delta$?''}
 
-Ao fazer essa pergunta para uma série de valores de $\delta$, estamos efetivamente perfilhando a 
-verossimilhança de cada ponto do espaço de parâmetros. Neste ponto, precisamos apontar que procedimentos
-de perfilhamento vêm sendo utilizados na inferência por verossimilhança há décadas para reduzir a 
-dimensionalidade do espaço de parâmetros - seja na forma de uma simples eliminação de ``{\em nuisance
-parameters}'', seja de forma elaborada através de análises de componentes principais. 
-Considere, por exemplo, o caso típico em que desejamos ajustar uma distribuição normal a uma série de dados,
-e ao invés de compararmos pares da forma $(\mu = \mu_0, \sigma = \sigma_0)$ representando um valor fixo para 
-a média e desvio padrão dessa normal, desejamos fazer afirmações apenas sobre a média $\mu$ desta normal.
-Já apontamos que este raciocínio corresponde a encarar hipóteses compostas da forma 
-$(\mu = \mu_0, \sigma \geq 0)$. Agora, vamos notar que isto é equivalente a considerar a função 
-$g(\mu, \sigma) = \mu$ - ou seja, estamos projetando o espaço bidimensional formado por $\mu$ e $\sigma$
-em um espaço unidimensional. Nossa proposta pode ser considerada uma generalização deste
-procedimento: ao invés de considerar apenas funções que removam um dos parâmetros, estamos considerando
-qualquer função não-inversível.
+By asking the same question for different values of $\delta$, we are effictively profiling the 
+likelihood surface for the parameter space. In this point, we need to remember that profiling 
+methods for likelihood are used in inference since the decade of 1970 to reduce the dimensionality
+of parameters spaces, in particular in the form of elimination of ``{\em nuisance parameters}''.
+Even if the status of this procedures is not fully understood under the likelihood
+paradigm (see for example \citep{Kalbfleisch70} for the relation between nuisance parameters and fiducial
+inference), these methods are generally accepted as a valid procedure for exploratory analysis.
 
-Há que se considerar, no entanto, que técnicas de remoção de ``{\em nuisance parameters}'' dentro do paradigma
-de verossimilhança no caso geral se assentam sobre questões que não estão totalmente resolvidas - e que
-se situam na fronteira entre o pensamento verossimilhantista e a inferência fiducial \citep{Kalbfleisch70,
-Edwards72}. Se estes métodos não podem ser, em geral, encarados como forma de inferência tão rigorosa quanto
-a inferência pela função de verossimilhança, é bem aceito que esta é uma análise exploratória válida. Nossa
-generalização se encontra no mesmo estado: embora ela não possa ser vista como uma forma rigorosa de 
-inferência, ela pode ser usada de forma exploratória sem incorrer em problemas mais profundos que a perfilhagem
-tradicional.
-
-Lembramos que, se do ponto de vista da análise de verossimilhança, nossa proposta não apresenta grande 
-inovação, na literatura de análise de sensibilidade ela é única em propor uma metodologia que utilize toda
-a informação contida nas amostras coletadas. 
+We have already discussed the typical example of fitting a normal distribution to a data set. In
+this example, the likelihood is defined for pairs $(\mu = \mu_0, \sigma = \sigma_0)$,
+but it is usual to make affirmations about the average $\mu$ of the distribution, without refering to $\sigma$.
+However, this is equilavent to consider the model $g(\mu, \sigma) = \mu$, that is, a model that
+projects the bidimensional space formed by $\mu$ and $\sigma$ into an unidimensional space. Our proposal
+is merely to use this same reasoning for general non-invertible functions. Even if this is nothing
+new under the optics of the likelihood profiling, this is the first time that this methodology is proposed
+in the literature of uncertainty analyses, to the best of our knowledge.
 
 \begin{figure}[htb]
 <<general, fig=TRUE>>=
@@ -507,44 +496,46 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 
 \subsection{Method}
 \begin{description}
-	\item[Definições]
-		Considere um modelo de interesse biológico qualquer - vamos chamá-lo de modelo biológico, para
-		diferenciar do modelo estatístico que será apresentado abaixo. Vamos considerar o caso simples
-		de um resultado escalar $y$ de um modelo com um vetor de entradas $\bu{\theta}$: $y = F(\bu{\theta})$.
-		Vamos representar por $\chi$ o conjunto de dados coletados. Se temos $n$ parâmetros e $m$ 
-		observações, $\chi$ é uma tabela de $n$ colunas por $m$ linhas.
+	\item[Definitions]
+    Consider first a mathematical model of interest. We will call this the ``biological model''\footnote{
+    But it could be a physical model, hidrological model, geochemical model, etc.}
+    to differentiate between this and the statistical model presented below. We will consider the simple
+    case of a scalar response $y$ for a model with a vector input $\bu{\theta}$: 
+		$y = F(\bu{\theta})$.
 
-		Formule diferentes modelos para explicar seus dados (ex, fertilidade constante ou agrupada, taxa de 
-		crescimento constante ou decrescente com a classe de tamanho, modelo com 4 ou com 5 classes de 
-		tamanho, etc) - este vai ser designado o modelo estatístico.
-		Escreva a função de verossimilhança $\mathcal{L}(\bu{\theta}|\chi)$ para cada modelo. 
-		Encontre o conjunto de parâmetros que melhor ajusta seus dados para cada modelo e 
-		determine o valor de AIC para cada modelo estatístico. 
-	\item[Amostragem]
-		De posse do modelo estatístico de melhor AIC\footnote{É possível que uma abordagem de inferência
-		multi-modelo possa ser utilizada em casos de empate de AIC
-		\citep{Burnham02}}, utilize um método de Monte Carlo para gerar um grande número de amostras com
-		densidade proporcional a $\mathcal{L}(\bu{\theta}|\chi)$. Vamos chamar esta amostra discreta de 
-		$\bu{A}$. À cada amostra $A_{i \cdot}$ da função $\mathcal{L}(\bu{\theta}|\chi)$, associamos 
-		$L_i = \mathcal{L}(A_{i \cdot} | \chi)$, o valor de verossimilhança desta amostra, e 
-		$Y_i = F(A_{i \cdot})$, o resultado do modelo biológico quando executado sobre esta amostra.
-		Normalize $L_i$ de forma que o mínimo de verossimilhança seja no $0$.
-	\item[Agregação]
-		A partir dos valores resultantes do modelo $Y_i$ e seus valores de verossimilhança $L_i$ associados,
-		construa o perfil superior para a verossimilhança de $y$ da seguinte forma: 
-		para cada incremento $z$, encontre o maior valor $\bar y$ em $Y_i$ tal que $L_i \leq z$. 
-		Anote este valor como $P_{sup}(z) = \bar y$ e repita para um valor maior de $z$.
+    Let's represent by $\chi$ the set of data collected in field or laboratory experiments. If we have
+    $n$ parameters and $m$ observations, $\chi$ is a table with $n$ columns and $m$ rows.
 
-		Proceda de forma análoga para construir o perfil inferior de verossimilhança. Os dois perfis, em 
-		conjunto, podem ser utilizados para investigar as regiões de plausibilidade para $y$.
+    Now formulate different models to explain your data (ex: constant or grouped fertility, constant or
+    decreasing growth rate, models with 4 or 5 size classes, etc.). These will be the statistical models.
+    Write the likelihood function $\mathcal{L}(\bu{\theta}|\chi)$ for each model, find the best
+    set of parameters that fits your data and determine the value of AIC for each statistical model
+    (see for example \citep{Burhnam02} for details in this step). 
+	\item[Sampling]
+    Take the model with the best AIC, and use a Monte Carlo sampling to generate a large number of 
+    samples with density proportional to 
+    $\mathcal{L}(\bu{\theta}|\chi)$ (for example, use the Metropolis algorithm \citep{Tierney94}). 
+    We will call this sample $\bu{A}$. To each element in 
+    $A_{i \cdot}$ (taken from $\mathcal{L}(\bu{\theta}|\chi)$), we have associated the value of 
+		$L_i = \mathcal{L}(A_{i \cdot} | \chi)$, the likelihood of this sample, and we take
+		$Y_i = F(A_{i \cdot})$, the result of the biological model over this sample.
+		Normalize $L_i$ to have the minimum log-likelihood in $0$.
+	\item[Aggregation]
+    Now we take the model results $Y_i$ and associated likelihoods $L_i$, and create an upper profile
+    in the following manner: for each increment $z$, find the largest value 
+		$\bar y$ in $Y_i$ such that $L_i \leq z$. Note down this value as $P_{sup}(z) = \bar y$,
+    and repeat for a larger value of $z$.
+
+    Proceed in an analogous fashion to build the lower likelihood profile. Both profiles, taken together,
+    can be used to investigate the plausibility regions of $y$ under $\mathcal{L}(\bu{\theta}|\chi)$.
 \end{description}
 
 \section[Case study]{Case study: a minimal model for population growth}
 
-Um modelo de população estruturada que pode ser considerado mínimo é o modelo
-com juvenis não-reprodutivos e adultos reprodutivos, modelo discutido por \cite{Caswell08} 
-como um exemplo simples da aplicação da análise de sensibilidade analítica. 
-O modelo é associado à seguinte matriz:
+Here, we will study a structured population model that be considered minimal:
+the life stages are non-reproducing juveniles and reproductive adults. This example 
+is presented by \citep{Caswell08} as a simple example of the analytical sensitivity analysis. The model
+is described by the following matrix:
 
 \begin{equation}
  A = \left[
@@ -555,13 +546,14 @@ O modelo é associado à seguinte matriz:
  \right]
 \end{equation}
 
-Aqui, $\sigma_1$ é a probabilidade de sobrevivência de juvenis, $\sigma_2$ é a probabilidade de sobrevivência de adultos, 
-$\gamma$ é a probabilidade de maturação, e $f$ é a fertilidade dos adultos. Vamos representar por $\lambda$ o maior
-autovalor dessa matriz.
+Here, $\sigma_1$ is the probability of juvenile survival, $\sigma_2$ is the probability of adult survival,
+$\gamma$ is the maturation probability and $f$ is the adult fertility. We will represent by $\lambda$ the
+largest eigenvalue of this matrix, and consider this as the model response.
 
-Vamos primeiramente presumir que a sobrevivência independe do estágio ($\sigma_1=\sigma_2=\sigma$). Também vamos fazer
-a suposição de que é possível marcar inequivocamente quais dos juvenis nasceram no último ciclo, e quais adultos
-passaram pelo processo de maturação no último ciclo, para chegar ao modelo:
+To simplify some calculations, let's presume that the survival rate does not depend on the life stage
+($\sigma_1=\sigma_2=\sigma$). We will also suppose that it is possible to unequivocally mark the juveniles
+that were born in the last time interval, and which passed through the maturation process to become adults
+in the last time interval. The model becomes:
 
 \begin{equation}
  A = \left[
@@ -572,11 +564,13 @@ passaram pelo processo de maturação no último ciclo, para chegar ao modelo:
  \right]
 \end{equation}
 
-Para animais de tamanho grande, com um filhote por estação reprodutiva, $f$ pode ser aproximado pela proporção de
-adultos que gera prole, $\sigma$ é dado pela proporção de indivíduos que sobrevivem por um ciclo e $\gamma$ pela
-proporção de juvenis que se tornam adultos por ciclo, de forma que os três parâmetros podem ser modelados por
-distribuições binomiais, com probabilidades $\theta_i$ desconhecidas e número de tentativas dados, respectivamente, por
-$n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n_t$, o tamanho total da população:
+For large animals with one offspring for reproductive seasons, such as whales, $f$ can be modeled as a the
+proportion of adults that generate offspring. The parameter $\sigma$ is modeled as the proportion of 
+individuals that survive from one time interval to another, and $\gamma$ as the proportion of juveniles that
+maturate from one time interval to another. This way, all of the three parameters can be modeled as
+binomial distributions with unknown probabilities 
+$\theta_i$ and number of trials given by 
+$n_1$, the number of juveniles, $n_2$, the number of adults, and $n_t$, the total population size:
 
 \begin{align}
 	\gamma & \sim \operatorname{binom}(\theta_1, n_1) \\
@@ -584,9 +578,8 @@ $n_1$, o número original de juvenis, $n_2$, o número original de adultos, e $n
 	\sigma & \sim \operatorname{binom}(\theta_3, n_t = n_1+n_2)
 \end{align}
 
-Vamos utilizar ainda a suposição de que os parâmetros são independentes neste exemplo, para chegar às 
-funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sobre a construção dessa função
-podem ser vistos na seção \ref{apmat}).
+We will also assume that the parameters are independent, to arrive at the likelihood functions graphed in
+\ref{fig:LikFunc} (mathematical details are presented in section \ref{apmat}).
 
 <<model>>=
 tr <- function (A) return(A[1,1]+A[2,2])
@@ -637,12 +630,13 @@ plue <- PLUE(model, factors, N, LL, start,
 minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
 @
 
-Vamos examinar um exemplo numérico com a população inicial contendo \Sexpr{n[1]} juvenis e \Sexpr{n[2]} adultos. O tamanho
-populacional pequeno é importante para acentuar as diferenças entre as abordagens. Após um ciclo, observamos \Sexpr{obs[1]}
-adultos recém maduros, \Sexpr{obs[2]} nascidos e \Sexpr{obs[3]} sobreviventes. É fácil ver na figura \ref{fig:LikFunc}
-que a melhor estimativa para
-cada parâmetro é dada por $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} e $\gamma = $ \Sexpr{round(gamma,2)}.
-Neste caso, o valor de $\lambda$ é \Sexpr{round(lambda,2)}.
+We will examine a numerical example with the initial population having \Sexpr{n[1]} juveniles and\Sexpr{n[2]}
+adults. The population size is very small, which is important to highlight the difference between the
+analytical and stochastic approaches. After one time step, we can see 
+\Sexpr{obs[1]} recent adults, \Sexpr{obs[2]} born juvenilies and \Sexpr{obs[3]} total survivors. It's 
+easy to see from the figure \ref{fig:LikFunc} that the best estimate for this parameters is given by
+$\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} and $\gamma = $ \Sexpr{round(gamma,2)}.
+Also, the corresponding value for $\lambda$ is \Sexpr{round(lambda,2)}.
 
 \begin{figure}
 <<LikFunc>>=
@@ -650,27 +644,27 @@ curve(dbinom(obs[3], n.t, x))
 curve(dbinom(obs[2], n[2], x), col = 2, add=TRUE)
 curve(dbinom(obs[1], n[1], x), col = 3, add=TRUE)
 @
-	\caption{Função de verossimilhança para cada parâmetro do modelo. Preto = $\sigma$, vermelho = $f$ e verde = $\gamma$.}
+	\caption{Likelihood function for each parameter in the model. Black = $\sigma$, red = $f$ and green = $\gamma$.}
 	\label{fig:LikFunc}
 \end{figure}
 
-As funções de verossimilhança de cada parâmetro
-foram utilizadas para gerar \Sexpr{get.N(plue)} amostras pelo método de Metropolis, a partir das quais 
-geramos uma distribuição empírica para $\lambda$, de forma proporcional à verossimilhança dos parâmetros.
-Esta distribuição de valores de $\lambda$, conjuntamente com os valores de verossimilhança associados a cada
-input, foi usada para gerar um perfil de verossimilhança para o resultado do modelo. O mínimo de verossimilhança para
-$\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
+The likelihood functions for each parameter were used to generate
+\Sexpr{get.N(plue)} samples using Metropolis algorithm, from which we derive an empirical distribution for
+$\lambda$, which is proportional to likelihood of the parameters.
+This $\lambda$ distribution, together with the likelihood values associated with each input, was used to
+construct a likelihood profile for the model result. The minimum likelihood for 
+$\lambda$ is attained in $\lambda = $ \Sexpr{round(minlik,2)}.
 
-As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
-resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
-discutidas em \citep{Chalom12}. É importante ressaltar que estas análises foram realizadas sobre uma
-vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária, centrada no ponto de máxima verossimilhança.
+Figures \ref{fig:lambdascatter} and \ref{fig:lambdaprcc} show preliminary results of the application of
+sensitivity techniques (such as described in \citep{Chalom12}) to the generated samples. It is important
+to highlight that this analyses have been carried out in a neighborhood of the maximum likelihood point
+that is not infinitesimal, nor arbitrary, which would be the case in analytical and other stochastic methods.
 
 \begin{figure}
 <<plot, fig=TRUE>>=
 plot(plue, xlim=c(0.6, 1.3))
 @
-	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
+	\caption{Likelihood profile for the results of a minimal model of structured population growth.}
 	\label{fig:lambda}
 \end{figure}
 \begin{figure}
@@ -678,16 +672,16 @@ plot(plue, xlim=c(0.6, 1.3))
 # Sensitivity analyses over lambda
 plotscatter(plue)
 @
-	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
-	mínimo, gerados a partir de uma abordagem de verossimilhança.}
+	\caption{Graph of the dispersion of parameter values (in the x axis) and results of the 
+  minimal model of structured population growth, generated by a likelihood profile method.  }
 	\label{fig:lambdascatter}
 \end{figure}
 \begin{figure}
 <<prcc, fig=TRUE>>=
 plotprcc(plue)
 @
-	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
-	estruturado mínimo de crescimento populacional}
+	\caption{Partial Rank Correlation Coefficient (PRCC) between the input and output values for a 
+  minimal model of structured population growth.}
 	\label{fig:lambdaprcc}
 \end{figure}
 
@@ -697,18 +691,18 @@ n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
 largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
 @
 
-A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
-É importante notar que esses resultados são para uma única amostra, e um tamanho amostral decididamente pequeno. 
-Considerando uma amostra \Sexpr{Mult} vezes maior, na qual todas as proporções se mantenham as mesmas (ou seja,
-o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por \Sexpr{Mult}), a análise resulta em
-um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
+The analysis shown indicates that the estimated value of $\lambda$ is very unreliable, presenting a
+very open profile. It is important to notice that this happens due to the small sample size. If we consider
+a sample in which all the observations are \Sexpr{Mult} times larger, but keeping all the proportions,
+the analysis results in a more closed profile (fig. \ref{fig:lambda2}).
 
 \begin{figure}
 <<larger, fig=TRUE>>=
 plot(largePlue, xlim=c(0.6, 1.3))
 @
-	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
-	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
+	\caption{Likelihood profile for the results of a minimal model of structured population growth, but with
+  larger sample size. In comparison to \ref{fig:lambda}, this profile is more closed and the plausibity
+  regions are narrower. }
 	\label{fig:lambda2}
 \end{figure}
 
