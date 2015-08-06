@@ -510,7 +510,7 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
     decreasing growth rate, models with 4 or 5 size classes, etc.). These will be the statistical models.
     Write the likelihood function $\mathcal{L}(\bu{\theta}|\chi)$ for each model, find the best
     set of parameters that fits your data and determine the value of AIC for each statistical model
-    (see for example \citep{Burhnam02} for details in this step). 
+    (see for example \citep{Burnham02} for details in this step). 
 	\item[Sampling]
     Take the model with the best AIC, and use a Monte Carlo sampling to generate a large number of 
     samples with density proportional to 
