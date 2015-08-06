@@ -10,7 +10,7 @@
 \setlength{\topmargin}{0cm}
 
 % Create friendly environments for theorems, propositions, &c.
-\newtheorem{axiom}{Axioma}[section]
+\newtheorem{axiom}{Axiom}[section]
 \newtheorem{theorem}{Theorem}[section]
 \newenvironment{proof}[1][Proof]{\begin{trivlist}
 	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
@@ -22,7 +22,7 @@
 
 \usepackage{Sweave}
 \begin{document}
-\SweaveOpts{fig=T,echo=F}
+\SweaveOpts{fig=F,echo=F}
 \setkeys{Gin}{width=0.8\textwidth}
 
 \title{Uncertainty analysis and composite hypothesis under the likelihood paradigm}
@@ -61,11 +61,11 @@ and calculations so that your reader can ask the same question, and then carry o
 
 The use of mathematical and computational models is now widespread in several fields of the biological 
 sciences. However, several applications of these models lack one or more steps that should be taken in
-order to correctly understand and interpret its results \citep{Bart95}. Though seldomly discussed together,
+order to correctly understand and interpret its results \citep{Bart95}. Though seldom discussed together,
 five steps can be seen as fundamental in this process: {\em verification, validation, calibration, 
 uncertainty analysis} and {\em sensitivity analysis}. 
 
-The two first steps are very tighly correlated, both in historical terms and in the common practice,
+The two first steps are very tightly correlated, both in historical terms and in the common practice,
 so it's common to refer to the set of validation and verification as ``V \& V''. We can think of verification
 as trying to ensure that the computer code is correctly implementing the desired model, while validation
 is trying to ensure that the theoretical model is capable of reproduce the actual phenomena of interest.
@@ -73,7 +73,7 @@ Another way to see it is to think that validation is determining that the model 
 equations, while verification is determining that the model is solving the equations right \citep{ASC2010}.
 
 The third step, calibration, consists in determining the right values for the input parameters of a model
-in order to enhance the correspondency between a model run and one observed situation. An appropriate
+in order to enhance the correspondence between a model run and one observed situation. An appropriate
 calibration of the model is then essential for the model to be used in a predictive fashion \citep{ASC2010}.
 
 The last steps consist in determining how much the variation of the input parameters is translated into
@@ -107,7 +107,7 @@ to a statistical theory, the sensitivity of biological models was developed as a
 the linear expansion of functions around a privileged point. Depending on the nature of the experiments
 designed to measure vital rates, there may be a plethora of methods that might be used to determine the
 set of values that best represent the status of knowledge that we have about a given natural system - and
-these methods may stem from frequentist, bayesian or likelihood-based approaches to the statistical theory.
+these methods may stem from frequentist, Bayesian or likelihood-based approaches to the statistical theory.
 The analytical theory of SUA, on the other hand, is in great part due to the work of Hal 
 Caswell \citep{Caswell89}, and proceeds by taking a model that is already optimally parametrized, and studying
 the first order derivatives of the model answer in relation to each input parameter. This formulation 
@@ -140,7 +140,7 @@ The main advantages of using a stochastic formulation are:
 \begin{enumerate}
   \item The analytical procedures are local, thus responding only to what happens after infinitesimal
     perturbations, and depends on the model functions being ``well-behaved'' in the chosen neighborhood.
-    The stochastical procedures are global and have no such limitation.
+    The stochastic procedures are global and have no such limitation.
   \item Any stochastic approach allows for the information contained in the sample variability to be used
     to represent the uncertainty about the parameters.
   \item By accepting the Likelihood Principle, we know that all relevant information on the samples is
@@ -195,7 +195,7 @@ $p_A(x)/p_B(x)$, measures the strength of that evidence.''
 
 The divergence between the likelihood school and frequentist school is due to the later rejecting the
 likelihood principle (although it accepts the principles of sufficiency and conditionality). On the other 
-hand, the Bayesian school generally disagrees with the likelihoodists by the interpretation of the law of
+hand, the Bayesian school generally disagrees with the Likelihoodists by the interpretation of the law of
 likelihood.
 
 The likelihood school of thought can be seen as an intellectual heir to the Neyman-Pearson hypothesis
@@ -213,25 +213,25 @@ whatever remains, {\em however improbable}, must be the truth?''.
 
 However, while Neyman and Pearson will use the likelihood ratio from several hypothesis to guide the 
 {\em behavior} of the scientist in accepting or rejecting hypothesis, Royall and Edwards will separate
-the concepts of (1) the degree of certainty that we have about one hypothesis; (2) the strenght of evidence
+the concepts of (1) the degree of certainty that we have about one hypothesis; (2) the strength of evidence
 that some data confers to one hypothesis over the others and (3) the course of action that should be taken
-after examining such evidences. While Neyman and Pearson conflate the strenght of evidence (2) with the
-course of action (3), and Bayesian analysis conflate the degree of certainty (1) with the strenght of 
+after examining such evidences. While Neyman and Pearson conflate the strength of evidence (2) with the
+course of action (3), and Bayesian analysis conflate the degree of certainty (1) with the strength of 
 evidence (2), the proposers of Likelihoodism propose that the role of statistical inference is to provide
-{\em only} the strenght of evidence \citep{Royall97}. 
+{\em only} the strength of evidence \citep{Royall97}. 
 The degree of certainty and course of action should take into account
 a multiplicity of other factors, and should not be part of the inference. One of the greatest precursors 
 of the statistical thought, Marquis Pierre-Simon de Laplace, had already foreshadowed this position with
-the problem of the number of judges necessary to convict or acquit a prisioner: this decision, to Laplace,
+the problem of the number of judges necessary to convict or acquit a prisoner: this decision, to Laplace,
 needs to take into account not only the probability of convicting an innocent of acquitting a guilty 
-prisioner, but also whether the punishment will be a fine or the death sentence\citep{Laplace1814}.
+prisoner, but also whether the punishment will be a fine or the death sentence\citep{Laplace1814}.
 
-Moreover, by dissociating the strenght of evidence from the decision making, Royall and Edwards are asking
+Moreover, by dissociating the strength of evidence from the decision making, Royall and Edwards are asking
 the scientist to reveal the untransformed likelihood ratios derived from its data, instead of transforming
 it into p-values or {\em a posterioris}, so that her peers are able to assess clearly what is the presented
 evidence. By retaking the scientist role as a subjective decision maker, this proposition converges to
-Fisher's, who criticized Neyman-Pearsons programme as being useful for industrial processing, but useless
-to the scientific community. The likelihoodist proposal thus echos the words of Fisher, and also the words
+Fisher's, who criticized Neyman-Pearson's plan as being useful for industrial processing, but useless
+to the scientific community. The likelihoodist proposal thus echoes the words of Fisher, and also the words
 of the Bayesian probabilist I. J. Good:
 
 \begin{quote}
@@ -274,7 +274,7 @@ declining?''}
 
 This question, formulated over the parameters of a probability distribution, should be 
 answered by means of the likelihood function. It can be demonstrated that one-to-one functions over the
-parameters presenrve the likelihood function, such that if $\mathcal{L}(\theta|\bu{x})$ is the likelihood
+parameters preserve the likelihood function, such that if $\mathcal{L}(\theta|\bu{x})$ is the likelihood
 of $\theta$ and $\phi = f(\theta)$ is given by a one-to-one function $f(\cdot)$, the 
 likelihood of $\phi$ is given by 
 $\mathcal{L}(\phi|\bu{x}) = \mathcal{L} \left(f(\theta)|\bu{x}\right)$ \citep{Edwards72}.
@@ -306,7 +306,7 @@ Here, we will present three paths that may be pursued for this end:
 
 Proposal \ref{i:alt} is based on the axiomatic formulation of a generalized law of likelihood (GLL) that
 is compatible with the law of likelihood (LL) for simple hypothesis for simple hypothesis, but able to extend
-its domain for composite hypothesis. And propostal \ref{i:ext} is based on the use of a weaker definition
+its domain for composite hypothesis. And proposal \ref{i:ext} is based on the use of a weaker definition
 of statistical evidence, based on a weak law of likelihood (WLL). We will review some existing results related
 to these proposals in the following sections.
 
@@ -321,121 +321,68 @@ to this proposal in section \ref{sec:plue}.
 
 \section{GLL: A general law of likelihood}\label{sec:GLL}
 
-Talvez a generalização mais óbvia para a lei da verossimilhança para hipóteses compostas seja tomar o máximo (ou supremo,
-no casos em que o máximo não existe) da verossimilhança de suas hipóteses simples. Esse é o caminho perseguido por
-\cite{Zhang09, Zhang13} e \cite{Bickel10}, por exemplo. Zhang considera duas hipóteses, $H_1 : \theta \in \Theta_1 \subset \Theta$
-versus $H_2 : \theta \in \Theta_2 \subset \Theta$, e postula os seguintes axiomas (levemente modificados para coerência
-com a notação):
+The most straightforward way to pursue a general law of likelihood is by considering the maximum of the
+likelihoods of the simple hypothesis as the likelihood of the composite hypothesis. This is precisely the
+path followed by \cite{Zhang09, Zhang13} and \cite{Bickel10}. We will follow the more didactic approach by
+Zhang. Let us consider two hypothesis, $H_1 : \theta \in \Theta_1 \subset \Theta$ versus 
+$H_2 : \theta \in \Theta_2 \subset \Theta$. Now we postulate the following two axioms\footnote{The notation
+was sightly altered for coherency with the other sections}:
 
 \begin{axiom}
-	Se $\inf \mathcal{L}(\Theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, então a observação $\bu{x}$ 
-	é uma evidência a favor de $\Theta_1$.\label{ax:inf}
+	If $\inf \mathcal{L}(\Theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, then the observation
+  $\bu{x}$ is evidence supporting $\Theta_1$ over $\Theta_2$.\label{ax:inf}
 \end{axiom}
 
 \begin{axiom}
-	Se $\bu{x}$ é evidência a favor de $H_1^*$ em relação a $H_2$ e $H_1^*$ implica em $H_1$, então $\bu{x}$ é evidência de 
-	$H_1$ sobre $H_2$.\label{ax:coh}
+	If $\bu{x}$ is evidence supporting $H_1^*$ over $H_2$ and $H_1^*$ implies $H_1$, then 
+  $\bu{x}$ is evidence supporting $H_1$ over $H_2$.\label{ax:coh}
 \end{axiom}
 
-O primeiro axioma estabelece que se a imagem de $\mathcal{L} (\Theta_1|\bu{x})$ e $\mathcal{L} (\Theta_2|\bu{x})$ são intervalos
-disjuntos, portanto, se toda hipótese simples que implica em $H_1$ é suportada {\em versus} toda hipótese simples que implica
-em $H_2$, então $H_1$ é suportada {\em versus} $H_2$. Não parece haver motivo para rejeitar esse axioma, além de uma
-indisposição prévia a tratar hipóteses compostas. Já o segundo axioma é uma forma de estabelecer coerência lógica.
-É importante clarificar que esse requisito de coerência {\em não é} equivalente a supor que a estrutura lógica das hipóteses
-deve ser usada como base para justificar um grau de crença sobre $H_1^*$ ou $H_1$: se $H_1^*$ implica em $H_1$ e a recíproca
-não é verdadeira, o axioma \ref{ax:coh} {\em não} justifica que $H_1^*$ seja melhor suportada que $H_1$ por qualquer evidência.
-Destes axiomas, deriva-se uma lei geral da verossimilhança:
+The first axiom ensures that if the images of $\mathcal{L} (\Theta_1|\bu{x})$ and 
+$\mathcal{L} (\Theta_2|\bu{x})$ are disjoint intervals, or in other words, if every simple hypothesis
+that implies $H_1$ is supported over every simple hypothesis that implies $H_2$, then $H_1$ is supported
+over $H_2$. There seem to be no reason to reject this axiom, other than a predisposition to ignore composite
+hypothesis. The second axiom is used to ensure a form of logical coherence. It is important to stress that
+this coherence axiom is {\em not} used to suppose that the logic structure of the hypothesis is somehow
+preserved in the likelihood function. In particular, if $H_1^*$ implies $H_1$, the axiom \ref{ax:coh} does
+not warrant the assertion that $H_1^*$ is better supported than $H_1$.
+
+From these axioms, we can derive the following general law of likelihood (GLL):
 
 \begin{theorem}
-	\textbf{(GLL)} Se $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, então existe evidência
-	a favor de $H_1$ sobre $H_2$.
+	\textbf{(GLL)} If $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, then
+  there $\bu{x}$ is evidence supporting $H_1$ over $H_2$.
 \end{theorem}
 
 \begin{proof}
-	Seja $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. Então existe $\theta_1 \in \Theta_1$
-	tal que $\mathcal{L} (\theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. Do axioma \ref{ax:inf}, a hipótese
-	$H_1^* : \theta = \theta_1$ é suportada em relação a $H_2$. Mas $H_1^*$ implica $H_1$, e a conclusão segue do axioma
-	\ref{ax:coh}.
+	Consider $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. 
+  Then there exists $\theta_1 \in \Theta_1$
+	so that $\mathcal{L} (\theta_1 | \bu{x}) > \sup \mathcal{L} (\Theta_2 | \bu{x})$. 
+  From the axiom \ref{ax:inf}, the hypothesis
+	$H_1^* : \theta = \theta_1$ is supported over $H_2$. But $H_1^*$ implies $H_1$, so the conclusion
+  follows directly from axiom \ref{ax:coh}.
 \end{proof}
 
-Embora não decorra dos axiomas, o uso de uma razão de verossimilhança generalizada $\sup \mathcal{L}(\Theta_1 | \bu{x}) / 
-\sup \mathcal{L} (\Theta_2 | \bu{x}) $ parece natural para quantificar a força da evidência. É trivial que GLL é 
-compatível com LL no caso de hipóteses simples, e com alguns casos particulares expostos por \citep{Royall97}. Essa formulação
-da GLL pode ser usada para apresentar questões de análise de incerteza e para formalizar o uso de verossimilhanças perfilhadas
-em alguns casos de modelos com {\em nuisance parameters}. 
+The use of a ``generalized likelihood ratio'' given by $\sup \mathcal{L}(\Theta_1 | \bu{x}) / 
+\sup \mathcal{L} (\Theta_2 | \bu{x}) $ seems natural to quantify the strenght of evidence, just as the
+likelihood ratio is used to quantify the strenght of evidence under the law of likelihood (LL).
+It is trivial to see that the GLL is compatible with LL in the case of simple hypothesis, and with some
+particular cases proposed by \citep{Royall97}. However, it is striking to see that this formulation of the 
+GLL allows for an {\em absolute} degree of hypothesis confirmations. One hypothesis 
 
-No entanto, a implicação mais surpreendente da GLL é que ela permite uma medida de confirmação {\em absoluta} de hipóteses.
-Uma hipótese  $H_1: \theta \in \Theta_1$ possui evidência favorável se $\sup \mathcal{L}(\Theta_1|\bu{x}) > 
-\sup \mathcal{L} (\Theta_1^c|\bu{x}$, onde $^c$ representa o conjunto complementar, ou $L(\Theta_1, \Theta_1^c) > 1$.
-Embora esse suporte seja nulo no caso
-de hipóteses simples sobre parâmetros contínuos, esse não é caso quando $\Theta$ é finito.
+$H_1: \theta \in \Theta_1$ can be absolutely supported if $\sup \mathcal{L}(\Theta_1|\bu{x}) > 
+\sup \mathcal{L} (\Theta_1^c|\bu{x}$, where $^c$ represents the complimentary set.
+That is equivalent to $L(\Theta_1, \Theta_1^c) > 1$. This absolute likelihood will always be zero
+for simple hypothesis concerning real values parameters, but this does not happen then $\Theta$ is finite.
 
-Considere um exemplo, dado por \cite{Royall97}: 
-
-Existem três urnas com bolas brancas em diferentes proporções: um quarto ($\theta_1$), metade ($\theta_2$) e 
-três quartos ($\theta_3$); identificamos como $H_i$ as três urnas possíveis.
-Se nenhuma bola branca for observada após 5 sorteios com reposição, essa observação, $\bu{x}$, implica que
-$\mathcal{L} (\theta_1 | \bu{x} ) \propto (\frac{3}{4})^5$,
-$\mathcal{L} (\theta_2 | \bu{x} ) \propto (\frac{1}{2})^5$ e
-$\mathcal{L} (\theta_3 | \bu{x} ) \propto (\frac{1}{4})^5$.
-
-A LL nos permite afirmar que $L(\theta_1, \theta_2) = 7.6$ é evidência mediana a favor de $H_1$ sobre $H_2$, e 
-$L(\theta_2, \theta_3) = 32$ é evidência forte de $H_2$ sobre $H_3$. No entanto, a LL não permite inferências sobre a hipótese
-composta $H_c : \theta=\theta_1 \lor \theta=\theta_3$ em comparação com $H_2$; equivalentemente, LL não permite
-inferências sobre a evidência absoluta $H_2$ sobre $\sim\!\! H_2$.
-
-Por outro lado, a GLL permite a afirmação de que $L(\theta_1 \lor \theta_3, \theta_2) = 7.6$ representa suporte para $H_c$ em
-relação a $H_2$, e ainda que
-o suporte absoluto para as três hipóteses é de 
-$L(\theta_1, \sim\!\! \theta_1) = 7.6$,
-$L(\theta_2, \sim\!\! \theta_2) = 0.13$,
-$L(\theta_3, \sim\!\! \theta_3) = 0.004$, confirmando que apenas a hipótese 1 tem força de evidência superior a 1.
-
-Uma desvantagem em aceitar a GLL é que o suporte a hipóteses compostas não se comporta da mesma forma que a razão
-de verossimilhanças para hipóteses simples. Suponha que o pesquisador, no mesmo problema das urnas, retira agora duas
-bolas brancas. Essa nova observação leva aos resultados 
-$L(\theta_1, \sim\!\! \theta_1) = 0.11$,
-$L(\theta_2, \sim\!\! \theta_2) = 0.44$,
-$L(\theta_3, \sim\!\! \theta_3) = 2.25$, oferecendo suporte apenas para $H_3$. No entanto, não há como combinar essa
-evidência com a apresentada acima: as quantidades derivadas do supremo da verossimilhança não são multiplicativas para conjuntos
-de dados distintos, ao contrário da verossimilhança. 
-A força de evidência absoluta para $\theta_1$ tomando o conjunto completo 
-de dados é de aproximadamente $1.8 \neq 7.6 * 0.11$.
-Essa constatação, no entanto, não invalida o teorema da GLL, embora
-lance dúvidas quanto à aplicabilidade da razão de verossimilhança generalizada como força de evidência para hipóteses compostas.
-
-Em um desenvolvimento independente, o estatístico indiano Debabrata Basu propôs uma generalização
-alternativa para a lei da verossimilhança em 1975:
-\begin{quote}
-``{\em The strong law of likelihood}: For any two subsets $A$ and $B$ of $\Theta$, the data supports the 
-hypothesis $\omega \in A$ better than the hypothesis $\omega in B$ if
-\begin{equation}
-\sum_{\omega \in A} \mathcal{L}(\omega) > \sum_{\omega \in B} \mathcal{L}(\omega)
-\end{equation}
-Let us recall the [assertion] that all our sets (the sample space, the parameter space, etc.) are finite.''
-\end{quote}\citep{Basu75}
-
-Novamente, o grande problema ao aceitar esta generalização é encontrar uma medida de força de evidência 
-compatível.
+On the other hand, accepting the generalized likelihood ratio makes it impossible for a researcher
+to combine evidence from multiple data sources, as the generalized likelihood is not a multiplicative
+quantity. So, the greatest problem here is to find a generalization that allows for a measure of
+strenght of evidence that can be combined across experiments.
 
 \section{WLL: A weak law of likelihood}
 
-Confrontados com os insucessos de trabalhar com a verossimilhança de hipóteses compostas e os problemas derivados
-de uma medida absoluta de confirmação, os principais defensores da lei da verossimilhança viram por bem abandonar a 
-consideração de hipóteses compostas. O outro curso de ação que podemos tomar é abandonar a lei da verossimilhança,
-e é o caminho que vamos seguir nesta seção.
-
-Um exemplo devido a \cite{Fitelson07} mostra uma questão importante sobre a lei da verossimilhança:
-tome um baralho de 52 cartas bem embaralhado, e considere as hipóteses (simples) 
-$H_1$: a primeira carta é o ás de espadas {\em versus}
-$H_2$: a primeira carta é preta. A observação de uma carta de espadas leva às seguintes verossimilhanças: 
-$\mathcal{L} ( H_1 | \spadesuit ) =  1 k> \mathcal{L} ( H_2 | \spadesuit ) =  \frac{1}{2} k$, sendo $k$ uma constante de 
-proporcionalidade, e a lei da verossimilhança nos leva a declarar o suporte para $H_1$ sobre $H_2$. Mas a evidência apresentada
-sobre $H_1$ é inconclusiva, mas garante $H_2$. Fitelson traça essa discordância na relação entre os chamados ``{\em catch-alls}'',
-$P(E | \sim\!\!H_1)$ e $P(E|\sim\!\!H_2)$\footnote{Em casos de cartas de baralhos, os {\em catch-alls} estão bem definidos;
-objetivistas podem ter problemas em aceitar a formulação de {\em catch-alls} em problemas mais gerais, como "essa observação
-provê suporte à teoria da evolução"}. Uma formulação mais geral sobre a lei da verossimilhança, apelidada por J. Joyce de
-lei fraca da verossimilhança (WLL) é dada por:
+A more general way of expressing statistical support is given by 
 
 \begin{description}
 \item[WLL]
@@ -444,8 +391,8 @@ $P(E|\sim\!\!H_1) \leq P(E|\sim\!\!H_2)$.''
 \citep{Fitelson07}
 \end{description}
 
-É evidente que LL $\implies$ WLL. No entanto, as principais correntes de Bayesianismo moderno {\em também} aceitam WLL: dada uma
-medida de confirmação $c(H,E)$, a expressão Bayesiana equivalente a LL é:
+Evidently, LL $\implies$ WLL. However, WLL is also implied by most modern Bayesian proponents. Given a 
+confirmation measure $c(H,E)$, the Bayesian equivalent for the LL is:
 
 \begin{description}
 \item[$\dagger_c$]
@@ -453,43 +400,35 @@ medida de confirmação $c(H,E)$, a expressão Bayesiana equivalente a LL é:
 \citep{Fitelson07}
 \end{description}
 
-Três possíveis formas para a medida de confirmação são:
+There are three main formats for the confirmation measures:
 \begin{description}
-\item[Diferença] $d(H,E) = P(H|E)-P(H)$
-\item[Razão] $r(H,E) = \frac{P(H|E)}{P(H)}$
-\item[Razão de verossimilhanças] $l(H,E) = \frac{P(E|H)}{P(E|\sim\!\!H)}$
+\item[Difference] $d(H,E) = P(H|E)-P(H)$
+\item[Ratio] $r(H,E) = \frac{P(H|E)}{P(H)}$
+\item[Likelihood ratio] $l(H,E) = \frac{P(E|H)}{P(E|\sim\!\!H)}$
 \end{description}
 
-É importante relembrar que a confirmação Bayesiana dada por $c(H,E)$ 
-tem um caráter não-relacional, à partir do qual se {\em deriva} uma 
-medida de confirmação relacional; verossimilhantistas enxergam na lei da verossimilhança uma relação primitiva.
-E enquanto a construção da medida de confirmação não-relacional depende da especificação de {\em prioris}, a WLL não faz uso 
-direto deles, mas apenas da especificação de {\em catch-alls}. Uma teoria que utilizasse a WLL sem invocar {\em prioris}
-poderia embasar uma escola de inferência intermediária, sem o uso de {\em prioris} ao qual objetivistas objetam, 
-nem a restrição
-arbitrária ao tratamento de hipóteses compostas.
-
-Concluímos esta seção ponderando que
-o paradigma da verossimilhança parece estar encravado dentro do pensamento Bayesiano: se generalizamos a Lei da Verossimilhança,
-nos encontramos em um paradigma Bayesiano; se a enfraquecemos, encontramos todas as correntes do Bayesianismo moderno.
-Se o problema da inferência estatística é respondido pela Lei da Verossimilhança, essa resposta deve passar por explicar
-essa singularidade.
+It is important to remember that the Bayesian confirmation given by $c(H,E)$ has a non-relational nature,
+and the relation confirmation is constructed by comparing two of those measures. Likelihoodists will se
+in the LL a primitive relational relation. While the construction of the non-relational confirmation measures
+depends on the specification of {\em a prioris}, the WLL makes no such assumptions, using only {\em catch-all}
+probabilities (the $P(E|\sim\!\!H)$ terms). One theory based on the WLL without invoking {\em a prioris}
+could be used as a base to an intermediate inference school of thought, one that is not dependent on the
+specification of {\em a prioris}, but without the arbitrary restriction on the use of composite hypothesis.
 
 \section{PLUE: a proposal for likelihood profiling}\label{sec:plue}
 
-Nesta seção, vamos descrever uma metodologia tentativa para a realização de análises de incerteza
-baseada no perfilhamento da verossimilhança dos parâmetros. Argumentamos que essa metodologia é
-intuitivamente atraente dentro de um paradigma de verossimilhança.
-Vamos nos referir ao nosso
-procedimento como PLUE - Profiled Likelihood Uncertainty Estimation.
+In this section, we will describe how the profiling techniques for likelihood functions can be 
+seen as a foundation for a methodology of uncertainty estimation for mathematical models.
+We reason that this methodology is intuitevely appealing under a likelihood paradigm; and we will
+refer to it as PLUE - Profiled Likelihood Uncertainty Estimation.
 
 \subsection{Intuition}
 
-Suponha que temos em mãos um modelo de crescimento populacional estruturado como aqueles discutidos
-por \citep{Chalom12}, e um conjunto de dados a partir dos quais podemos calcular
-as taxas de sobrevivência, crescimento e fertilidade para a espécie. 
+Suppose that we have one mathematical model, for example a structured population growth model
+like those exemplified in \citep{Chalom12}, and one data set from which we can estimate the 
+vital rates of the population, such as survival, growth and fertility rates.
 
-De posse desses dados, gostaríamos de fazer as seguintes perguntas:
+With this data in hands, we would like to ask the following questions:
 
 {\em ``Qual o suporte que os dados dão para a afirmação de que a população está estável {\em versus} 
 em declínio? Qual o suporte que os dados dão para a afirmação de que a população vai se extinguir em menos 
@@ -543,7 +482,7 @@ inovação, na literatura de análise de sensibilidade ela é única em propor u
 a informação contida nas amostras coletadas. 
 
 \begin{figure}[htb]
-<<>>=
+<<general, fig=TRUE>>=
 L <- function(x) {
 	x = x + 3
 	((x)*(x-2)*(x-6)*(x-9)+100)/20
@@ -651,12 +590,7 @@ Vamos utilizar ainda a suposição de que os parâmetros são independentes nest
 funções de verossimilhança retratadas na fig. \ref{fig:LikFunc} (detalhes sobre a construção dessa função
 podem ser vistos na seção \ref{apmat}).
 
-<<load, fig=F>>=
-# First, we set the random seed to ensure reproducibility:
-set.seed(42)
-# Loads the pse package:
-library(pse)
-# Helper functions for the model:
+<<model>>=
 tr <- function (A) return(A[1,1]+A[2,2])
 A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
 getlambda = function (sigma, f, gamma) {
@@ -666,9 +600,8 @@ getlambda = function (sigma, f, gamma) {
 }
 getlambda = Vectorize(getlambda)
 model <- function(x) getlambda(x[,1], x[,2], x[,3])
-
-factors = c("sigma", "f", "gamma")
-N = 50000
+@
+<<params>>=
 # Initial population: juveniles, adults, total
 n <- c(10, 15); n.t <- sum(n)
 # Observed quantities: matured, born, survival
@@ -677,9 +610,9 @@ obs <- c(3, 2, 23)
 sigma <- obs[3]/n.t
 f <- obs[2]/n[2]
 gamma <- obs[1]/n[1]
-start = c(sigma, f, gamma)
 lambda <- getlambda(sigma, f, gamma)
-# probability distribution. It's the POSITIVE LL.
+@
+<<LL>>=
 # NOTE: LL function uses GLOBAL obs and n!!!
 LL <- function (x) 
 {
@@ -689,7 +622,18 @@ LL <- function (x)
 	if (is.nan(t)) return (-Inf);
 	return(t);
 }
+@
+<<profiling>>=
+library(pse)
+factors = c("sigma", "f", "gamma")
+N = 50000
+# we set the random seed to ensure reproducibility:
+set.seed(42)
+# The starting point for the Monte Carlo sampling
+start = c(sigma, f, gamma)
 plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+@
+<<minLik>>=
 minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
 @
 
@@ -724,15 +668,15 @@ vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária (c
 no cap. \ref{cap:pse}), centrada no ponto de máxima verossimilhança.
 
 \begin{figure}
-<<Case1>>=
+<<plot, fig=TRUE>>=
 plot(plue)
 @
 	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
 	\label{fig:lambda}
 \end{figure}
 \begin{figure}
-<<>>=
-# Analise de sensibilidade sobre lambda
+<<scatter, fig=TRUE>>=
+# Sensitivity analyses over lambda
 plotscatter(plue)
 @
 	\caption{Gráfico de dispersão dos valores de parâmetros (no eixo x) e resultados do modelo de crescimento estruturado
@@ -740,7 +684,7 @@ plotscatter(plue)
 	\label{fig:lambdascatter}
 \end{figure}
 \begin{figure}
-<<>>=
+<<prcc, fig=TRUE>>=
 plotprcc(plue)
 @
 	\caption{Análise de Partial Rank Correlation Coefficient entre as entradas do modelo e o resultado em um modelo
@@ -748,7 +692,7 @@ plotprcc(plue)
 	\label{fig:lambdaprcc}
 \end{figure}
 
-<<largerSample, fig=FALSE>>=
+<<largerSample>>=
 Mult=3
 n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
 largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
@@ -766,7 +710,7 @@ o número de indivíduos maturados, nascidos e sobreviventes é multiplicado por
 um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
 
 \begin{figure}
-<<>>=
+<<larger, fig=TRUE>>=
 plot(largePlue)
 @
 	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
@@ -822,37 +766,16 @@ O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo
 \end{align}
 
 \subsection{\R code for performing the analyses}
-
 \SweaveOpts{fig=F,echo=T}
-Code for loading the package and creating the model objects:
-<<lload, echo=TRUE>>=
-<<load>>
-@
 
-This document presents a brief introduction to a proposed methodology for the likelihood profiling of
-of the results from a computational model. This methodology is nicknamed PLUE, for 
-Profiled Likehood Uncertainty Estimation, and is implemented in the {\em pse} package by the PLUE function.
-A paper describing the theoretical background for this proposal is under preparation for publication.
-The present document presumes you are familiar with general concepts from parameter space exploration. If
-you are not, please refer to our work in \citep{Chalom12}.
-The PLUE methodology is useful if you are interested in analysing a computational model and if you have
-already gathered some data from which you can estimate likelihood distributions for your input parameters.
-If you are interested in conducting an exploratory analysis and you don't have any data collected, you 
-should use the tools described in the ``pse\_tutorial'' vignette in this package.
+In this section, we will present the \R code used to generate the analyses and graphs presented above.
+This can be seen as a tutorial in the usage of the computational tools provided in the ``pse'' package.
 You should have installed \R 
 \footnote{This tutorial was written and tested with \R version 
 3.0.1, but it should work with newer versions}
 along with an interface and 
 text editor of your liking, and the package ``pse''
 (available on http://cran.r-project.org/web/packages/pse).
-
-The general question we are attempting to answer here is: {\em how much support does the data give to 
-alternative hypothesis concerning the result of a (non-invertible) model?} It should be noted that while this
-question may not be always answered under a likehoodist approach to statistical inference, it does have
-an answer when we restrict one of the alternative hypothesis to being the maximum likehood estimator for the
-parameters. This answer is given by profiling the likelihood of the model parameters, and while this procedure
-leads to a function that is not a true likelihood function (thus not possessing many desirable properties),
-it is generally accepted as a valid exploratory analysis.
 
 \subsubsection{Biological and statistical models}
 First, we should define our interest model. We will refer to this model as the biological model\footnote{
@@ -865,18 +788,11 @@ parameter, and every line represents a different combination of values
 for those parameters. The function must return an array with the same
 number of elements as there were lines in the original data frame,
 and each entry in the array should correspond to the result of running
-the model with the corresponding parameter combination. For example, it can be this:
+the model with the corresponding parameter combination. For example, it can be this\footnote{See the preceding
+sections for the interpretation of the model, including parameters and results}:
 
-<<model>>=
-oneRun <- function (r, K, Xo) {
-    X <- Xo
-    for (i in 0:20) {
-       X <- X+r*X*(1-X/K)
-    }   
-    return (X) 
-}
-modelVec <- Vectorize(oneRun) 
-model <- function(x) modelVec(x[,1], x[,2], x[,3])
+<<>>=
+<<model>>
 @
 
 Following the definition of the model, we should define the likelihood function for our parameters.
@@ -885,32 +801,23 @@ data and select the best of them, we recommend using the \R package \textbf{bbml
 Then, the best model should be written as a function receiving a numeric vector representing one realization
 of the parameter vector and returning the {\em positive} log-likelihood of that vector.
 
-For example, the best model may be that the parameters $r$, $K$ and $Xo$ are all independent from each other,
-coming from two exponentials and from the {\em size} parameter of one binomial distribution, 
-respectively, fitting the data in the {\em observations} data.frame below:
+For example, the best model may be that the parameters $\sigma$, $f$ and $\gamma$ are all independent 
+from each other, coming from the specified binomial distributions:
+
 <<>>=
-r <- c(1.4, 1.2, 1.8)
-K <- c(70, 85, 98)
-Xo <- c(50, 60, 45)
-obs = data.frame(r=r, K=K, Xo=Xo)
+<<params>>
 @
 
 The likelihood function, in this case, should be:
+
 <<>>=
-LL <- function (x) 
-{
-	t <- sum(dexp(1/obs$r, as.numeric(x[1]), log=TRUE)) +
-		  sum(dexp(1/obs$K, as.numeric(x[2]), log=TRUE)) +
-		  sum(dbinom(obs$Xo, as.integer(x[3]), p=0.5, log=TRUE))
-	if (is.nan(t)) return (-Inf);
-	return(t);
-}
-LLs <- function(x) suppressWarnings(LL(x))
+<<LL>>
 @
+
 Please note that this function uses the global variable {\em obs}, and that it return minus infinity instead
 of not-a-number in cases where the likelihood is not properly defined. This can happen, for instance, if
 any of the values of {\em x} is negative.
-Also, notice that this function converts the third element of {\em x} to integer, as the {\em dbinom} function does not accept a fractional value for the {\em size} parameter.
+Also, notice that this function converts the elements of {\em x} to integer, as the {\em dbinom} function does not accept a fractional value for the {\em size} parameter.
 
 \subsubsection{Profiling: sampling and aggregating the results}
 After carefully constructing the model of interest and the likelihood function, as described in the 
@@ -926,32 +833,19 @@ and more control over the process, we recommend using {\em method=`mcmc'}, which
 package.
 
 <<>>=
-library(pse)
-factors = c("r", "K", "X0")
-set.seed(42)
-N = 10000
-# The starting point for the Monte Carlo sampling
-start = c(mean(obs$r), mean(obs$K), 2*max(obs$Xo))
-plue <- PLUE(model, factors, N, LLs, start)
+<<profiling>>
 @
-
-\textbf{Important note:} the example above uses a $N$ of 10.000, which is very low. For practical applications, always use larger samples and the `mcmc' method.
 
 In order to see the profiled likelihood of the model result, simply run:
-<<plot,fig=T>>=
-plot(plue)
+<<>>=
+<<plot>>
 @
-
-The profile seen in this figure shows that the
-model result is very unreliable. It can be considered very plausible, from the data collected, that the result of the model lie anywhere in the $20 - 120$ interval.
 
 Additional plots may be seen by using the 
 {\em plotscatter} and {\em plotprcc} functions:
-<<scatter,fig=T>>=
-plotscatter(plue, add.lm=F)
-@
-<<prcc,fig=T>>=
-plotprcc(plue)
+<<>>=
+<<scatter>>
+<<prcc>>
 @
 
 The interpretation of these graphs is analogous
