@@ -4,21 +4,19 @@
 \usepackage[twoside,margin=1.2in]{geometry}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{amsthm}
 \usepackage[square,sort]{natbib}
 \usepackage{framed, color}
 \definecolor{shadecolor}{rgb}{0.9, 0.9, 0.9}
 \setlength{\topmargin}{0cm}
 
-% Create friendly environments for theorems, propositions, &c.
+% Create friendly environments for theorems
 \newtheorem{axiom}{Axiom}[section]
-\newtheorem{theorem}{Theorem}[section]
-\newenvironment{proof}[1][Proof]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
-\newenvironment{definition}[1][Definition]{\begin{trivlist}
-	\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newtheorem*{theorem}{Theorem}
 \newcommand{\bu}[1]{\mbox{$\mathbf{#1}$}}
 \usepackage{xspace}
 \newcommand{\R}{\textnormal{\sffamily\bfseries R}\xspace}
+\setcounter{tocdepth}{2} % Adds subsections, but no further, to TOC
 
 \usepackage{Sweave}
 \begin{document}
@@ -350,8 +348,8 @@ not warrant the assertion that $H_1^*$ is better supported than $H_1$.
 From these axioms, we can derive the following general law of likelihood (GLL):
 
 \begin{theorem}
-	\textbf{(GLL)} If $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, then
-  there $\bu{x}$ is evidence supporting $H_1$ over $H_2$.
+	\textbf{(GLL)} ``If $\sup \mathcal{L} (\Theta_1 | \bu{x} ) > \sup \mathcal{L} (\Theta_2 | \bu{x})$, then
+  there $\bu{x}$ is evidence supporting $H_1$ over $H_2$.'' \citep{Zhang09}
 \end{theorem}
 
 \begin{proof}
@@ -502,8 +500,8 @@ text(1.08, 9.7, expression(x[max]))
 arrows(1.08, 7.7, 1.08, 9, angle=90, code=3, length=0.15)
 text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 @
-	\caption{Representação esquemática de uma função de verossimilhança, mostrando dois pontos de interesse:
-	o máximo global $x_{max}$ e o máximo de uma região distinta $x_{lim}$. Veja detalhes no texto.} 
+	\caption{Schematic representation of a likelihood function, highlighting two interest points: the
+  global maximum $x_{max}$ and the maximum in a given region $x_{lim}$. See details on the main text.} 
 	\label{fig:esquema}
 \end{figure}
 
@@ -592,9 +590,10 @@ podem ser vistos na seção \ref{apmat}).
 
 <<model>>=
 tr <- function (A) return(A[1,1]+A[2,2])
-A.to.lambda <- function(A) 1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
+A.to.lambda <- function(A) 
+  1/2*(tr(A) + sqrt((tr(A)^2 - 4*det(A))))
 getlambda = function (sigma, f, gamma) {
-	A.to.lambda (matrix(c(sigma*(1-gamma), f, 
+  A.to.lambda (matrix(c(sigma*(1-gamma), f, 
                         sigma*gamma, sigma), 
                       ncol=2, byrow=TRUE) )
 }
@@ -616,11 +615,11 @@ lambda <- getlambda(sigma, f, gamma)
 # NOTE: LL function uses GLOBAL obs and n!!!
 LL <- function (x) 
 {
-	t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
-				  dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
-				  dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
-	if (is.nan(t)) return (-Inf);
-	return(t);
+  t <- dbinom(obs[3], n.t, as.numeric(x[1]), log=TRUE) +
+    dbinom(obs[2], n[2], as.numeric(x[2]), log=TRUE) +
+    dbinom(obs[1], n[1], as.numeric(x[3]), log=TRUE)
+  if (is.nan(t)) return (-Inf);
+  return(t);
 }
 @
 <<profiling>>=
@@ -631,7 +630,8 @@ N = 50000
 set.seed(42)
 # The starting point for the Monte Carlo sampling
 start = c(sigma, f, gamma)
-plue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
+plue <- PLUE(model, factors, N, LL, start, 
+             method="mcmc", opts=list(blen=10), nboot=50)
 @
 <<minLik>>=
 minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
@@ -663,13 +663,12 @@ $\lambda$ é atingido em $\lambda = $ \Sexpr{round(minlik,2)}.
 
 As figuras \ref{fig:lambdascatter} e \ref{fig:lambdaprcc} mostram
 resultados preliminares da aplicação de técnicas de análise de sensibilidade sobre as amostras geradas, análogas às
-discutidas no capítulo \ref{cap:pse}. É importante ressaltar que estas análises foram realizadas sobre uma
-vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária (como seriam as análises descritas
-no cap. \ref{cap:pse}), centrada no ponto de máxima verossimilhança.
+discutidas em \citep{Chalom12}. É importante ressaltar que estas análises foram realizadas sobre uma
+vizinhança não infinitesimal (como seria o caso analítico) nem arbitrária, centrada no ponto de máxima verossimilhança.
 
 \begin{figure}
 <<plot, fig=TRUE>>=
-plot(plue)
+plot(plue, xlim=c(0.6, 1.3))
 @
 	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada.  }
 	\label{fig:lambda}
@@ -696,11 +695,6 @@ plotprcc(plue)
 Mult=3
 n <- Mult*n; n.t = Mult*n.t; obs = Mult*obs;
 largePlue <- PLUE(model, factors, N, LL, start, method="mcmc", opts=list(blen=10), nboot=50)
-
-# pop inicial: juv, ad, total
-n <- c(10, 15); n.t <- sum(n)
-# x obs: maturados, nascidos, sobrev.totais
-obs <- c(3, 2, 23)
 @
 
 A análise realizada indica que o valor de $\lambda$ estimado é pouco confiável, tendo um perfil muito aberto. 
@@ -711,48 +705,51 @@ um perfil muito mais fechado (veja figura \ref{fig:lambda2}).
 
 \begin{figure}
 <<larger, fig=TRUE>>=
-plot(largePlue)
+plot(largePlue, xlim=c(0.6, 1.3))
 @
 	\caption{Análise de verossimilhança perfilhada sobre os resultados do modelo mínimo de população estruturada,
 	mas com tamanho amostral maior. Em comparação com a figura \ref{fig:lambda}, o perfil é muito mais fechado. }
 	\label{fig:lambda2}
 \end{figure}
 
+\newpage
 \subsection{Mathematical details}\label{apmat}
-Nesta seção, vamos desenvolver alguns detalhes matemáticos sobre o exemplo acima.
+In this section, we will detail some mathematical points left out in the example above.
 
-Para um dado número observado $x_A$ de juvenis que passaram pelo processo de maturação, se tornando adultos, após um ciclo,
-a função de log-verossimilhança para $\gamma$ é dada por
+For a given observed number of juveniles that have undergone maturation, becoming adults in the last time
+interval, $x_A$, we can write the log-likelihood function for $\gamma$ as:
 
 \begin{equation}
 \mathcal{L} \left( \theta_1 | x_A \right) 
 = \log \left( {n_1 \choose x_A} \theta_1^{x_A} (1-\theta_1) ^{n_1-x_A} \right)
 \end{equation}
 
-Da mesma forma, a função de log-verossimilhança para $f$ é dada em função do número de juvenis nascidos no último ciclo, $x_J$:
+In the same way, the log-likelihod for $f$ is related to the number of juveniles that were born in the
+last time interval, $x_J$, by the expression:
+
 \begin{equation}
 \mathcal{L} \left( \theta_2 | x_J \right) 
 = \log \left( {n_2 \choose x_J} \theta_2^{x_J} (1-\theta_2) ^{n_2-x_J} \right)
 \end{equation}
 
-Por fim, a função de log-verossimilhança referente a $\sigma$ é dada em função do número de indivíduos sobreviventes, $x_S$,
-calculado como o número de indivíduos observado menos $x_J$:
+And last, the $\sigma$ log-likelihood function is given over the number of surviving individuals $x_S$
+(or the total population minus $x_J$):
 \begin{equation}
 \mathcal{L} \left( \theta_3 | x_S \right) 
 = \log \left( {n_t \choose x_S} \theta_3^{x_S} (1-\theta_3) ^{n_t-x_S} \right)
 \end{equation}
 
-Com o pressuposto forte de que as três variáveis são independentes, e escrevendo $n_t = n_3$ e 
-$\{x_A, x_J, x_S\} = \{x_1, x_2, x_3\}$
-para facilitar a notação\footnote{Importante frisar: $x_1$ não corresponde aqui ao número de juvenis observados após um ciclo, etc.}
-a função de verossimilhança para o vetor de parâmetros $\boldsymbol\theta$ é:
+With the strong assumption that the three variables are independent, we can write $n_t = n_3$ and
+$\{x_A, x_J, x_S\} = \{x_1, x_2, x_3\}$ in order to arrive at the more economical notation\footnote{
+It is important to remember that $x_1$ is not the number of juveniles, and so on.}
+for the likelihood function over the entire parameter vector $\boldsymbol\theta$:
 
 \begin{equation}
 \mathcal{L} \left( \boldsymbol{\theta} | \mathbf{x} \right) 
 = \sum_i \log \left( {n_i \choose x_i} \theta_i^{x_i} (1-\theta_i) ^{n_i-x_i} \right) \label{eqn:loglik}
 \end{equation}
 
-O resultado do modelo é $\lambda$, o maior autovalor de A obedecendo 
+The result of the model is $\lambda$, the largest eigenvalue in $A$. For 2x2 matrices, this is given simply by:
 \begin{equation}
 	\det \left[ 
 	\begin{array}{ll} \lambda - \sigma(1-\gamma) & -f \\
@@ -817,7 +814,6 @@ The likelihood function, in this case, should be:
 Please note that this function uses the global variable {\em obs}, and that it return minus infinity instead
 of not-a-number in cases where the likelihood is not properly defined. This can happen, for instance, if
 any of the values of {\em x} is negative.
-Also, notice that this function converts the elements of {\em x} to integer, as the {\em dbinom} function does not accept a fractional value for the {\em size} parameter.
 
 \subsubsection{Profiling: sampling and aggregating the results}
 After carefully constructing the model of interest and the likelihood function, as described in the 
@@ -841,24 +837,19 @@ In order to see the profiled likelihood of the model result, simply run:
 <<plot>>
 @
 
-Additional plots may be seen by using the 
+Notice that additional parameters may be specified for the underlying plotting function, such as
+{\em xlim}, {\em ylab} or {\em main}. Additional plots may be seen by using the 
 {\em plotscatter} and {\em plotprcc} functions:
 <<>>=
 <<scatter>>
 <<prcc>>
 @
 
-The interpretation of these graphs is analogous
-to the graphs generated by the Latin Hypercube
-Sampling, and described in the 
-``pse\_tutorial'' vignette. However, it is 
-important to notice that, instead of the 
-arbitrary region of the parameter space that
-is sampled in the LHS scheme, the plots 
-presented in this vignette are representing
-a discretization of the likelihood surfaces
-of the parameters, thus incorporating all the
-information about the data collected.
+The interpretation of these graphs is analogous to those generated by the Latin Hypercube
+Sampling, as described in \citep{Chalom12}. However, it is important to notice that, instead of the 
+arbitrary region of the parameter space that is sampled in the LHS scheme, the plots 
+presented in this document are representing a discretization of the likelihood surfaces
+of the parameters, thus incorporating all the information about the data collected.
 
 \section*{Acknowledgements}
 This work was supported by a CAPES scholarship.
