@@ -32,8 +32,19 @@
 \maketitle
 
 \begin{abstract}
-%%% ABSTRACT
-  Abstract goes here
+  The correct use and interpretation of models depends on several steps, two of which being the
+  calibration by parameter estimation and the analysis of uncertainty. In the biological literature,
+  these steps are seldom discussed together, but they can be seen as fitting pieces of the same puzzle.
+  In particular, analytical procedures for uncertainty estimation may be masking a high degree of 
+  uncertainty coming from a model with a stable structure, but insufficient data. 
+  
+  Under a likelihoodist approach, the problem of uncertainty estimation is closely related to the problem
+  of composite hypothesis. In this paper, we present a brief historical background on the statistical 
+  school of Likelihoodism, and examine the complex relations between the law of likelihood and the 
+  problem of composite hypothesis, together with the existing proposals for coping with it. Then, we
+  propose a new integrative methodology for the uncertainty estimation of models using the information
+  in the collected data. We argue that this methodology is intuitively appealing under a likelihood 
+  paradigm. 
 \end{abstract}
 
 \newpage
@@ -88,7 +99,7 @@ the research papers, discussed in different chapters of books (ie: \citep{Caswel
 even performed by different people. In matrix models for population projections, the results discussion
 is focused on a single combination of parameters, considered to be an optimum for the CPE, and the
 SUA is presented as a separate step, being secondary to the main results (see, for example, 
-\citep{SilvaMatos99}. We have no guarantees that even the statistical schools of though considered for 
+\citep{SilvaMatos99}). We have no guarantees that even the statistical schools of though considered for 
 both procedures will be coherent.
 
 Moreover, the parameter set used in the model calibration may have few to no relation to parameters that
@@ -363,8 +374,8 @@ From these axioms, we can derive the following general law of likelihood (GLL):
 \end{proof}
 
 The use of a ``generalized likelihood ratio'' given by $\sup \mathcal{L}(\Theta_1 | \bu{x}) / 
-\sup \mathcal{L} (\Theta_2 | \bu{x}) $ seems natural to quantify the strenght of evidence, just as the
-likelihood ratio is used to quantify the strenght of evidence under the law of likelihood (LL).
+\sup \mathcal{L} (\Theta_2 | \bu{x}) $ seems natural to quantify the strength of evidence, just as the
+likelihood ratio is used to quantify the strength of evidence under the law of likelihood (LL).
 It is trivial to see that the GLL is compatible with LL in the case of simple hypothesis, and with some
 particular cases proposed by \citep{Royall97}. However, it is striking to see that this formulation of the 
 GLL allows for an {\em absolute} degree of hypothesis confirmations. One hypothesis 
@@ -376,7 +387,7 @@ for simple hypothesis concerning real values parameters, but this does not happe
 On the other hand, accepting the generalized likelihood ratio makes it impossible for a researcher
 to combine evidence from multiple data sources, as the generalized likelihood is not a multiplicative
 quantity. So, the greatest problem here is to find a generalization that allows for a measure of
-strenght of evidence that can be combined across experiments.
+strength of evidence that can be combined across experiments.
 
 \section{WLL: A weak law of likelihood}
 
@@ -394,7 +405,8 @@ confirmation measure $c(H,E)$, the Bayesian equivalent for the LL is:
 
 \begin{description}
 \item[$\dagger_c$]
-``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ according to measure $c$ {\em iff} $c(H_1,E) > c(H_2,E)$.''
+``Evidence $E$ favors hypothesis $H_1$ over hypothesis $H_2$ according to measure $c$ if and only if
+  $c(H_1,E) > c(H_2,E)$.''
 \citep{Fitelson07}
 \end{description}
 
@@ -406,7 +418,7 @@ There are three main formats for the confirmation measures:
 \end{description}
 
 It is important to remember that the Bayesian confirmation given by $c(H,E)$ has a non-relational nature,
-and the relation confirmation is constructed by comparing two of those measures. Likelihoodists will se
+and the relation confirmation is constructed by comparing two of those measures. Likelihoodists will see
 in the LL a primitive relational relation. While the construction of the non-relational confirmation measures
 depends on the specification of {\em a prioris}, the WLL makes no such assumptions, using only {\em catch-all}
 probabilities (the $P(E|\sim\!\!H)$ terms). One theory based on the WLL without invoking {\em a prioris}
@@ -417,7 +429,7 @@ specification of {\em a prioris}, but without the arbitrary restriction on the u
 
 In this section, we will describe how the profiling techniques for likelihood functions can be 
 seen as a foundation for a methodology of uncertainty estimation for mathematical models.
-We reason that this methodology is intuitevely appealing under a likelihood paradigm; and we will
+We reason that this methodology is intuitively appealing under a likelihood paradigm; and we will
 refer to it as PLUE - Profiled Likelihood Uncertainty Estimation.
 
 \subsection{Intuition}
@@ -442,7 +454,7 @@ the population growth is negative?''}
 Schematically, we can see in figure \ref{fig:esquema} that we are comparing the likelihood at the global
 maximum ($x_{max}$) with the maximum value attained at a distinct region ($x_{lim}$). This kind of question
 is now comparing one simple hypothesis, corresponding to the maximum likelihood, with a composite hypothesis.
-This kind of comparation avoids the problems and quirks that afflict the general laws of likelihood due to
+This kind of comparison avoids the problems and quirks that afflict the general laws of likelihood due to
 the superposition of likelihood intervals. In terms of the Zhang axioms (see section \ref{sec:GLL}),
 we are accepting a weak form of the first, but not the second.
 
@@ -451,7 +463,7 @@ This reasoning can be extended to the following:
 {\em ``Which are the points in the parameter space for which the support given by the data 
 {\em versus} the point of maximum likelihood is greater than a certain threshold $\delta$?''}
 
-By asking the same question for different values of $\delta$, we are effictively profiling the 
+By asking the same question for different values of $\delta$, we are effectively profiling the 
 likelihood surface for the parameter space. In this point, we need to remember that profiling 
 methods for likelihood are used in inference since the decade of 1970 to reduce the dimensionality
 of parameters spaces, in particular in the form of elimination of ``{\em nuisance parameters}''.
@@ -461,9 +473,10 @@ inference), these methods are generally accepted as a valid procedure for explor
 
 We have already discussed the typical example of fitting a normal distribution to a data set. In
 this example, the likelihood is defined for pairs $(\mu = \mu_0, \sigma = \sigma_0)$,
-but it is usual to make affirmations about the average $\mu$ of the distribution, without refering to $\sigma$.
-However, this is equilavent to consider the model $g(\mu, \sigma) = \mu$, that is, a model that
-projects the bidimensional space formed by $\mu$ and $\sigma$ into an unidimensional space. Our proposal
+but it is usual to make affirmations about the average $\mu$ of the distribution, without 
+referring to $\sigma$.
+However, this is equivalent to consider the model $g(\mu, \sigma) = \mu$, that is, a model that
+projects the bi-dimensional space formed by $\mu$ and $\sigma$ into an unidimensional space. Our proposal
 is merely to use this same reasoning for general non-invertible functions. Even if this is nothing
 new under the optics of the likelihood profiling, this is the first time that this methodology is proposed
 in the literature of uncertainty analyses, to the best of our knowledge.
@@ -498,7 +511,7 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
 \begin{description}
 	\item[Definitions]
     Consider first a mathematical model of interest. We will call this the ``biological model''\footnote{
-    But it could be a physical model, hidrological model, geochemical model, etc.}
+    But it could be a physical model, hydrological model, geochemical model, etc.}
     to differentiate between this and the statistical model presented below. We will consider the simple
     case of a scalar response $y$ for a model with a vector input $\bu{\theta}$: 
 		$y = F(\bu{\theta})$.
@@ -564,7 +577,7 @@ in the last time interval. The model becomes:
  \right]
 \end{equation}
 
-For large animals with one offspring for reproductive seasons, such as whales, $f$ can be modeled as a the
+For large animals with one offspring for reproductive seasons, such as whales, $f$ can be modeled as the
 proportion of adults that generate offspring. The parameter $\sigma$ is modeled as the proportion of 
 individuals that survive from one time interval to another, and $\gamma$ as the proportion of juveniles that
 maturate from one time interval to another. This way, all of the three parameters can be modeled as
@@ -633,7 +646,7 @@ minlik <- unique(plue$res[plue$nLL == min(plue$nLL)])
 We will examine a numerical example with the initial population having \Sexpr{n[1]} juveniles and\Sexpr{n[2]}
 adults. The population size is very small, which is important to highlight the difference between the
 analytical and stochastic approaches. After one time step, we can see 
-\Sexpr{obs[1]} recent adults, \Sexpr{obs[2]} born juvenilies and \Sexpr{obs[3]} total survivors. It's 
+\Sexpr{obs[1]} recent adults, \Sexpr{obs[2]} born juveniles and \Sexpr{obs[3]} total survivors. It's 
 easy to see from the figure \ref{fig:LikFunc} that the best estimate for this parameters is given by
 $\sigma = $ \Sexpr{round(sigma,2)}, $f = $ \Sexpr{round(f,2)} and $\gamma = $ \Sexpr{round(gamma,2)}.
 Also, the corresponding value for $\lambda$ is \Sexpr{round(lambda,2)}.
@@ -701,7 +714,7 @@ the analysis results in a more closed profile (fig. \ref{fig:lambda2}).
 plot(largePlue, xlim=c(0.6, 1.3))
 @
 	\caption{Likelihood profile for the results of a minimal model of structured population growth, but with
-  larger sample size. In comparison to \ref{fig:lambda}, this profile is more closed and the plausibity
+  larger sample size. In comparison to \ref{fig:lambda}, this profile is more closed and the plausibility
   regions are narrower. }
 	\label{fig:lambda2}
 \end{figure}
@@ -718,7 +731,7 @@ interval, $x_A$, we can write the log-likelihood function for $\gamma$ as:
 = \log \left( {n_1 \choose x_A} \theta_1^{x_A} (1-\theta_1) ^{n_1-x_A} \right)
 \end{equation}
 
-In the same way, the log-likelihod for $f$ is related to the number of juveniles that were born in the
+In the same way, the log-likelihood for $f$ is related to the number of juveniles that were born in the
 last time interval, $x_J$, by the expression:
 
 \begin{equation}
@@ -845,7 +858,7 @@ arbitrary region of the parameter space that is sampled in the LHS scheme, the p
 presented in this document are representing a discretization of the likelihood surfaces
 of the parameters, thus incorporating all the information about the data collected.
 
-\section*{Acknowledgements}
+\section*{Acknowledgments}
 This work was supported by a CAPES scholarship.
 
 \newpage
