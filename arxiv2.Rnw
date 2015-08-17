@@ -33,17 +33,22 @@
 
 \begin{abstract}
   The correct use and interpretation of models depends on several steps, two of which being the
-  calibration by parameter estimation and the analysis of uncertainty. In the biological literature,
+  calibration by parameter estimation and the analysis of uncertainty. %PI: and of sensivity?
+  In the biological literature,
   these steps are seldom discussed together, but they can be seen as fitting pieces of the same puzzle.
   In particular, analytical procedures for uncertainty estimation may be masking a high degree of 
-  uncertainty coming from a model with a stable structure, but insufficient data. 
+  uncertainty coming from a model with a stable structure, but insufficient data. %PI: que frase fantástica, adorei:)
   
-  Under a likelihoodist approach, the problem of uncertainty estimation is closely related to the problem
-  of composite hypothesis. In this paper, we present a brief historical background on the statistical 
-  school of Likelihoodism, and examine the complex relations between the law of likelihood and the 
+  Under a likelihoodist approach, %PI: o termo likelihoodist é bem conhecido? Se não só usaria no texto a partir do momento que vc o definiu. 
+  the problem of uncertainty estimation is closely related to the problem
+  of composite hypothesis. %PI: é um problema exclusivo da escola de verossimilhança? Se não basta retirar o under likelihoodist approach
+  In this paper, we present a brief historical background on the statistical 
+  school of Likelihoodism, %PI: que tal: "on the statistical school base on the Likelihood Principle ('Likelihoodism')
+  and examine the complex relations between the law of likelihood and the 
   problem of composite hypothesis, together with the existing proposals for coping with it. Then, we
   propose a new integrative methodology for the uncertainty estimation of models using the information
-  in the collected data. We argue that this methodology is intuitively appealing under a likelihood 
+  in the collected data. %PI: e não vale mencionar que com ele tb é possível fazer uma análise de sensibilidade baseada na incertaz que há no dado?
+  We argue that this methodology is intuitively appealing under a likelihood 
   paradigm. 
 \end{abstract}
 
@@ -169,7 +174,8 @@ more widely advocated as an alternative to both frequentism and Bayesianism. The
 about the logic of inference and the 1972 book by A.W.F. Edwards on likelihoods can be seen as the starting
 points for this position to become an independent school of thought, sometimes called Likelihoodism.
 More recently, this position will be strongly supported by the works of Richard Royall and Elliott Sober.
-
+%PI: sugestão para o período abaixo :
+% Both authors propose that the conjuntion of the [...] are a separate school of statistical inference, which Sober calls 'Likelihoodism'.
 The likelihoodist school of thought is based on the conjunction of the likelihood principle, as demonstrated
 by Allan Birnbaum, and the law of likelihood, as enunciated by Ian Hacking.
 
@@ -382,14 +388,16 @@ GLL allows for an {\em absolute} degree of hypothesis confirmations. One hypothe
 $H_1: \theta \in \Theta_1$ can be absolutely supported if $\sup \mathcal{L}(\Theta_1|\bu{x}) > 
 \sup \mathcal{L} (\Theta_1^c|\bu{x}$, where $^c$ represents the complimentary set.
 That is equivalent to $L(\Theta_1, \Theta_1^c) > 1$. This absolute likelihood will always be zero
-for simple hypothesis concerning real values parameters, but this does not happen then $\Theta$ is finite.
+for simple hypothesis concerning real values parameters, but this does not happen then $\Theta$ is finite. %PI: não entendi. Seria 'when Theta is finite'?
 
 On the other hand, accepting the generalized likelihood ratio makes it impossible for a researcher
 to combine evidence from multiple data sources, as the generalized likelihood is not a multiplicative
 quantity. So, the greatest problem here is to find a generalization that allows for a measure of
-strength of evidence that can be combined across experiments.
+strength of evidence that can be combined across experiments. 
+%PI: o fato de tornar-se uma medida absoluta de evidência tb não seria um problema?
 
 \section{WLL: A weak law of likelihood}
+%PI: qual a ligação desta seção com a anterior? Ajudaria mais uma frase explicitando como vc chega aqui a partir da seção anterior.
 
 A more general way of expressing statistical support is given by 
 
@@ -426,6 +434,7 @@ could be used as a base to an intermediate inference school of thought, one that
 specification of {\em a prioris}, but without the arbitrary restriction on the use of composite hypothesis.
 
 \section{PLUE: a proposal for likelihood profiling}\label{sec:plue}
+%PI: aqui tb vale deixar mais clara a relação desta seção com as anteriores. veja meus comentários gerais no começo do documento.
 
 In this section, we will describe how the profiling techniques for likelihood functions can be 
 seen as a foundation for a methodology of uncertainty estimation for mathematical models.
@@ -526,12 +535,14 @@ text(1.4,(7.7+9)/2,(expression(Delta[L])), cex=1.3)
     (see for example \citep{Burnham02} for details in this step). 
 	\item[Sampling]
     Take the model with the best AIC, and use a Monte Carlo sampling to generate a large number of 
-    samples with density proportional to 
+    samples %PI: samples of parameter values (?)
+    with density proportional to 
     $\mathcal{L}(\bu{\theta}|\chi)$ (for example, use the Metropolis algorithm \citep{Tierney94}). 
     We will call this sample $\bu{A}$. To each element in 
     $A_{i \cdot}$ (taken from $\mathcal{L}(\bu{\theta}|\chi)$), we have associated the value of 
 		$L_i = \mathcal{L}(A_{i \cdot} | \chi)$, the likelihood of this sample, and we take
 		$Y_i = F(A_{i \cdot})$, the result of the biological model over this sample.
+                %PI: sugestão: the output of the biological model for the input of each sampled set of parameters.
 		Normalize $L_i$ to have the minimum log-likelihood in $0$.
 	\item[Aggregation]
     Now we take the model results $Y_i$ and associated likelihoods $L_i$, and create an upper profile
@@ -665,7 +676,8 @@ The likelihood functions for each parameter were used to generate
 \Sexpr{get.N(plue)} samples using Metropolis algorithm, from which we derive an empirical distribution for
 $\lambda$, which is proportional to likelihood of the parameters.
 This $\lambda$ distribution, together with the likelihood values associated with each input, was used to
-construct a likelihood profile for the model result. The minimum likelihood for 
+construct a likelihood profile for the model result. %PI:Não seria melhor chamar de PLUE profile with a minimum of ... ?
+The minimum likelihood for 
 $\lambda$ is attained in $\lambda = $ \Sexpr{round(minlik,2)}.
 
 Figures \ref{fig:lambdascatter} and \ref{fig:lambdaprcc} show preliminary results of the application of
@@ -865,3 +877,97 @@ This work was supported by a CAPES scholarship.
 \bibliographystyle{apalike}
 \bibliography{chalom}
 \end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%PI
+%% Primeira rodada de observaçoes para o artigo:
+
+%% 1 - Gostei muito e creio que pode ser util por pelo menos dois
+%% motivos: a revisao do problema de inferencia com hipoteses multiplas e
+%% o PLUE em si como uma soluçao (fundamentaçao + como fazer). Merece vir
+%% a publico, a.k.a ser publicado e bem divulgado. 
+
+%% 2 - Como tudo me parece muito bom, minha mineirice desconfiada me diz
+%% que precisamos muito da leitura de pelo menos dois caras muito bons na
+%% area, para nos certificarmso que nao caimos na armadilha do discurso
+%% internamente coerente. Primeiro passo e ver como a banca reage. Mas se
+%% deles nao vier muito vamos ainda fazer uma rodada com outres (gostaria
+%% muito que um fosse o Bolker, ver item 4b) 
+
+%% 3 - O proposito da discussao da lei geral e da lei fraca pode ficar
+%% mais clara, principalmente se/como ajudam na proposta pratica do
+%% PLUE. Creio que para um leitor da área de estatística biológica fica a
+%% dúvida se são apresnetadas só como alternativas
+%% sem utilidade prática, ou se contribuem para o PLUE. Creio que aqui
+%% são algumas frases para deixar mais claro o propósito destas
+%% seções. Pode ser inclusive na introdução geral.
+
+%% 4 - Aprofundar o dialogo do PLUE com outras opções disponiveis,
+%% enfatizando a diferença entre o caso em que a quantidade é função
+%% monotônica dos parâmetros estimados e quando não é. Vejo aí duas
+%% questões distintas: relação com perfilhamento e poder apelar ou não  
+%% para a propriedade de invariância. Se podemos apelar a relação com
+%% perfilhamento é uma. Se podemos me parece que a relação é outra, 
+%% e provavelmente a parte mais original da proposta (portanto a que
+%% demanda melhor elaboração).
+%% Mais alguma elaboração sobre este tópico:
+%% a) Do ponto de vista de verossimilhanca vc ja avançou muito na
+%% relacao que há com perfilhamento. Quanto a isso pode valer a pena
+%% comparar com outra técnicas para fazer inferencias sobre quantidades
+%% derivadas dos modelos. O caso mais simples eh qdo essas quantidades
+%% sao funcoes monotonicas dos parametros. Nestes casos a quantidade
+%% derivada é tb um mle e ai temos toda a teoria de maxima
+%% verossimilhanca para nos orientar. Mesmos nesses casos pode ser
+%% preciso usar aproximacoes ou simulacoes. Sobre tudo isso, veja seção
+%% 7.5 do Bolker (mas note que ele nem menciona se as funcoes dos
+%% parametros sao monotonicas ou nao, o que me leva ao ponto seguinte) 
+
+%% b) Ao comparar com as outras solucoes, um ponto a esclarecer é a
+%% relacao do PLUE com o perfil de uma funcao monotonica dos
+%% parâmetros. Suspeito que neste caso o PLUE equivale exatamente a uma
+%% verossimilhança perfilhada, correto? Seja este o resultado ou o
+%% contrário vale demonstrar ao leitor. No caso em que a quantidade de
+%% interesse nao é uma função monotônica (ou não se sabe?) é que o PLUE
+%% me parece não se reduzir a nenhum abordagem de verossimilhança ainda
+%% proposta. No entanto, neste caso ele tem similaridades com a
+%% inferência bayesiana da distribuição de quantidades derivadas de um
+%% modelo. Me parece que tb tem relação com o que Bolker chama de Population Prediction
+%% Intervals (PPI, seção 7.5.2, que ele conclui com o comentário de que
+%% "blurs the line between frequentist and Bayesian approaches[...] I
+%% have yet to see a solidly grounded justification for propagating the
+%% sampling distributions of parameters in this way." Por isso penso que ele seria
+%% uma ótima pessoa para avaliar este artigo.) 
+
+%% 5 - Na seção 7 (exemplo) vc indica : "It is important to highlight that this analyses have been carried out in a neighborhood
+%% of the maximum likelihood point that is not innitesimal, nor arbitrary, which
+%% would be the case in analytical and other stochastic methods". 
+%% Creio que detlahra mais isso, para que o leitor se convença das
+%% vantagens, em termos conceituais e práticos (importante para
+%% biólogos). Em resumo, explorar como os exemplos mostram as vantagens
+%% da integração de calibração com análise de incertezas e de
+%% sensibilidade.
+%% detalhes:
+%% a) Vale novamente chamar a atenção que a quantidade de interesse (lambda)
+%% não é (ou não sabemos?) uma função monotônica dos parâmetros, apenas
+%% para enfatizar que é um caso escolhido para mostrar esta
+%% situação. Talvez valha tb indicar que este é um dos casos mais
+%% conhecidos em ecologia em que a quantidade de interesse não é uma
+%% função monotônica dos mles
+%% b) Mais importante, falta explorar nos exemplos as
+%% vantagens de avaliar sensibilidade e incerteza com uma amostra de
+%% valores dos parâmetros com distribuição proporcional à superfície de
+%% verossimilhança. No caso da análise de incerteza, cabe indicar que
+%% isso dá um referencial objetivo de incerteza ou variação do input: 
+%% ela é proporcional à matriz de informação, ou seja à informação contida nos dados (que é
+%% toda a informação que interesse para a inferência, pelo Princípio).
+%% Para a análise de sensibilidade seria legal indicar que aqui tb é
+%% preciso um critério para definir como varrer o espaço de parâmetros,
+%% coisa que a sensibilidade analítica não faz: ao analisar o
+%% comportamento na vizinha infinitesimal do valor obtido na calibração, 
+%% o critério imposto vem das ferramentas matemáticas escolhidas para analisar a sensibilidade e não
+%% de uma fonte de incerteza em si (seja ela conhecimento a priori ou
+%% informação contida nos dados). Isso está diretamente ligado à noção de
+%% sensibilidade como uma derivada, o que me parece um caso de "golden
+%% hammer": molda-se o problema de acordo com a ferramenta.
+%% Depois dessas considerações ficaria legal comparar com os resultados
+%% da análise de sensibilidade usual e pontuar as vantagens no estudo de caso.
