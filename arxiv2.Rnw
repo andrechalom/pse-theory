@@ -24,7 +24,7 @@
 \setkeys{Gin}{width=0.8\textwidth}
 
 \title{Uncertainty analysis and composite hypothesis under the likelihood paradigm}
-\author{Andre Chalom \and Paulo Inacio Prado,\\ 
+\author{Andr\'e Chalom \and Paulo In\'acio de Knegt L\'opez de Prado,\\
   Department of Ecology, Institute of Biosciences, University of São Paulo \\
   \texttt{andrechalom@gmail.com}
   }
