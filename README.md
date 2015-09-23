@@ -6,7 +6,7 @@ This repository contains the source files used to generate three documents:
 * The [Parameter space exploration of ecological models] (http://arxiv.org/abs/1210.6278) paper on arXiv (arxiv1.pdf);
 * The [Uncertainty analysis and composite hypothesis under the likelihood paradigm] (http://arxiv.org/abs/1508.03354) paper on arXiv (arxiv2.pdf).
 
-The full text of the dissertation is presented here as the [final.pdf] (http://github.com/andrechalom/pse-theory/final.pdf) file. The arxiv1 paper consists on a translation to English of the third chapter and selected sections from the first chapter present in the dissertation, while the arxiv2 paper corresponds to the second chapter.
+The full text of the dissertation is presented here as the [final.pdf] (http://github.com/andrechalom/pse-theory/raw/master/final.pdf) file. The arxiv1 paper consists on a translation to English of the third chapter and selected sections from the first chapter present in the dissertation, while the arxiv2 paper corresponds to the second chapter.
 
 ## Compiling
 
