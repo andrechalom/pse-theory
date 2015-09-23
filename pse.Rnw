@@ -132,7 +132,7 @@ I. Universidade de São Paulo. Programa Interunidades de Pós-Graduação em Bio
 \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}l l}
 \rule{16em}{1px} 	& \rule{16em}{1px} \\
 Prof. Dr. 		& Prof. Dr. \\
-**Nome**			& **Nome**
+Pedro Luis Bernardo da Rocha			& Ricardo Zorzetto Nicoliello Vencio
 \end{tabular*}
 
 \par

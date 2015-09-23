@@ -939,7 +939,7 @@ This work was supported by a CAPES scholarship.
 %% uma ótima pessoa para avaliar este artigo.) 
 
 %% 5 - Na seção 7 (exemplo) vc indica : "It is important to highlight that this analyses have been carried out in a neighborhood
-%% of the maximum likelihood point that is not innitesimal, nor arbitrary, which
+%% of the maximum likelihood point that is not infinitesimal, nor arbitrary, which
 %% would be the case in analytical and other stochastic methods". 
 %% Creio que detlahra mais isso, para que o leitor se convença das
 %% vantagens, em termos conceituais e práticos (importante para
