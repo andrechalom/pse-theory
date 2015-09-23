@@ -1,0 +1,10 @@
+
+# /
+/*.pdf
+/*.toc
+/*.bbl
+/*.aux
+/*.blg
+/*.log
+/*.tex
+/mydata.csv
